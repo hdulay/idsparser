@@ -44,14 +44,14 @@ public class Main {
                 if (visited.contains(path)) continue;
                 visited.add(path);
 
-                Field[] fields = IDSUtil.instance().getNodes(path, "//element[@type='OmniDate' or @type='OmniLink']")
+                Field[] fields = IDSUtil.getNodes(path, "//element[@type='OmniDate' or @type='OmniLink']")
                         .stream()
                         .map(node -> {
                             return getField(node, path);
                         }).toArray(size -> new Field[size]);
 
                 Field[] dates = Arrays.stream(fields).filter(field -> field.getType() == Type.OmniDate
-                        //&& field.getDoc().toLowerCase().contains("patient")
+                        && field.getDoc().toLowerCase().contains("patient")
                 ).toArray(size -> new Field[size]);
                 Arrays.stream(dates).forEach(System.out::println);
                 String[] lines = Arrays.stream(dates).map(date -> date.toString()).toArray(size -> new String[size]);

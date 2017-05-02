@@ -21,13 +21,6 @@ public class IDSUtil {
 
     private static DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     private static XPathFactory xPathfactory = XPathFactory.newInstance();
-    private static IDSUtil instance = null;
-
-    public synchronized static IDSUtil instance() {
-        if (instance == null)
-            instance = new IDSUtil();
-        return instance;
-    }
 
     public static List<Node> getNodes(String path, String xpathStr) throws ParserConfigurationException, SAXException,
             IOException, XPathExpressionException {

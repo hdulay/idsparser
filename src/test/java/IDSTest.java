@@ -19,7 +19,7 @@ public class IDSTest {
     public void evaluatesExpression() throws ParserConfigurationException, SAXException, XPathExpressionException, IOException {
         String path = "ids/Clinical/Encounter_1.2.2.xml";
 
-        IDSUtil.instance().getNodes(path, "//element[@type='OmniDate']")
+        IDSUtil.getNodes(path, "//element[@type='OmniDate']")
                 .stream()
                 .map(node -> {
                     return getField(node, path);
