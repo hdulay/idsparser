@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.2.8" changeVersion="1" domain="Clinical" type="instance"
+			 name="CarePlan"  
+	 		 elementOrder="CarePlanNumber, Patient, TypeCode, Status, StartDate, EndDate, Note, Diagnoses, Goals"
+	 		 implementationClass="com.ibi.omni.patient.model.clinical.CarePlan">	 					
+	  	 					
+	<changeLog>
+		<change version="1.2.8_0">Initial Version</change>
+		<change version="1.2.8_1">Added SourceStatusCode to instance and collection items.</change>
+		<change version="1.2.8_2">Added TypeCode.</change>
+	</changeLog>
+	
+	<notes>
+	
+	</notes>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	<customType name="SourceCodeList" class="com.ibi.omni.patient.ids.SourceCodeListType"/>
+	
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	
+	<documentation>	
+A Care Plan is designed for a specific patient to address the delivery of care needed for a specific condition or set of conditions over a period of time.  Care plans vary in their scope as they can be simple to complex.  A simple implementation could be to track when a patient is due for his next physical.  A complex care plan would be for an oncology patient covering diet, chemotherapy, radiation, lab work and counseling with detailed timing relationships, pre-conditions and goals.  The design below takes an intermediate approach.  It includes basic details about who is involved and what actions are needed without tracking dependencies or timing relationships between activities.  This approach does allow for capturing the care plan at the clinical event. 
+	</documentation>
+
+	<element name="CarePlanNumber" type="string">
+		<documentation>
+		Specifies the care plan number.	
+		</documentation>
+		
+		<example>1234567</example>
+	</element>
+	
+
+	<element name="Patient" type="OmniLink" contains="Patient" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		Contains the patient the care plan is designed for. 
+		
+		Use this element to specify a Patient in the system using the Patient's SourceName and SourceInstanceId. You cannot load Patient
+		information using this element, however if the Patient is not found then a "placeholder" will be created that will contain the Patient
+		when loaded.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<Patient>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>PatientId</SourceInstanceId>
+			</Patient>
+			]]>
+		</example>		
+	</element>
+
+	<element name="TypeCode" type="SourceCode" codeSource="OMNI" codeSet="0496">
+		<documentation>
+			Contains type code indicating the category of the care plan. This will typically relate either to a plan
+			for treatment of a chronic condition (e.g., Diabetes), or the long-term remediation of an unhealthy
+			condition (e.g., weight loss)..
+		</documentation>
+
+		<example sourceName="OMNI" sourceCodeSet="0496" sourceCode="2"/>
+	</element>
+		
+	<element name="Status" type="SourceCode" codeSource="OMNI" codeSet="6090">
+		<documentation>
+		Indicates whether the plan is currently being acted upon, represents future intentions or is now just historical record.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="6090" sourceCode="completed"/>
+	</element>
+
+	<element name="StartDate" type="OmniDate">
+		<documentation>
+		Contains the starting date of when the care plan is expected to begin.
+		</documentation>
+		
+		<example format="yyyy-MM-dd">2013-01-01</example>
+	</element>
+
+	<element name="EndDate" type="OmniDate">
+		<documentation>
+		Contains the ending date of when the care plan is expected to be completed.
+		</documentation>
+		
+		<example format="yyyy-MM-dd">2013-08-01</example>
+	</element>
+
+	<element name="Note" type="string">
+		<documentation>
+		Contains general notes about the care plan not covered elsewhere.
+		</documentation>
+		
+		<example>Care Plan Note</example>
+	</element>
+
+	<element name="Diagnoses" type="SourceCodeList" contains="DiagnosisCode" codeSource="OMNI" codeSet="ICD9">
+		<documentation>
+		Identifies the diagnoses that represents the health issues the patient is experiencing and this care plan will address.
+		</documentation>
+			
+ 		<example>
+			<![CDATA[
+			<DiagnosisCode sourceName="OMNI" sourceCodeSet="ICD9" sourceCode="20923" />
+			<DiagnosisCode sourceName="OMNI" sourceCodeSet="ICD9" sourceCode="20963" />
+			]]>
+		</example>		
+	</element>
+
+	<list name="Goals">
+		<documentation>
+		Goals is a list of CarePlanGoals.
+		</documentation>
+		
+		<idsSpecification name="CarePlanGoal" udlName="CarePlanGoal" type="instance_child"
+			 		 		elementOrder="Description, Status, Note"
+			 		 		implementationClass="com.ibi.omni.patient.model.clinical.CarePlanGoal">
+			 
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+					 	  	
+			<documentation>
+			Each care plan goal describes the intended objective of carrying out the plan, providing clinicians context by which to evaluate the effectiveness of the plan.
+			</documentation>
+
+
+			<element name="Description" type="string">
+				<documentation>
+				Describes the desired objective of the care plan.
+				</documentation>
+				
+				<example>Lose 10 lbs</example>
+			</element>
+
+			<element name="Status" type="SourceCode" codeSource="OMNI" codeSet="6091">
+				<documentation>
+				Indicates whether the goal has been met and is still being targeted.
+				</documentation>
+				
+				<example sourceName="OMNI" sourceCodeSet="6091" sourceCode="achieved" />
+			</element>
+			
+			<element name="Note" type="string">
+				<documentation>
+				Contains progress notes, concerns or related information that doesn't describe the goal itself.
+				</documentation>
+				
+				<example>Care Plan Goal Note</example>
+			</element>
+			
+		</idsSpecification>			
+	</list>
+</idsDocument>

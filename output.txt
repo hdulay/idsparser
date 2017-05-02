@@ -1,0 +1,179 @@
+[Encounter_1.2.2.xml] [ArrivalDateTime] [OmniDate] [patient] : Tracks the date and time the patient arrived at the facility.  This is different than the date the patient is admitted (applies to inpatient only).
+[Encounter_1.2.2.xml] [DepartureDateTime] [OmniDate] [patient] : Tracks the date and time the patient leaves the facility for both inpatient and outpatient.  For inpatient, can be different than discharge date.
+[Encounter_1.2.2.xml] [TriageStartDateTime] [OmniDate] [patient] : Tracks the date and time the triage process is started for a patient in the emergency room.
+[Encounter_1.2.2.xml] [TriageEndDateTime] [OmniDate] [patient] : Tracks the date and time the triage process is completed for a patient in the emergency room.
+[Encounter_1.2.2.xml] [LivingWillDate] [OmniDate] [patient] : This element is used to specify the date the patient supplied a living will.
+[Encounter_1.2.2.xml] [AdvanceDirectiveLastVerifiedDateTime] [OmniDate] [unknown] : Indicates the date and time that the advance directive specified was last verified.
+[Encounter_1.2.2.xml] [AssertionDate] [OmniDate] [patient] : Estimated or actual date the chronic condition was first detected for the patient.
+[Encounter_1.2.2.xml] [AssertionDateTime] [OmniDate] [patient] : Estimated or actual date and time (if applicable) the symptom was first detected by the patient.
+[Encounter_1.2.2.xml] [SubstanceStartDate] [OmniDate] [patient] : Identifies the date the patient first used the substance.
+[Encounter_1.2.2.xml] [SubstanceEndDate] [OmniDate] [patient] : Identifies the date the patient last used the substance.
+[Encounter_1.2.2.xml] [TreatmentProgramStartDate] [OmniDate] [patient] : Identifies the date the patient last started a treatment program.
+[Encounter_1.2.2.xml] [TreatmentProgramEndDate] [OmniDate] [patient] : Identifies the date the patient last ended a treatment program.
+[Encounter_1.2.2.xml] [DiscussionDateTime] [OmniDate] [unknown] : Identifies the date and time when consent was discussed with the subject.
+[Encounter_1.2.2.xml] [DecisionDateTime] [OmniDate] [unknown] : Identifies the date and time when the decision to grant/refuse consent was made.
+[Encounter_1.2.2.xml] [EffectiveDateTime] [OmniDate] [unknown] : Identifies the date and time the consent became effective.
+[Encounter_1.2.2.xml] [EndDateTime] [OmniDate] [unknown] : Identifies the date and time the consent becomes ineffective.
+[Encounter_1.2.2.xml] [RegistrationDateTime] [OmniDate] [patient] : Tracks the date and time the patient registered at the facility.
+[Encounter_1.2.2.xml] [DischargeDateTime] [OmniDate] [patient] : Tracks the date and time the patient registered at the facility.
+[Encounter_1.2.2.xml] [EDCheckinDateTime] [OmniDate] [patient] : Tracks the date and time the patient was checked in to the Emergency Department.
+[Encounter_1.2.2.xml] [EDCheckoutDateTime] [OmniDate] [patient] : Tracks the date and time the patient was checked out of the Emergency Department.
+[Encounter_1.2.2.xml] [PreadmissionDateTime] [OmniDate] [patient] : Tracks the date and time, typically in the future, that the patient is expected to be admitted.
+[Episode_1.2.2.xml] [StartDate] [OmniDate] [patient] : The date the episode of care for the patient is scheduled to start.
+[Episode_1.2.2.xml] [EndDate] [OmniDate] [patient] : The date the episode of care for the patient should be completed.
+[OrganizationalUnit_1_2_4.xml] [StartDate] [OmniDate] [unknown] : Specify the date this address became active.
+[OrganizationalUnit_1_2_4.xml] [EndDate] [OmniDate] [unknown] : Specify the date this address becomes inactive.
+[OrganizationalUnit_1_2_4.xml] [StartDate] [OmniDate] [unknown] : Use this element to specify the date the identifier became active.
+[OrganizationalUnit_1_2_4.xml] [EndDate] [OmniDate] [unknown] : Use this element to specify the date the identifier becomes inactive.
+[OrganizationalUnit_1_2_4.xml] [StartDate] [OmniDate] [unknown] : Specify the date this contact method became active.
+[OrganizationalUnit_1_2_4.xml] [EndDate] [OmniDate] [unknown] : Specify the date this contact method became inactive.
+[OrganizationalUnit_1_2_4.xml] [StartDate] [OmniDate] [unknown] : Use this element to specify the date the relation became active.
+[OrganizationalUnit_1_2_4.xml] [EndDate] [OmniDate] [unknown] : Use this element to specify the date the relation becomes inactive.
+[Organization_1_1_7.xml] [StartDate] [OmniDate] [unknown] : Use this element to specify the date that the name became active for this Organization.
+[Organization_1_1_7.xml] [EndDate] [OmniDate] [unknown] : Use this element to specify the date that the name will become inactive for this
+				Organization.
+[Organization_1_1_7.xml] [StartDate] [OmniDate] [unknown] : Specify the date this address became active.
+[Organization_1_1_7.xml] [EndDate] [OmniDate] [unknown] : Specify the date this address becomes inactive.
+[Organization_1_1_7.xml] [StartDate] [OmniDate] [unknown] : Use this element to specify the date the identifier became active.
+[Organization_1_1_7.xml] [EndDate] [OmniDate] [unknown] : Use this element to specify the date the identifier becomes inactive.
+[Organization_1_1_7.xml] [StartDate] [OmniDate] [unknown] : Specify the date this contact method became active.
+[Organization_1_1_7.xml] [EndDate] [OmniDate] [unknown] : Specify the date this contact method became inactive.
+[Organization_1_1_7.xml] [StartDate] [OmniDate] [unknown] : Use this element to specify the date the relation became active.
+[Organization_1_1_7.xml] [EndDate] [OmniDate] [unknown] : Use this element to specify the date the relation becomes inactive.
+[Facility_1_1_7.xml] [StartDate] [OmniDate] [unknown] : Specify the date this address became active.
+[Facility_1_1_7.xml] [EndDate] [OmniDate] [unknown] : Specify the date this address becomes inactive.
+[Facility_1_1_7.xml] [StartDate] [OmniDate] [unknown] : Use this element to specify the date the identifier became active.
+[Facility_1_1_7.xml] [EndDate] [OmniDate] [unknown] : Use this element to specify the date the identifier becomes inactive.
+[Facility_1_1_7.xml] [StartDate] [OmniDate] [unknown] : Specify the date this contact method became active.
+[Facility_1_1_7.xml] [EndDate] [OmniDate] [unknown] : Specify the date this contact method became inactive.
+[Facility_1_1_7.xml] [StartDate] [OmniDate] [unknown] : Use this element to specify the date the relation became active.
+[Facility_1_1_7.xml] [EndDate] [OmniDate] [unknown] : Use this element to specify the date the relation becomes inactive.
+[Patient_1_1_8.xml] [LivingWillDate] [OmniDate] [patient] : This element is used to specify the date the patient supplied a living will.
+[Patient_1_1_8.xml] [MyChartSignedupDate] [OmniDate] [patient] : Use this element to specify the date the patient signed up for mychart access.
+[Patient_1_1_8.xml] [SmokingStartDate] [OmniDate] [patient] : Use this element to specify the date the patient began smoking.
+[Patient_1_1_8.xml] [SmokingQuitDate] [OmniDate] [patient] : Use this element to specify the date the patient stopped smoking.
+[Patient_1_1_8.xml] [ExpectedDeliveryDate] [OmniDate] [patient] : Use this element to specify a patients expected date of delivery.
+[Patient_1_1_8.xml] [ExpectedDeliveryDateEntered] [OmniDate] [unknown] : Use this element to specify the date that the expected date of delivery was entered
+[Patient_1_1_8.xml] [StartDate] [OmniDate] [unknown] : Specify the date this preferred provider became active.
+[Patient_1_1_8.xml] [EndDate] [OmniDate] [unknown] : Specify the date this preferred provider becomes inactive.
+[PatientHealthPlan_1_2_8.xml] [PlanEffectiveDate] [OmniDate] [unknown] : Date the health plan took effect for this subscriber.
+[PatientHealthPlan_1_2_8.xml] [PlanExpirationDate] [OmniDate] [unknown] : Date the health plan expired for this subscriber.
+[HealthPlan_1_2_8.xml] [StartDate] [OmniDate] [unknown] : Specify the date this address became active.
+[HealthPlan_1_2_8.xml] [EndDate] [OmniDate] [unknown] : Specify the date this address becomes inactive.
+[HealthPlan_1_2_8.xml] [StartDate] [OmniDate] [unknown] : Specify the date this contact method became active.
+[HealthPlan_1_2_8.xml] [EndDate] [OmniDate] [unknown] : Specify the date this contact method became inactive.
+[Payer_1_2_8.xml] [StartDate] [OmniDate] [unknown] : Use this element to specify the date that the name became active for this Organization.
+[Payer_1_2_8.xml] [EndDate] [OmniDate] [unknown] : Use this element to specify the date that the name will become inactive for this
+				Organization.
+[Payer_1_2_8.xml] [StartDate] [OmniDate] [unknown] : Use this element to specify the date the identifier became active.
+[Payer_1_2_8.xml] [EndDate] [OmniDate] [unknown] : Use this element to specify the date the identifier becomes inactive.
+[Payer_1_2_8.xml] [StartDate] [OmniDate] [unknown] : Specify the date this address became active.
+[Payer_1_2_8.xml] [EndDate] [OmniDate] [unknown] : Specify the date this address becomes inactive.
+[Payer_1_2_8.xml] [StartDate] [OmniDate] [unknown] : Specify the date this contact method became active.
+[Payer_1_2_8.xml] [EndDate] [OmniDate] [unknown] : Specify the date this contact method became inactive.
+[Account_1.2.6.xml] [AccountBalanceDateTime] [OmniDate] [unknown] : Definition TBD
+[Guarantor_1_2_8.xml] [GuaranteePeriodStartDate] [OmniDate] [unknown] : Specifies the start of period when guarantor is responsible.
+[Guarantor_1_2_8.xml] [GuaranteePeriodEndDate] [OmniDate] [unknown] : Specifies the end of period when guarantor is responsible.
+[Guarantor_1_2_8.xml] [HireEffectiveDate] [OmniDate] [unknown] : Specifies the guarantor's starting employment date.
+[Guarantor_1_2_8.xml] [StopDate] [OmniDate] [unknown] : Specifies the guarantor's last date of employment.
+[GuarantorAccount_1_1_7.xml] [TransactionDate] [OmniDate] [unknown] : 
+[GuarantorAccount_1_1_7.xml] [DateOfBirth] [OmniDate] [unknown] : Guarantor's Date of Birth
+[GuarantorAccount_1_1_7.xml] [EmploymentStartDate] [OmniDate] [unknown] : 
+[GuarantorAccount_1_1_7.xml] [NextAccountReviewDate] [OmniDate] [unknown] : Next review date this Guarantor Account should be reviewed
+[GuarantorAccount_1_1_7.xml] [NextReviewDate] [OmniDate] [unknown] : Next review date this Guarantor Account should be reviewd
+[GuarantorAccount_1_1_7.xml] [LastInsurancePaymentDate] [OmniDate] [unknown] : Most recent insurance payment received date
+[GuarantorAccount_1_1_7.xml] [LastPatientPaymentDate] [OmniDate] [unknown] : Most recent insurance payment amount
+[GuarantorAccount_1_1_7.xml] [PricingContractExpireDate] [OmniDate] [unknown] : Pricing contract expiriy date for this Guarantor Account
+[GuarantorAccount_1_1_7.xml] [LastNonDemandEnterpriseStatementDate] [OmniDate] [unknown] : Last Non Demand Enterprise Statement Date
+[GuarantorAccount_1_1_7.xml] [LastDemandEnterpriseStatementDate] [OmniDate] [unknown] : Last demand enterprise statement date
+[GuarantorAccount_1_1_7.xml] [LastNonDemandEnterpriseGeneratedStatementDate] [OmniDate] [unknown] : Date of last non-demand enterprise statement generated
+[GuarantorAccount_1_1_7.xml] [LastDemandEnterpriseGeneratedStatementDate] [OmniDate] [unknown] : Date of last demand enterprise statement generated
+[GuarantorAccount_1_1_7.xml] [NextStatementDate] [OmniDate] [unknown] : Next statement date
+[GuarantorAccount_1_1_7.xml] [SelfPayAgingDate] [OmniDate] [unknown] : Hospital Billing Self Pay aging date Oldest
+[GuarantorAccount_1_1_7.xml] [InsuranceAgingDate] [OmniDate] [unknown] : Hospital Billing Insurance aging date
+[GuarantorAccount_1_1_7.xml] [LastInsurancePaymentDate] [OmniDate] [unknown] : Hospital Billing Last Insurance payment date
+[GuarantorAccount_1_1_7.xml] [LastSelfPayPaymentDate] [OmniDate] [unknown] : Hospital Billing Last Self Pay payment date
+[GuarantorAccount_1_1_7.xml] [GuarantorLastStatementDate] [OmniDate] [unknown] : Date the last statement sent to the Guarantor
+[GuarantorAccount_1_1_7.xml] [GuarantorNextStatementDate] [OmniDate] [unknown] : Date the next statement send to the Guarantor
+[GuarantorAccount_1_1_7.xml] [GuarantorLastDemandStatementDate] [OmniDate] [unknown] : Date of the last demand statement to be sent to the Guarantor
+[GuarantorAccount_1_1_7.xml] [GuarantorNoteExpirationDate] [OmniDate] [unknown] : Expiration date of the Billing Note for this guarantor account
+[GuarantorAccount_1_1_7.xml] [StartDate] [OmniDate] [unknown] : Payment Plan start date
+[GuarantorAccount_1_1_7.xml] [NextStatementDate] [OmniDate] [unknown] : Date of the next statement to be sent to Guarantor for Profee Billing Drop Cycle
+[GuarantorAccount_1_1_7.xml] [ExpirationDate] [OmniDate] [unknown] : Note expiry Date
+[GuarantorAccount_1_1_7.xml] [CreatedOnDate] [OmniDate] [unknown] : The date and time the note was created.
+[GuarantorAccount_1_1_7.xml] [ContactDate] [OmniDate] [unknown] : Contact date
+[GuarantorAccount_1_1_7.xml] [ReContactDate] [OmniDate] [unknown] : The date the account should be contacted again
+[GuarantorAccount_1_1_7.xml] [RecordedDate] [OmniDate] [unknown] : Date and Time the contact was recorded
+[GuarantorAccount_1_1_7.xml] [TransactionDate] [OmniDate] [unknown] : 
+[CoveragePlan_1_1_7.xml] [EffectiveDate] [OmniDate] [unknown] : The effective date of the coverage.
+[CoveragePlan_1_1_7.xml] [CardIssueDate] [OmniDate] [unknown] : Stores the card issue date.
+[CoveragePlan_1_1_7.xml] [NextReviewDate] [OmniDate] [unknown] : The date on which this coverage should next be verified. This is calculated every time the coverage is verified.
+[CoveragePlan_1_1_7.xml] [TerminationDate] [OmniDate] [unknown] : The termination date of the coverage.
+[CoveragePlan_1_1_7.xml] [CobraTerminationDate] [OmniDate] [unknown] : The termination date for any COBRA arrangement.
+[CoveragePlan_1_1_7.xml] [StudentMembersReviewDate] [OmniDate] [unknown] : The date on which you should review the status of any members on this coverage who are students.
+[CoveragePlan_1_1_7.xml] [StudentMembersReviewDate] [OmniDate] [unknown] : The date on which you should review the status of any members on this coverage who are students.
+[CoveragePlan_1_1_7.xml] [LastProratedDate] [OmniDate] [unknown] : The date on which a bucket was last adjusted by proration.
+[CoveragePlan_1_1_7.xml] [LastCoverageVerifiedDate] [OmniDate] [unknown] : The last date the coverage was verified.
+[CoveragePlan_1_1_7.xml] [WorkersCompInjuryDate] [OmniDate] [unknown] : Workers Comp date of injury. This is the date the injury occurred on the job. This field is populated as the user sets up the WC account.
+[CoveragePlan_1_1_7.xml] [EffectiveMedicarePartACoverageDate] [OmniDate] [unknown] : The effective date of Medicare Part A.
+[CoveragePlan_1_1_7.xml] [EffectiveMedicarePartBCoverageDate] [OmniDate] [unknown] : The effective date of Medicare Part B.
+[CoveragePlan_1_1_7.xml] [AlternateSubscriberBirthDate] [OmniDate] [unknown] : The alternate subscriber date of birth override for use with interfaces.
+[CoveragePlan_1_1_7.xml] [SelfVerificationDate] [OmniDate] [unknown] : Stores the last self-verification date. Used by Welcome.
+[Provider_1_1_7.xml] [ExpectedReturnDate] [OmniDate] [unknown] : Use this element to specify when an inactive Provider is expected to return to active
+		status.
+[Provider_1_1_7.xml] [CoverageStartDate] [OmniDate] [unknown] : Use this element to specify the date that the this coverage started.
+[Provider_1_1_7.xml] [CoverageEndDate] [OmniDate] [unknown] : Use this element to specify the date that the this coverage ended.
+[Provider_1_1_7.xml] [RetroactiveDate] [OmniDate] [unknown] : Use this element to specify the date that the this coverage is retroactive to.
+[Provider_1_1_7.xml] [DegreeGrantedDate] [OmniDate] [unknown] : This field contains the date the academic degree was granted to the staff member.
+[Provider_1_1_7.xml] [DegreeStartDate] [OmniDate] [unknown] : This field contains the date when the academic degree program started.
+[Provider_1_1_7.xml] [DegreeEndDate] [OmniDate] [unknown] : This field contains the date when the academic degree program ended.
+[Provider_1_1_7.xml] [StartDate] [OmniDate] [unknown] : This field contains the date in which the practitioner earned this speciality.
+[Provider_1_1_7.xml] [EndDate] [OmniDate] [unknown] : This field contains the date in which the practitioner ended this speciality.
+[Provider_1_1_7.xml] [StartDate] [OmniDate] [unknown] : This field contains the date in which the practitioner started working at 
+						the specific organization unit in the specific practicing specialty category.
+[Provider_1_1_7.xml] [EndDate] [OmniDate] [unknown] : This field contains the date in which the practitioner ended working at 
+						the specific organization unit in the specific practicing specialty category.
+[Provider_1_1_7.xml] [Date] [OmniDate] [unknown] : This field contains the date when the certification was granted.
+[Provider_1_1_7.xml] [ActiveDate] [OmniDate] [unknown] : This field contains the date/time when the certificate became or will become active.
+[Provider_1_1_7.xml] [InactiveDate] [OmniDate] [unknown] : This field contains the date/time when the certificate became or will become inactive.
+[Provider_1_1_7.xml] [ExpirationDate] [OmniDate] [unknown] : This field contains the date/time when the certificate expires or will expire.
+[Provider_1_1_7.xml] [RenewalDate] [OmniDate] [unknown] : This field contains the date/time when the certificate must/will/ be / has been renewed.
+[Provider_1_1_7.xml] [RevocationDate] [OmniDate] [unknown] : This field contains the date/time when the certificate has been revoked.
+[Provider_1_1_7.xml] [IssuedDate] [OmniDate] [unknown] : Use this element to specify date the license was issued.
+[Provider_1_1_7.xml] [ExpirationDate] [OmniDate] [unknown] : Use this element to specify date the license will Expire.
+[Provider_1_1_7.xml] [RenewalDate] [OmniDate] [unknown] : Use this element to specify date the license will require renewal.
+[Provider_1_1_7.xml] [StartDate] [OmniDate] [unknown] : Use this element to specify when the Practice License for the Facility will be in effect.
+[Provider_1_1_7.xml] [EndDate] [OmniDate] [unknown] : Use this element to specify when the Practice License for the Facility will be terminate.
+[Provider_1_1_7.xml] [VerifiedDate] [OmniDate] [unknown] : Use this element to specify the user id or name of the person who performed the verification.
+[Provider_1_1_7.xml] [MonitoringDate] [OmniDate] [unknown] : Use this element to specify when the monitoring occured.
+[Provider_1_1_7.xml] [StartDate] [OmniDate] [unknown] : Use this element to specify when the privilege at the facility begins.
+[Provider_1_1_7.xml] [EndDate] [OmniDate] [unknown] : Use this element to specify when the privilege ends.
+[Provider_1_1_7.xml] [RevokedDate] [OmniDate] [unknown] : Use this element to specify the date that this privilege was revoked.
+[Provider_1_1_7.xml] [StartDate] [OmniDate] [unknown] : Use this element to specify when the assignment will begin at the specified Facility.
+[Provider_1_1_7.xml] [EndDate] [OmniDate] [unknown] : This field contains the date in which the practitioner ended working at 
+						the specific organization unit in the specific practicing specialty category.
+[Provider_1_1_7.xml] [AssignmentStatusDate] [OmniDate] [unknown] : Use this element to specify the date that the status was updated.
+[Provider_1_1_7.xml] [TerminationDate] [OmniDate] [unknown] : Use this element to specify when this assignment was abnormally terminated.
+[ProviderPractice_2_5_1_1.xml] [StartDate] [OmniDate] [unknown] : Start date of the Practice/BusinessUnit relationship.
+[ProviderPractice_2_5_1_1.xml] [EndDate] [OmniDate] [unknown] : End date of the Practice/BusinessUnit relationship.
+[ProviderPractice_2_5_1_1.xml] [StartDate] [OmniDate] [unknown] : Use this element to specify the Start Date of the PracticeSpecialty.
+[ProviderPractice_2_5_1_1.xml] [EndDate] [OmniDate] [unknown] : Use this element to specify the End Date of the PracticeSpecialty.
+[ProviderPractice_2_5_1_1.xml] [StartDate] [OmniDate] [unknown] : Specify the date this address is effective.
+[ProviderPractice_2_5_1_1.xml] [EndDate] [OmniDate] [unknown] : Specify the date this address is no longer effective.
+[ProviderPractice_2_5_1_1.xml] [StartDate] [OmniDate] [unknown] : Specify the date this identifier is effective.
+[ProviderPractice_2_5_1_1.xml] [EndDate] [OmniDate] [unknown] : Specify the date this identifier is no longer effective.
+[PracticeFacility_2_5_1_1.xml] [StartDate] [OmniDate] [unknown] : Use this element to specify the Start Date of the PracticeSpecialty.
+[PracticeFacility_2_5_1_1.xml] [EndDate] [OmniDate] [unknown] : Use this element to specify the End Date of the PracticeSpecialty.
+[PracticeFacility_2_5_1_1.xml] [StartDate] [OmniDate] [unknown] : Specify the date this address is effective.
+[PracticeFacility_2_5_1_1.xml] [EndDate] [OmniDate] [unknown] : Specify the date this address is no longer effective.
+[PracticeFacility_2_5_1_1.xml] [StartDate] [OmniDate] [unknown] : Specify the date this identifier is effective.
+[PracticeFacility_2_5_1_1.xml] [EndDate] [OmniDate] [unknown] : Specify the date this identifier is no longer effective.
+[FacilityLocation_1_1_7.xml] [StartDate] [OmniDate] [unknown] : Specify the date this address became active.
+[FacilityLocation_1_1_7.xml] [EndDate] [OmniDate] [unknown] : Specify the date this address becomes inactive.
+[FacilityLocation_1_1_7.xml] [StartDate] [OmniDate] [unknown] : Use this element to specify the date the identifier became active.
+[FacilityLocation_1_1_7.xml] [EndDate] [OmniDate] [unknown] : Use this element to specify the date the identifier becomes inactive.
+[FacilityLocation_1_1_7.xml] [StartDate] [OmniDate] [unknown] : Specify the date this contact method became active.
+[FacilityLocation_1_1_7.xml] [EndDate] [OmniDate] [unknown] : Specify the date this contact method became inactive.
+[FacilityLocation_1_1_7.xml] [StartDate] [OmniDate] [unknown] : Use this element to specify the date the relation became active.
+[FacilityLocation_1_1_7.xml] [EndDate] [OmniDate] [unknown] : Use this element to specify the date the relation becomes inactive.
+[BenefitPlan_1_1_7.xml] [ContactUpdateDate] [OmniDate] [unknown] : The contact date of the benefit plan in standard date format.

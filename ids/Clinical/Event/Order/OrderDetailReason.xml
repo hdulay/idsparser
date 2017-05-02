@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.0.0" changeVersion="2" domain="Clinical" type="instance"
+			 name="OrderDetailReason"  
+	 		 elementOrder="OrderDetailReason"
+	 		 implementationClass="com.ibi.omni.patient.model.clinical.event.order.OrderDetailReason">
+	
+	<changeLog>
+		<change version="1.0.0">Initial Revision</change>
+	</changeLog>
+	
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	
+	<documentation>
+	</documentation>
+
+	<element name="OrderDetailReason" type="SourceCode">
+		<documentation></documentation>
+		<example sourceName="TestSystem" codeSet="OrderDetailReasons">05</example>
+	</element>
+
+</idsDocument>

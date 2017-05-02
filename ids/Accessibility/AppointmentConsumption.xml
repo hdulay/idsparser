@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.0.0" 
+			 domain="Accessibility" 
+			 type="consumption"
+			 basedOn="Appointment"
+			 name="AppointmentConsumption" 
+	 		 elementOrder="AppointmentNumber, Patient, PatientMaster, Provider, ProviderMaster, Location,
+	 		               LanguageInterpreterCode, ShadowProvider, ReferralSource, VisitTypeCode, BlockCategoryCode, 
+						   NumberOfCalls, NumberOfChanges, ChangeReasonCode, AppointmentStatusCode, AutomatedReminderStatusCode, 
+						   ConfirmationStatusCode, CancellationReasonCode, RescheduledAppointment,
+						   AppointmentLength">
+	 		 
+	, Execution, Indicators, Notifications, Notes"
+	  	 					
+	  	 								 <!-- Use IDS table name as basis for consumptionType tablename. -->
+	<changeLog>
+		<change version="1.0.0_0">Initial Version</change>
+	</changeLog>
+
+ 	<customType name="string" class="com.ibi.dib.core.ids.types.consumption.IdsConsumptionStringType"/>
+ 	<customType name="link" class="com.ibi.dib.core.ids.types.consumption.IdsConsumptionLinkType"/>
+ 	<customType name="code" class="com.ibi.dib.core.ids.types.consumption.IdsConsumptionCodeType"/>
+ 	<customType name="integer" class="com.ibi.dib.core.ids.types.consumption.IdsConsumptionIntegerType"/>
+ 	 		
+	<documentation>
+	Basic consumptionType view for Accessibility Appointment.
+	</documentation>
+
+	<element name="AppointmentNumber" type="string"/>	
+
+	<element name="PatientMaster" type="link" contains="PatientMaster"/>
+
+	<element name="Patient" type="link" basedOn="Patient"/>
+		
+	<element name="Provider" type="link" basedOn="Provider"/>
+	
+	<element name="ProviderMaster" type="link" contains="ProviderMaster"/>	
+	
+	<element name="Location" type="link" basedOn="Location"/>
+   	
+  	<element name="LanguageInterpreterCode" type="code"/>
+
+	<element name="ShadowProvider" type="link"/>
+
+	<element name="ReferralSource" type="link"/>
+	
+  	<element name="VisitTypeCode" type="code"/>
+
+  	<element name="BlockCategoryCode" type="code"/>
+
+	<element name="NumberOfCalls" type="integer"/>
+
+	<element name="NumberOfChanges" type="integer"/>
+
+  	<element name="ChangeReasonCode" type="code"/>
+	
+	<element name="AppointmentStatusCode" type="code"/>
+
+  	<element name="AutomatedReminderStatusCode" type="code"/>
+
+  	<element name="ConfirmationStatusCode" type="code"/>
+
+  	<element name="CancellationReasonCode" type="code"/>
+	
+	<element name="RescheduledAppointment" type="link"/>
+
+	<element name="AppointmentLength" type="integer" basedOn="Execution.AppointmentLength"/>
+
+<!--	
+
+	<group name="Execution" 
+	       elementOrder="AppointmentLength, AppointmentStartDateTime, AppointmentEndDateTime, ScheduledFromKiosk, 
+	       				 ConfirmedDateTime, CancelledDateTime, SignInDateTime, InitialCheckInDateTime, CheckInKiosk, 
+	       				 CheckInDateTime, ArrivalListRemovalDateTime, PagedDateTime, RoomAssignedDateTime, 
+	       				 RoomedDateTime, NurseLeftRoomDateTime, ProviderEnteredRoomDateTime, CheckOutKiosk, 
+	       				 CheckOutDateTime">
+
+		
+		<element name="AppointmentStartDateTime" type="consumptionType"/>
+	
+		<element name="AppointmentEndDateTime" type="consumptionType"/>
+	
+		<element name="ScheduledFromKiosk" type="consumptionType"/>
+
+		<element name="ConfirmedDateTime" type="consumptionType"/>
+		
+		<element name="CancelledDateTime" type="consumptionType"/>
+		
+		<element name="SignInDateTime" type="consumptionType"/>
+		
+		<element name="InitialCheckInDateTime" type="consumptionType"/>
+		
+		<element name="CheckInKiosk" type="consumptionType"/>
+		
+		<element name="CheckInDateTime" type="consumptionType"/>
+		
+		<element name="ArrivalListRemovalDateTime" type="consumptionType"/>
+		
+		<element name="PagedDateTime" type="consumptionType"/>
+		
+		<element name="RoomAssignedDateTime" type="consumptionType"/>
+		
+		<element name="RoomedDateTime" type="consumptionType"/>
+		
+		<element name="NurseLeftRoomDateTime" type="consumptionType"/>
+		
+		<element name="ProviderEnteredRoomDateTime" type="consumptionType"/>
+		
+		<element name="CheckOutKiosk" type="consumptionType"/>
+		
+		<element name="CheckOutDateTime" type="consumptionType"/>
+	</group>
+
+	<group name="Indicators" 
+	       elementOrder="ReferralIndicator, OverbookIndicator, OverrideIndicator, TimeUnavailableIndicator, 
+	       		         WalkinIndicator, SequentialAppointmentIndicator, WarningOverridenIndicator, 
+	       		         SameDayIndicator, JointAppointmentIndicator, CancelledSameDayIndicator" 
+	       udlName="indicator">
+	       
+
+		<element name="ReferralIndicator" type="consumptionType"/>
+	
+		<element name="OverbookIndicator" type="consumptionType"/>
+		
+		<element name="OverrideIndicator" type="consumptionType"/>
+	
+		<element name="TimeUnavailableIndicator" type="consumptionType"/>
+	
+		<element name="WalkinIndicator" type="consumptionType"/>
+	
+		<element name="SequentialAppointmentIndicator" type="consumptionType"/>
+	
+		<element name="WarningOverridenIndicator" type="consumptionType"/>
+	
+		<element name="SameDayIndicator" type="consumptionType"/>
+	
+		<element name="JointAppointmentIndicator" type="consumptionType"/>
+	
+		<element name="CancelledSameDayIndicator" type="consumptionType"/>
+	</group>
+
+	<list name="Notifications">
+		<idsDocument name="AppointmentNotificationConsumption" 
+					 type="consumptionType"
+					 basedOn="AppointmentNotification"
+			 		 elementOrder="NotificationModeCode, NotificationReasonCode, NotificationDateTime">
+			 		
+			<element name="NotificationModeCode" type="consumptionType"/>
+			
+			<element name="NotificationReasonCode" type="consumptionType"/>
+			
+			<element name="NotificationDateTime" type="consumptionType"/>
+		</idsDocument>
+	</list>
+	
+	<list name="Notes">
+		<idsDocument name="AppointmentNoteConsumption" 
+					 type="consumptionType"
+					 basedOn="AppointmentNote"
+			 		 elementOrder="NoteTypeCode, Note, NoteDateTime">
+			 		
+			<element name="NoteTypeCode" type="consumptionType"/>
+			
+			<element name="Note" type="consumptionType"/>
+			
+			<element name="NoteDateTime" type="consumptionType"/>
+		</idsDocument>
+	</list>
+ -->	
+</idsDocument>

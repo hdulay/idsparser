@@ -1,0 +1,556 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.0.0" changeVersion="0" domain="Workforce" type="instance"
+			 name="WorkerTraining"  
+	 		 elementOrder="MedicalFacility, MedicalOrganization, CostCenter, AccountCode, 
+					AccountName, PeriodStartDate, PeriodEndDate, PeriodTypeCode,
+					PlanningCategoryCode, PlanningSubCategoryCode, CurrencyCode,
+					Worker, TrainingRequirements, TrainingCoursesTaken"
+			 >
+	 		               	
+	<changeLog>
+		<change version="1.0.0">Initial</change>
+	</changeLog>
+
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+	<notes> 
+	</notes>
+			
+	<documentation>
+ 	Continued education is required for many medical professionals to keep their license and/or certification current. 
+ 	This Worker Training IDS enables the customer to populate the Actual, Projected, Budget or Benchmark statistics on training 
+	requirements and courses taken by a worker for a reporting period. 
+	</documentation>
+
+	<element name="MedicalFacility" type="OmniLink" contains="Facility">
+		<documentation>
+		Specifies the physical medical facility associated with the worker.
+		</documentation>
+		
+		<example>
+			<Facility>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>Hospital</SourceInstanceId>
+			</Facility>
+		</example>
+	</element>
+
+	<element name="MedicalOrganization" type="OmniLink" contains="Organization">
+		<documentation>
+		Identifies the medical organization associated with the worker.  
+		This organization consists of a group of people working together to improve methods 
+		of health care delivery.
+		</documentation>
+
+		<example>
+			<Organization>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>Medical Center</SourceInstanceId>
+			</Organization>
+		</example>
+			
+	</element>
+
+	<element name="CostCenter" type="OmniLink" contains="OrganizationalUnit">
+		<documentation>
+		An Organizational Unit is a specific group or entity for organizing or managing 
+		resources within the enterprise.  Usually, these are made up of people or locations which cooperate 
+		in specified objectives.  These may be Departments, Divisions, Nursing Units, Service Lines, Regions,
+		 Cost Centers, etc.  A G/L Cost Center is a segment of an enterprise for which Accounting is performed 
+		in the General Ledger.  G/L Cost Centers are arranged into a hierarchy which allows roll-ups and 
+		drill-downs on financial information within the enterprise.  Low-level Cost Centers may be 
+		Nursing Units if the hierarchy is based on physical location, or may be Service Specialty 
+		if the hierarchy is based on Service Line.  Use this attribute to link to the Cost Center 
+		associated with the workers benefit.
+		</documentation>
+		
+		<example>
+			<OrganizationalUnit>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>Accounting Department</SourceInstanceId>
+			</OrganizationalUnit>
+		</example>
+	</element>
+
+	<element name="AccountCode" type="string">
+		<documentation>
+		Identifies the code assigned to the account associated with the worker's training.
+		</documentation>
+		
+		<example>
+			<AccountCode>
+				4589
+			</AccountCode>
+		</example>
+	</element>
+
+	<element name="AccountName" type="string">
+		<documentation>
+		Identifies the name assigned to the account associated with the worker's training.
+		</documentation>
+		
+		<example>
+			<AccountName>
+				JohnDoeAccountName
+			</AccountName>
+		</example>
+	</element>
+
+	<element name="PeriodStartDate" type="datetime">
+		<documentation>
+		Contains the starting date associated with the worker's training.
+		</documentation>
+		
+		<example>
+			<PeriodStartDate format="yyyy-MM-dd">
+				2015-03-03
+			</PeriodStartDate>
+		</example>
+	</element>
+
+	<element name="PeriodEndDate" type="datetime">
+		<documentation>
+		Contains the ending date associated with the worker's training.
+		</documentation>
+		
+		<example>
+			<PeriodEndDate format="yyyy-MM-dd">
+				2015-04-04
+			</PeriodEndDate>
+		</example>
+	</element>
+
+	<element name="PeriodTypeCode" type="SourceCode">
+		<documentation>
+		Identifies the period of time as it pertains to the worker's training.
+		</documentation>
+		
+		<example sourceName="TestSystem" codeSet="PeriodTypeCodes">
+			Year
+		</example>
+	</element>
+
+	<element name="PlanningCategoryCode" type="SourceCode">
+		<documentation>
+		These IDS's can be used to capture Actuals, Budgeted, Projected or Benchmarks for 
+		any metric for the reporting period. A single IDS can be for only one Planning 			
+		Category/Subcategory combination. If the customer reports this at the facility level, 
+		then each IDS represents one Facility/Category/Subcategory combination. The customer can 
+		generate these at multiple levels if they so choose. IDS's at the facility level, or IDS's 
+		down to the cost center level, or anything and everything in between. 
+
+		The distinction between Budgeted (near-term) and Projected (longer term) is generally accepted, 
+		but how the customer uses these categories is up to them; they just enable a means of making 
+		comparisons. Actuals would capture the real statistics for the reporting period.
+
+		If they are so inclined, they might generate "Benchmark" IDS's if say there is an industry formula 
+		for a hospital or organization of their size. Multiple benchmark IDS's might be generated for 
+		different percentiles, if they exist or are calculable which is probably at the beginning of the 
+		fiscal year, or when industry benchmarks are issued.
+		</documentation>
+		
+		<example sourceName="TestSystem" codeSet="PlanningCategoryCode">
+			Projected
+		</example>
+	</element>
+
+	<element name="PlanningSubCategoryCode" type="SourceCode">
+		<documentation>
+		The Planning Subcategory provides a method to generate these Actuals, Budgeted, Projected or 
+		Benchmarks IDS's for different percentiles, if they exist or are calculable.
+		</documentation>
+		
+		<example sourceName="TestSystem" codeSet="PlanningSubCategoryCodes">
+			50th percentile
+		</example>
+	</element>
+
+	<element name="CurrencyCode" type="SourceCode" codeSource="OMNI" codeSet="4217">
+		<documentation>
+		Specifies the denomination for all amounts using the industry standard defined in
+		the ISO 4217 code set.
+		</documentation>
+	</element>
+
+	<element name="Worker" type="OmniLink" contains="Worker">
+		<documentation>
+		Identifies the worker receiving the training reported during this period.  A Worker is member
+ 		of the Workforce, such as an Employee, Contingent Worker (e.g. Independent Professionals, 
+		Temporary Contract Workers, Independent Contractors, Consultants), or other Person of Interest 
+		(e.g. External Instructor, External Trainee, Global Payroll, Stock - Board Member, Stock - Non-HR Employee).
+		</documentation>
+
+		<example>
+			<Worker>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>Consultants</SourceInstanceId>
+			</Worker>
+		</example>
+			
+	</element>
+
+	<list name="TrainingRequirements">
+		<documentation>
+		TrainingRequirements is a collection of TrainingRequirement instances.  Medical professionals 
+		maintain their competency in their field through continuing education as well as to learn about new and developing 
+		areas in their specialty.  These training requirements may take place in-person, written publications, online programs, 
+		audio, video or other electronic media. Content for these programs is developed, reviewed and delivered by experts
+		in their individual clinical areas.  Training that is required by medical professionals, such as to maintain 
+		their license, is defined here.
+		</documentation>
+	
+	<idsDocument version="1.0.0" changeVersion="0" domain="Workforce" type="instance_child"
+				 name="TrainingRequirement"  
+		 		 elementOrder="RequirementSource, TrainingGoal, RequiredAmount, AmountAchieved,
+						TrainingCreditTypeCode, RequirementPeriodTypeCode"
+				 >
+		<include name="CommonElements"
+				 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+				 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+			               	
+		<changeLog>
+			<change version="1.0.0">Initial</change>
+		</changeLog>
+		
+	
+		
+	
+		<notes> 
+		</notes>
+				
+		<documentation>
+	 	Medical professionals maintain their competency in their field through continuing 
+		education as well as to learn about new and developing areas in their specialty.  
+		These training requirements may take place in-person, written publications, 
+		online programs, audio, video or other electronic media. Content for these programs is 
+		developed, reviewed and delivered by experts in their individual clinical areas.  
+		Training that is required by medical professionals, such as to maintain their license, is defined here.
+		</documentation>
+		
+		<element name="RequirementSource" type="string">
+			<documentation>
+			Contains the name of the entity, such as a state or medical association, 
+			that requires a specific form of education to ensure those in the medical 
+			field maintain competence and learn about new or developing areas in their field.
+			</documentation>
+			
+			<example>
+				<RequirementSource>
+					NY State
+				</RequirementSource>
+			</example>
+		</element>
+	
+		<element name="TrainingGoal" type="string">
+			<documentation>
+			Identifies the reason for obtaining this training such as accreditation or to maintain their license.
+			</documentation>
+			
+			<example>
+				<TrainingGoal>
+					Maintain License
+				</TrainingGoal>
+			</example>
+		</element>
+	
+		<element name="RequiredAmount" type="double">
+			<documentation>
+			Identifies the number of training credits (e.g. hours, CME units, CEU) required to complete the training.
+			</documentation>
+			
+			<example>
+				<RequiredAmount>
+					12
+				</RequiredAmount>
+			</example>
+		</element>
+	
+		<element name="AmountAchieved" type="double">
+			<documentation>
+			Identifies the number of training credits that have been completed.
+			</documentation>
+			
+			<example>
+				<AmountAchieved>
+					4
+				</AmountAchieved>
+			</example>
+		</element>
+	
+		<element name="TrainingCreditTypeCode" type="SourceCode">
+			<documentation>
+			Defines the measure used in continuing education programs such as hours, 
+			continuing medical education (CME) units, continuing education units (CEU) 
+			or credit hours.
+			</documentation>
+			
+			<example sourceName="TestSystem" codeSet="TrainingCreditTypeCodes">
+				Hours
+			</example>
+		</element>
+	
+		<element name="RequirementPeriodTypeCode" type="SourceCode">
+			<documentation>
+			Identifies how often this training must be retaken as a requirement for maintaining
+	 		license or certification.  For example, Arizona requires an average of 40 hours of CME every 
+			two years for medical professionals to maintain their licenses.
+			</documentation>
+			
+			<example sourceName="TestSystem" codeSet="RequirementPeriodTypeCodes">
+				Year
+			</example>
+		</element>
+	</idsDocument>	
+	</list>
+
+	<list name="TrainingCoursesTaken">
+		<documentation>
+		TrainingCoursesTaken is a collection of TrainingCourseTaken instances which track details on the training
+ 		course taken including attributes that identify the course, number of hours it will take to complete the course, cost of 
+		the course, when it was taken, the final score achieved by the student, whether or not a certification is awarded and 
+		course survey details.
+		</documentation>
+	
+	<idsDocument version="1.0.0" changeVersion="0" domain="Workforce" type="instance_child"
+				 name="TrainingCourseTaken"  
+		 		 elementOrder="TrainingCourseId, TrainingCourseName, TrainingHours, TrainingCost,
+						TrainingStartDate, TrainingCompletedDate, TrainingTypeCode,
+						TrainingProvider, FinalScoreText, FinalScoreNumeric, TrainingCreditsEarned,
+						TrainingCreditTypeCode, Certification, CourseSurvey" >
+		<include name="CommonElements"
+				 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+				 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+		               	
+		<changeLog>
+			<change version="1.0.0">Initial</change>
+		</changeLog>
+		
+		<notes> 
+		</notes>
+				
+		<documentation>
+	 	Tracks details on the training course taken including attributes that identify 
+		the course, number of hours it will take to complete the course, cost of the course, 
+		when it was taken, the final score achieved by the student, whether or not a certification 
+		is awarded and course survey details.
+		</documentation>
+	
+		<element name="TrainingCourseId" type="string">
+			<documentation>
+			Contains an identifier for the training course.
+			</documentation>
+			
+			<example>
+				<TrainingCourseId>
+					234
+				</TrainingCourseId>
+			</example>
+		</element>
+	
+		<element name="TrainingCourseName" type="string">
+			<documentation>
+			Contains the name of the training course.
+			</documentation>
+			
+			<example>
+				<TrainingCourseName>
+					John Doe Painting Course
+				</TrainingCourseName>
+			</example>
+		</element>
+	
+		<element name="TrainingHours" type="double">
+			<documentation>
+			Represents the number of hours in this training course.
+			</documentation>
+			
+			<example>
+				<TrainingHours>
+					4
+				</TrainingHours>
+			</example>
+		</element>
+	
+		<element name="TrainingCost" type="double">
+			<documentation>
+			Represents the cost of this training course.
+			</documentation>
+			
+			<example>
+				<TrainingCost>
+					100
+				</TrainingCost>
+			</example>
+		</element>
+	
+		<element name="TrainingStartDate" type="datetime">
+			<documentation>
+			Contains the starting date of the training course.
+			</documentation>
+			
+			<example>
+				<TrainingStartDate format="yyyy-MM-dd">
+					2015-03-03
+				</TrainingStartDate>
+			</example>
+		</element>
+	
+		<element name="TrainingCompletedDate" type="datetime">
+			<documentation>
+			Contains the date the student completed the training course.
+			</documentation>
+			
+			<example>
+				<TrainingCompletedDate format="yyyy-MM-dd">
+					2015-03-03
+				</TrainingCompletedDate>
+			</example>
+		</element>
+	
+		<element name="TrainingTypeCode" type="SourceCode">
+			<documentation>
+			Identifies the method in which the training course is administered to the student.
+			</documentation>
+			
+			<example sourceName="TestSystem" codeSet="TrainingTypeCodes">
+				In-Person
+			</example>
+		</element>
+	
+		<element name="TrainingProvider" type="string">
+			<documentation>
+			Contains the name of the person, company or association through which training is being provided.
+			</documentation>
+			
+			<example>
+				<TrainingProvider>
+					John Doe
+				</TrainingProvider>
+			</example>
+		</element>
+	
+		<element name="FinalScoreText" type="string">
+			<documentation>
+			Tracks the final score the student received upon completion of this training course.  
+			This attribute captures score in text format.
+			</documentation>
+			
+			<example>
+				<FinalScoreText>
+					Pass
+				</FinalScoreText>
+			</example>
+		</element>
+	
+		<element name="FinalScoreNumeric" type="double">
+			<documentation>
+			Tracks the final score the student received upon completion of this training course.  
+			This attribute captures score in numeric format.
+			</documentation>
+			
+			<example>
+				<FinalScoreNumeric>
+					100
+				</FinalScoreNumeric>
+			</example>
+		</element>
+	
+		<element name="TrainingCreditsEarned" type="double">
+			<documentation>
+			Identifies the number of training credits (e.g. hours, CME units, CEU) earned upon 
+			successful completion of this course.
+			</documentation>
+			
+			<example>
+				<TrainingCreditsEarned>
+					15 
+				</TrainingCreditsEarned>
+			</example>
+		</element>
+	
+		<element name="TrainingCreditTypeCode" type="SourceCode">
+			<documentation>
+			Defines the measure used in continuing education programs such as hours, continuing medical education (CME) units,
+			continuing education units (CEU) or credit hours.
+			</documentation>
+			
+			<example sourceName="TestSystem" codeSet="TrainingCreditTypeCodes">
+				Hours
+			</example>
+		</element>
+		
+		<group name="Certification" elementOrder="Type, Name, EffectiveDate, ExpirationDate">
+			<documentation>
+			Element in this group may be used to specify education information about the patient.
+			</documentation>
+			
+			<element name="Type" type="string">
+				<documentation>
+				This can be used to categorize the type of certification provided when successfully complete t
+				his training course.  For example, nursing certification types could include Clinical Nurse Specialist (CNS) 
+				Certifications, Nurse Practitioner (NP) Certifications, Specialty Certifications and Assessment-Based Certificates.
+				</documentation>
+			
+				<example>
+					<Type>
+						Clinical Nurse Specialist Certification
+					</Type>
+				</example>
+			</element>
+	
+			<element name="Name" type="string">
+				<documentation>
+				Contains the official name of the training course certification.  For example, a few certifications 
+				available for nursing professionals include Acute Care NP, Adult NP, Family NP, Adult Health CNS, Pediatric CNS, 
+				Ambulatory Care Nursing, Cardiac-Vascular Nursing, Genetics, Medical-Surgical Nursing and Pain Management Nursing.
+				</documentation>
+			
+				<example>
+					<Name>
+						Pediatric CNS
+					</Name>
+				</example>
+			</element>
+	
+			<element name="EffectiveDate" type="datetime">
+				<documentation>
+				Contains the date the certification is in effect.
+				</documentation>
+			
+				<example>
+					<EffectiveDate format="yyyy-MM-dd">
+						2015-03-03
+					</EffectiveDate>
+				</example>
+			</element>
+	
+			<element name="ExpirationDate" type="datetime">
+				<documentation>
+				Contains the date the certification will expire.
+				</documentation>
+			
+				<example>
+					<ExpirationDate format="yyyy-MM-dd">
+						2015-03-03
+					</ExpirationDate>
+				</example>
+			</element>
+		</group>
+	
+		<element name="CourseSurvey" type="OmniLink" contains="Survey">
+			<documentation>
+			Surveys are used to poll customers on their level of satisfaction with a service or product.  
+			For the worker who took the training course, it captures specific attributes for the focus and 
+			identification of a survey, the approved vendor that administered the survey, when it was taken, 
+			and the list of questions and answers provided by the person who filled out the survey.
+			</documentation>
+		</element>
+	</idsDocument>
+	
+	</list>	
+</idsDocument>

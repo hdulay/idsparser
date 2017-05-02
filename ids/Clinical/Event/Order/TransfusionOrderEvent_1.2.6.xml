@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.2.6" changeVersion="0" domain="Clinical.Event.Order" type="instance"
+			 name="TransfusionOrderEvent" udlName="TransfusionOrderEvent"
+			 elementOrder="BloodProductCode, BloodProductProcessingCode, BloodProductQuantity, BloodProductAmount, BloodProductAmountUnitOfMeasureCode,
+							       IndicationForUseCode, IntendedUseDateTime, IntendedDispenseLocation, RequestedDispenseDateTime, RequestedDispenseLocation, InformedConsentIndicator"
+			 implementationClass="com.ibi.omni.patient.model.clinical.event.order.TransfusionOrderEvent">
+
+	<changeLog>
+		<change version="1.2.6_0">Initial Version</change>
+	</changeLog>
+
+	<notes>
+    <note version="1.2.6_0">changed InformedConsentIndicator to InformedConsentIndicatorCode</note>
+	</notes>
+
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	<customType name="SourceCodeList" class="com.ibi.omni.patient.ids.SourceCodeListType"/>
+
+	<include name="OrderElements"
+			 prependToElementOrder="EventDateTime, Location, OrderNumber, OrderTypeCode, PriorityCode, OrderReason, OrderOutcomeStatusCode, OrderDetailNumber, Sequence, OrderDetailStatusCode, OrderSetNumber, OrderSetName"
+			 appendToElementOrder="OrderDetailReasons"/>
+
+	<include name="EventElements"
+			 prependToElementOrder="ParentEvent, Encounter, CarePlanId, CarePlan, CCDCategoryCode"
+			 appendToElementOrder="EventProviders, EventNotes"/>
+
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+	<documentation>
+    Each order event captures the requests made by a Provider for a Patient's handling, diagnosis, treatment, etc. as part of an Encounter.
+	</documentation>
+
+  <element name="BloodProductCode" type="SourceCode" codeSource="OMNI" codeSet="0426">
+    <documentation>
+    ISBT 128 is the global standard for the terminology, identification, labeling, and information transfer of medical products of human origin (including blood, cell, tissue, and organ products) across international borders and disparate health care systems.
+    </documentation>
+    
+    <example sourceName="OMNI" sourceCodeSet="0426" sourceCode="CRYO"/>
+  </element>
+  
+  <element name="BloodProductProcessingCode" type="SourceCode" codeSource="OMNI" codeSet="0508">
+    <documentation>
+      Specifies required processing of the blood product that must be completed prior to transfusion to the patient.
+    </documentation>
+    
+    <example sourceName="OMNI" sourceCodeSet="0508" sourceCode="CS"/>
+  </element>
+  
+  <element name="BloodProductQuantity" type="double">
+    <documentation>
+      Contains the number of blood products ordered.
+    </documentation>
+    
+    <example>1.0</example>
+  </element>
+  
+  <element name="BloodProductAmount" type="double">
+    <documentation>
+      Contains the ordered amount (volume) associated with each quantity of blood product.
+    </documentation>
+    
+    <example>1.0</example>
+  </element>
+  
+  <element name="BloodProductAmountUnitOfMeasureCode" type="SourceCode" codeSource="OMNI" codeSet="6020">
+    <documentation>
+      Contains the unit of measure for the blood product amount.
+    </documentation>
+    
+    <example sourceName="OMNI" sourceCodeSet="6020" sourceCode="Foz"/>
+  </element>
+  
+  <element name="IndicationForUseCode" type="SourceCode" codeSource="OMNI" codeSet="0509">
+    <documentation>
+      Specifies the reason that the blood product was ordered.    This can be used for prospective reviews or retrospective studies of blood product ordering practices of the ordering provider by the Quality Assurance Department and/or Transfusion Committee.
+    </documentation>
+    
+    <example sourceName="OMNI" sourceCodeSet="0509" sourceCode="NSV"/>
+  </element>
+  
+  <element name="IntendedUseDateTime" type="OmniDate">
+    <documentation>
+      This represents the date and time the person who placed the order intends to use the blood product.
+    </documentation>
+        
+    <example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+  </element>
+  
+  <element name="IntendedDispenseLocation" type="OmniLink" contains="FacilityLocation" keys="SourceName, SourceInstanceId" allowCreate="true">
+    <documentation>
+      Contains the facility location where the blood product is to be dispensed.
+    </documentation>
+
+    <example>
+      <![CDATA[
+        <FacilityLocation>
+          <SourceName>TestSystem</SourceName>
+          <SourceInstanceId>FacilityLocationId</SourceInstanceId>
+        </FacilityLocation>
+      ]]>
+    </example>
+  </element>
+  
+   <element name="RequestedDispenseDateTime" type="OmniDate">
+    <documentation>
+      This represents the date and time that the requested blood products must be ready to dispense.
+    </documentation>
+        
+    <example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+  </element>
+  
+  <element name="RequestedDispenseLocation" type="OmniLink" contains="FacilityLocation" keys="SourceName, SourceInstanceId" allowCreate="true">
+    <documentation>
+      Contains the requested facility location where the blood product is to be dispensed.
+    </documentation>
+
+    <example>
+      <![CDATA[
+        <FacilityLocation>
+          <SourceName>TestSystem</SourceName>
+          <SourceInstanceId>FacilityLocationId</SourceInstanceId>
+        </FacilityLocation>
+      ]]>
+    </example>
+  </element>
+  
+  <element name="InformedConsentIndicator" type="SourceCode" codeSource="OMNI" codeSet="0136">
+    <documentation>
+      Indicates whether consent for the transfusion was obtained.  If "Yes", consent was obtained.  If "No", consent was not obtained.
+    </documentation>
+    
+    <example sourceName="OMNI" sourceCodeSet="0136" sourceCode="Y"/>
+  </element>
+  
+
+</idsDocument>

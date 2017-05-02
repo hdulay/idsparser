@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.2.3" changeVersion="2" domain="Clinical.Event" type="instance"
+			 name="ProcedureEvent"  
+	 		 elementOrder="EventDateTime, EventEndDateTime, Location, ServiceLineId, ServiceLine,
+	 		 			ProcedureCode, CPT4ProcedureCode, HCPCSProcedureCode, ICD9DecimalProcedureCode,
+	 		 			ICD9NonDecimalProcedureCode, ICD10ProcedureCode, SNOMEDCTProcedureCode, OtherProcedureCodes,
+	 		 			ProvidedCounselingIndicator, Outcome, Anesthesia,
+	 		 			Consents, BodySites, Indications, Complications, ProcedureModifierCodes"
+	 		 implementationClass="com.ibi.omni.patient.model.clinical.event.ProcedureEvent">
+	  	 					
+	<changeLog>
+		<change version="1.2.3_0">Initial Version</change>
+		<change version="1.2.3_1">Updated codeTable reference on ComplicationCode</change>
+		<change version="1.2.3_2">Added SourceStatusCode to instance and collection items.</change>
+		<change version="1.2.3_3">Added  CPT4ProcedureCode, HCPCSProcedureCode, ICD9DecimalProcedureCode,
+			ICD9NonDecimalProcedureCode, ICD10ProcedureCode, SNOMEDCTProcedureCode, OtherProcedureCodes</change>
+		<change version="1.2.3_4">Added ProcedureModifierCodes</change>
+	</changeLog>
+	
+	<notes>
+	- Changed name of subject to ProcedureEvent to differentiate it as a type of clinicalEvent.
+	- For FacilityLocation, tweaked the definition slightly
+	- EventDateTime and FacilityLocation are common fields, but are implemented separately here to distinguish their usage/description in this Event.
+	- Changed field order, and added Anesthesia group (need a definition for the group).
+	- Changed BodySite to ProcedureBodySite to separate it from other BodySite objects.
+	- Question: How are individual BodySites and Indications expected to be uniquely identified?
+	</notes>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	<customType name="SourceCodeList" class="com.ibi.dib.core.ids.types.IdsCodeListType"/>
+
+
+	<include name="EventElements"
+			 prependToElementOrder="ParentEvent, Encounter, CarePlanId, CarePlan, CCDCategoryCode"
+			 appendToElementOrder="EventProviders, EventNotes"/>
+			 
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	
+	<documentation>	
+	Each Procedure event captures all procedure codes (e.g. ICD9, ICD10, CPT, HCPCS) with related data.  It also captures Anesthesia information, the duration of the procedure, and whether the patient was counseled on the procedure.
+	</documentation>
+
+	<element name="EventDateTime" type="OmniDate">
+		<documentation>
+		Date and time that the procedure administered to the patient began.
+		</documentation>
+		
+		<example format="yyyy-MM-dd hh:mm:ss">2000-10-01 11:12:32</example>
+	</element>
+
+	<element name="EventEndDateTime" type="OmniDate">
+		<documentation>
+		Date and time that the procedure administered to the patient completed.
+		</documentation>
+		
+		<example format="yyyy-MM-dd hh:mm:ss">2000-10-01 11:12:32</example>
+	</element>
+
+	<element name="Location" type="OmniLink" contains="FacilityLocation" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		The facility location where the procedure took place.
+		
+		Use this element to specify a FacilityLocation in the system using the FacilityLocation's SourceName and SourceInstanceId. You cannot load FacilityLocation
+		information using this element, however if the FacilityLocation is not found then a "placeholder" will be created that will contain the FacilityLocation
+		when loaded.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<FacilityLocation>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>FacilityLocationId</SourceInstanceId>
+			</FacilityLocation>
+			]]>
+		</example>		
+	</element>
+
+	<element name="ServiceLineId" type="string">
+		<documentation>
+		deprecated: UNDER CONSTRUCTION: OrganizationalUnit has not been completed. Add unique OrganizationalUnit until this element is changed to a link.
+		
+A single organizational unit, maintained in the Organization domain, will be assigned to each service line. A service line provides the healthcare industry the ability to determine the profitability of its diverse services.  These are typically limited to a handful of well defined, mutually exclusive categories or groupings of individual services or interventions.  They are often associated with the DRG.  A service line can be tied to multiple physical locations (Oncology is provided at Facility1 and Facility2, Orthopedics is provided at Facility2 and Facility3). 
+		</documentation>	
+	</element>
+		
+	<element name="ServiceLine" type="OmniLink" contains="OrganizationalUnit" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		Use this element to specify a ServiceLine in the system using the OrganizationalUnit's SourceName and SourceInstanceId. You cannot load OrganizationalUnit
+		information using this element, however if the OrganizationalUnit is not found then a "placeholder" will be created that will contain the OrganizationalUnit
+		when loaded.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<OrganizationalUnit>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>PatientId</SourceInstanceId>
+			</OrganizationalUnit>
+			]]>
+		</example>		
+	</element>
+
+	<element name="ProcedureCode" type="SourceCode" codeSource="OMNI" codeSet="ICD9-CM-V3">
+		<documentation>
+		A medical procedure is a course of action intended to achieve a result in the care of the patient.  Procedure codes may contain a modifier code which indicates the description of the service provided was altered 
+		(e.g. a complex operation may have a surgeon and assistant surgeon, a radiological procedure involves both the equipment usage as well as the provider who interprets the findings).
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="ICD9-CM-V3" sourceCode="0002"/>
+	</element>
+
+	<element name="CPT4ProcedureCode" type="SourceCode" codeSource="CPT-4" codeSet="2.16.840.1.113883.6.12">
+		<documentation>
+			Procedure code expressed as a CPT-4 code.
+		</documentation>
+
+		<example sourceName="CPT-4" sourceCodeSet="2.16.840.1.113883.6.12" sourceCode="0528"/>
+	</element>
+
+	<element name="HCPCSProcedureCode" type="SourceCode" codeSource="HCPCS" codeSet="2.16.840.1.113883.6.14">
+		<documentation>
+			Procedure code expressed as a HCPCS code.
+		</documentation>
+
+		<example sourceName="HCPCS" sourceCodeSet="2.16.840.1.113883.6.14" sourceCode="0528"/>
+	</element>
+
+	<element name="ICD9DecimalProcedureCode" type="SourceCode" codeSource="ICD9" codeSet="2.16.840.1.113883.6.104-ALT">
+		<documentation>
+			Procedure code expressed as an ICD-9 code with decimal point.
+		</documentation>
+
+		<example sourceName="ICD9" sourceCodeSet="2.16.840.1.113883.6.104-ALT" sourceCode="052.8"/>
+	</element>
+
+	<element name="ICD9NonDecimalProcedureCode" type="SourceCode" codeSource="ICD9" codeSet="2.16.840.1.113883.6.104" dbColumn="icd9_no_dec_procedure_code">
+		<documentation>
+			Procedure code expressed as an ICD-9 code without a decimal point.
+		</documentation>
+
+		<example sourceName="ICD9" sourceCodeSet="2.16.840.1.113883.6.104" sourceCode="0528"/>
+	</element>
+
+	<element name="ICD10ProcedureCode" type="SourceCode" codeSource="SNOMEDCT" codeSet="2.16.840.1.113883.6.4">
+		<documentation>
+			Procedure code expressed as an ICD-10-PCS code.
+		</documentation>
+
+		<example sourceName="ICD10" sourceCodeSet="2.16.840.1.113883.6.4" sourceCode="052.8"/>
+	</element>
+
+	<element name="SNOMEDCTProcedureCode" type="SourceCode" codeSource="ICD10" codeSet="2.16.840.1.113883.6.96">
+		<documentation>
+			Procedure code expressed as a SNOMED code.
+		</documentation>
+
+		<example sourceName="ICD10" sourceCodeSet="2.16.840.1.113883.6.96" sourceCode="052.8"/>
+	</element>
+
+	<element name="OtherProcedureCodes" type="SourceCodeList" contains="OtherProcedureCode">
+		<documentation>
+			Procedure code expressed in a custom or proprietary code set.
+		</documentation>
+
+		<![CDATA[
+			<OtherProcedureCode sourceName="ICD9" sourceCodeSet="2.16.840.1.113883.6.103-AL" sourceCode="NONE" />
+			<OtherProcedureCode sourceName="ICD9" sourceCodeSet="2.16.840.1.113883.6.103-AL" sourceCode="ONE" />
+			]]>
+	</element>
+
+ 	<element name="ProvidedCounselingIndicator" type="SourceCode" codeSource="OMNI" codeSet="0136">
+		<documentation>
+		Indicates whether the patient was counseled prior to the procedure to discuss all aspects of what is involved and risks of the procedure..  If "Yes", patient was counseled.  If "No", patient was not counseled.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0136" sourceCode="Y"/>
+	</element>
+
+	<element name="Outcome" type="string" maxLength="1000">
+		<documentation>
+		What was the outcome of the procedure - did it resolve reasons why the procedure was performed? 
+		</documentation>	
+	</element>	
+
+<!--
+ - Anesthesia Information 
+ -->	
+	
+	<group name="Anesthesia" 
+	       elementOrder="AnesthesiaTypeCode, AnestheticTypeCode, AnesthesiaMinutes, AnesthesiaHoldEndDateTime" udlName="ans">
+		<documentation>
+		UNDER CONSTRUCTION:
+		</documentation>
+
+		<element name="AnesthesiaTypeCode" type="SourceCode" sourceName="0019">
+			<documentation>
+			There are different types of anesthesia and the determination of which to use depends of the type of surgery and medical condition of the patient. 
+			</documentation>
+			
+			<example sourceCodeSet="AnesthesiaTypeCodes" sourceCode="regional">Regional Anesthesia</example>
+		</element>
+	
+		<element name="AnestheticTypeCode" type="SourceCode">
+			<documentation>
+			Based on type of anesthesia, there may be different types of anesthetics available.
+			</documentation>
+			
+			<example sourceCodeSet="AnestheticTypeCodes" sourceCode="epidural">Epidural Anesthesia</example>
+		</element>
+
+		<element name="AnesthesiaMinutes" type="double">
+			<documentation>
+			Tracks the total minutes anesthesia was administered.
+			</documentation>
+			
+			<example>120.0</example>
+		</element>
+	
+		<element name="AnesthesiaHoldEndDateTime" type="OmniDate">
+			<documentation>
+			Tracks the date and time the anesthesia was out of the patient's system.
+			</documentation>
+			
+			<example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+		</element>
+	</group>
+
+
+	<!-- Consents are implemented on Procedure, as well as on the Encounter itself -->
+	<list name="Consents">
+		<documentation>
+		Consents is a collection of Consent records used to identify patient consent information and forms filled out during the encounter by the patient or designated contact of the patient. 
+		</documentation>
+		
+		<idsSpecification name="ProcedureConsent" type="instance_child"
+			 		 		elementOrder="ConsentNumber, TypeCode, FormVersion, ConsentText, SubjectSpecificConsent, ConsentBackgroundInformation, SubjectSpecificBackground, ConsenterImposedLimitations,
+			 		 		ModeCode, StatusCode, DiscussionDateTime, DecisionDateTime, EffectiveDateTime, EndDateTime, CompetenceIndicator, ConsenterRelationshipCode, 
+			 		 		NonSubjectConsenterReasonCode, NonSubjectConsenter, TranslatorAssistIndicator, TranslatedToLanguageCode, InformationalMaterialSuppliedIndicator, ConsentBypassReasonCode, 
+			 		 		ConsentDisclosureCode, ConsentNonDisclosureCode"
+			 		 		implementationClass="com.ibi.omni.patient.model.clinical.event.ProcedureConsent">
+
+			 
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+					 	  	
+			<documentation>
+			Contains information about the type of consent and the person that provided the consent on behalf of the patient.
+			</documentation>
+		
+			<element name="ConsentNumber" type="string">
+				<documentation>
+				Uniquely identifies a specific recorded consent. This may be the number assigned to an electronic consent, or may be the number on a printed consent form.
+				</documentation>
+				
+				<example>ConsentNumber</example>
+			</element>
+
+			<element name="TypeCode" type="SourceCode" codeSource="OMNI" codeSet="0496">
+				<documentation>
+				Identifies what the subject is consenting to such as type of service, surgical procedure, information access/release or other event.
+				</documentation>
+						
+				<example sourceName="OMNI" sourceCodeSet="0496" sourceCode="2"/>
+			</element>
+			
+			<element name="FormVersion" type="string">
+				<documentation>
+				Identifies a specific form and version used to record the consent.  A given version of a consent form implies a particular set of wording that appears on the form.
+				</documentation>
+				
+				<example>FormVersion</example>
+			</element>
+			
+			<element name="ConsentText" type="string">
+				<documentation>
+				Describes the specific procedures/information releases/events the subject is consenting to.
+				</documentation>
+				
+				<example>ConsentText</example>
+			</element>
+			
+			<element name="SubjectSpecificConsent" type="string" maxLength="1000">
+				<documentation>
+				Describes any additions or variations to the standard procedures/information releases/events from a standard consent that are applicable to the subject whose consent is sought.
+				</documentation>
+				
+				<example>SubjectSpecificConsentText</example>
+			</element>
+			
+			<element name="ConsentBackgroundInformation" type="string" maxLength="1000">
+				<documentation>
+				Describes any additional information relating to the procedure/information release/event that needs to be understood by the subject for informed consent. May include the reason for the service, the expected benefit, risks, etc.
+				</documentation>
+				
+				<example>ConsentBackgroundInformationText</example>
+			</element>
+			
+			<element name="SubjectSpecificBackground" type="string" maxLength="1000">
+				<documentation>
+				Describes any additions or variations to the standard additional information that needs to be understood by the patient for informed consent. May include a description of benefits and risks that are specific to the subject from whom consent is sought. May also include an indication that there are no subject-specific risks/benefits.
+				</documentation>
+				
+				<example>SubjectSpecificBackgroundText</example>
+			</element>
+						
+			<element name="ConsenterImposedLimitations" type="string" maxLength="1000">
+				<documentation>
+				Describes any restrictions or limitations placed on their consent by the subject.
+				</documentation>
+				
+				<example>ConsenterImposedLimitationsText</example>
+			</element>
+
+			<element name="ModeCode" type="SourceCode" codeSource="OMNI" codeSet="0497">
+				<documentation>
+				Specifies the method in which a subject provides consent.
+				</documentation>
+						
+				<example sourceName="OMNI" sourceCodeSet="0497" sourceCode="W"/>
+			</element>			
+			
+			<element name="StatusCode" type="SourceCode" codeSource="OMNI" codeSet="0498">
+				<documentation>
+				Indicates whether consent has been sought and granted.
+				</documentation>
+						
+				<example sourceName="OMNI" sourceCodeSet="0498" sourceCode="A"/>
+			</element>			
+			
+			<element name="DiscussionDateTime" type="OmniDate">
+				<documentation>
+				Identifies the date and time when consent was discussed with the subject.
+				</documentation>
+				
+				<example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+			</element>
+						
+			<element name="DecisionDateTime" type="OmniDate">
+				<documentation>
+				Identifies the date and time when the decision to grant/refuse consent was made.
+				</documentation>
+				
+				<example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+			</element>
+						
+			<element name="EffectiveDateTime" type="OmniDate">
+				<documentation>
+				Identifies the date and time the consent became effective.
+				</documentation>
+				
+				<example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+			</element>			
+
+			<element name="EndDateTime" type="OmniDate">
+				<documentation>
+				Identifies the date and time the consent becomes ineffective.
+				</documentation>
+				
+				<example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+			</element>			
+
+			<element name="CompetenceIndicator" type="SourceCode" codeSource="OMNI" codeSet="0136">
+				<documentation>
+				Identifies whether the subject was deemed competent to provide consent.  If "Yes", subject was competent.  If "No", subject was not competent.
+				</documentation>
+				
+				<example sourceName="OMNI" sourceCodeSet="0136" sourceCode="Y"/>
+			</element>
+
+			<element name="ConsenterRelationshipCode" type="SourceCode" codeSource="OMNI" codeSet="0548">
+				<documentation>
+				Identifies the relationship of the consenter to the patient/subject.
+				</documentation>
+						
+				<example sourceName="OMNI" sourceCodeSet="0548" sourceCode="2"/>
+			</element>
+			
+			<element name="NonSubjectConsenterReasonCode" type="SourceCode" codeSource="OMNI" codeSet="0502">
+				<documentation>
+				Identifies why consent was granted by a person other than the subject of the consent.
+				</documentation>
+						
+				<example sourceName="OMNI" sourceCodeSet="0502" sourceCode="MIN"/>
+			</element>
+
+  			<element name="NonSubjectConsenter" type="document" contains="Person" immediate="false" excludeInDoc="true">
+				<documentation>
+			The Patient is generally assumed to be the consenter in the Consent record.  However, there are situations where the Patient is not the MedicalConsenter for themselves.  This data element is used to communicate information about a non-subject consenter.
+				</documentation>
+			</element>
+ 
+			<element name="TranslatorAssistIndicator" type="SourceCode" codeSource="OMNI" codeSet="0136">
+				<documentation>
+				Identifies whether translation was required to obtain informed consent from the subject.  If "Yes", translation was required.  If "No", translation was not required.
+				</documentation>
+				
+				<example sourceName="OMNI" sourceCodeSet="0136" sourceCode="Y"/>
+			</element>
+
+			<element name="TranslatedToLanguageCode" type="SourceCode" codeSource="OMNI" codeSet="0296">
+				<documentation>
+				Identifies the language the consent form is written in. HL7 recommends using the ISO table 639 for suggested values. 
+				</documentation>
+				
+				<example sourceName="OMNI" sourceCodeSet="0296" sourceCode="eng" />
+			</element>			
+			
+			<element name="InformationalMaterialSuppliedIndicator" type="SourceCode" codeSource="OMNI" codeSet="0136">
+				<documentation>
+				Identifies whether additional educational or reference material was provided to the subject as part of the consent process.  If "Yes", additional material was provided.  If "No", additional material was not provided.
+				</documentation>
+				
+				<example sourceName="OMNI" sourceCodeSet="0136" sourceCode="Y"/>
+			</element>
+			
+ 			<element name="ConsentBypassReasonCode" type="SourceCode" codeSource="OMNI" codeSet="0499">
+				<documentation>
+				Identifies why the subject's consent was not sought.
+				</documentation>
+				
+				<example sourceName="OMNI" sourceCodeSet="0499" sourceCode="E" />
+			</element>			
+			
+ 			<element name="ConsentDisclosureCode" type="SourceCode" codeSource="OMNI" codeSet="0500">
+				<documentation>
+				Identifies how much information was disclosed to the subject as part of the informed consent process.
+				</documentation>
+				
+				<example sourceName="OMNI" sourceCodeSet="0500" sourceCode="F" />
+			</element>
+						
+ 			<element name="ConsentNonDisclosureCode" type="SourceCode" codeSource="OMNI" codeSet="0501">
+				<documentation>
+				Identifies why the subject did not receive full disclosure.
+				</documentation>
+				
+				<example sourceName="OMNI" sourceCodeSet="0501" sourceCode="E" />
+			</element>			
+		</idsSpecification>
+	</list>	 
+
+	<!-- BodySites are implemented on Procedure and Diagnosis -->
+	<list name="BodySites" contains="ClinicalBodySite">
+		<documentation>
+		BodySites is a collection of DiagnosisBodySite records.
+		</documentation>	
+	</list>
+	<!-- 
+	<list name="BodySites">
+		<documentation>
+		BodySites is a collection of ProcedureBodySite records.
+		</documentation>
+		
+		<idsSpecification name="ClinicalBodySite" type="instance_child"
+			 		 		elementOrder="BodySiteCode, BodySiteDetails"
+			 		 		implementationClass="com.ibi.omni.patient.model.clinical.event.ClinicalBodySite">
+			 
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+					 	  	
+			<documentation>
+			The anatomical location where this condition manifests itself.  The details indicates a more precise location.  (e.g.  If body site is "Region of thorax", details could be "Lung")
+			</documentation>
+		
+			<element name="BodySiteCode" type="SourceCode" codeSource="OMNI" codeSet="0163">
+				<documentation>
+				Identifies the anatomical location where the condition manifested.
+				</documentation>
+				
+				<example sourceName="OMNI" sourceCodeSet="0163" sourceCode="LA"/>
+			</element>
+		
+			<element name="BodySiteDetails" type="string">
+				<documentation>
+				Provides more detailed anatomical location information than is provided by the body site itself.
+				</documentation>
+				
+				<example>Lung</example>
+			</element>			
+		</idsSpecification>			
+	</list>
+    -->
+	<list name="Indications">
+		<documentation>
+		Indications is a collection of Indication records.  Contains the reason why the procedure was performed. This may be due to a Condition, may be coded entity of some type, or may simply be present as text (e.g. Dark lesion on forearm getting darker last 3 months).
+		</documentation>
+		
+		<idsSpecification name="Indication" type="instance_child" 
+			 		 		elementOrder="IndicationCode, IndicationDetails"
+			 		 		implementationClass="com.ibi.omni.patient.model.clinical.event.Indication">
+			 
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+					 	  	
+			<documentation>
+			Contains the reason why the procedure was performed. This may be due to a Condition, may be coded entity of some type, or may simply be present as text (e.g. Dark lesion on forearm getting darker last 3 months).
+			</documentation>
+		
+			<element name="IndicationCode" type="SourceCode" codeSource="OMNI" codeSet="ICD9">
+				<documentation>
+				Identifies diagnosed condition or other reason that resulted in the procedure being performed.
+				</documentation>
+				
+				<example sourceName="OMNI" sourceCodeSet="ICD9" sourceCode="052.8"/>
+			</element>
+
+			<element name="IndicationDetails" type="string">
+				<documentation>
+				Free-form text describing why the procedure was performed.
+				</documentation>
+				
+				<example>Lung</example>
+			</element>			
+		</idsSpecification>			
+	</list>
+
+	<!-- Consents are implemented on Procedure, as well as on the Encounter itself -->
+	<list name="Complications">
+		<documentation>
+		Complications is a collection of Complication records.  Contains details on complications that occurred during the procedure.
+		</documentation>
+		
+		<idsSpecification name="ProcedureComplication" type="instance_child" 
+			 		 		elementOrder="Sequence, ComplicationCode, ComplicationNote"
+			 		 		implementationClass="com.ibi.omni.patient.model.clinical.event.ProcedureComplication">
+			 
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+					 	  	
+			<documentation>
+			Contains details on complications that occurred during the procedure.  Each procedure can have a sequential set of complications attached to the record.  If the code set for the complication code is diagnosis then a separate Diagnosis event record should also exist with details on the encounter.
+			</documentation>
+		
+			<element name="Sequence" type="double">
+				<documentation>
+				Tracks the sequence of Complications for the encounter as described by patient in order of importance. 
+				</documentation>
+				
+				<example>1.0</example>
+			</element>
+			
+			<element name="ComplicationCode" type="SourceCode" codeSource="OMNI" codeSet="ICD9">
+				<documentation>
+				Describes the Complication that occurred as a direct result of the procedure.  Complication codes can be a custom set of values defined by the customer or an industry standard such as diagnosis codes (e.g. ICD-9, ICD-10). 
+				</documentation>
+				
+				<example sourceName="OMNI" sourceCodeSet="ICD9" sourceCode="0528"/>
+			</element>
+
+			<element name="ComplicationNote" type="string" maxLength="1000">
+				<documentation>
+				Contains any additional pertinent information about the Complication
+				</documentation>
+				
+				<example>ComplicationNote</example>
+			</element>
+		</idsSpecification>			
+	</list>
+	<element name="ProcedureModifierCodes" type="SourceCodeList" contains="ProcedureModifierCode">
+		<documentation>
+			List of procedure modifier codes
+		</documentation>
+
+		<![CDATA[
+			<ProcedureModifierCode sourceName="HL7-V3" sourceCodeSet="2.16.840.1.113883.6.12" sourceCode="NONE" />
+			<ProcedureModifierCode sourceName="HL7-V3" sourceCodeSet="2.16.840.1.113883.6.12" sourceCode="ONE" />
+			]]>
+	</element>
+
+	
+</idsDocument>

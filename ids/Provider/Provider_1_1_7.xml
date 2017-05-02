@@ -1,0 +1,1667 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.1.7" changeVersion="3" domain="Provider" type="instance"
+			 name="Provider" udlName="Provider" 
+	 		 elementOrder="MasterId, PreMergeSurvivor, Type, ActiveFlag, InactiveReason, ExpectedReturnDate, PractitionerCategory,
+						   PhotoURL,
+						   Person, Educations, Insurances, Languages, Specialities, Licenses, Certifications,
+						   Privileges, Credentials, Overrides"
+			 implementationClass="com.ibi.omni.patient.model.provider.Provider">
+	 		               	
+	<changeLog>
+		<change version="1.0.2">Added Insurances, Specialities, Licenses, Certifications, Privileges, and Credentials</change>
+		<change version="1.0.3">Added PractionerCategory</change>
+		<change version="1.0.4">Added Override collection</change>
+		<change version="1.1.7_0">Supported Version</change>
+		<change version="1.1.7_1">
+			Added Provider.PhotoURL, ProviderSpeciality.SpecialityClassification
+			PracticingSpecialities.AcceptingNewPatient, PracticingSpecialities.AcceptingWalkIns
+			PracticingSpecialities.SupervisingProvider, PracticingSpecialities.SupervisionRequired,
+			ProviderPrivilege.OutpatientOrderingProvider, ExtendedAttributes Collection
+		</change>
+		<change version="1.1.7_2">Added SourceStatusCode to instance and collection items.</change>
+		<change version="1.1.7_3">Added PreMergeSurvivor element.</change>
+		<change version="1.1.7_4">Added ProviderPractice</change>
+	</changeLog>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+
+	<include name="MasteringElements" appendToElementOrder="MatchRole,MatchCandidateGroupId,MatchQualityScore,MatchRule"/>
+
+	<documentation>
+	Use this IDS to load Provider related information into OmniPatient. A Provider can be a Person or Employee
+	that provides Health Care Services to a Patient.
+	
+	You may feed both external or internal Providers.
+	</documentation>
+	
+	<example node="ExtendedAttributes">
+		<![CDATA[
+		<ExtendedAttribute>
+			<SourceName>TestSystem</SourceName>
+			<SourceInstanceId>12345</SourceInstanceId>
+			<Name>PatientAgeFrom</Name>
+			<Type>int</Type>
+			<Value>18</Value>
+			<SourceModifiedDate format="yyyy-MM-dd hh:mm:ss">2000-01-01 10:12:32</SourceModifiedDate>
+			<SourceModifiedBy>JSMITH</SourceModifiedBy>
+		</ExtendedAttribute>
+		]]>	
+	</example>
+	
+	<element name="PreMergeSurvivor" type="OmniLink" contains="Provider" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>		
+		There are often scenarios in a given source system where multiple instance records may be created 
+		that represent the same logical entity. At some point the source system may detect this issue and
+		would like to convey that information to the processing server.
+		
+		Use this element to indicate the surviving entity when multiple instances represent the same 
+		entity. This element will be used during the matching and merging process to insure that entity
+		instances are properly grouped. 
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<Provider>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>TestSystem:ProviderSurvivor</SourceInstanceId>
+			</Provider>
+			]]>
+		</example>		
+	</element>
+	
+	<element name="MasterId" type="string" hidden="true">
+		<documentation>
+		Links this instance to the master. This value is created and updated by the Omni
+		matching service.
+		</documentation>
+	</element>
+	
+	<element name="Type" type="SourceCode" codeTable="0182">
+		<documentation>Use this element to specify the type of Provider. A provider may be a staff member of the hospital or external.</documentation>
+		
+		<example sourceCodeSet="ProviderTypes" sourceCode="C">Cardiologist</example>
+	</element>
+
+	<element name="ActiveFlag" type="SourceCode" codeTable="0183">
+		<documentation>
+		Use this field to specify the current active state of the Provider.
+		</documentation>
+		
+		<example sourceCodeSet="StaffStatuses" sourceCode="I">Inactive</example>
+	</element>
+	
+	<element name="InactiveReason" type="SourceCode" codeTable="0540">
+		<documentation>
+		Use this element to specify why the Provider is currently inactive. 
+		</documentation>
+		
+		<example sourceCodeSet="InactiveReasons" sourceCode="L">Leave of Absence</example>
+	</element>
+
+	<element name="ExpectedReturnDate" type="OmniDate">
+		<documentation>
+		Use this element to specify when an inactive Provider is expected to return to active
+		status. 
+		</documentation>
+		
+		<example format="yyyy-MM-dd">2013-12-31</example>
+	</element>
+
+	<element name="PractitionerCategory" type="SourceCode" codeTable="0186">
+		<documentation>
+		Use this element to specify the category of this practitioner. HL-7 allows 
+		for the PractitionerCategory (HL7 user-defined table 0186) to be used for 
+		this purpose.
+
+		Values may include codes for staff physician, courtesy physician, resident, 
+		physician assistant, physical therapist, psychiatrist, psychologist, 
+		pharmacist, registered nurse, licensed practical nurse, licensed vocational 
+		nurse, nurse practitioner, etc.
+		</documentation>
+		
+		<example sourceCodeSet="PractitionerCategoryCodes" sourceCode="RESIDENT">Resident</example>
+	</element>
+
+	<element name="PhotoURL" type="string">
+		<documentation>
+		Use this element to specify the URL containing the photo file location.
+		</documentation>
+		
+		<example>http://hospital.com/photo/234567</example>
+	</element>
+
+	<element name="Person" type="document" contains="Person" excludeInDoc="true">
+		<documentation>
+		Use this element to link or define the Person who is implementing the Provider role
+		within the Health Care Organization.
+		</documentation>
+	</element>
+ 
+ 	<list name="Insurances">
+		<documentation>
+		Use this collection to specify insurances for this Provider.	
+		</documentation>
+		
+		<idsSpecification name="ProviderInsurance" udlName="ProviderInsurance" type="instance_child"
+			 		 	  elementOrder="InsuranceType, InsuranceClass, CoverageStartDate, CoverageEndDate, RetroactiveDate, 
+			 		               PolicyNumber, PrimaryLimit, PrimaryLimitPerClaim, ExcessLimit, ExcessLimitPerClaim,
+			 		               Contact, AgentName, CarrierName, Carrier"
+			 		      implementationClass="com.ibi.omni.patient.model.provider.ProviderInsurance">
+			 		               				
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+			<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+			
+			<documentation>
+			Use this specification to feed Provider Insurance information into OmniPatient. This
+			specification is essentially the relevant coverage and policy information and a link
+			to the actual insurance company providing the insurance.
+			</documentation>
+					
+			<element name="InsuranceType" type="SourceCode" codeTable="0000">
+				<documentation>
+				Use this element to specify the type of insurance.
+				</documentation>
+				
+				<example sourceCodeSet="InsuranceTypeCodes" sourceCode="Medical">Medical Insurance</example>
+			</element>
+		
+			<element name="InsuranceClass" type="SourceCode" codeTable="0000">
+				<documentation>
+				Use this element to specify the class of insurance.
+				</documentation>
+				
+				<example sourceCodeSet="InsuranceClassCodes" sourceCode="Liability">Liability Insurance</example>
+			</element>
+		
+			<element name="CoverageStartDate" type="OmniDate">
+				<documentation>
+				Use this element to specify the date that the this coverage started.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+		
+			<element name="CoverageEndDate" type="OmniDate">
+				<documentation>
+				Use this element to specify the date that the this coverage ended.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2010-01-01</example>
+			</element>
+		
+			<element name="RetroactiveDate" type="OmniDate">
+				<documentation>
+				Use this element to specify the date that the this coverage is retroactive to.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">1999-01-01</example>
+			</element>
+		
+			<element name="PolicyNumber" type="string">
+				<documentation>
+				Use this element to specify the policy number for this insurance.
+				</documentation>
+				
+				<example>124-FGHT-9087654</example>
+			</element>
+		
+			<element name="PrimaryLimit" type="double">
+				<documentation>
+				Use this element to specify the total limit for this coverage.
+				</documentation>
+				
+				<example>500000.00</example>
+			</element>
+		
+			<element name="PrimaryLimitPerClaim" type="double">
+				<documentation>
+				Use this element to specify the per claim limit for this coverage.
+				</documentation>
+				
+				<example>50000.00</example>
+			</element>
+		
+			<element name="ExcessLimit" type="double">
+				<documentation>
+				Use this element to specify the total excess limit for this coverage.
+				</documentation>
+				
+				<example>10000000.00</example>
+			</element>
+		
+			<element name="ExcessLimitPerClaim" type="double">
+				<documentation>
+				Use this element to specify the per claim limit for this coverage. This will be
+				the maximum amount when all underlying policies are totally exhausted. Note: This
+				should not be the Umbrella insurance limit since that is actually another insurance
+				policy.
+				</documentation>
+				
+				<example>100000.00</example>
+			</element>
+		
+			<element name="Contact" type="document" contains="Person" excludeInDoc="true">
+				<documentation>
+				Use this element to specify the contact person who knows/manages this Provider insurance
+				record. This contact should have knowledge of the Provider as well as the Carrier and be
+				able to answer relevant questions.
+				</documentation>
+				
+				<example>
+					<![CDATA[
+					<Person>
+						<SourceName>TestSystem</SourceName>
+						<SourceInstanceId>ProviderInsuranceContact</SourceInstanceId>
+					</Person>
+					]]>
+				</example>
+			</element>
+		
+			<element name="AgentName" type="string">
+				<documentation>
+				Use this element to specify the agent contact name at the specified Carrier. This is
+				the person external to the organization unlike the Contact.
+				</documentation>
+				
+				<example>Joe Insurance</example>
+			</element>
+		
+			<element name="CarrierName" type="string">
+				<documentation>
+				Use this element to specify the Insurance carrier name. Do not use this element if are
+				using the Carrier element as that should contain the legal name of the carrier.
+				</documentation>
+				
+				<example>State Farm Insurance</example>
+			</element>
+			
+			<element name="Carrier" type="document" contains="Organization" excludeInDoc="true">
+				<documentation>
+				Use this element to link to the Organization that is providing insurance for
+				this Provider. 
+				</documentation>
+				
+				<example>
+					<![CDATA[
+					<Organization>
+						<SourceName>TestSystem</SourceName>
+						<SourceInstanceId>InsuranceCarrier</SourceInstanceId>
+					</Organization>
+					]]>
+				</example>
+			</element>
+		</idsSpecification>		
+	</list>	
+
+ 	<list name="Languages">
+		<documentation>
+		Use this collection to specify the set of Languages the Provider has some level
+		of proficiency in.	
+		</documentation>
+		
+		<idsSpecification name="ProviderLanguage" udlName="ProviderLanguage" type="instance_child"
+			 		 	  elementOrder="Language, Ability, Proficiency, InterpreterPrivileges"
+			 		 	  implementationClass="com.ibi.omni.patient.model.provider.ProviderLanguage">
+			
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+			<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+		
+			<documentation>
+			Use this collection element to specify one or more possible languages that
+			the Provider has some level of proficiency in. 
+			Each language will allow ability (Read, Write, etc) as well as proficiency 
+			(Excellent, Good, etc) to be specified.
+			
+			The InterpreterPrivilege will allow specification of the locations where the Provider
+			may be used to interpret for the language specified.
+			</documentation>
+		
+			<element name="Language" type="SourceCode" codeTable="0296">
+				<documentation>
+				Use this element to specify the language that the Provider has ability to understand.
+				</documentation>
+				
+				<example sourceCodeSet="LanguageCodes" sourceCode="ENG">English</example>
+			</element>
+		
+			<element name="Ability" type="SourceCode" codeTable="0403">
+				<documentation>
+				Use this element to specify ability (Read, Write, etc) the Provider possesses with 
+				respect to the language.
+				</documentation>
+				
+				<example sourceCodeSet="LanguageAbilityCodes" sourceCode="R">Read</example>
+			</element>
+			
+			<element name="Proficiency" type="SourceCode" codeTable="0404">
+				<documentation>
+				Use this element to to specify the level of proficiency (Good, Bad, etc) the Provider 
+				possesses with respect to the language ability.
+				</documentation>
+						
+				<example sourceCodeSet="LanguageProficienvyCodes" sourceCode="02">Good</example>
+			</element>
+		
+		 	<list name="InterpreterPrivileges">
+				<documentation>
+				Use this collection to specify the locations (Facilities) that this Provider
+				may be used as an interpreter for the specified language.
+				</documentation>
+				
+				<idsSpecification name="ProviderInterpreterPrivilege" udlName="ProviderInterpreterPrivilege" type="instance_child"
+					 		 	  elementOrder="Location"
+					 		 	  implementationClass="com.ibi.omni.patient.model.provider.ProviderInterpreterPrivilege">
+						
+					<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+					<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+					<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+				
+					<include name="CommonElements"
+							 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+							 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+									  	
+					<documentation>
+					Use this collection element to specify the location that a Provider may provide
+					interpretation services.
+					</documentation>
+									
+					<element name="Location" type="OmniLink" contains="Facility" keys="SourceName, SourceInstanceId" allowCreate="true">
+						<documentation>
+						Use this element to specify a link to the Facility where the Provider may
+						provider interpreter services for the specified Language.
+						</documentation>
+						
+						<example>
+							<![CDATA[
+							<Facility>
+								<SourceName>TestSystem</SourceName>
+								<SourceInstanceId>HospitalA</SourceInstanceId>
+							</Facility>
+							]]>
+						</example>	
+					</element>
+				</idsSpecification>
+			</list>	
+		</idsSpecification>
+	</list>	
+
+ 	<list name="Educations">
+		<documentation>
+		Use this collection to specify the set of Education that the Provider has
+		completed or is currently active.
+		</documentation>
+		
+		<idsSpecification name="ProviderEducation" udlName="ProviderEducation" type="instance_child"
+			 		 	  elementOrder="Type, DegreeGranted, DegreeGrantedDate, DegreeStartDate, DegreeEndDate,
+			 		 			   InstitutionName, Institution, Specialization, 
+			 		 			   Fee, ClassRank, ClassCount, ClassPercentile"
+			 		 	  implementationClass="com.ibi.omni.patient.model.provider.ProviderEducation">
+			
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+			<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+		  	
+			<documentation>
+			Use this structure to specify education information for the Provider.
+			</documentation>
+			
+			<element name="Type" type="SourceCode" codeTable="0402">
+				<documentation>
+				This field contains the categorization of the education. (i.e. Graduate, Medical, etc)
+				</documentation>
+				
+				<example sourceCodeSet="InsitutionTypeCodes" sourceCode="G">Graduate</example>
+			</element>
+			
+			<element name="DegreeGranted" type="SourceCode" codeTable="0360">
+				<documentation>
+				This field contains the standard classification awarded upon completion of a 
+				unified program of study
+				</documentation>
+				
+				<example sourceCodeSet="DegreeGrantedCodes" sourceCode="PA">Physician Assistant</example>
+			</element>
+		
+			<element name="DegreeGrantedDate" type="OmniDate">
+				<documentation>
+				This field contains the date the academic degree was granted to the staff member.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+		
+			<element name="DegreeStartDate" type="OmniDate">
+				<documentation>
+				This field contains the date when the academic degree program started.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">1995-01-01</example>
+			</element>
+			
+			<element name="DegreeEndDate" type="OmniDate">
+				<documentation>
+				This field contains the date when the academic degree program ended.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+		
+			<element name="InstitutionName" type="string">
+				<documentation>
+				This field contains the official name of the academic institution that granted 
+				the degree to the Staff Member. This should not be used if you intend to supply
+				a link to the actual School.
+				</documentation>
+				
+				<example>Clarkson University</example>
+			</element>
+			
+			<element name="Institution" type="document" contains="Organization" excludeInDoc="true">
+				<documentation>
+				Use this element to define the educational institution the Provider attended.
+				</documentation>		
+			</element>
+				
+			<element name="Specialization" type="SourceCode" codeTable="0454">
+				<documentation>
+				This field contains the subject of academic study associated with the specific academic 
+				degree program pursued by the staff member as his/her area of specialization. 
+				</documentation>
+				
+				<example sourceCodeSet="SpecialityCodes" sourceCode="C">Cardiology</example>
+			</element>
+			
+			<element name="Fee" type="float">
+				<documentation>
+				Use this element to specify the amount paid to receive this education.
+				</documentation>
+				
+				<example>120000</example>
+			</element>
+		
+			<element name="ClassRank" type="string">
+				<documentation>
+				Use this element to specify the rank of the Provider while receiving this education.
+				</documentation>
+				
+				<example>35th of 365</example>
+			</element>
+		
+			<element name="ClassCount" type="integer">
+				<documentation>
+				Use this element to specify the student count while receiving this education.
+				</documentation>
+				
+				<example>500</example>
+			</element>
+		
+			<element name="ClassPercentile" type="float">
+				<documentation>
+				Use this element to specify the student class percentile while receiving this education.
+				</documentation>
+				
+				<example>25</example>
+			</element>
+		</idsSpecification>
+	</list>	
+
+ 	<list name="Specialities">
+		<documentation>
+		Use this collection to specify the set of specialities linked to this Provider.
+		</documentation>
+		
+		<idsSpecification name="ProviderSpeciality" udlName="ProviderSpeciality" type="instance_child"
+			 		 	  elementOrder="SpecialityType, SpecialityClassification, StartDate, EndDate, 
+			 		 	  PracticingSpecialities, PrimaryIndicator"
+			 		 	  implementationClass="com.ibi.omni.patient.model.provider.ProviderSpeciality">
+			
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+			<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+					  	
+			<documentation>
+			Use this collection element to specify one or more Provider specialities.
+			</documentation>
+		
+			<element name="SpecialityType" type="SourceCode" codeTable="0454">
+				<documentation>
+				This field contains the segment of the population that a health care provider 
+				chooses to service, a specific medical service, a specialization in treating a 
+				specific disease, or any other descriptive characteristic about the provider's 
+				practice relating to the services rendered of the practitioner at a specific 
+				organization unit, for example, Mental Health
+				</documentation>
+				
+				<example sourceCodeSet="ProviderSpecialityTypeCodes" sourceCode="Cardiology">Cardiology</example>
+			</element>
+
+			<element name="SpecialityClassification" type="SourceCode" codeTable="0453">
+				<documentation>
+				ANSI ASC X12 Health Care Provider Taxonomy, Level 2 -  Classification
+				</documentation>
+				
+				<example sourceCodeSet="HealthcareProviderClassificationCodes" sourceCode="Cardiology">Cardiology</example>
+			</element>
+		
+			<element name="StartDate" type="OmniDate">
+				<documentation>
+				This field contains the date in which the practitioner earned this speciality.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+		
+			<element name="EndDate" type="OmniDate">
+				<documentation>
+				This field contains the date in which the practitioner ended this speciality.		
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+		
+			<list name="PracticingSpecialities">
+				<documentation>
+				Use this collection to link specialities that the Provider is currently practicing.
+				</documentation>
+				
+				<idsSpecification name="ProviderPracticeSpeciality" udlName="ProviderPracticeSpeciality" type="instance_child"
+					 		 	  elementOrder="Specialization, SpecializationDescription, StartDate, EndDate, Facility, EmploymentStatus,
+					 		 	  		   PracticeFacility, ProviderPractice,
+					 		 			   OrganizationUnit,PrimaryOrganizationIndicator,
+					 		               BoardApprovalIndicator, PrimaryCareIndicator,
+					 		               AcceptingNewPatients, AcceptingWalkIns, SupervisingProvider, 
+					 		               SupervisionRequired"
+					 		      implementationClass="com.ibi.omni.patient.model.provider.ProviderPracticeSpeciality">
+						
+					<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+					<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+					<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+				
+					<include name="CommonElements"
+							 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+							 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+									  	
+					<documentation>
+					Use this collection element to specify one or more Provider specialities that are currenly being practiced.
+					</documentation>
+				
+					<element name="Specialization" type="SourceCode" codeTable="0454">
+						<documentation>
+						Use this element to specify the specialization that the Provider is practicing
+						at the facility.
+						</documentation>
+						
+						<example sourceCodeSet="ProviderSpecialityCodes" sourceCode="CV">Valve Replacement</example>
+					</element>
+				
+					<element name="SpecializationDescription" type="string">
+						<documentation>
+						Use this element to specify notes on this specific specific specialization.
+						</documentation>
+						
+						<example>Provider has very good outcomes for Heart Valve Replacements.</example>
+					</element>
+				
+					<element name="StartDate" type="OmniDate">
+						<documentation>
+						This field contains the date in which the practitioner started working at 
+						the specific organization unit in the specific practicing specialty category.
+						</documentation>
+						
+						<example format="yyyy-MM-dd">2000-01-01</example>
+					</element>
+				
+					<element name="EndDate" type="OmniDate">
+						<documentation>
+						This field contains the date in which the practitioner ended working at 
+						the specific organization unit in the specific practicing specialty category.
+						</documentation>
+						
+						<example format="yyyy-MM-dd">2000-01-01</example>
+					</element>
+				
+					<element name="Facility" type="OmniLink" contains="Facility" keys="SourceName, SourceInstanceId" allowCreate="true">
+						<documentation>
+							DEPRECATED:  Please use the PracticeFacility data element, which provides better granularity
+							on the specific Practice Facility.
+
+							Use this element to specify the location where this specialty is being practiced.
+						</documentation>
+						
+						<example>
+						 	<![CDATA[
+							<Facility>
+								<SourceName>TestSystem</SourceName>
+								<SourceInstanceId>HospitalA</SourceInstanceId>
+							</Facility>
+							]]>
+						</example>
+					</element>
+					<element name="OrganizationUnit" type="SourceCode" codeTable="0405">
+						<documentation>
+						This field contains the organization unit, as defined by the organization owning
+						the Facility.
+						</documentation>
+						
+						<example sourceCodeSet="OrganizationUnitCodes" sourceCode="AC">Acute Care</example>
+					</element>
+				
+					<element name="PrimaryOrganizationIndicator" type="SourceCode" codeTable="0136">
+						<documentation>
+						This field contains an indicator for whether this organization unit is the 
+						primary organization unit for this practitioner.
+						</documentation>
+						
+						<example sourceCodeSet="YesNoCodes" sourceCode="N">No</example>
+					</element>
+				
+					<element name="EmploymentStatus" type="SourceCode" codeTable="0066">
+						<documentation>
+						This field contains a code indicating the working relationship of the practitioner 
+						at this organization.
+						</documentation>
+						
+						<example sourceCodeSet="EmploymentStatusCodes" sourceCode="FT">Full Time</example>
+					</element>
+
+					<element name="ProviderPractice" type="OmniLink" contains="ProviderPractice" keys="SourceName, SourceInstanceId" allowCreate="true">
+						<documentation>
+							Use this element to specify the ProviderPractice for whom this specialty is being practiced.
+						</documentation>
+
+						<example>
+							<![CDATA[
+							<ProviderPractice>
+								<SourceName>TestSystem</SourceName>
+								<SourceInstanceId>HospitalAB</SourceInstanceId>
+							</ProviderPractice>
+							]]>
+						</example>
+					</element>
+
+					<element name="PracticeFacility" type="OmniLink" contains="PracticeFacility" keys="SourceName, SourceInstanceId" allowCreate="true">
+						<documentation>
+							Use this element to specify the location where this specialty is being practiced.
+						</documentation>
+
+						<example>
+							<![CDATA[
+							<PracticeFacility>
+								<SourceName>TestSystem</SourceName>
+								<SourceInstanceId>HospitalABC</SourceInstanceId>
+							</PracticeFacility>
+							]]>
+						</example>
+					</element>
+				
+					<element name="BoardApprovalIndicator" type="SourceCode" codeTable="0136">
+						<documentation>
+						This field contains an indicator for whether this practice specialty requires board approval.
+						</documentation>
+						
+						<example sourceCodeSet="YesNoCodes" sourceCode="Y">Yes</example>
+					</element>
+				
+					<element name="PrimaryCareIndicator" type="SourceCode" codeTable="0136">
+						<documentation>
+						This field contains an indicator for whether this practice specialty may act as a 
+						primary care physician (PCP).
+						</documentation>
+						
+						<example sourceCodeSet="YesNoCodes" sourceCode="Y">Yes</example>
+					</element>
+					
+					<element name="AcceptingNewPatients" type="SourceCode" codeTable="0136">
+						<documentation>
+						Use this element to specify if the provider is accepting new patients at the facility where 
+						practicing a specific specialty.
+						</documentation>
+						
+						<example sourceCodeSet="YesNoCodes" sourceCode="Y">Yes</example>
+					</element>
+					
+					<element name="AcceptingWalkIns" type="SourceCode" codeTable="0136">
+						<documentation>
+						Use this element to specify if the provider is accepting walk-ins at the facility where 
+						practicing a specific specialty.
+						</documentation>
+						
+						<example sourceCodeSet="YesNoCodes" sourceCode="Y">Yes</example>
+					</element>
+
+					<element name="SupervisingProvider" type="SourceCode" codeTable="0136">
+						<documentation>
+						Use this element to specify if the provider can supervise others at the facility where 
+						practicing a specific specialty.
+						</documentation>
+						
+						<example sourceCodeSet="YesNoCodes" sourceCode="Y">Yes</example>
+					</element>
+
+					<element name="SupervisionRequired" type="SourceCode" codeTable="0136">
+						<documentation>
+						Use this element to specify if the provider requires supervision at the facility 
+						where practicing a specific specialty.
+						</documentation>
+						
+						<example sourceCodeSet="YesNoCodes" sourceCode="Y">Yes</example>
+					</element>
+								
+				</idsSpecification>				
+			</list>
+			<element name="PrimaryIndicator" type="SourceCode" codeTable="0136">
+				<documentation>
+					Use this element to specify the provider's primary indicator.
+				</documentation>
+
+				<example sourceCodeSet="YesNoCodes" sourceCode="N">No</example>
+			</element>
+		</idsSpecification>
+	</list>	
+
+ 	<list name="Certifications">
+		<documentation>
+		Use this collection to specify the set of certifications earned by this Provider.
+		
+		Certification attests to the education, skills, and training of a Provider, and 
+		recognition is achieved through testing for standard knowledge by examination. 
+
+		Licensure via individual state regulations is granted after certification and 
+		recognizes a provider's unique, highly developed skill set and ability to provide 
+		patient care. 
+
+		Credentialing and privileging follows licensure and is the process through 
+		which a provider obtains authorization to practice in a health care setting.
+		</documentation>
+		
+		<idsSpecification name="ProviderCertification" udlName="ProviderCertification" type="instance_child"
+			 		 	  elementOrder="CertificationType, Subject, GrantingInformation, SerialNumber, Jurisdiction, 
+			 		               ActiveDate, InactiveDate, ExpirationDate, RenewalDate, RevocationDate, RevocationReason"
+			 		      implementationClass="com.ibi.omni.patient.model.provider.ProviderCertification">
+			
+			<changeLog>
+				<change version="1.0.0">Initial Creation</change>
+			</changeLog>
+			
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+			<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+					  	
+			<documentation>
+			Use this structure to specify one or more Provider certifications. 
+			</documentation>
+				
+			<element name="CertificationType" type="SourceCode" codeTable="0360">
+				<documentation>
+				Use this field to specify the certification type.
+				</documentation>
+				
+				<example sourceCodeSet="CertificationTypeCodes" sourceCode="EMT">Emergency Medical Technician</example>
+			</element>
+		
+			<element name="Subject" type="string">
+				<documentation>
+				This field defines the name of the subject of the certificate as used by the certifying body.
+				</documentation>
+				
+				<example>Medical Certification for EMT</example>
+			</element>
+			
+			<group name="GrantingInformation" elementOrder="Authority, Date, Country, StateProvince, CountyRegion" udlName="granting">
+				<documentation>
+				This element contains information regarding the granting authority and privilege locations for the certification.
+				</documentation>
+		
+				<element name="Authority" type="document" contains="Organization" excludeInDoc="true">
+					<documentation>
+					Use this element to link to the Organization that granted this certificate to the Provider.
+					</documentation>
+		
+					<example>
+					<![CDATA[
+					<Organization>
+						<SourceName>TestSystem</SourceName>
+						<SourceInstanceId>GrantingAuthorityId</SourceInstanceId>
+					</Organization>
+					]]>
+					</example>
+				</element>
+			
+				<element name="Date" type="OmniDate">
+					<documentation>
+					This field contains the date when the certification was granted.
+					</documentation>
+					
+					<example format="yyyy-MM-dd">2000-01-01</example>
+				</element>
+			
+				<element name="Country" type="SourceCode" codeTable="0399">
+					<documentation>
+					Use this element to specify the country that the certification is granted for.
+					</documentation>
+					
+					<example sourceCodeSet="CountryCodes" sourceCode="USA">United States</example>
+				</element>
+			
+				<element name="StateProvince" type="SourceCode" codeTable="0347">
+					<documentation>
+					Use this element to specify the state/province the certification was granted for. 
+					</documentation>
+					
+					<example sourceCodeSet="StateCodes" sourceCode="NY">New York</example>
+				</element>
+		
+				<element name="CountyRegion" type="SourceCode" codeTable="0289">
+					<documentation>
+					Use this element to specify the county/region the certification was granted for.
+					</documentation>
+					
+					<example sourceCodeSet="CountyCodes" sourceCode="LIV">Livingston County</example>
+				</element>
+			</group>
+			
+			<element name="SerialNumber" type="string">
+				<documentation>
+				This field contains the number and/or characters that identify the certificate held by the health professional. 
+				</documentation>
+				
+				<example>123-YREF-8975678</example>
+			</element>
+		
+			<group name="Jurisdiction" elementOrder="Country, StateProvince, CountyRegion, Breadth">
+				<documentation>
+				This element contains information regarding the jurisdiction for the certification
+				of privilege.
+				</documentation>
+				
+				<element name="Country" type="SourceCode" codeTable="0399">
+					<documentation>
+					This field contains the country for which the qualification is valid. 
+					</documentation>
+					
+					<example sourceCodeSet="CountryCodes" sourceCode="USA">United States</example>
+				</element>
+				
+				<element name="StateProvince" type="SourceCode" codeTable="0347">
+					<documentation>
+					This field contains the state for which the qualification is valid 
+					</documentation>
+					
+					<example sourceCodeSet="StateCodes" sourceCode="NY">New York</example>
+				</element>
+				
+				<element name="CountyRegion" type="SourceCode" codeTable="0289">
+					<documentation>
+					This field contains the county/parish for which the qualification is valid. 
+					</documentation>
+					
+					<example sourceCodeSet="CountyCodes" sourceCode="LIV">Livingston County</example>
+				</element>
+				
+				<element name="Breadth" type="SourceCode" codeTable="0547">
+					<documentation>
+					This field contains the breadth/extent of the jurisdiction where the qualification is valid. 
+					</documentation>
+					
+					<example sourceCodeSet="JurisdictionBreadthCodes" sourceCode="S">State/Province</example>
+				</element>
+			</group>
+		
+			<element name="ActiveDate" type="OmniDate">
+				<documentation>
+				This field contains the date/time when the certificate became or will become active.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+		
+			<element name="InactiveDate" type="OmniDate">
+				<documentation>
+				This field contains the date/time when the certificate became or will become inactive.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+			
+			<element name="ExpirationDate" type="OmniDate">
+				<documentation>
+				This field contains the date/time when the certificate expires or will expire.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+			
+			<element name="RenewalDate" type="OmniDate">
+				<documentation>
+				This field contains the date/time when the certificate must/will/ be / has been renewed.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2017-01-01</example>
+			</element>
+			
+			<element name="RevocationDate" type="OmniDate">
+				<documentation>
+				This field contains the date/time when the certificate has been revoked.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2010-01-01</example>
+			</element>
+			
+			<element name="RevocationReason" type="string">
+				<documentation>
+				This field contains the reason for revoking the certificate 
+				(e.g., having been compromised, changes of conditions/environment, etc.)
+				</documentation>
+				
+				<example>Insurance Fraud</example>
+			</element>		
+		</idsSpecification>
+	</list>	
+
+ 	<list name="Licenses">
+		<documentation>
+		Use this element to specify the licenses that were granted to this Provider.
+		
+		Licensure via individual state regulations is granted after certification and 
+		recognizes a provider's unique, highly developed skill set and ability to provide 
+		patient care. 
+		</documentation>
+		
+		<idsSpecification name="ProviderLicense" udlName="ProviderLicense" type="instance_child"
+			 		 elementOrder="LicenseType, LicenseNumber, IssuedDate, ExpirationDate, RenewalDate, 
+			 		 			   LicensingAuthority, PracticingLicenses"
+			 		 	implementationClass="com.ibi.omni.patient.model.provider.ProviderLicense">
+			
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+			<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+		
+			<documentation>
+			Use this structure to specify License information for the Provider.
+			
+			Licensure via individual state regulations is granted after certification and 
+			recognizes a provider's unique, highly developed skill set and ability to provide 
+			patient care. 
+			
+			Note: This is the list of possible licenses the Provider may practice, not 
+			what they are actually practicing.
+			</documentation>
+		
+			<element name="LicenseType" type="SourceCode" codeTable="0000">
+				<documentation>
+				Use this element to specify the type of license.
+				</documentation>
+				
+				<example sourceCodeSet="LicenseTypeCodes" sourceCode="MTIA">Medical Training License I(A)</example>
+				
+				<codes>
+					<option value="ACUPUNCTURIST">ACUPUNCTURIST</option>
+					<option value="ANESTHESIOLOGIST ASSISTANT">ANESTHESIOLOGIST ASSISTANT</option>
+					<option value="MEDICAL TRAINING LICENSE I(A)">MEDICAL TRAINING LICENSE I(A)</option>
+					<option value="MEDICAL TRAINING LICENSE I(B)">MEDICAL TRAINING LICENSE I(B)</option>
+					<option value="MEDICAL TRAINING LICENSE II">MEDICAL TRAINING LICENSE II</option>
+					<option value="MEDICAL TRAINING REGISTRANT">MEDICAL TRAINING REGISTRANT</option>
+					<option value="MEDICINE AND SURGERY">MEDICINE AND SURGERY</option>
+					<option value="NATUROPATH PHYSICIAN">NATUROPATH PHYSICIAN</option>
+					<option value="OSTEOPATHY AND SURGERY">OSTEOPATHY AND SURGERY</option>
+					<option value="PHYSICIAN ASSISTANT">PHYSICIAN ASSISTANT</option>
+					<option value="POLYSOMNOGRAPHIC TECHNICIAN">POLYSOMNOGRAPHIC TECHNICIAN</option>
+					<option value="POLYSOMNOGRAPHIC TECHNOLOGIST">POLYSOMNOGRAPHIC TECHNOLOGIST</option>
+					<option value="POLYSOMNOGRAPHIC TRAINEE">POLYSOMNOGRAPHIC TRAINEE</option>
+					<option value="POSTGRADUATE PHYSICIAN TRAINEE">POSTGRADUATE PHYSICIAN TRAINEE</option>
+					<option value="SURGICAL ASSISTANT">SURGICAL ASSISTANT</option>
+				</codes>
+			</element>
+		
+			<element name="LicenseNumber" type="string">
+				<documentation>
+				Use this element to specify the license number.
+				</documentation>
+				
+				<example>AC30008</example>
+			</element>
+		
+			<element name="IssuedDate" type="OmniDate">
+				<documentation>
+				Use this element to specify date the license was issued.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+		
+			<element name="ExpirationDate" type="OmniDate">
+				<documentation>
+				Use this element to specify date the license will Expire.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2020-01-01</example>
+			</element>
+		
+			<element name="RenewalDate" type="OmniDate">
+				<documentation>
+				Use this element to specify date the license will require renewal.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2015-01-01</example>
+			</element>
+		
+			<element name="LicensingAuthority" type="document" contains="Organization" excludeInDoc="true">
+				<documentation>
+				Use this element to specify the authority that issues to license.
+				</documentation>
+				
+				<example>
+					<![CDATA[
+					<Organization>
+						<SourceName>TestSystem</SourceName>
+						<SourceInstanceId>LicensingOrganization</SourceInstanceId>
+					</Organization>
+					]]>
+				</example>
+			</element>
+				
+		 	<list name="PracticingLicenses">
+				<documentation>
+				Use this element to specify the facilities where the Provider is currently practicing.
+				</documentation>
+				
+				<idsSpecification name="ProviderPracticeLicense" udlName="ProviderPracticeLicense" type="instance_child"
+					 		 elementOrder="LicenseType, StartDate, EndDate, 
+					 		 VerificationStatus, VerificationMethod, VerifiedBy, VerifiedDate, VerificationComment, 
+					 		 Facility, CredentialStatus, LicenseMonitoring"
+					 		 implementationClass="com.ibi.omni.patient.model.provider.ProviderPracticeLicense">
+						
+					<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+					<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+					<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+				
+					<include name="CommonElements"
+							 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+							 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+									  	
+					<documentation>
+					Use this element to specify information about what a Provider is licensed to practice
+					at a specified Facility.
+					
+					Defines what the provider is currently practicing. [Medicine, Paramedic, Cardiaoligist]. 
+					</documentation>
+				
+					<element name="LicenseType" type="SourceCode" codeTable="0000">
+						<documentation>
+						Use this element to specify the type of license. This may be the same as the parent
+						license or a sub-classification underneath that license.
+						</documentation>
+						
+						<example sourceCodeSet="LicenseTypeCodes" sourceCode="MTIA">Medical Training License I(A)</example>
+					</element>
+				
+					<element name="StartDate" type="OmniDate">
+						<documentation>
+						Use this element to specify when the Practice License for the Facility will be in effect.
+						</documentation>
+						
+						<example format="yyyy-MM-dd">2000-01-01</example>
+					</element>
+				
+					<element name="EndDate" type="OmniDate">
+						<documentation>
+						Use this element to specify when the Practice License for the Facility will be terminate.
+						</documentation>
+						
+						<example format="yyyy-MM-dd">2020-01-01</example>
+					</element>
+				
+					<element name="VerificationStatus" type="SourceCode" codeTable="0000">
+						<documentation>
+						Use this element to specify the status of the Credential. Verification will be periodic
+						process to insure the Provider should continue to have this license to practice at
+						the facility.
+						</documentation>
+						
+						<example sourceCodeSet="VerificationStatusCodes" sourceCode="V">Verified</example>
+					</element>
+				
+					<element name="VerificationMethod" type="SourceCode" codeTable="0000">
+						<documentation>
+						Use this element to specify how the verification was conducted. When this verification is
+						complete the CredentialStatus should also be known.
+						</documentation>
+						
+						<example sourceCodeSet="VerificationMethodCodes" sourceCode="M">Manual Verification</example>
+					</element>
+				
+					<element name="VerifiedBy" type="string">
+						<documentation>
+						Use this element to specify the user id or name of the person who performed the verification.
+						</documentation>
+						
+						<example>HH1234567</example>
+					</element>
+				
+					<element name="VerifiedDate" type="OmniDate">
+						<documentation>
+						Use this element to specify the user id or name of the person who performed the verification.
+						</documentation>
+						
+						<example format="yyyy-MM-dd">2013-01-01</example>
+					</element>
+				
+					<element name="VerificationComment" type="string">
+						<documentation>
+						Use this element to capture comments from the person performing the verification.
+						</documentation>
+						
+						<example>Reviewed records and all appears to be in order.</example>
+					</element>
+					
+					<element name="Facility" type="OmniLink" contains="Facility" keys="SourceName, SourceInstanceId" allowCreate="true">
+						<documentation>
+						Specify the facility that the Provider is licensed to practicing at.
+						</documentation>
+
+						<example>
+							<![CDATA[
+							<Facility>
+								<SourceName>TestSystem</SourceName>
+								<SourceInstanceId>HospitalA</SourceInstanceId>
+							</Facility>
+							]]>
+						</example>
+					</element>
+					
+					<element name="CredentialStatus" type="SourceCode" codeTable="0000">
+						<documentation>
+						Use this element to specify the status of credentials for this license. You may
+						also use RelatedCredential to link the Credential if known.  
+						</documentation>
+						
+						<example sourceCodeSet="CredentialStatusCodes" sourceCode="A">Active</example>
+					</element>
+					
+					<list name="LicenseMonitoring">
+						<documentation>
+						Specifies the list of monitor records.
+						</documentation>
+						
+						<idsSpecification name="ProviderLicenseMonitor" udlName="ProviderLicenseMonitor" type="instance_child"
+							 		 elementOrder="MonitoringDate, MonitoringOutcome, Severity, OutcomeDescription"
+							 		 implementationClass="com.ibi.omni.patient.model.provider.ProviderLicenseMonitor">
+								
+							<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+							<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+							<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+						
+							<include name="CommonElements"
+									 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+									 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+						
+							<documentation>
+							Use this specification to feed license monitor records for a PracticingLicense.
+							This is simply an activity log of when and who monitored the license. A practice 
+							license may be monitored multiple times a year.
+							</documentation>
+						
+							<element name="MonitoringDate" type="OmniDate">
+								<documentation>
+								Use this element to specify when the monitoring occured.
+								</documentation>
+								
+								<example format="yyyy-MM-dd hh:mm">2013-01-01 02:30</example>
+							</element>
+							
+							<element name="MonitoringOutcome" type="SourceCode">
+								<documentation>
+								Description of the outcome of this monitoring record.
+								</documentation>
+								
+								<example sourceCodeSet="LicenseMonitoringOutcomeCodes" sourceCode="P">Passed</example>
+							</element>
+						
+							<element name="Severity" type="SourceCode">
+								<documentation>
+								???
+								</documentation>
+								
+								<example sourceCodeSet="LicenseMonitoringSeverityCodes" sourceCode="L">Low</example>
+							</element>
+						
+							<element name="OutcomeDescription" type="string">
+								<documentation>
+								Detailed description of the outcome of this monitoring record.
+								</documentation>
+								
+								<example>Everything went fine.</example>
+							</element>
+							
+						</idsSpecification>
+					</list>		
+				</idsSpecification>				
+			</list>			
+		</idsSpecification>		
+	</list>	
+
+ 	<list name="Credentials">
+		<documentation>
+		Use this element to specify the credentials that were granted to this Provider.
+		</documentation>
+		
+		<idsSpecification name="ProviderCredential" udlName="ProviderCredential" type="instance_child"
+			 		 elementOrder="Credential, CredentialingAuthority, Facility"
+			 		 implementationClass="com.ibi.omni.patient.model.provider.ProviderCredential">
+			
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+			<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+					  	
+			<documentation>
+			A Credential is issued after a Provider has been Certified and Licensed. A Credential will allow a Provider to work within a specific Hospital setting.
+			</documentation>
+		
+			<backgroun>
+			A Credential is issued after a Provider has been Certified and Licensed. A Credential will allow a Provider to work with a specific Hospital setting.
+			
+			
+			John,
+			
+			I went the web and got a decent answer…
+			http://www.medscape.com/viewarticle/723679
+			
+			From Article:
+			Certification attests to the education, skills, and training of a Provider, and recognition is achieved through testing for standard knowledge by examination. Licensure via individual state regulations is granted after certification and recognizes a provider's unique, highly developed skill set and ability to provide patient care. Credentialing and privileging follows licensure and is the process through which a provider obtains authorization to practice in hospital settings.
+			
+			So it looks like process is:
+			Education -> Certification -> Licensing -> Credentialing
+			
+			Does this look correct? JOHN WAS AFFIRMATIVE
+			
+			
+			Hope this helps, they are different. Let’s spend two hours a day together next week.
+			
+			What is credentialing?  
+			Credentialing is a systematic approach to the collection and verification of a provider's professional qualifications. The qualifications that are reviewed and verified include, but are not limited to, relevant training, licensure, certification and/or registration to practice in a health care field, and academic background. Additionally, Aetna conducts an assessment of whether the provider meets certain criteria relating to professional competence and conduct.
+			
+			HEALTH CARE PROVIDER CERTIFICATE PROCESS:
+			Initial Application: Applications for a health care provider certificate are submitted along with a $1,000 non-refundable application fee. After the application is reviewed and deemed complete, the applicant is notified to contact the agency in writing for an on-site initial survey.
+			
+			Initial Survey: The on-site review for a health care provider certificate is conducted to assure compliance with Florida Statute and rule. The initial review covers the following areas:
+			•	Governing Body 
+			•	Medical Records System 
+			•	Quality of Care 
+			•	Quality Assurance Program 
+			•	Referral procedures 
+			•	Internal Risk Management 
+			•	Credentialing 
+			•	Grievance Procedure 
+			•	Provider Network 
+			•	Advance Directives 
+			•	Member Handbooks and/or Subscriber Agreements 
+			If found to be in compliance, the Agency issues a Health Care Provider Certificate (HCPC) indicating the counties or parts of counties for which the applicant has been approved.
+			
+			Renewal: The HCPC is renewed biannually upon submission of an application for renewal and a $1,000 non-refundable application fee. Upon receipt of an application for renewal, the provider network is reviewed for compliance with Florida Statute and rule.
+			
+			Monitoring: Ongoing monitoring is accomplished through quarterly and annual grievance reports, annual risk management surveys, complaint information from the HMO Complaint Hotline, and investigations of subscriber quality of care complaints. In addition, HMOs are required to maintain accreditation from a nationally recognized accreditation organization approved by the Agency.
+			Expansions: An HMO or prepaid health clinic may expand their geographic service area by submitting an expansion affidavit. When the affidavit is reviewed and deemed complete, a desk review is completed to review the provider network the health plan will use in the expanded area. The affidavit also affirms consistent compliance throughout the expanded network with Florida Statute and rule.
+			
+			Accreditation: Accreditation is a process to measure how a health care organization performs using a nationally recognized set of quality standards. By looking at internal processes of monitoring and evaluating the health care given to members of health maintenance organizations, members are assured of quality services rendered in the most cost effective manner. Since 1992, Florida has required HMOs to be accredited by a nationally recognized accreditation organization whose standards have been approved by the Agency
+			</backgroun>
+		
+			<element name="Credential" type="string">
+				<documentation>
+				Use this element specify the credential identifier. This identifier should be supplied
+				by the IssuingAuthority. 
+				</documentation>
+				
+				<example>CRED09876345-A</example>
+			</element>
+		
+			<element name="CredentialingAuthority" type="document" contains="Organization" excludeInDoc="true">
+				<documentation>
+				Use this element to link to the credential issuing organization. This will typically
+				be the Hospital that the Provider will be providing service. 
+				</documentation>
+			</element>
+		
+			<element name="Facility" type="OmniLink" contains="Facility" keys="SourceName, SourceInstanceId" allowCreate="true">
+				<documentation>
+				Specify the facility where the Provider is allowed to work given this credential. 
+				</documentation>
+				
+				<example>
+					<![CDATA[
+					<Facility>
+						<SourceName>TestSystem</SourceName>
+						<SourceInstanceId>HospitalA</SourceInstanceId>
+					</Facility>
+					]]>
+				</example>
+			</element>		
+		</idsSpecification>
+	</list>	
+
+ 	<list name="Privileges">
+		<documentation>
+		Use this element to specify the privileges the Provider has been given
+		for a set of facilities. These privileges are used to make assignments to
+		the Provider. 
+		</documentation>
+		
+		<idsSpecification name="ProviderPrivilege" udlName="ProviderPrivilege" type="instance_child"
+			 		 elementOrder="Privilege, OutpatientOrderingProvider,
+			 		 			   StartDate, EndDate, RevokedDate, Comment, Facility, Assignments"
+			 		 			   implementationClass="com.ibi.omni.patient.model.provider.ProviderPrivilege">
+			
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+			<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+					  	
+			<documentation>
+			This entity defines permissions (privileges) granted to a Provider by a hospital governing 
+			board to provide patient care in the hospital. The governing board must insure that the
+			Provider has proper Licensing and Credentials to perform the granted permission.
+			</documentation>
+		
+			<element name="Privilege" type="SourceCode" codeTable="0525">
+				<documentation>
+				Use this element to specify the privilege for this Provider at the specified Facility.
+				Example: Admitting, Clinical, Conversion, Emergency, Hospital, Staff, Temporary, Therapeutic,
+				e-Prescribe
+				</documentation>
+				
+				<example sourceCodeSet="PrivilegeCodes" sourceCode="A">Admitting</example>
+			</element>
+
+			<element name="OutpatientOrderingProvider" type="SourceCode" codeTable="0136">
+				<documentation>
+				Use this element to specify if the provider can place orders on outpatients at the facility.
+				</documentation>
+				
+				<example sourceCodeSet="YesNoCodes" sourceCode="N">No</example>
+			</element>
+		
+			<element name="StartDate" type="OmniDate">
+				<documentation>
+				Use this element to specify when the privilege at the facility begins.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+		
+			<element name="EndDate" type="OmniDate">
+				<documentation>
+				Use this element to specify when the privilege ends.		
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+		
+			<element name="RevokedDate" type="OmniDate">
+				<documentation>
+				Use this element to specify the date that this privilege was revoked.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2013-01-01</example>
+			</element>
+		
+			<element name="Comment" type="string">
+				<documentation>
+				Use this element to specify comments regarding this privilege.
+				</documentation>
+				
+				<example>May want to review this.</example>
+			</element>
+		
+			<element name="Facility" type="OmniLink" contains="Facility" keys="SourceName, SourceInstanceId" allowCreate="true">
+				<documentation>
+				Use this element to define the Facility where the Provider has this Privilege. This
+				is physical facility while the assignment will indicate where in the Facility the
+				actual service will/has been rendered.
+				</documentation>
+				
+				<example>
+					<![CDATA[
+					<Facility>
+						<SourceName>TestSystem</SourceName>
+						<SourceInstanceId>HospitalA</SourceInstanceId>
+					</Facility>
+					]]>
+				</example>
+			</element>
+		
+			<list name="Assignments">
+				<documentation>
+				Use this collection to link Provider detailed assignments at the facility to where 
+				they are Privileged to work.
+				</documentation>
+				
+				<idsSpecification name="ProviderAssignment" udlName="ProviderAssignment" type="instance_child"
+					 		 elementOrder="AssignmentType, StartDate, EndDate, AssignmentStatus, AssignmentStatusDate, MedicalGroup, 
+										   PrimarySpeciality, TerminationDate, TerminationReason,
+										   AllowedToSeePatients, WorkHours, AcceptingPatients, PointOfService"
+							implementationClass="com.ibi.omni.patient.model.provider.ProviderAssignment">
+						
+					<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+					<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+					<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+				
+					<include name="CommonElements"
+							 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+							 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+									  	
+					<documentation>
+					This entity defines an actual work assignment, which includes time frame and location
+					at the Facility that the Provider will or has rendered service. This entity must always
+					be a child of a ProviderPrivilege. 
+						
+					Example: Provider may be assigned to perform admittance M-F 8:00-5:00pm at Hospital A on ward B.
+					</documentation>
+				
+					<element name="AssignmentType" type="SourceCode" codeTable="0000">
+						<documentation>
+						Use this element to specify the type of assignment. This type of assignment should
+						be consistent with the parent ProviderPrivilege.
+						</documentation>
+						
+						<example sourceCodeSet="AssignmentTypeCodes" sourceCode="ER">Emergency Triage</example>
+					</element>
+				
+					<element name="StartDate" type="OmniDate">
+						<documentation>
+						Use this element to specify when the assignment will begin at the specified Facility.
+						</documentation>
+						
+						<example format="yyyy-MM-dd">2000-01-01</example>
+					</element>
+				
+					<element name="EndDate" type="OmniDate">
+						<documentation>
+						This field contains the date in which the practitioner ended working at 
+						the specific organization unit in the specific practicing specialty category.
+						</documentation>
+						
+						<example format="yyyy-MM-dd">2000-01-01</example>
+					</element>
+				
+					<element name="AssignmentStatus" type="SourceCode">
+						<documentation>
+						Use this element to specify the status of this assignment.
+						</documentation>
+						
+						<example sourceCodeSet="AssignmentStatusCodes" sourceCode="A">Active</example>
+					</element>
+				
+					<element name="AssignmentStatusDate" type="OmniDate">
+						<documentation>
+						Use this element to specify the date that the status was updated.
+						</documentation>
+						
+						<example format="yyyy-MM-dd">2000-01-01</example>
+					</element>
+				
+					<element name="PrimarySpeciality" type="SourceCode" codeTable="0454">
+						<documentation>
+						Use this element to specify the primary speciality required for this assignment.
+						</documentation>
+						
+						<example sourceCodeSet="ProviderSpecialityCodes" sourceCode="Cardiology">Cardiology</example>
+					</element>
+					
+					<element name="MedicalGroup" type="string">
+						<documentation>
+						Use this element to link this assignment to a MedicalGroup. This medical group can
+						then be used to aggregate information about Providers at a Facility.
+						</documentation>
+						
+						<example>MEDGRP1</example>
+					</element>
+				
+					<element name="TerminationDate" type="OmniDate">
+						<documentation>
+						Use this element to specify when this assignment was abnormally terminated.
+						</documentation>
+						
+						<example format="yyyy-MM-dd">2000-01-01</example>
+					</element>
+				
+					<element name="TerminationReason" type="SourceCode">
+						<documentation>
+						Use this element to specify the reason for abnormal termination.
+						</documentation>
+						
+						<example sourceCodeSet="TerminationReasonCodes" sourceCode="Unrealiable">Unrealiable</example>
+					</element>
+				
+					<element name="AllowedToSeePatients" type="SourceCode" codeTable="0136">
+						<documentation>
+						Use this element to specify if the Provider may see Patients.
+						</documentation>
+						
+						<example sourceCodeSet="YesNoCodes" sourceCode="Y">Yes</example>
+					</element>
+				
+					<element name="WorkHours" type="string">
+						<documentation>
+						Use this element to specify the hours expected to provide service at the 
+						specified location.
+						</documentation>
+						
+						<example>M-F 8:00-5:00</example>
+					</element>
+				
+					<element name="AcceptingPatients" type="SourceCode" codeTable="0136">
+						<documentation>
+						Use this element to specify if the Provider is accepting new patients.
+						</documentation>
+						
+						<example sourceCodeSet="YesNoCodes" sourceCode="Y">Yes</example>
+					</element>
+				
+					<element name="PointOfService" type="OmniLink" contains="FacilityLocation" keys="SourceName, SourceInstanceId" allowCreate="true">
+						<documentation>
+						Use this element to specify the actual service contact point within 
+						the facility.
+						</documentation>
+						
+						<example>
+							<![CDATA[
+							<FacilityLocation>
+								<SourceName>TestSystem</SourceName>
+								<SourceInstanceId>HospitalLocationA</SourceInstanceId>
+							</FacilityLocation>
+							]]>
+						</example>						
+					</element>	
+				</idsSpecification>
+			</list>
+		</idsSpecification>
+	</list>	
+
+	<list name="Overrides">
+		<documentation>
+		Use this collection to specify manual overrides between this object and 
+		the specified object.	
+		</documentation>
+
+		<idsSpecification name="ProviderManualOverride" udlName="ProviderManualOverride" type="instance_child"
+			 		 elementOrder="OverrideType, OtherProvider"
+			 		 implementationClass="com.ibi.omni.patient.model.provider.ProviderManualOverride">
+			 		               		
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+			<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+				
+			<documentation>
+			Use this IDS to force a specific manual override between providers in Omni. The processing of the override
+			will be specific to the OverrideType and Providers specified. 
+			</documentation>
+			
+		 	<element name="OverrideType" type="SourceCode" codeTable="0000">
+				<documentation>
+				Use this element to specify what type of manual override should be performed between
+				the this Provider and the OtherProvider specified.
+				</documentation>
+				
+				<example sourceCodeSet="OverrideTypeCodes" sourceCode="LPR">Link Providers</example> 
+			</element>
+				
+		 	<element name="OtherProvider" type="document" contains="Provider">
+				<documentation>
+				Use this element to specify the other Provider effected by this manual override request.
+				</documentation>
+		
+				<example>
+					<![CDATA[
+					<Provider>
+						<SourceName>TestSystem</SourceName>
+						<SourceInstanceId>NPI:1234567</SourceInstanceId>
+					</Provider>
+					]]>
+				</example>
+			</element>
+		</idsSpecification>				
+	</list>	 
+</idsDocument>

@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.1.7" 
+			 domain="Workforce" 
+			 type="instance_child"
+			 name="Job"
+			 tableName="worker_job"
+	 		 elementOrder="Title, Job, Position, ReportsToPosition, Supervisor, PayrollStatus, RegularTemporary, FullPartTime, 
+				StandardHours, StandardHoursFrequency, FullTimeEquivalent, HireDate, LastHireDate, LastWorkedDate, ExpectedReturnDate, 
+				HRCompany, HRBusinessUnit, HRDepartment, HRLocation, HolidaySchedule, Compensation, Union,
+				EffectiveDate, ExpirationDate">
+
+	<changeLog>
+		<change version="1.1.7">Split out from Worker</change>
+	</changeLog>
+
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+				
+	<documentation>
+	Use this IDS to feed Job-related information for a Worker at a particular company. 
+	A Worker may hold many jobs. 
+	</documentation>
+
+	<element name="Title" type="string">
+		<documentation>
+		The title of this job, which might be different then the worker's official title. 
+		</documentation>
+	</element>
+		
+	<element name="Job" type="SourceCode">
+		<documentation>
+		The Job Code value associated with this job.
+		</documentation>
+	</element>
+
+	<element name="Position" type="SourceCode">
+		<documentation>
+		If the HR system is driven by position, use this data element to identify 
+		the position associated with the job.
+		</documentation>
+	</element>
+
+	<element name="ReportsToPosition" type="SourceCode">
+		<documentation>
+		If the HR system is driven by position, use this data element to identify 
+		the position that this position reports to (this is the Supervisor's position).
+		</documentation>
+	</element>
+
+	<element name="Supervisor" type="OmniLink" contains="Worker" dbColumn="supervisor_id">
+		<documentation>
+		Use this element to link or define the supervisor for this Job.
+		</documentation>
+	</element>
+
+	<element name="PayrollStatus" type="SourceCode">
+		<documentation>
+		Displays the payroll status of the current job record. 
+			
+		Some examples:  Active, Deceased, Leave with Pay, Leave of Absence, Retired, Retired with Pay, 
+		Retired-Pension Administration, Suspended, Terminated, Terminated with Pay, Terminated Pension Payout
+		</documentation>
+	</element>
+	
+	<element name="RegularTemporary" type="SourceCode">
+		<documentation>
+		Indicates whether the worker is a regular employee or temporary employee.
+		</documentation>
+	</element>
+	
+	<element name="FullPartTime" type="SourceCode">
+		<documentation>
+		Indicates whether the worker is full-time or part-time.
+		</documentation>
+	</element>
+
+	<element name="StandardHours" type="double" dbColumn="std_hours">
+		<documentation>
+		Indicates the standard hours for the worker.
+		</documentation>
+	</element>
+
+	<element name="StandardHoursFrequency" type="SourceCode" dbColumn="std_hours_frequency_code">
+		<documentation>
+		Indicates the time period during which workers must complete the standard hours. 
+		Ex. Day, Week, Month, Year, etc.
+		</documentation>
+	</element>
+
+	<element name="FullTimeEquivalent" type="double">
+		<documentation>
+		Indicates the percentage of full-time work that the worker should normally 
+		work in this job. This value is based on the standard hours entry for this job and 
+		the standard work period. Full time positions will generally be eqaul to 1.0.
+		</documentation>
+	</element>
+
+	<element name="HireDate" type="date">
+		<documentation>
+		Indicates the Hire Date for the job.
+		</documentation>
+	</element>
+
+	<element name="LastHireDate" type="date">
+		<documentation>
+		Indicates the Last Hire Date for the job.
+		</documentation>
+	</element>
+
+	<element name="LastWorkedDate" type="date">
+		<documentation>
+		 The day before the termination effective date as the termination date and the date 
+		 last worked. If the person is rehired, these fields should be cleared.  
+		 When a person returns from leave, this field should be cleared. 
+		</documentation>
+	</element>
+
+	<element name="ExpectedReturnDate" type="date">
+		<documentation>
+		Use this element to specify when an inactive Worker is expected to return to active status. 
+		</documentation>
+	</element>
+	
+	<element name="HRCompany" type="SourceCode" dbColumn="hr_company_code">
+		<documentation>
+		The Company defined in the HR system that is associated with this job.
+		</documentation>
+	</element>
+
+	<element name="HRBusinessUnit" type="SourceCode" dbColumn="hr_business_unit_code">
+		<documentation>
+		The Business Unit defined in the HR system that is associated with this job.
+		</documentation>
+	</element>
+	
+	<element name="HRDepartment" type="SourceCode" dbColumn="hr_department_code">
+		<documentation>
+		The Department defined in the HR system that is associated with this job.
+		</documentation>
+	</element>
+
+	<element name="HRLocation" type="SourceCode" dbColumn="hr_location_code">
+		<documentation>
+		The Location defined in the HR system that is associated with this job.
+		</documentation>
+	</element>
+
+	<element name="HolidaySchedule" type="SourceCode">
+		<documentation>
+		The Holiday Schedule that is associated with this job.
+		</documentation>
+	</element>
+
+	<group name="Compensation" 
+		   elementOrder="PayGroup, Rate, Frequency, Currency, Shift, ShiftDifferentialRate, ShiftDifferentialFactor" 
+		   udlName="compensation">
+		   
+		<documentation>
+		Identifies compensation information associated with this job.
+		</documentation>
+		
+		<element name="PayGroup" type="SourceCode" dbColumn="comp_pay_group_code">
+			<documentation>
+			Identifies the pay group under which this job will be paid.
+			</documentation>
+		</element>
+
+		<element name="Rate" type="double" dbColumn="comp_rate">
+			<documentation>
+			Indicates the compensation rate for the person, which is the sum of all 
+			base pay salary components.
+			</documentation>
+		</element>
+	
+		<element name="Frequency" type="SourceCode" dbColumn="comp_frequency_code">
+			<documentation>
+			Indicates the time period in which workers will earn their compensation 
+			rate. Ex. Hour, Week, Month, Year, etc.
+			</documentation>
+		</element>
+		
+		<element name="Currency" type="SourceCode" dbColumn="comp_currency_code">
+			<documentation>
+			Indicates the currency code for the Compensation Rate.
+			</documentation>
+		</element>
+
+		<element name="Shift" type="SourceCode" dbColumn="comp_shift_code">
+			<documentation>
+			The designated shift associated with this job.
+			</documentation>
+		</element>
+
+		<element name="ShiftDifferentialRate" type="double" dbColumn="comp_shift_differential_rate">
+			<documentation>
+			The shift differential represented as a flat amount. May be populated 
+			in combination with ShiftDifferentialFactor.
+			</documentation>
+		</element>
+
+		<element name="ShiftDifferentialFactor" type="double" dbColumn="comp_shift_differential_factor">
+			<documentation>
+			The shift differential represented as a percentage. May be populated in 
+			combination with ShiftDifferentialRate.
+			</documentation>
+		</element>
+	</group>
+
+	<group name="Union" 
+		   elementOrder="Union, BargainingUnit, LaborAgreement, EmployeeCategory, EmployeeSubCategory, EmployeeSubCategory2, 
+		 				 PayUnionFee, SeniorityDate, CategoryEntryDate" 
+		   udlName="union">
+		   
+		<documentation>
+		Identifies union information associated with this job.
+		</documentation>
+
+		<element name="Union" type="SourceCode" dbColumn="union_code">
+			<documentation>
+			Identifies the union code associated with this job.
+			</documentation>
+		</element>
+
+		<element name="BargainingUnit" type="SourceCode">
+			<documentation>
+			Identifies the specific bargaining unit within the union associated with this job.
+			</documentation>
+		</element>
+		
+		<element name="LaborAgreement" type="SourceCode">
+			<documentation>
+			Identifies the union labor agreement associated with this job.
+			</documentation>
+		</element>
+
+		<element name="EmployeeCategory" type="SourceCode">
+			<documentation>
+			Identifies the category of employee within the union associated with this job.
+			</documentation>
+		</element>
+
+		<element name="EmployeeSubCategory" type="SourceCode" dbColumn="union_employee_subcat_code">
+			<documentation>
+			Identifies the sub category of employee within the union associated with this job.
+			</documentation>
+		</element>
+
+		<element name="PayUnionFee" type="SourceCode">
+			<documentation>
+			Does employee pay union fees
+			</documentation>
+		</element>
+		
+		<element name="EmployeeSubCategory2" type="SourceCode" dbColumn="union_employee_subcat2_code">
+			<documentation>
+			Identifies the second sub category of employee within the union associated with this job.
+			</documentation>
+		</element>
+		
+		<element name="SeniorityDate" type="date">
+			<documentation>
+			Use this element to specify the date on which the worker enters the union. 
+			</documentation>
+		</element>
+
+		<element name="CategoryEntryDate" type="date">
+			<documentation>
+			Use this element to specify specify the date on which the worker enters the category.
+			</documentation>
+		</element>		
+	</group>
+	
+	<element name="ExpirationDate" type="date">
+		<documentation>
+		Expiration Date.
+		</documentation>
+	</element>
+	
+	<element name="EffectiveDate" type="date">
+		<documentation>
+		Expiration Date.
+		</documentation>
+	</element>
+
+</idsDocument>		

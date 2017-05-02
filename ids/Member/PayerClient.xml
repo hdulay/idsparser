@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument
+	idsVersion="2.0" 
+	version="1.3.7"
+	changeVersion="0" 
+	type="instance"
+	domain="Member"
+	name="PayerClient"
+	elementOrder="ClientName"
+	>
+	
+	<include name="CommonElements"
+			 prependToElementOrder="SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="OmniStatus, OmniStatusReason, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+	<changeLog>
+		<change version="1.3.2.0">Initial Version</change>
+	</changeLog>
+			
+	<documentation>
+PayerClient
+	</documentation>
+
+	<element name="SourceName" key="true" type="string" required="true">
+		<documentation>
+		Use this element to identify the source system that was responsible for generating this 
+	    document. This value is determined by the integration team and used in combination with 
+	    SourceInstanceId will allow this record to be traced back to its originating source.
+		</documentation>
+
+		<example>TestSystem</example>
+	</element>
+
+	<element name="SourceInstanceId" key="true" type="string" required="true" >
+		<documentation>
+		This element must contain an integration manufactured value that uniquely identifies this
+		PseudoClaim and can be used to map back to the source system. Whatever value is
+		manufactured must not change over time as it will be used to make updates when data
+		changes in the source system are processed.
+		</documentation>
+		
+		<example>TestPayerId</example>
+	</element>
+
+	<element name="ClientName" type="string">
+		<documentation>
+		Common name for the Client of the Payer
+		</documentation>
+		
+		<example>Client Name</example>
+	</element>
+
+</idsDocument>

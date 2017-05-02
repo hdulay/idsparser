@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument name="ClinicalBodySite" udlName="ClinicalBodySite" type="instance" access="shared" domain="Clinical.Event"
+			 		 		elementOrder="BodySiteCode, BodySiteDetails"
+			 		 		implementationClass="com.ibi.omni.patient.model.clinical.event.ClinicalBodySite">
+			 
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+					 	  	
+			<documentation>
+			The anatomical location where this condition manifests itself.  The details indicates a more precise location.  (e.g.  If body site is "Region of thorax", details could be "Lung")
+			</documentation>
+		
+			<element name="BodySiteCode" type="SourceCode" codeSource="OMNI" codeSet="0163">
+				<documentation>
+				Identifies the anatomical location where the condition manifested.
+				</documentation>
+				
+				<example sourceName="OMNI" sourceCodeSet="0163" sourceCode="LA"/>
+			</element>
+		
+			<element name="BodySiteDetails" type="string">
+				<documentation>
+				Provides more detailed anatomical location information than is provided by the body site itself.
+				</documentation>
+				
+				<example>Lung</example>
+			</element>			
+</idsDocument>

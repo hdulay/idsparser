@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsInclude name="OrderElements" type="include">	
+
+	<element name="EventDateTime" type="OmniDate">
+		<documentation>
+		Date and time that the order was placed.
+		</documentation>
+		
+		<example format="yyyy-MM-dd hh:mm:ss">2000-10-01 11:12:32</example>
+	</element>
+
+	<element name="Location" type="OmniLink" contains="FacilityLocation" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		Facility location where the order was placed.
+	
+		Use this element to specify a FacilityLocation in the system using the FacilityLocation's SourceName and SourceInstanceId. You cannot load FacilityLocation
+		information using this element, however if the FacilityLocation is not found then a "placeholder" will be created that will contain the FacilityLocation
+		when loaded.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<FacilityLocation>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>FacilityLocationId</SourceInstanceId>
+			</FacilityLocation>
+			]]>
+		</example>		
+	</element>
+
+	<element name="OrderNumber" type="string">
+		<documentation>
+		Uniquely identifies the order.
+		</documentation>
+		
+		<example>ORD-12345678</example>
+	</element>
+	
+	<element name="OrderTypeCode" type="SourceCode">
+		<documentation>
+		Distinguishes between Inpatient and Outpatient Orders, although a more granular distinction is possible.
+		</documentation>
+		
+		<example sourceCodeSet="OrderTypeCodes" sourceCode="orderTypeCode">Order Type Code</example>
+	</element>
+			
+	<element name="PriorityCode" type="SourceCode" codeSource="OMNI" codeSet="6055">
+		<documentation>
+		Indicates urgency with which the Order should be fulfilled.
+		</documentation>
+				
+		<example sourceName="OMNI" sourceCodeSet="6055" sourceCode="asap"/>
+	</element>
+
+	<element name="OrderReason" type="string"  maxLength="1000">
+		<documentation>
+		Describes the reason for the entire order in free-form text.  This has nothing to do with a diagnosis.
+		</documentation>
+		
+		<example>Free-form text block describing the reason for the Order.</example>
+	</element>
+	
+	<element name="OrderOutcomeStatusCode" type="SourceCode" codeSource="OMNI" codeSet="6060">
+		<documentation>
+		Indicates the Status of the entire Order.
+		</documentation>
+				
+		<example sourceName="OMNI" sourceCodeSet="6060" sourceCode="asap"/>
+	</element>
+	
+	<element name="OrderDetailNumber" type="string">
+		<documentation>
+		Represents the order detail number.  Even though each type of clinical event order 
+		only contains a single order detail record, still capture the order detail number 
+		for reference.
+		</documentation>
+		
+		<example>ORD-12345678-1</example>
+	</element>	
+	
+	<element name="Sequence" type="double">
+		<documentation>
+		Represents the sequence assigned to the original order detail.  Even though each 
+		type of clinical event order only contains a single order detail record, still capture 
+		this sequence for reference.  Allows to see the sequence of order detail items within 
+		an order by grouping by the order number belonging to all detail records.  
+		
+		Sequence serves to align predecessor/successor order detail items when required.
+		</documentation>
+		
+		<example>1.0</example>
+	</element>
+
+	<element name="OrderDetailStatusCode" type="SourceCode" codeSource="OMNI" codeSet="6065">
+		<documentation>
+		Indicates the current point in the process of the OrderDetail item.
+		</documentation>
+				
+		<example sourceName="OMNI" sourceCodeSet="6065" sourceCode="requested"/>
+	</element>
+
+	<element name="OrderSetNumber" type="string">
+		<documentation>
+		Each order detail item may belong to a pre-defined Order Set that is combined for efficiency.  
+		OrderSets may be created for particular diagnoses or treatments by an individual physician, 
+		or by a health system in accordance with evidence-based medicine protocols or industry best 
+		practices.
+		
+		Some OrderSets are "Standing Orders" for particular situations, and are not placed by individual 
+		Providers, but rather are agreed upon in advance by the Medical Staff.  This field contains 
+		the unique identifier for the order set record. 
+		</documentation>
+		
+		<example>ORDSET-12345678</example>
+	</element>	
+
+	<element name="OrderSetName" type="string">
+		<documentation>
+		Contains the name of the order set.
+		</documentation>
+		
+		<example>Myocardial Infarction Order Set</example>
+	</element>	
+
+	<element name="OrderDetailReasons" type="SourceCodeList" contains="OrderDetailReason">
+		<documentation>
+		Identifies any additives introduced to the specimen before or at the time of collection. 
+		These additives may be introduced in order to preserve, maintain or enhance the particular 
+		nature or component of the specimen.
+		</documentation>
+
+ 		<example>
+		<![CDATA[
+		<OrderDetailReason sourceCodeSet="OrderDetailReasons" sourceCode="Reason1"/>
+		<OrderDetailReason sourceCodeSet="OrderDetailReasons" sourceCode="Reason2"/>
+		]]>
+		</example>		
+	</element>
+	
+
+</idsInclude>

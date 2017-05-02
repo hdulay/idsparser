@@ -1,0 +1,903 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="2.1" changeVersion="1" domain="Clinical.Event.Order" type="instance"
+       name="PharmacyPrescriptionOrderEvent" udlName="PharmacyPrescriptionOrderEvent"  
+       elementOrder="SubstanceCode, PharmacyOrderTypeCode, ProviderAdministrationInstructionCode, ProviderAdministrationInstructions,
+                     Requested, Dispensed, PharmacyPrescriptionFulfillment, VaccinationFulfillment, SupplementaryCodes, Components, 
+                     AdministrationRoutes, FormularyStatusCode, QuantityReturnedAmount, QuantityReturnedUnitOfMeasureCode,
+                     QuantityWastedAmount, QuantityWastedUnitOfMeasureCode, DrugLegalClassCode"
+       implementationClass="com.ibi.omni.patient.model.clinical.event.order.PharmacyPrescriptionOrderEvent">             
+                 
+  <changeLog>
+    <change version="1.2.6_0">Initial Version</change>
+    <change version="1.2.6_1">Added Request/RequestText, VaccinationFulfillment/AmountText, VaccinationFulfillment/StrengthText, VaccinationFulfillment/DrugStrengthVolumneText</change>
+    <change version="2.1"> Added columns FormularyStatusCode, QuantityReturnedAmount, QuantityReturnedUnitOfMeasureCode,
+                     QuantityWastedAmount, QuantityWastedUnitOfMeasureCode, DrugLegalClassCode. RedMine: Feature #3847</change>
+    
+  </changeLog>
+  
+  <customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+  <customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+  <customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+  <customType name="SourceCodeList" class="com.ibi.omni.patient.ids.SourceCodeListType"/>
+  
+  <include name="OrderElements"
+       prependToElementOrder="EventDateTime, Location, OrderNumber, OrderTypeCode, PriorityCode, OrderReason, OrderOutcomeStatusCode, OrderDetailNumber, Sequence, OrderDetailStatusCode, OrderSetNumber, OrderSetName"
+       appendToElementOrder="OrderDetailReasons"/>
+       
+  <include name="EventElements"
+       prependToElementOrder="ParentEvent, Encounter, CarePlanId, CarePlan, CCDCategoryCode"
+       appendToElementOrder="EventProviders, EventNotes"/>
+       
+  <include name="CommonElements"
+       prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+       appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+  
+  <documentation>  
+    This subject covers a Pharmacy Prescription Order which contains data elements specific to an ordered Pharmacy Prescription for the patient.  The order can be to fulfill a medical substance/treatment or vaccination but not both (so fulfillment data elements for either PharmacyPrescriptionFulfillment group or VaccinationFulfillment group 
+  </documentation>
+
+  <element name="SubstanceCode" type="SourceCode">
+    <documentation>
+    Identifies the medical substance/treatment requested.
+    </documentation>
+    
+    <example sourceCodeSet="SubstanceCodes" sourceCode="374058000">Prednisone 10mg tablet (product)</example>
+  </element>
+  
+  <element name="PharmacyOrderTypeCode" type="SourceCode" codeSource="OMNI" codeSet="0480">
+    <documentation>
+    Contains the general category of pharmacy order.
+    </documentation>
+    
+    <example sourceName="OMNI" sourceCodeSet="0480" sourceCode="M"/>
+  </element>
+  
+  <element name="ProviderAdministrationInstructionCode" type="SourceCode">
+    <documentation>
+    Identifies the ordering provider's coded instructions to the patient or to the provider administering the drug or treatment.
+    </documentation>
+    
+    <example sourceCodeSet="ProviderAdministrationInstructionCodes" sourceCode="1111111">Administer Once Daily</example>
+  </element>
+    
+  <element name="ProviderAdministrationInstructions" type="string">
+    <documentation>
+    Contains free-form instructions from the ordering provider to the patient or to the provider administering the drug or treatment.
+    </documentation>
+    
+    <example>ProviderAdministrationInstructions</example>
+  </element>
+  
+  <group name="Requested" elementOrder="RequestText, MinAmount, MaxAmount, AmountUnitOfMeasureCode, AmountPerTimeCode, DosageFormCode,
+                                        Strength, StrengthUnitOfMeasureCode, DrugStrengthVolume, DrugStrengthVolumeUnitOfMeasureCode,
+                                        RateAmount,RateAmountUnitOfMeasureCode" udlName="requested">
+
+    <element name="RequestText" type="string">
+      <documentation>
+        TBD: Stephen Kahn  
+      </documentation>
+    
+      <example>TBD</example>
+    </element>
+                                        
+    <element name="MinAmount" type="double">
+      <documentation>
+        Contains the requested ordered amount.  In a variable dose order, this is the minimum ordered amount.  In a non-varying dose order, this is the exact amount of the order.
+      </documentation>
+    
+      <example>1.0</example>
+    </element>
+    
+    <element name="MaxAmount" type="double">
+      <documentation>
+        In a variable dose order, this is the requested maximum ordered amount. In a non-varying dose order, this field is not used.
+      </documentation>
+    
+      <example>100.0</example>
+    </element>
+    
+    <element name="AmountUnitOfMeasureCode" type="SourceCode" codeSource="OMNI" codeSet="6020">
+      <documentation>
+        Contains the unit of measure for the medical substance amount to be dispensed. 
+      </documentation>
+    
+      <example sourceName="OMNI" sourceCodeSet="6020" sourceCode="Foz"/>
+    </element>
+    
+    <element name="AmountPerTimeCode" type="SourceCode">
+      <documentation>
+        Contains the requested time unit to use to calculate the rate at which the pharmaceutical is to be administered.  Value is required when the ordered substance is to be administered continuously at a prescribed rate (e.g., certain IVs). For example, if the "requested amount/units" are 300 ml and the "per time" unit is H1, the rate is 300ml/hr and the duration of this dose is 1 hour.  Thus the requested amount and per time unit define the duration of the service.
+      </documentation>
+    
+      <example sourceCodeSet="AmountPerTimeCodes" sourceCode="S">seconds</example>
+    </element>
+    
+    <element name="DosageFormCode" type="SourceCode">
+      <documentation>
+        The dosage form indicates the requested manner in which the medical substance is dispensed.  Set this value when the substance requested does not specify the dosage form.
+      </documentation>
+    
+      <example sourceCodeSet="DosageFormCodes" sourceCode="Tablet">Tablet</example>
+    </element>
+    
+    <element name="Strength" type="double">
+      <documentation>
+        When medical substance requested does not specify the strength, this will contain the numeric part of the strength.
+      </documentation>
+    
+      <example>200.0</example>
+    </element>
+    
+    <element name="StrengthUnitOfMeasureCode" type="SourceCode" codeSource="OMNI" codeSet="6020">
+      <documentation>
+        Defines the requested unit of the strength.  The units may express a quantity per unit of time. For example, micrograms per hour (ug/h).
+      </documentation>
+    
+      <example sourceName="OMNI" sourceCodeSet="6020" sourceCode="Foz"/>
+    </element>
+    
+    <element name="DrugStrengthVolume" type="double">
+      <documentation>
+        Contains the requested volume measurement in which the drug strength concentration is contained. For example, Acetaminophen 120mg/5ml Elixir means that 120mg of the drug is in a solution with a volume of 5ml
+      </documentation>
+    
+      <example>5.0</example>
+    </element>
+    
+    <element name="DrugStrengthVolumeUnitOfMeasureCode" type="SourceCode" codeSource="OMNI" codeSet="6020">
+      <documentation>
+        Contains the requested volumetric unit for the drug strength. 
+      </documentation>
+    
+      <example sourceName="OMNI" sourceCodeSet="6020" sourceCode="Foz"/>
+    </element>
+        
+    <element name="RateAmount" type="double">
+      <documentation>
+        Contains the requested rate at which to administer a treatment, e.g., 150 ml/hr (for an IV) or 4 liters/min for nasal oxygen.
+      </documentation>
+    
+      <example>5.0</example>
+    </element>
+    
+    <element name="RateAmountUnitOfMeasureCode" type="SourceCode" codeSource="OMNI" codeSet="6020">
+      <documentation>
+        Contains the units in which requested rate amount is denominated.
+      </documentation>
+    
+      <example sourceName="OMNI" sourceCodeSet="6020" sourceCode="Foz"/>
+    </element>
+  </group>
+  
+  <group name="Dispensed" elementOrder="Amount, AmountUnitOfMeasureCode, DispenseCode, NumberOfRefills,
+                                        DispenseInterval, NeedsHumanReviewIndicator, DispensingPharmacy, TotalDailyDose,
+                                        TotalDailyDoseUnitOfMeasureCode, ProviderPharmacyTreatmentInstructionCode,
+                                        ProviderPharmacyTreatmentInstructions, AllowSubstitutionsCode" udlName="dispensed">
+  
+    <element name="Amount" type="double">
+      <documentation>
+        Contains the amount to be dispensed.
+      </documentation>
+    
+      <example>1.0</example>
+    </element>
+    
+    <element name="AmountUnitOfMeasureCode" type="SourceCode" codeSource="OMNI" codeSet="6020">
+      <documentation>
+        Contains the unit of measure for the medical substance amount to be dispensed. 
+      </documentation>
+    
+      <example sourceName="OMNI" sourceCodeSet="6020" sourceCode="Foz"/>
+    </element>
+    
+    <element name="DispenseCode" type="SourceCode">
+      <documentation>
+        Identifies the manner in which the medical substance is to be dispensed.
+      </documentation>
+    
+      <example sourceCodeSet="DispenseCodes" sourceCode="Capsule">Capsule</example>
+    </element>  
+    
+    <element name="NumberOfRefills" type="double">
+      <documentation>
+        Defines the number of times the requested dispense amount can be given to the patient.  Refers to outpatient only.
+      </documentation>
+    
+      <example>2.0</example>
+    </element>
+    
+    <element name="DispenseInterval" type="double">
+      <documentation>
+        Specifies the minimum number of days that must occur between dispensing substance.
+      </documentation>
+    
+      <example>1.0</example>
+    </element>
+    
+    <element name="NeedsHumanReviewIndicator" type="SourceCode" codeSource="OMNI" codeSet="0136">
+      <documentation>
+          Indicates whether the pharmacist or non-pharmacist treatment supplier filling the order needs to pay special attention to the text in the ordering provider's pharmacy/treatment instructions.  If "Yes", a warning is present to review.  If "No", the order has no warning to be reviewed.
+       </documentation>
+
+       <example sourceName="OMNI" sourceCodeSet="0136" sourceCode="Y"/>
+    </element>
+      
+    <element name="DispensingPharmacy" type="OmniLink" contains="FacilityLocation" keys="SourceName, SourceInstanceId" allowCreate="true">
+      <documentation>
+        Identifies the pharmacy that will dispense the prescription.
+      </documentation>
+
+      <example>
+        <![CDATA[
+          <FacilityLocation>
+            <SourceName>TestSystem</SourceName>
+            <SourceInstanceId>FacilityLocationId</SourceInstanceId>
+          </FacilityLocation>
+        ]]>
+      </example>
+    </element>
+    
+    <element name="TotalDailyDose" type="double">
+      <documentation>
+        Contains the total daily dose for this particular pharmaceutical as expressed in terms of actual dispense units.
+      </documentation>
+    
+      <example>500.0</example>
+    </element>
+    
+    <element name="TotalDailyDoseUnitOfMeasureCode" type="SourceCode" codeSource="OMNI" codeSet="6020">
+      <documentation>
+        Contains the unit of measure for the medical substance amount to be dispensed. 
+      </documentation>
+    
+      <example sourceName="OMNI" sourceCodeSet="6020" sourceCode="Foz"/>
+    </element>
+    
+    <element name="ProviderPharmacyTreatmentInstructionCode" type="SourceCode">
+      <documentation>
+        Identifies the ordering provider's coded instructions to the pharmacy or the non-pharmacy treatment provider (e.g. respiratory therapy).
+      </documentation>
+    
+      <example sourceCodeSet="ProviderPharmacyTreatmentInstructionCodes" sourceCode="RT">Respiratory Therapy</example>
+    </element>
+    
+    <element name="ProviderPharmacyTreatmentInstructions" type="string">
+      <documentation>
+        Contains free-form instructions from the ordering provider to the pharmacy or the non-pharmacy treatment provider (e.g. respiratory therapy).
+      </documentation>
+        
+      <example>ProviderPharmacyTreatmentInstructions</example>
+    </element>
+    
+    <element name="AllowSubstitutionsCode" type="SourceCode" codeSource="OMNI" codeSet="0161">
+      <documentation>
+        Specifies whether substitutions are allowed.
+      </documentation>
+    
+      <example sourceName="OMNI" sourceCodeSet="0161" sourceCode="G"/>
+    </element>
+  </group>
+  
+
+  <group name="PharmacyPrescriptionFulfillment" 
+  		 elementOrder="SubstanceCode, AdministrationStartDateTime, AdministrationEndDateTime, Amount, 
+                       AmountUnitOfMeasureCode, AmountPerTimeCode, DosageFormCode, Strength, StrengthUnitOfMeasureCode,
+                       DrugStrengthVolume, DrugStrengthVolumeUnitOfMeasureCode, BarcodeIdentifier, SubstanceLotNumber,
+                       SubstanceExpirationDate, SubstanceManufacturerCode, AdministeredLocation, SubstanceRefusalReasonCode,
+                       CompletionStatusCode, AdministrationNoteCode, AdministrationNotes"
+         dbColumnPrefix="pful">
+                                                              
+    <element name="SubstanceCode" type="SourceCode" dbColumn="pful_substance_code">
+      <documentation>
+        Identifies the medical substance/treatment administered. 
+      </documentation>
+    
+      <example sourceCodeSet="SubstanceCodes" sourceCode="374058000">Prednisone 10mg tablet (product)</example>
+    </element>
+    
+    <element name="AdministrationStartDateTime" type="OmniDate" dbColumn="pful_admin_start_date_time">
+      <documentation>
+        This represents the date and time that the administration of the medical substance/treatment started.
+      </documentation>
+        
+      <example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+    </element>
+      
+    <element name="AdministrationEndDateTime" type="OmniDate" dbColumn="pful_admin_end_date_time">
+      <documentation>
+        This represents the date and time that the administration of the medical substance/treatment ended.  If order was for continuous administration (e.g. IV), this value will be different than the start date; otherwise, it will be the same.
+      </documentation>
+        
+      <example format="yyyy-MM-dd hh:mm">2013-01-01 09:00</example>
+    </element>
+  
+    <element name="Amount" type="double" dbColumn="pful_amount">
+      <documentation>
+        Contains the medical substance amount administered.
+      </documentation>
+    
+      <example>200.0</example>
+    </element>
+    
+    <element name="AmountUnitOfMeasureCode" type="SourceCode" codeSource="OMNI" codeSet="6020" dbColumn="pful_amount_uom_code">
+      <documentation>
+        Contains the unit of measure for the administered medical substance amount. 
+      </documentation>
+    
+      <example sourceName="OMNI" sourceCodeSet="6020" sourceCode="Foz"/>
+    </element>
+    
+    <element name="AmountPerTimeCode" type="SourceCode" dbColumn="pful_amount_per_time_code">
+      <documentation>
+        Contains the rate at which the medical substance/treatment was administered required only when a substance is administered continuously at a prescribed rate such as for certain IV solutions.
+      </documentation>
+    
+      <example sourceCodeSet="AmountPerTimeCodes" sourceCode="UGH">ug/h</example>
+    </element>
+    
+    <element name="DosageFormCode" type="SourceCode" dbColumn="pful_dosage_form_code">
+      <documentation>
+        The dosage form indicates the manner in which the medical substance is administered.  Set this value when the substance administered code does not specify the dosage form.
+      </documentation>
+    
+      <example sourceCodeSet="DosageFormCodes" sourceCode="LQ">Liquid</example>
+    </element>
+    
+    <element name="Strength" type="double" dbColumn="pful_stgth">
+      <documentation>
+        When medical substance administered does not specify the strength, this will contain the numeric part of the strength.
+      </documentation>
+    
+      <example>100.0</example>
+    </element>
+    
+    <element name="StrengthUnitOfMeasureCode" type="SourceCode" codeSource="OMNI" codeSet="6020">
+      <documentation>
+        Contains the unit of measure for the administered medical substance amount. 
+      </documentation>
+    
+      <example sourceName="OMNI" sourceCodeSet="6020" sourceCode="Foz"/>
+    </element>
+     
+    <element name="DrugStrengthVolume" type="double" dbColumn="pful_drug_stgth_vol">
+      <documentation>
+        Contains the administered volume measurement in which the drug strength concentration is contained. For example, Acetaminophen 120mg/5ml Elixir means that 120mg of the drug is in a solution with a volume of 5ml
+      </documentation>
+    
+      <example>100.0</example>
+    </element>
+    
+   <element name="DrugStrengthVolumeUnitOfMeasureCode" type="SourceCode" codeSource="OMNI" codeSet="6020" dbColumn="pful_stgth_uom_code">
+      <documentation>
+        Contains the unit of measure for the administered medical substance amount. 
+      </documentation>
+    
+      <example sourceName="OMNI" sourceCodeSet="6020" sourceCode="Foz"/>
+    </element>
+    
+    <element name="BarcodeIdentifier" type="string" dbColumn="pful_barcode_identifier">
+      <documentation>
+        Contains the pharmacy system assigned barcode for the administered medical substance.
+      </documentation>
+        
+      <example>1234567890</example>
+    </element>
+    
+    <element name="SubstanceLotNumber" type="string" dbColumn="pful_substance_lot_number">
+      <documentation>
+        Contains the lot number of the medical substance administered.
+      </documentation>
+        
+      <example>3200-1</example>
+    </element>
+    
+    <element name="SubstanceExpirationDate" type="OmniDate" dbColumn="pful_substance_expiration_date">
+      <documentation>
+        Contains the expiration date of the medical substance administered.  
+      </documentation>
+        
+      <example format="yyyy-MM-dd">2013-01-01</example>
+    </element>
+    
+    <element name="SubstanceManufacturerCode" type="SourceCode" codeSource="OMNI" codeSet="0227" dbColumn="pful_substance_manuf_code">
+      <documentation>
+        Contains the unit of measure for the administered medical substance amount. 
+      </documentation>
+    
+      <example sourceName="OMNI" sourceCodeSet="0227" sourceCode="BAH"/>
+    </element>
+    
+    <element name="AdministeredLocation" type="OmniLink" contains="FacilityLocation" keys="SourceName, SourceInstanceId" allowCreate="true" dbColumn="pful_administered_location_id">
+      <documentation>
+        Identifies the facility location where the medical substance/treatment was administered.
+      </documentation>
+
+      <example>
+        <![CDATA[
+          <FacilityLocation>
+            <SourceName>TestSystem</SourceName>
+            <SourceInstanceId>FacilityLocationId</SourceInstanceId>
+          </FacilityLocation>
+        ]]>
+      </example>
+    </element>
+    
+    <element name="SubstanceRefusalReasonCode" type="SourceCode" dbColumn="pful_substance_refusal_code">
+      <documentation>
+        If the patient refused the medical substance/treatment, this value will contain the coded reason for the refusal.
+      </documentation>
+    
+      <example sourceCodeSet="SubstanceRefusalReasonCodes" sourceCode="DW">Dont Want</example>
+    </element>
+    
+    <element name="CompletionStatusCode" type="SourceCode" codeSource="OMNI" codeSet="0322" dbColumn="pful_completion_status_code">
+      <documentation>
+        Contains the status of administering the medical substance/treatment.
+      </documentation>
+    
+      <example sourceName="OMNI" sourceCodeSet="0322" sourceCode="CP"/>
+    </element>
+    
+    <element name="AdministrationNoteCode" type="SourceCode" dbColumn="pful_administration_note_code">
+      <documentation>
+        Contains coded notes from the provider administering the medical substance/treatment.
+      </documentation>
+    
+      <example sourceCodeSet="AdministrationNoteCodes" sourceCode="AN">AdministrationNote</example>
+    </element>
+    
+    <element name="AdministrationNotes" type="string" maxLength="1000">
+      <documentation>
+        Contains free-form notes from the provider administering the medical substance/treatment.
+      </documentation>
+        
+      <example>This is an administration note</example>
+    </element>
+  </group>
+  
+  
+  <group name="VaccinationFulfillment" elementOrder="VaccineCode, AdministrationStartDateTime, AdministrationEndDateTime, AmountText, Amount, AmountUnitOfMeasureCode,
+                                                     AmountPerTimeCode, DosageFormCode, StrengthText, Strength, StrengthUnitOfMeasureCode, DrugStrengthVolumeText, DrugStrengthVolume,
+                                                     DrugStrengthVolumeUnitOfMeasureCode, BarcodeIdentifier, VaccineLotNumber, VaccineExpirationDate, 
+                                                     VaccineManufacturerCode, AdministeredLocation, VaccineRefusalReasonCode, CompletionStatusCode, 
+                                                     AdministrationNoteCode, AdministrationNotes"
+         dbColumnPrefix="vful">
+                                                      
+    <element name="VaccineCode" type="SourceCode" codeSource="OMNI" codeSet="0292" dbColumn="vful_vaccine_code">
+      <documentation>
+        Identifies the vaccine administered.  None of the vaccines are administered orally unless specifically denoted.
+      </documentation>
+    
+      <example sourceName="OMNI" sourceCodeSet="0292" sourceCode="91"/>
+    </element>
+    
+    <element name="AdministrationStartDateTime" type="OmniDate" dbColum="vful_admin_start_date_time">
+      <documentation>
+        This represents the date and time that the administration of the vaccine started.
+      </documentation>
+        
+      <example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+    </element>
+      
+    <element name="AdministrationEndDateTime" type="OmniDate" dbColumn="vful_admin_end_date_time">
+      <documentation>
+      This represents the date and time that the administration of the vaccine ended.  If order was for continuous administration (e.g. IV), this value will be different than the start date; otherwise, it will be the same.
+      </documentation>
+        
+      <example format="yyyy-MM-dd hh:mm">2013-01-01 09:00</example>
+    </element>
+
+    <element name="AmountText" type="string" dbColumn="vful_amount_text">
+      <documentation>
+        Text field to communication amount information that cannot easily be parsed.
+      </documentation>
+    
+      <example>TBD</example>
+    </element>
+  
+    <element name="Amount" type="double" dbColumn="vful_amount">
+      <documentation>
+        Contains the vaccine amount administered.
+      </documentation>
+    
+      <example>200.0</example>
+    </element>
+    
+    <element name="AmountUnitOfMeasureCode" type="SourceCode" codeSource="OMNI" codeSet="6020" dbColumn="vful_amount_uom_code">
+      <documentation>
+        Contains the unit of measure for the vaccine amount administered.
+      </documentation>
+    
+      <example sourceName="OMNI" sourceCodeSet="6020" sourceCode="Foz"/>
+    </element>
+    
+    <element name="AmountPerTimeCode" type="SourceCode" dbColumn="vful_amount_per_time_code">
+      <documentation>
+        Contains the rate at which the vaccine was administered required only when a vaccine is administered continuously at a prescribed rate such as for certain IV solutions.
+      </documentation>
+    
+      <example sourceCodeSet="AmountPerTimeCodes" sourceCode="UGH">ug/h</example>
+    </element>
+    
+    <element name="DosageFormCode" type="SourceCode" dbColumn="vful_dosage_form_code">
+      <documentation>
+        The administered dosage form indicates the manner in which the vaccine is dispensed.  Set this value when the vaccine administered code does not specify the dosage form.
+      </documentation>
+    
+      <example sourceCodeSet="DosageFormCodes" sourceCode="TB">Tablet</example>
+    </element>
+
+    <element name="StrengthText" type="string" dbColumn="vful_stgth_text">
+      <documentation>
+        When vaccine administered does not specify the strength, this will contain a textual description of the strength.
+      </documentation>
+    
+      <example>TBD</example>
+    </element>
+    
+    <element name="Strength" type="double" dbColumn="vful_stgth">
+      <documentation>
+        When vaccine administered does not specify the strength, this will contain the numeric part of the strength.
+      </documentation>
+    
+      <example>100.0</example>
+    </element>
+    
+    <element name="StrengthUnitOfMeasureCode" type="SourceCode" codeSource="OMNI" codeSet="6020" dbColumn="vful_stgth_uom_code">
+      <documentation>
+        Defines the administered unit of the strength.  The units may express a quantity per unit of time. For example, micrograms per hour (ug/h).
+      </documentation>
+    
+      <example sourceName="OMNI" sourceCodeSet="6020" sourceCode="Foz"/>
+    </element>
+
+    <element name="DrugStrengthVolumeText" type="string" dbColumn="vful_drug_stgth_vol_text">
+      <documentation>
+         Contains the textual description administered volume measurement in which the drug strength concentration is contained. 
+         For example, Acetaminophen 120mg/5ml Elixir means that 120mg of the drug is in a solution with a volume of 5ml
+      </documentation>
+    
+      <example>TBD</example>
+    </element>
+     
+    <element name="DrugStrengthVolume" type="double" dbColumn="vful_drug_stgth_vol">
+      <documentation>
+         Contains the administered volume measurement in which the drug strength concentration is contained. For example, Acetaminophen 120mg/5ml Elixir means that 120mg of the drug is in a solution with a volume of 5ml
+      </documentation>
+    
+      <example>100.0</example>
+    </element>
+    
+   <element name="DrugStrengthVolumeUnitOfMeasureCode" type="SourceCode" codeSource="OMNI" codeSet="6020" dbColumn="vful_drug_stgth_vol_uom_code">
+      <documentation>
+        Contains the administered volumetric unit for the drug strength.
+      </documentation>
+    
+      <example sourceName="OMNI" sourceCodeSet="6020" sourceCode="Foz"/>
+    </element>
+    
+    <element name="BarcodeIdentifier" type="string" dbColumn="vful_barcode_identifier">
+      <documentation>
+        Contains the pharmacy system assigned barcode for the administered vaccine.
+      </documentation>
+        
+      <example>1234567890</example>
+    </element>
+    
+    <element name="VaccineLotNumber" type="string" dbColumn="vful_vaccine_lot_number">
+      <documentation>
+        Contains the lot number of the vaccine administered.
+      </documentation>
+        
+      <example>3200-1</example>
+    </element>
+    
+    <element name="VaccineExpirationDate" type="OmniDate" dbColumn="vful_vaccine_expiration_date">
+      <documentation>
+        Contains the expiration date of the vaccine administered.
+      </documentation>
+        
+      <example format="yyyy-MM-dd">2013-01-01</example>
+    </element>
+    
+    <element name="VaccineManufacturerCode" type="SourceCode" codeSource="OMNI" codeSet="0227" dbColumn="vful_vaccine_manuf_code">
+      <documentation>
+        Contains the manufacturer of the vaccine administered.
+      </documentation>
+    
+      <example sourceName="OMNI" sourceCodeSet="0227" sourceCode="BAH"/>
+    </element>
+    
+    <element name="AdministeredLocation" type="OmniLink" contains="FacilityLocation" keys="SourceName, SourceInstanceId" allowCreate="true" dbColumn="vful_administered_location_id">
+      <documentation>
+        Identifies the facility location where the vaccine was administered.
+      </documentation>
+
+      <example>
+        <![CDATA[
+          <FacilityLocation>
+            <SourceName>TestSystem</SourceName>
+            <SourceInstanceId>FacilityLocationId</SourceInstanceId>
+          </FacilityLocation>
+        ]]>
+      </example>
+    </element>
+    
+    <element name="VaccineRefusalReasonCode" type="SourceCode" dbColumn="vful_vaccine_refusal_code">
+      <documentation>
+        If the patient refused the vaccination, this value will contain the coded reason for the refusal.
+      </documentation>
+    
+      <example sourceCodeSet="VaccineRefusalReasonCodes" sourceCode="DW">Dont Want</example>
+    </element>
+    
+    <element name="CompletionStatusCode" type="SourceCode" codeSource="OMNI" codeSet="0322" dbColumn="vful_completion_status_code">
+      <documentation>
+        Contains the status of administering the vaccination.
+      </documentation>
+    
+      <example sourceName="OMNI" sourceCodeSet="0322" sourceCode="CP"/>
+    </element>
+    
+    <element name="AdministrationNoteCode" type="SourceCode" dbColumn="vful_administration_note_code">
+      <documentation>
+        Contains coded notes from the provider administering the vaccination.
+      </documentation>
+    
+      <example sourceCodeSet="AdministrationNoteCodes" sourceCode="AN">AdministrationNote</example>
+    </element>
+    
+    <element name="AdministrationNotes" type="string" dbColumn="vful_administration_notes">
+      <documentation>
+        Contains free-form notes from the provider administering the vaccination.
+      </documentation>
+        
+      <example>This is an administration note</example>
+    </element>  
+  </group>
+  
+  <element name="SupplementaryCodes" type="SourceCodeList" contains="PharmacySupplementaryCode">
+    <documentation>
+      SupplementaryCodes is a collection of SupplementaryCode records.  Accommodates the identification of any codes that might be associated with the ordered substance.  
+      Each pharmacy prescription ordered substance can have none, one or many supplementary codes.
+    </documentation>
+
+    <example>
+    <![CDATA[
+    <PharmacySupplementaryCode sourceCodeSet="SupplementaryCodes" sourceCode="SupplementaryCode1"/>
+    <PharmacySupplementaryCode sourceCodeSet="SupplementaryCodes" sourceCode="SupplementaryCode2"/>
+    ]]>
+    </example>    
+  </element>
+  
+  <list name="Components">
+    <documentation>
+      Components is a collection of Component records.  If the drug or treatment ordered is a compound drug or an IV solution and the components 
+      (base and all additives) are not known, define the components in this table.  Each pharmacy prescription order can have none or many components.
+    </documentation>
+    
+    <idsSpecification name="Component" udlName="Component" 
+              elementOrder="ComponentCode, ComponentTypeCode, Amount, AmountUnitOfMeasureCode, Strength, StrengthUnitOfMeasureCode,
+                            DrugStrengthVolume, DrugStrengthVolumeUnitOfMeasureCode, SupplementaryCodes"
+                            implementationClass="com.ibi.omni.patient.model.clinical.event.order.Component">
+              
+      <customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+      <customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+      <customType name="SourceCodeList" class="com.ibi.omni.patient.ids.SourceCodeListType"/>
+    
+      <include name="CommonElements"
+        prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+        appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+      
+      <documentation>
+        If the drug or treatment ordered is a compound drug or an IV solution and the components (base and all additives) are not known, define the components here.
+      </documentation>
+    
+      <element name="ComponentCode" type="SourceCode">
+        <documentation>
+          Identifies the medical substance/treatment requested.
+        </documentation>
+    
+        <example sourceCodeSet="ComponentCodes" sourceCode="CC">ComopnentCode</example>
+      </element>
+    
+      <element name="ComponentTypeCode" type="SourceCode" codeSource="OMNI" codeSet="0166">
+        <documentation>
+          Contains the drug or treatment component type.
+        </documentation>
+    
+        <example sourceName="OMNI" sourceCodeSet="0166" sourceCode="B"/>
+      </element>
+      
+      <element name="Amount" type="double">
+        <documentation>
+          Identifies the amount of this component to be added to the specified amount of the base.
+        </documentation>
+    
+        <example>200.0</example>
+      </element>
+    
+      <element name="AmountUnitOfMeasureCode" type="SourceCode" codeSource="OMNI" codeSet="6020">
+        <documentation>
+          Contains the unit of measure for the medical substance amount.
+        </documentation>
+    
+        <example sourceName="OMNI" sourceCodeSet="6020" sourceCode="Foz"/>
+      </element>
+      
+      <element name="Strength" type="double">
+        <documentation>
+          When medical substance requested does not specify the strength, this will contain the numeric part of the strength.
+        </documentation>
+    
+        <example>100.0</example>
+      </element>
+    
+      <element name="StrengthUnitOfMeasureCode" type="SourceCode" codeSource="OMNI" codeSet="6020">
+        <documentation>
+          Defines the unit of the strength.  The units may express a quantity per unit of time. For example, micrograms per hour (ug/h).
+        </documentation>
+    
+        <example sourceName="OMNI" sourceCodeSet="6020" sourceCode="Foz"/>
+      </element>
+      
+      <element name="DrugStrengthVolume" type="double">
+        <documentation>
+          Contains the volume measurement in which the drug strength concentration is contained. For example, Acetaminophen 120mg/5ml Elixir means that 120mg of the drug is in a solution with a volume of 5ml
+        </documentation>
+    
+        <example>100.0</example>
+      </element>
+    
+      <element name="DrugStrengthVolumeUnitOfMeasureCode" type="SourceCode" codeSource="OMNI" codeSet="6020">
+        <documentation>
+          Contains the volumetric unit for the drug strength.
+        </documentation>
+    
+        <example sourceName="OMNI" sourceCodeSet="6020" sourceCode="Foz"/>
+      </element>
+      
+      <element name="SupplementaryCodes" type="SourceCodeList" contains="ComponentSupplementaryCode">
+        <documentation>
+          SupplementaryCodes is a collection of SupplementaryCode records.  Accommodates the identification of any codes that might be associated with each component. 
+          Each component can have none, one or many supplementary codes.
+        </documentation>
+
+        <example>
+        <![CDATA[
+          <ComponentSupplementaryCode sourceCodeSet="SupplementaryCodes" sourceCode="SupplementaryCode1"/>
+          <ComponentSupplementaryCode sourceCodeSet="SupplementaryCodes" sourceCode="SupplementaryCode2"/>
+        ]]>
+        </example>    
+      </element>
+      
+    </idsSpecification>
+  </list>
+  
+  <list name="AdministrationRoutes">
+    <documentation>
+      AdministrationRoutes is a collection of AdministrationRoute records.  Contains alternative combinations of route, body site, administration device, 
+      and administration method that are prescribed as they apply to a particular order.  Each pharmacy prescription order can have none, one or more 
+      administration route records.
+    </documentation>
+    
+    <idsSpecification name="AdministrationRoute" udlName="AdministrationRoute" tableName="pharmacy_administration_route"
+      elementOrder="RouteOfAdministrationCode, BodySiteCode, BodySiteModifierCode, DeviceCode, MethodCode, RoutingInstructionCode"
+      implementationClass="com.ibi.omni.patient.model.clinical.event.order.AdministrationRoute">
+      
+      <customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+      
+      <include name="CommonElements"
+        prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+        appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+      
+      <element name="RouteOfAdministrationCode" type="SourceCode" codeSource="OMNI" codeSet="0162">
+        <documentation>
+          Contains the route of administration.
+        </documentation>
+    
+        <example sourceName="OMNI" sourceCodeSet="0162" sourceCode="DT"/>
+      </element>
+      
+      <element name="BodySiteCode" type="SourceCode" codeSource="OMNI" codeSet="0163">
+        <documentation>
+          Identifies the anatomical location for administering the drug or treatment.
+        </documentation>
+    
+        <example sourceName="OMNI" sourceCodeSet="0163" sourceCode="LG"/>
+      </element>
+      
+      <element name="BodySiteModifierCode" type="SourceCode" codeSource="OMNI" codeSet="0495">
+        <documentation>
+          Provides a more concise body site location for administering the drug or treatment.
+        </documentation>
+    
+        <example sourceName="OMNI" sourceCodeSet="0495" sourceCode="DIS"/>
+      </element>
+      
+      <element name="DeviceCode" type="SourceCode" codeSource="OMNI" codeSet="0164">
+        <documentation>
+          Contains the device for administering the drug or treatment.
+        </documentation>
+    
+        <example sourceName="OMNI" sourceCodeSet="0164" sourceCode="IVP"/>
+      </element>
+      
+      <element name="MethodCode" type="SourceCode" codeSource="OMNI" codeSet="0165">
+        <documentation>
+          Contains the method for administering the drug or treatment.
+        </documentation>
+    
+        <example sourceName="OMNI" sourceCodeSet="0165" sourceCode="IS"/>
+      </element>
+      
+      <element name="RoutingInstructionCode" type="SourceCode">
+        <documentation>
+          Identifies the ordering provider's routing instructions for administering the drug or treatment.
+        </documentation>
+    
+        <example sourceCodeSet="RoutingInstructionCodes" sourceCode="RI">RoutingInstruction</example>
+      </element>
+      
+    </idsSpecification>
+  </list>
+   
+  <element name="SourceStatusCode" udlName="sourceStatusCode" dbColumn="source_status_code" type="code" key="false" hidden="false" excludeInDoc="false" excludeFromRamp="false" immediate="false" required="false" index="false">
+        <documentation>Use this element to specify a customer specific status for the instance. This may be used during the match and merge process.</documentation>
+        <example sourceName="TestSystem" codeSet="SourceStatusCodes">A</example>
+      </element>
+ 
+  <element name="FormularyStatusCode" type="SourceCode">
+    <documentation>
+Defines whether the drug requested is/was within the accepted formulary at the institution
+    </documentation>
+    
+    <example sourceCodeSet="ProviderAdministrationInstructionCodes" sourceCode="1111111">Administer Once Daily</example>
+  </element>
+  
+  
+  <element name="QuantityReturnedAmount" type="double">
+    <documentation>
+    Defines amount returned unused of ordered drug
+    </documentation>
+    
+    <example sourceCodeSet="ProviderAdministrationInstructionCodes" sourceCode="1111111">17</example>
+  </element>
+  
+  
+  <element name="QuantityReturnedUnitOfMeasureCode" type="SourceCode">
+    <documentation>
+Defines amount unit of measure of amount returned unused
+    </documentation>
+    
+    <example sourceCodeSet="ProviderAdministrationInstructionCodes" sourceCode="1111111">Bushels</example>
+  </element>
+  
+  
+  <element name="QuantityWastedAmount" type="double">
+    <documentation>
+Defines amount wasted of ordered drug
+    </documentation>
+    
+    <example sourceCodeSet="ProviderAdministrationInstructionCodes" sourceCode="1111111">17</example>
+  </element>
+  
+  
+  <element name="QuantityWastedUnitOfMeasureCode" type="SourceCode">
+    <documentation>
+ Defines amount unit of measure of amount wasted
+     </documentation>
+    
+    <example sourceCodeSet="ProviderAdministrationInstructionCodes" sourceCode="1111111">Bushels</example>
+  </element>
+  
+  
+  <element name="DrugLegalClassCode" type="SourceCode">
+    <documentation>
+ Defines the legal class of the drug, e.g. DEA class controlled substance
+     </documentation>
+    
+    <example sourceCodeSet="ProviderAdministrationInstructionCodes" sourceCode="1111111">Illegal</example>
+  </element>
+                                                              
+</idsDocument>

@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.0.0"
+             domain="Provider"
+             type="instance"
+			 name="ProviderPractice"
+             udlName="ProviderPractice"
+             elementOrder="MasterId, PreMasteredId, LegalName, DoingBusinessAsName, DisplayName, NationalProviderId, TaxIdTypeCode,
+             TaxId, PrimaryPhone, PrimaryFax, PrimaryEmail,   PrimaryAddress, ParentPractice, BusinessUnits, Specialties,
+             OtherAddresses, OtherIdentifiers"
+             implementationClass="com.ibi.omni.patient.model.provider.ProviderPractice">
+
+	<changeLog>
+		<change version="1.0.0">Initial version</change>
+	</changeLog>
+
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+
+    <include name="CommonElements"
+             prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+             appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+    <include name="MasteringElements" appendToElementOrder="MatchRole,MatchCandidateGroupId,MatchQualityScore,MatchRule"/>
+
+
+    <documentation>
+        Use this IDS to load ProviderPractice-related information into OmniPatient. Per CMS, a Provider
+        Practice is an "organization that renders health care or furnishes health care supplies to patients."
+        You may feed both external or internal ProviderPractices.
+    </documentation> 
+
+    <element name="MasterId" type="string" hidden="true">
+        <documentation>
+            Links this instance to the master. This value is created and updated by the Omni
+            matching service.
+        </documentation>
+    </element>
+
+    <element name="PreMasteredId" type="OmniLink" contains="ProviderPractice" keys="SourceName, SourceInstanceId"
+             allowCreate="true">
+        <documentation>
+            There are often scenarios in a given source system where multiple instance records may be created
+            that represent the same logical entity. At some point the source system may detect this issue and
+            would like to convey that information to the processing server.
+
+            Use this element to indicate the surviving entity when multiple instances represent the same
+            entity. This element will be used during the matching and merging process to insure that entity
+            instances are properly grouped.
+        </documentation>
+    </element>
+
+    <element name="LegalName" type="string">
+        <documentation>
+            The legal business name of the person or entity that owns the
+            ProviderPractice, as registered with governmental agencies.
+        </documentation>
+    </element>
+
+    <element name="DoingBusinessAsName" type="string">
+        <documentation>
+            Use this element to specify the Doing Business As (DBA) name of the Provider Organization.
+        </documentation>
+    </element>
+
+    <element name="DisplayName" type="string">
+        <documentation>
+            A common or abbreviated name commonly used in marketing or sales material for the ProviderPractice.
+        </documentation>
+    </element>
+
+    <element name="NationalProviderId" type="string">
+        <documentation>
+            National Provider Identifier for the Provider Practice, as provided by CMS through NPPES.
+        </documentation>
+    </element>
+
+
+    <element name="TaxIdTypeCode" type="SourceCode" codeSource="OMNI" codeSet="0203">
+        <documentation>
+            Use this element to specify the type of Tax identifier. For example SS - Social Security
+            Number, TAX - Tax ID, etc...
+        </documentation>
+    </element>
+
+    <element name="TaxId" type="string">
+        <documentation>
+            Use this element to specify the Tax identifier value.
+        </documentation>
+    </element>
+
+    <element name="PrimaryPhone" type="string">
+        <documentation>
+            Use this element to specify the primary contact phone number for this ProviderPractice.
+        </documentation>
+    </element>
+
+    <element name="PrimaryFax" type="string">
+        <documentation>
+            Use this element to specify the primary fax number for this ProviderPractice.
+        </documentation>
+    </element>
+
+    <element name="PrimaryEmail" type="string">
+        <documentation>
+            Use this element to specify the primary contact email for this ProviderPractice.
+        </documentation>
+    </element>
+
+    <group name="PrimaryAddress"
+           elementOrder="AddressLine1, AddressLine2, AddressLine3, AddressLine4, City, StateProvince, PostalCode,
+		   Country, CountyRegion, StateProvinceCode, CountryCode, CountyRegionCode, Latitude, Longitude">
+
+        <documentation>
+            Elements in this group may be used to specify primary administrative location information for the
+            ProviderPractice.
+        </documentation>
+
+        <element name="AddressLine1" type="string">
+            <documentation>
+                This element specifies the street or mailing address of a person or institution. When
+                referencing an institution, this first component is used to specify the institution name.
+                When used in connection with a person, This element specifies the first line of the address.
+            </documentation>
+        </element>
+
+        <element name="AddressLine2" type="string">
+            <documentation>
+                This element specifies the second line of address. In general, it qualifies address. Examples:
+                Suite 555 or Fourth Floor. When referencing an institution, This element specifies the street address.
+            </documentation>
+        </element>
+
+        <element name="AddressLine3" type="string">
+            <documentation>
+                This element specifies the name of the person or organization that should appear
+                as part of the address. This is also known as the "Care of" or "C/O" line.
+            </documentation>
+        </element>
+
+        <element name="AddressLine4" type="string">
+            <documentation>
+                This element specifies more address information.
+            </documentation>
+        </element>
+
+        <element name="City" type="string">
+            <documentation>
+                This element specifies the city, district or place where the addressee is located
+                depending upon the national convention for formatting addresses for postal usage.
+            </documentation>
+        </element>
+
+        <element name="StateProvince" type="string">
+            <documentation>
+                This element specifies the state or province where the addressee is located. State or
+                province should be represented by the official postal service codes for that country.
+            </documentation>
+        </element>
+
+        <element name="PostalCode" type="string">
+            <documentation>
+                This element specifies the zip or postal code where the addressee is located. Zip or postal codes
+                should be represented by the official codes for that country. In the US, thezip code takes the form
+                99999[-9999], while the Canadian postal code takes the form A9A9A9 and the Australian Postcode takes
+                the form 9999.
+            </documentation>
+        </element>
+
+        <element name="Country" type="string">
+            <documentation>
+                This element specifies the country where the addressee is located.
+            </documentation>
+
+        </element>
+
+        <element name="CountyRegion" type="string">
+            <documentation>
+                This element specifies the county where the addressee is located when applicable.
+            </documentation>
+        </element>
+
+        <element name="StateProvinceCode" type="SourceCode">
+            <documentation>
+                This element specifies a code-based representation of the StateProvince, such as FIPS.
+            </documentation>
+        </element>
+
+        <element name="CountryCode" type="SourceCode">
+            <documentation>
+                This element specifies a code-based representation of the Country, such as FIPS.
+            </documentation>
+        </element>
+
+        <element name="CountyRegionCode" type="SourceCode">
+            <documentation>
+                This element specifies a code-based representation of the CountyRegion, such as FIPS.
+            </documentation>
+
+        </element>
+
+        <element name="Latitude" type="double" precision="9" scale="6">
+            <documentation>
+                This element specified the latitude of the address.
+            </documentation>
+        </element>
+
+        <element name="Longitude" type="double" precision="9" scale="6">
+            <documentation>
+                This element specified the longitude of the address.
+            </documentation>
+        </element>
+    </group>
+
+    <element name="ParentPractice" type="OmniLink" contains="ProviderPractice">
+        <documentation>
+            Use this element to specify a reference to the parent ProviderPractice for this PracticeFacility.
+        </documentation>
+    </element>
+
+    <list name="BusinessUnits">
+        <idsSpecification name="PracticeBusinessUnit" udlName="PracticeBusinessUnit" type="instance_child"
+                          elementOrder="BusinessUnit, StartDate, EndDate"
+                          implementationClass="com.ibi.omni.patient.model.provider.PracticeBusinessUnit">
+
+            <include name="CommonElements"
+                     prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+                     appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+            <documentation>
+                Use this group to specify relationships between the Provider Practice and Organizational
+                or Financial Hierarchy elements such as CostCenter, RevenueCenter, and ServiceLine.
+            </documentation>
+
+            <element name="BusinessUnit" type="OmniLink" contains="OrganizationalUnit">
+                <documentation>
+                    Use this element to specify the name or abbreviated name of the provider's specialty.
+                </documentation>
+            </element>
+
+            <element name="StartDate" type="OmniDate">
+                <documentation>
+                    Start date of the Practice/BusinessUnit relationship.
+                </documentation>
+            </element>
+
+            <element name="EndDate" type="OmniDate">
+                <documentation>
+                    End date of the Practice/BusinessUnit relationship.
+                </documentation>
+            </element>
+        </idsSpecification>
+
+    </list>
+
+    <list name="Specialties">
+
+        <idsSpecification name="PracticeSpecialty" udlName="PracticeSpecialty" type="instance_child"
+                          elementOrder="SpecialtyName, SpecialtyCode, TaxonomyCode, StartDate, EndDate"
+                          implementationClass="com.ibi.omni.patient.model.provider.PracticeSpecialty">
+
+            <include name="CommonElements"
+                     prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+                     appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+            <documentation>
+                Use this structure to specify the specialties offered by the ProviderPractice.
+            </documentation>
+
+            <element name="SpecialtyName" type="string">
+                <documentation>
+                    Use this element to specify the name or abbreviated name
+                    of the provider's specialty, if not available as a code.
+                </documentation>
+            </element>
+
+            <element name="SpecialtyCode" type="SourceCode">
+                <documentation>
+                    Use this element to specify the specialty code that of the Provider's specialty.
+                </documentation>
+            </element>
+
+            <element name="TaxonomyCode" type="SourceCode" codeSource="OMNI" codeSet="0454">
+                <documentation>
+                    Use this element to specify the Level 2 - Classification or Level 3 - Area
+                    of Specialization, Provider Taxonomy code associated with this specialty.
+                </documentation>
+            </element>
+
+            <element name="StartDate" type="OmniDate">
+                <documentation>
+                    Use this element to specify the Start Date of the PracticeSpecialty.
+                </documentation>
+            </element>
+
+            <element name="EndDate" type="OmniDate">
+                <documentation>
+                    Use this element to specify the End Date of the PracticeSpecialty.
+                </documentation>
+            </element>
+        </idsSpecification>
+    </list>
+
+    <list name="OtherAddresses">
+
+        <idsSpecification name="PracticeAddress" udlName="PracticeAddress" type="instance_child"
+                          elementOrder="Type, StartDate, EndDate, AddressLine1, AddressLine2, AddressLine3, AddressLine4,
+                           City, StateProvince, PostalCode, Country, CountyRegion, StateProvinceCode, CountryCode,
+                           CountyRegionCode, Latitude, Longitude"
+                          implementationClass="com.ibi.omni.patient.model.provider.PracticeAddress">
+
+            <include name="CommonElements"
+                       prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+                       appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+            <documentation>
+                Use this specification to load additional Practice Addresses, such as remittance addresses, etc.
+                This structure should not be used to specify practice locations. These will be implemented in
+                the PracticeFaciliity IDS.
+            </documentation>
+
+            <element name="Type" type="SourceCode">
+                <documentation>
+                    Use this element to specify the type of address being loaded.
+                </documentation>
+            </element>
+
+            <element name="StartDate" type="OmniDate">
+                <documentation>
+                    Specify the date this address is effective.
+                </documentation>
+            </element>
+
+            <element name="EndDate" type="OmniDate">
+                <documentation>
+                    Specify the date this address is no longer effective.
+                </documentation>
+            </element>
+
+            <element name="AddressLine1" type="string">
+                <documentation>
+                    This element specifies the street or mailing address of a person or institution. When
+                    referencing an institution, this first component is used to specify the institution name.
+                    When used in connection with a person, This element specifies the first line of the
+                    address.
+                </documentation>
+            </element>
+
+            <element name="AddressLine2" type="string">
+                <documentation>
+                    This element specifies the second line of address. In general, it qualifies address. Examples: Suite
+                    555 or Fourth Floor. When referencing an institution, This element specifies the street address.
+                </documentation>
+            </element>
+
+            <element name="AddressLine3" type="string">
+                <documentation>
+                    This element specifies the name of the person or organization that should appear as part of
+                    the address. This is also known as the "Care of" or "C/O" line..
+                </documentation>
+            </element>
+
+            <element name="AddressLine4" type="string">
+                <documentation>
+                    This element specifies more address information.
+                </documentation>
+            </element>
+
+            <element name="City" type="string">
+                <documentation>
+                    This element specifies the city, district or place where the addressee is located
+                    depending upon the national convention for formatting addresses for postal usage.
+                </documentation>
+            </element>
+
+            <element name="StateProvince" type="string">
+                <documentation>
+                    This element specifies the state or province where the addressee is located. State or
+                    province should be represented by the official postal service codes for that country.
+                </documentation>
+            </element>
+
+            <element name="PostalCode" type="string">
+                <documentation>
+                    This element specifies the zip or postal code where the addressee is located. Zip or postal codes
+                    should be represented by the official codes for that country. In the US, the zip code takes the
+                    form 99999[-9999], while the Canadian postal code takes the form A9A9A9 and the Australian Postcode
+                    takes the form 9999.
+                </documentation>
+            </element>
+
+            <element name="Country" type="string">
+                <documentation>
+                    This element specifies the country where the addressee is located.
+                </documentation>
+            </element>
+
+            <element name="CountyRegion" type="string">
+                <documentation>
+                    This element specifies the county where the addressee is located when applicable.
+                </documentation>
+            </element>
+
+            <element name="StateProvinceCode" type="SourceCode">
+                <documentation>
+                    This element specifies a code-based representation of the StateProvince, such as FIPS.
+                </documentation>
+            </element>
+
+            <element name="CountryCode" type="SourceCode">
+                <documentation>
+                    This element specifies a code-based representation of the Country, such as FIPS.
+                </documentation>
+            </element>
+
+            <element name="CountyRegionCode" type="SourceCode">
+                <documentation>
+                    This element specifies a code-based representation of the CountyRegion, such as FIPS.
+                </documentation>
+            </element>
+
+            <element name="Latitude" type="double" precision="9" scale="6">
+                <documentation>
+                    This element specified the latitude of the address.
+                </documentation>
+            </element>
+
+            <element name="Longitude" type="double" precision="9" scale="6">
+                <documentation>
+                    This element specified the longitude of the address.
+                </documentation>
+            </element>
+
+        </idsSpecification>
+    </list>
+
+    <list name="OtherIdentifiers">
+
+        <idsSpecification name="PracticeIdentifier" udlName="PracticeIdentifier" type="instance_child"
+                          elementOrder="Type, StartDate, EndDate, Value, IssuingAuthority, Comment"
+                          implementationClass="com.ibi.omni.patient.model.provider.PracticeIdentifier">
+
+            <include name="CommonElements"
+                     prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+                     appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+            <documentation>
+                Use this structure to specify additional identifiers for the ProviderPractice.
+            </documentation>
+
+            <element name="Type" type="SourceCode">
+                <documentation>
+                    Use this element to specify the type of identifier.
+                </documentation>
+            </element>
+
+            <element name="StartDate" type="OmniDate">
+                <documentation>
+                    Specify the date this identifier is effective.
+                </documentation>
+            </element>
+
+            <element name="EndDate" type="OmniDate">
+                <documentation>
+                    Specify the date this identifier is no longer effective.
+                </documentation>
+            </element>
+
+            <element name="Value" type="string">
+                <documentation>
+                    Use this element to specify the value of the identifier.
+                </documentation>
+            </element>
+
+            <element name="IssuingAuthority" type="string">
+                <documentation>
+                    Use this element to specify the organization that was responsible for issuing this identification.
+                </documentation>
+            </element>
+
+            <element name="Comment" type="string">
+                <documentation>
+                    Use this element to store comments about the identifier.
+                </documentation>
+            </element>
+
+        </idsSpecification>
+    </list>
+</idsDocument>

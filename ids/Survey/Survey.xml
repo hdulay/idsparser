@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<idsDocument version="1.0.0" changeVersion="0" domain="Survey" type="instance" 
+			 name="Survey"
+		     elementOrder="SurveyVendor, SurveyVendorIdentifier, SurveyVendorName, SurveyLanguageCode, 
+		     SurveyIdentifier, SurveySponsorOrganization, SurveyVersion, SurveyName, SurveySubjectIdentifier, 
+		     SurveySubjectName, SurveyStartDate, SurveyCompletionDate, 
+		     SurveyTopicCode, SurveySubTopicCode, LagDays, OverallScore, Questions">
+		     
+	<include name="CommonElements"
+		prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+		appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy" />
+	
+	<documentation>Overview:
+		This will be the reusable Survey definition that can be part of any
+		survey-related IDS (Patient Satisfaction, Provider Satisfaction,
+		Safety Surveys, etc.). It captures specific attributes for the focus
+		and identification of a survey, the approved vendor that administered
+		the survey, when it was taken, and the list of questions and answers
+		provided by the person who filled out the survey.
+
+		NOTE: Survey MUST be fed only in context with another IDS such as Patient
+		Satisfaction, Provider Satisfaction, Safety Surveys, etc. Loading
+		Survey first then trying to link to it will not work.
+	</documentation>
+
+	<element name="SurveyVendor" type="link" contains="Organization">
+		<documentation>Identifies the organization representing the approved
+			vendor administering the survey.</documentation>
+	</element>
+
+	<element name="SurveyVendorIdentifier" type="string">
+		<documentation>Identifies a number assigned to represent the approved
+			vendor that administered the survey. The SurveyVendorId attribute
+			should be used when the client hasn't implemented the Organization
+			IDS.</documentation>
+	</element>
+
+	<element name="SurveyVendorName" type="string">
+		<documentation>Identifies a name assigned to represent the approved
+			vendor that administered the survey. The SurveyVendorName attribute
+			should be used when the client hasn't implemented the Organization
+			IDS.</documentation>
+	</element>
+	<element name="SurveyLanguageCode" type="code">
+		<documentation>Specifies the language used on the survey.
+		</documentation>
+	</element>
+	
+	<element name="SurveyIdentifier" type="string">
+		<documentation>Contains an unique identifier assigned to represent
+			this survey.</documentation>
+	</element>
+	
+	<element name="SurveySponsorOrganization" type="string">
+		<documentation>Identifies the organization that sponsors the survey.
+			For example, NHPCO (National Hospice and Palliative Care
+			Organization) sponsors post-death surveys FEHC (Family Evaluation of
+			Hospice Care), FEBS (Family Evaluation of Bereavement Services) and
+			FEPC (Family Evaluation of Palliative Care). Palliative care is
+			specialized medical care for those with serious illnesses such as
+			cancer, kidney failure, Alzheimer's, stroke, etc., focusing on pain
+			management, difficulty breathing, fatigue, nausea, loss of appetite,
+			difficulty sleeping and depression.</documentation>
+	</element>
+
+	<element name="SurveyVersion" type="string">
+		<documentation>Contains the version assigned to this survey. Examples
+			of versions would be year-based (e.g. 2012, 2013, 2014, etc.) or
+			incremental number-based (e.g. 1.0, 1.5, 2.0, 3.0, etc.).
+		</documentation>
+	</element>
+
+	<element name="SurveyName" type="string">
+		<documentation>Contains the name of the survey such as: HCAHPS
+			(Hospital Consumer Assessment of Healthcare Providers and Systems)
+			Survey FEHC (Family Evaluation of Hospice Care) Survey FEHC-V (Family
+			Evaluation of Hospice Care for Veteran) Survey FEBS (Family
+			Evaluation of Bereavement Services) Survey FEPC (Family Evaluation of
+			Palliative Care) Survey</documentation>
+	</element>
+	
+	<element name="SurveySubjectIdentifier" type="string">
+		<documentation>Contains the unique identifier assigned to the survey
+			subject.</documentation>
+	</element>
+	
+	<element name="SurveySubjectName" type="string">
+		<documentation>Contains the primary subject covered in the survey
+			(e.g. Hospital Stay, Hospice Care, Bereavement Services, Palliative
+			Care).</documentation>
+	</element>
+
+	<element name="SurveyStartDate" type="datetime">
+		<documentation>Date of first attempt to complete survey.
+		</documentation>
+	</element>
+
+	<element name="SurveyCompletionDate" type="datetime">
+		<documentation>Date all survey data collection was completed.
+		</documentation>
+	</element>
+
+	<element name="SurveyTopicCode" type="code">
+		<documentation>Defines the primary topic that is the focus of this
+			survey.</documentation>
+	</element>
+
+	<element name="SurveySubTopicCode" type="code">
+		<documentation>Survey topics can be further categorized as needed. For
+			instance, the survey topic of Post Death could have subtopics of
+			Hospice, Palliative Care or Bereavement Services.</documentation>
+	</element>
+
+	<element name="LagDays" type="integer">
+		<documentation>Days between date of survey completion and event being
+			surveyed about.</documentation>
+	</element>
+
+	<element name="OverallScore" type="double">
+		<documentation>Overall score.</documentation>
+	</element>
+
+	<list name="Questions">
+		<documentation>Questions is a collection of Question instances. A
+			survey can have many questions.</documentation>
+
+		<idsDocument version="1.0.0" changeVersion="0" domain="Survey" type="instance_child" 
+				     name="SurveyQuestion"
+					 elementOrder="QuestionId, SequenceNumber, QuestionVisibleIdentifier, QuestionText, 
+					 QuestionTopicCode, QuestionSubTopicCode, Answers">
+			
+			<include name="CommonElements"
+				prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+				appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy" />
+			
+			<documentation>A survey can have many questions.</documentation>
+			
+			<element name="QuestionId" type="string">
+				<documentation>Contains an unique identifier assigned to represent
+					this specific question on this survey. It may or may not be
+					displayed on the survey.</documentation>
+			</element>
+
+			<element name="SequenceNumber" type="integer">
+				<documentation>Specifies the sequential number of this question in
+					the order it is found on this survey.</documentation>
+			</element>
+
+			<element name="QuestionVisibleIdentifier" type="string">
+				<documentation>Specifies a number to display on this survey for this
+					specific question.</documentation>
+			</element>
+
+			<element name="QuestionText" type="string">
+				<documentation>Contains the actual text that makes up the question
+					on this survey.</documentation>
+			</element>
+
+			<element name="QuestionTopicCode" type="code">
+				<documentation>Survey questions can be grouped into topics such as
+					communication with doctors and nurses, responsiveness of hospital
+					staff, pain management, communication about medicines, discharge
+					information, cleanliness of the hospital environment, quietness of
+					the hospital environment, and transition of care.</documentation>
+			</element>
+
+			<element name="QuestionSubTopicCode" type="code">
+				<documentation>Survey questions can be further categorized as
+					needed. For instance, the survey can have a topic covering the
+					hospital environment with subtopics of cleanliness and quietness.
+				</documentation>
+			</element>
+
+			<list name="Answers">
+				<documentation>Answers is a collection of Answer instances. For survey
+					questions allowing multiple answers, there will be more than a single
+					instance in the collection. Otherwise, only one instance will exist
+					in the collection.</documentation>
+
+				<idsDocument version="1.0.0" changeVersion="0" domain="Survey" type="instance_child"
+							 name="SurveyAnswer"
+							 elementOrder="AnswerIdentifier, AnswerTypeCode, AnswerChoiceId, AnswerText, AnswerRawScore,
+						  AnswerRawScoreBasisScaleBottom, AnswerRawScoreBasisScaleTop, AnswerSentimentCode">
+
+					<include name="CommonElements"
+							 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+							 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy" />
+
+					<documentation>For survey questions allowing multiple answers, there
+						will be more than a single instance in the collection. Otherwise,
+						only one instance will exist in the collection.</documentation>
+
+					<element name="AnswerIdentifier" type="string">
+						<documentation>Identifies a number assigned to represent this
+							specific answer on this question on this survey.</documentation>
+					</element>
+
+					<element name="AnswerTypeCode" type="code">
+						<documentation>Defines the type of answer to expect whether it is
+							multiple choice, text, numeric, etc.</documentation>
+					</element>
+
+					<element name="AnswerChoiceId" type="string">
+						<documentation>For multiple choice answers, 1,2,3...a,b,c...etc.
+						</documentation>
+					</element>
+
+					<element name="AnswerText" type="string" maxLength="5000">
+						<documentation>Contains the freeform text answer.</documentation>
+					</element>
+
+					<element name="AnswerRawScore" type="double">
+						<documentation>Actual score.</documentation>
+					</element>
+
+					<element name="AnswerRawScoreBasisScaleBottom" type="double">
+						<documentation>Lowest possible score (negative sentiment).
+						</documentation>
+					</element>
+
+					<element name="AnswerRawScoreBasisScaleTop" type="double">
+						<documentation>Highest possible score (positive sentiment).
+						</documentation>
+					</element>
+
+					<element name="AnswerSentimentCode" type="code">
+						<documentation>Sentiment analysis involves the classification of
+							text to represent positive, negative and neutral categories.
+						</documentation>
+					</element>
+				</idsDocument>
+			</list>
+
+
+		</idsDocument>
+	</list>
+
+
+</idsDocument>
+

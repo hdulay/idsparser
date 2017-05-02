@@ -1,0 +1,841 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.1.7" changeVersion="4" type="instance" domain="Person"
+			 name="Person" udlName="Person"  
+			 circularExclude="Relations"
+	 		 elementOrder="Publicity, Protection, Gender, MaritalStatus, Language,
+	                       CareLanguage, WrittenLanguage, EnglishFluency, InterpreterRequired, Citizenship, EthnicGroup,
+	                       Race, Religion, PlaceOfWorship, MotherMaidenName, DateOfBirth, Deceased, DateOfDeath, CauseOfDeath,
+	                       Handicap, HearingImpaired, VisuallyImpaired, Blind, Deaf, AmbulatoryStatus, Military,
+	                       Names, Addresses, Identifiers, ContactMethods, Relations"	                       
+	         implementationClass="com.ibi.omni.patient.model.person.Person">
+ 
+	<changeLog>
+		<change version="1.0.0">Initial Revision</change>
+		<change version="1.1.7_0">Supported Version</change>
+        <change version="1.1.7_1">Added Comment element to PersonIdentifer. Changed Citizenship sourceCode reference to 0399.</change>
+        <change version="1.1.7_2">Extended Attributes Support</change>
+        <change version="1.1.7_3">Updated ContactMethod.Type sourceCode reference to 0185. Updated Military.Rank sourceCode reference to 0141.</change> 
+        <change version="1.1.7_4">Added SourceStatusCode to instance and collection items.</change>
+        <change version="1.1.7_5">Added Latitude and Longitude Data Elements to Person Address.</change>
+	</changeLog>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	
+	<documentation>
+	Use this specification to load Person information into OmniPatient. A person should not be loaded into OmniPatient
+	unless it has a defined role like Patient, Provider, or Relation.
+	</documentation>
+ 	
+	<element name="Publicity" type="SourceCode" codeTable="0215">
+		<documentation>
+		This field contains a user-defined code indicating what level of publicity is allowed 
+	 	(e.g., No Publicity, Family Only) for the patient. 
+		</documentation>
+		
+		<example sourceCodeSet="PublicityCodes" sourceCode="N">No Publicity</example>
+	</element>
+
+	<element name="Protection" type="SourceCode" codeTable="0618">
+		<documentation>
+		This field identifies the patient's protection that determines whether access to 
+	 	information about this person should be kept from users who do not have adequate 
+	 	authority for the patient.
+		</documentation>
+		
+		<example sourceCodeSet="ProtectionCodes" sourceCode="UL">Unlisted</example>
+	</element>
+	
+	<element name="Gender" type="SourceCode" codeTable="0001" HL7="PID-8 Administrative Sex">
+		<documentation>
+		This field contains the patient's sex. 
+		</documentation>
+		
+		<example sourceCodeSet="GenderCodes" sourceCode="F">Female</example>
+	</element>
+
+	<element name="MaritalStatus" type="SourceCode" codeTable="0002" HL7="PID-16 Martial Status">
+		<documentation>
+		Use this element to specify the person's marital (civil) status. 
+		</documentation>
+		
+		<example sourceCodeSet="MaritalStatusCodes" sourceCode="D">Divorced</example>
+	</element>
+
+	<element name="Language" type="SourceCode" codeTable="0296" HL7="PID-15 Primary Language">
+		<documentation>
+		Use this element to specify the person's primary language. 
+	 	HL7 recommends using the ISO table 639 for suggested values. 
+		</documentation>
+		
+		<example sourceCodeSet="LanguageCodes" sourceCode="E">English</example>
+	</element>
+	
+	<element name="CareLanguage" type="SourceCode" codeTable="0296">
+		<documentation>
+		This field defines the language required of the care giver for this patient.
+		</documentation>
+		
+		<example sourceCodeSet="LanguageCodes" sourceCode="S">Spanish</example>
+	</element>
+	
+	<element name="WrittenLanguage" type="SourceCode" codeTable="0296" HL7="">
+		<documentation>
+		This field determine the preferred written language of the patient.
+		</documentation>
+		
+		<example sourceCodeSet="LanguageCodes" sourceCode="E">English</example>
+	</element>
+	
+	<element name="EnglishFluency" type="SourceCode" codeTable="0136" HL7="">
+		<documentation>
+		Is the patient fluent in English.
+		</documentation>
+
+		<example sourceCodeSet="YesNoCodes" sourceCode="Y">Yes</example>
+	</element>
+	
+	<element name="InterpreterRequired" type="SourceCode" codeTable="0136" HL7="">
+		<documentation>
+		Use this element to indicate if an interpreter is required when communicating with this 
+	    person. Use the Language to determine the persons primary language.
+		</documentation>
+		
+		<example sourceCodeSet="YesNoCodes" sourceCode="Y">Yes</example>
+	</element>
+	
+	<element name="Citizenship" type="SourceCode" codeTable="0399" HL7="PID-26 Citizenship">
+		<documentation>
+		Use this element to supply the information related to a person's country citizenship. 
+		</documentation>
+		
+		<example sourceCodeSet="CitizenshipCodes" sourceCode="USA">United States of America</example>
+	</element>
+
+	<element name="EthnicGroup" type="SourceCode" codeTable="0189" HL7="PID-22 Ethnic Group">
+		<documentation>
+		Use this element to supply the information related to a person's ethnicity. 
+		</documentation>
+		
+		<example sourceCodeSet="EthincGroupCodes" sourceCode="H">Hispanic</example>
+	</element>
+
+	<element name="Race" type="SourceCode" codeTable="0005" HL7="PID-10 Race">
+		<documentation>
+		This field refers to the Persons race. 
+		</documentation>
+		
+		<example sourceCodeSet="RaceCodes" sourceCode="WH">White</example>
+	</element>
+
+	<element name="Religion" type="SourceCode" codeTable="0006" HL7="PID-17 Religion">
+		<documentation>
+		This field contains the persons religious affiliation. 
+		</documentation>
+		
+		<example sourceCodeSet="ReligionCodes" sourceCode="AB">American Baptist</example>
+	</element>
+
+	<element name="PlaceOfWorship" type="string" HL7="PD1-14 Place Of Worship">
+		<documentation>
+		Specify the name of the church that the person attends. 
+		</documentation>
+		
+		<example>United Church of Christ, Sunnyvale</example>
+	</element>
+	
+	<element name="MotherMaidenName" type="string" HL7="PID-6 Mother's Maiden Name">
+		<documentation>
+		Use this element to define the family name under which the mother was born (i.e., before marriage). 
+	    It may be used to distinguish between patients with the same last name. 
+		</documentation>
+		
+		<example>Steele</example>
+	</element>
+	
+	<element name="DateOfBirth" type="OmniDate" HL7="PID-7 Date/Time of Birth">
+		<documentation>
+		This field contains the persons's date and time of birth. 
+		</documentation>
+		
+		<example format="yyyy-MM-dd">1965-02-21</example>
+	</element>
+
+	<element name="Deceased" type="SourceCode" codeTable="0136" HL7="PID-30">
+		<documentation>
+		This field indicates whether the patient is deceased. 
+		</documentation>
+		
+		<example sourceCodeSet="YesNoCodes" sourceCode="N">No</example>
+	</element>
+
+	<element name="DateOfDeath" type="OmniDate" HL7="PID-29 Patient Death Date and Time">
+		<documentation>
+		This field contains the date and time at which the patient death occurred. 
+		</documentation>
+		
+		<example format="yyyy-MM-dd">2050-02-21</example>
+	</element>
+
+	<element name="CauseOfDeath" type="string" HL7="">
+		<documentation>
+		This field specifies the cause of death. 
+		</documentation>
+		
+		<example>Currently alive and well.</example>
+	</element>
+
+	<element name="Handicap" type="SourceCode" codeTable="0295" HL7="PD1-6 Handicap">
+		<documentation>
+		This field indicates the nature of the patient's permanent handicapped condition (e.g., deaf, blind). 
+	 	A handicapped condition is defined as a physical or mental disability that is permanent. 
+	 	Transient handicapped conditions should be sent in the ambulatory status. 
+		</documentation>
+		
+		<example sourceCodeSet="HandicapCodes" sourceCode="DV">Decreased Vision</example>
+	</element>
+
+	<element name="HearingImpaired" type="SourceCode" codeTable="0136" HL7="">
+		<documentation>
+		This field indicates whether the patient is hearing impaired. 
+		</documentation>
+		
+		<example sourceCodeSet="YesNoCodes" sourceCode="N">No</example>
+	</element>
+
+	<element name="VisuallyImpaired" type="SourceCode" codeTable="0136" HL7="">
+		<documentation>
+		This field indicates whether the patient is visually impaired. 
+		</documentation>
+		
+		<example sourceCodeSet="YesNoCodes" sourceCode="Y">Yes</example>
+	</element>
+	
+	<element name="Blind" type="SourceCode" codeTable="0136" HL7="">
+		<documentation>
+		This field indicates whether the patient is blind. 
+		</documentation>
+		
+		<example sourceCodeSet="YesNoCodes" sourceCode="N">No</example>
+	</element>
+	
+	<element name="Deaf" type="SourceCode" codeTable="0136" HL7="">
+		<documentation>
+		This field indicates whether the patient is deaf. 
+		</documentation>
+		
+		<example sourceCodeSet="YesNoCodes" sourceCode="N">No</example>
+	</element>
+	
+	<element name="AmbulatoryStatus" type="SourceCode" codeTable="0009" HL7="">
+		<documentation>
+		This field identifies the transient rate of mobility for the next of kin/associated party. 
+		</documentation>
+		
+		<example sourceCodeSet="AmbulatoryStatusCodes" sourceCode="A5">Vision Impaired</example>
+	</element>
+
+<!--
+ - Military Information 
+ -->	
+	
+	<group name="Military" 
+	       elementOrder="VeteranStatus, Branch, Category, Component, PayGrade, Rank, UnitId" udlName="mil">
+		<documentation>
+		The elements in this grouping may be used for people that have been associated with
+		a branch of the military.
+		</documentation>
+
+		<element name="VeteranStatus" type="SourceCode" codeTable="0172">
+			<documentation>
+			Use this element to specify veterans status for the patient.
+			</documentation>
+
+			<example sourceCodeSet="VeteranStatusCodes" sourceCode="Reserves">Reserves</example>
+		</element>
+
+		<element name="Branch" type="SourceCode" codeTable="0140">
+			<documentation>
+			Use this element to specify the military branch of service the patient is associated
+			with.
+			</documentation>
+
+			<example sourceCodeSet="MilitaryBranchCodes" sourceCode="Army">United States Army</example>
+		</element>
+
+		<element name="Category" type="SourceCode" codeTable="">
+			<documentation>
+			This element combines the branch of service and eligibility type into a three-character code, 
+			such as A14. This code may effect billing and other downstream systems.
+			</documentation>
+
+			<example sourceCodeSet="MilitaryCategoryCodes" sourceCode="A14">A14</example>
+		</element>
+
+		<element name="Component" type="SourceCode" codeTable="TBD">
+			<documentation>
+			Specify the patients military component, which is used to distinguish between patients who are on 
+			regular active duty and those who are members of one of the augmenting support groups.
+			</documentation>
+
+			<example sourceCodeSet="MilitaryComponentCodes" sourceCode="AR">Army Reserve</example>
+		</element>
+
+		<element name="PayGrade" type="string">
+			<documentation>
+			Use this element to specify the patients military pay grade.
+			</documentation>
+
+			<example>E-7</example>
+		</element>
+	
+		<element name="Rank" type="SourceCode" codeTable="0141">
+			<documentation>
+			Use this element to specify the patients military rank if applicable.
+			</documentation>
+
+			<example sourceName="OMNI" sourceCodeSet="0141" sourceCode="E7">Enlisted Level 7</example>
+		</element>
+
+		<element name="UnitId" type="string">
+			<documentation>
+			Use this element to specify the military unit identifier to which the patient is assigned.
+			</documentation>
+
+			<example>platoon</example>
+		</element>
+	</group>
+	
+	<list name="Names">
+		<documentation>
+		Use this collection to specify one or more names used by this Person.
+		</documentation>
+		
+		<idsSpecification name="PersonName" udlName="PersonName" type="instance_child"
+			 		 elementOrder="Type, StartDate, EndDate, FullName, Prefix, FirstName, LastName, MiddleName, Suffix, Degree, Title"
+			 		 implementationClass="com.ibi.omni.patient.model.person.PersonName">
+					 
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+		  	
+			<documentation>
+			Use this collection element to specify one or more possible names used or
+		 	associated with a person. This may include things like maiden name, legal
+		 	name, nicknames, etc...
+			</documentation>
+				
+			<element name="Type" type="SourceCode" codeTable="0200">
+				<documentation>
+				Use this element to specify the type of name.
+				</documentation>
+				
+				<example sourceCodeSet="NameTypeCodes" sourceCode="L">Legal Name</example>
+			</element>
+		
+			<element name="StartDate" type="OmniDate">
+				<documentation>
+				Use this element to specify the date that the name became active for this Patient.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">1965-02-21</example>
+			</element>
+			
+			<element name="EndDate" type="OmniDate">
+				<documentation>
+				Use this element to specify the date that the name will become inactive for this
+				Patient.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2050-01-01</example>
+			</element>
+		
+			<element name="FullName" type="string">
+				<documentation>
+				Use this element to specify the full name of the Patient if the source system does
+				not contain the individual component fields. If this field is being used please do
+				not use the component fields. 
+				</documentation>
+				
+				<example>Jane E. Smith</example>
+			</element>
+		
+			<element name="LastName" type="string" >
+				<documentation>
+				Use this element to specify the last name of the Patient.
+				</documentation>
+				
+				<example>Smith</example>
+			</element>
+			
+			<element name="FirstName" type="string">
+				<documentation>
+				Use this element to specify the first name of the Patient.
+				</documentation>
+				
+				<example>Jane</example>
+			</element>
+			
+			<element name="MiddleName" type="string">
+				<documentation>
+				Use this element to specify the last name or middle initial of the Patient.
+				</documentation>
+				
+				<example>E</example>
+			</element>
+			
+			<element name="Suffix" type="string">
+				<documentation>
+				Use this element to specify the suffix for the Patient's name. (e.g., Jr. or III)
+				</documentation>
+				
+				<example>III</example>
+			</element>
+			
+			<element name="Prefix" type="string">
+				<documentation>
+				Use this element to specify the prefix for the Patient's name. (e.g., Dr., Mr, Ms.)
+				</documentation>
+				
+				<example>Ms</example>
+			</element>
+			
+			<element name="Degree" type="string">
+				<documentation>
+				Use this element to specify the degree the Patient holds. 
+				</documentation>
+				
+				<example>Dr</example>
+			</element>
+		
+			<element name="Title" type="string">
+				<documentation>
+				Use this element to specify the title held by the Patient. 
+				</documentation>
+				
+				<example>Senior Specialist</example>
+			</element>			
+		</idsSpecification>		
+	</list>	
+
+	<list name="Addresses">
+		<documentation>
+		Use this collection to specify one or more addresses used by this Person.
+		</documentation>
+
+		<idsSpecification name="PersonAddress" udlName="PersonAddress" type="instance_child"
+			 		 	  elementOrder="Type, StartDate, EndDate, PreferenceOrder, AddressLine1, AddressLine2,
+					 		       AddressLine3, AddressLine4, City, StateProvince, PostalCode, Country, 
+					 		       CountyRegion, UsageComment, Latitude, Longitude"
+					 	implementationClass="com.ibi.omni.patient.model.person.PersonAddress">
+						 
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+		  	
+			<documentation>
+			Use this specification to load Person address information into Omni.
+			</documentation>
+			
+			<element name="Type" type="SourceCode" codeTable="0190">
+				<documentation>
+				Use this element to specify the type of address being loaded.
+				</documentation>
+				
+				<example sourceCodeSet="AddressTypeCodes" sourceCode="H">Home Address</example>
+			</element>
+		
+			<element name="StartDate" type="OmniDate">
+				<documentation>
+				Specify the date this address became active.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+			
+			<element name="EndDate" type="OmniDate">
+				<documentation>
+				Specify the date this address becomes inactive.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+		
+			<element name="PreferenceOrder" type="integer">
+				<documentation>
+				This field is for an entity having multiple addresses, indicates which is the 'most preferred' (lowest number) 
+			 	to 'least preferred' (highest number).
+				</documentation>
+				
+				<example>1</example>
+			</element>
+		
+			<element name="AddressLine1" type="string">
+				<documentation>
+				This field specifies the street or mailing address of a person or institution. 
+			 	When referencing an institution, this first component is used to specify the institution 
+			 	name. When used in connection with a person, this component specifies the first line of the address.
+				</documentation>
+				
+				<example>4000 East Ave</example>
+			</element>
+			
+			<element name="AddressLine2" type="string">
+				<documentation>
+				This field specifies the second line of address. In general, it qualifies address. 
+			 	Examples: Suite 555 or Fourth Floor. When referencing an institution, this component 
+			 	specifies the street address.
+				</documentation>
+				
+				<example>Suite 555</example>
+			</element>
+			
+			<element name="AddressLine3" type="string">
+				<documentation>
+				This field specifies the name of the person or organization that should appear as part of the 
+			 	address. This is also known as the "Care of" or "C/O" line.
+				</documentation>
+				
+				<example>ATTN: Jane Smith</example>
+			</element>
+			
+			<element name="AddressLine4" type="string">
+				<documentation>
+				This field specifies more address information.
+				</documentation>
+				
+				<example>Fragile</example>
+			</element>
+			
+			<element name="City" type="string">
+				<documentation>
+				This field specifies the city, district or place where the addressee is located 
+			 	depending upon the national convention for formatting addresses for postal usage.
+				</documentation>
+				
+				<example>Livonia</example>
+			</element>
+			
+			<element name="StateProvince" type="SourceCode"  codeTable="0347">
+				<documentation>
+				This field specifies the state or province where the addressee is located. State or 
+			 	province should be represented by the official postal service codes for that country. 
+				</documentation>
+				
+				<example sourceCodeSet="StateCodes" sourceCode="NY">New York</example>
+			</element>
+		
+			<element name="PostalCode" type="string">
+				<documentation>
+				This component specifies the zip or postal code where the addressee is located.  Zip or 
+			 	postal codes should be represented by the official codes for that country. In the US, the zip 
+			 	code takes the form 99999[-9999], while the Canadian postal code takes the form A9A9A9 and the 
+			 	Australian Postcode takes the form 9999. 
+				</documentation>
+				
+				<example>14488</example>
+			</element>
+		
+			<element name="Country" type="SourceCode" codeTable="0399">
+				<documentation>
+				This component specifies the country where the addressee is located. HL7 
+			 	specifies that the 3-character (alphabetic) form of ISO 3166 be used for the 
+			 	country code.
+				</documentation>
+				
+				<example sourceCodeSet="CountryCodes" sourceCode="USA">United States</example>
+			</element>
+		
+			<element name="CountyRegion" type="SourceCode" codeTable="0289">
+				<documentation>
+				This component specifies the county where the addressee is located when applicable.
+				</documentation>
+				
+				<example sourceCodeSet="CountyRegionCodes" sourceCode="LIV">Livingston</example>
+			</element>
+		
+			<element name="UsageComment" type="string">
+				<documentation>
+				Descriptive information about the use of the address.
+			 	Example : "Do not ring bell"
+				</documentation>
+				
+				<example>Do not ring bell</example>
+			</element>
+
+			<element name="Latitude" type="double" precision="9" scale="6">
+				<documentation>
+					Contains the Latitude.
+				</documentation>
+				<example>
+					40.75007189999999
+				</example>
+			</element>
+
+			<element name="Longitude" type="double" precision="9" scale="6">
+				<documentation>
+					Contains the Longitude.
+				</documentation>
+				<example>
+					-73.99220259999998
+				</example>
+			</element>
+		</idsSpecification>
+	</list>	
+
+	<list name="Identifiers">
+		<documentation>
+		Use this collection to specify the list of identifiers for this Person. 
+	 	You may specify any number of identifiers as this is simply a name/value pair structure.
+		</documentation>
+		
+		<idsSpecification name="PersonIdentifier" udlName="PersonIdentifier" type="instance_child"
+			 		 	  elementOrder="Type, StartDate, EndDate, Value, IssuingAuthority,Comment"
+			 		 	  implementationClass="com.ibi.omni.patient.model.person.PersonIdentifier">
+				 		
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+		  	
+			<documentation>
+			Use this structure to specify identifiers for a Person.
+			</documentation>
+			
+			<element name="Type" type="SourceCode" codeTable="0203">
+				<documentation>
+				Use this element to specify the type of identifier. For example
+			 	BA - Bank Account Number, BCT - Birth Certificate Number, etc...
+				</documentation>
+				
+				<example sourceCodeSet="IdentifierCodes" sourceCode="MRN">Medical Record Number</example>
+			</element>
+		
+			<element name="StartDate" type="OmniDate">
+				<documentation>
+				Use this element to specify the date the identifier became active.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+			
+			<element name="EndDate" type="OmniDate">
+				<documentation>
+				Use this element to specify the date the identifier becomes inactive.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+		
+			<element name="Value" type="string">
+				<documentation>
+				Use this element to specify the value of the identifier.
+				</documentation>
+				
+				<example>12345678</example>
+			</element>
+			
+			<element name="IssuingAuthority" type="document" contains="Organization" excludeInDoc="true">
+				<documentation>
+				Use this element to specify the Organization that was responsible for 
+				issuing this identification.
+				</documentation>
+				
+				<example>
+					<![CDATA[
+					<Organization>
+						<SourceName>TestSystem</SourceName>
+						<SourceInstanceId>HospitalA</SourceInstanceId>
+						<OrganizationType sourceCodeSet="organizationTypeCodes" sourceCode="H">Hospital</OrganizationType>
+					</Organization>
+					]]>
+				</example>
+			</element>
+
+            <element name="Comment" type="string">
+                <documentation>
+                    Use this element to store comments about the identifier.
+                </documentation>
+
+                <example>Comment about identifier.</example>
+            </element>
+		</idsSpecification>
+	</list>	
+
+	<list name="ContactMethods">
+		<documentation>
+		Use this collection to specify the list of email, phone number, fax number, 
+	 	and other contact methods associated with this Person.		
+		</documentation>
+		
+		<idsSpecification name="PersonContactMethod" udlName="PersonContactMethod" type="instance_child"
+			 		 	  elementOrder="Type, StartDate, EndDate, PreferenceOrder, Protection, Value, UsageComment"
+			 		 	  implementationClass="com.ibi.omni.patient.model.person.PersonContactMethod">
+			 			
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+		  	
+			<documentation>
+			Use this collection to specify one or more contact methods for a patient. 
+			For example you may specify multiple email, phone, or fax numbers. 
+			This document can only be used within a Patient.Identifiers element.
+			</documentation>
+				
+			<element name="Type" type="SourceCode" codeTable="0185">
+				<documentation>
+				Use this element to specify what type of contact method is being 
+			 	described. i.e. Email, Phone, etc..
+				</documentation>
+				
+				<example sourceName="OMNI" sourceCodeSet="0185" sourceCode="H">Home Phone Number</example>
+			</element>
+		
+			<element name="StartDate" type="OmniDate">
+				<documentation>
+				Specify the date this contact method became active.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+			
+			<element name="EndDate" type="OmniDate">
+				<documentation>
+				Specify the date this contact method became inactive.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2050-01-01</example>
+			</element>
+		
+			<element name="PreferenceOrder" type="integer">
+				<documentation>
+				For a patient having contact methods, indicates which is the 'most preferred' (lowest number) 
+			 	to 'least preferred' (highest number).
+				</documentation>
+				
+				<example>1</example>
+			</element>
+			
+			<element name="Protection" type="SourceCode" codeTable="0618">
+				<documentation>
+				Identifies that the contact method needs to be treated with special care or sensitivity.
+				</documentation>
+				
+				<example sourceCodeSet="ProtectionCodes" sourceCode="UP">Unpublished</example>
+			</element>
+			
+			<element name="Value" type="string">
+				<documentation>
+				Identifies the value of the contact method.
+				</documentation>
+				
+				<example>(222) 234-6879 x9808</example>
+			</element>
+		
+			<element name="UsageComment" type="string">
+				<documentation>
+				Defines the usage comment. Such as 'After 5pm'
+				</documentation>
+				
+				<example>No calls after 5pm</example>
+			</element>			
+		</idsSpecification>
+	</list>	
+
+	<list name="Relations">
+		<documentation>
+		Use this collection to specify personal and business relations for this Person. 
+	 	For example you may specify next of kin, employer, Insurance Company, Guarantor, etc...	
+		</documentation>
+		
+		<idsSpecification name="PersonRelation" udlName="PersonRelation" type="instance_child"
+			 		 	  elementOrder="Type, StartDate, EndDate, Relation, RelatedTo" 
+			 		 	  implementationClass="com.ibi.omni.patient.model.person.PersonRelation">
+			 
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+				  	
+			<documentation>
+			Use this collection element to specify Personal relationships.
+			</documentation>
+		
+			<element name="Type" type="SourceCode" codeTable="0063">
+				<documentation>
+				This field contains the actual personal relationship that the associated party has to
+			 	the person.
+				</documentation>
+				
+				<example sourceCodeSet="PersonRelationCodes" sourceCode="SPO">Spouse</example>
+			</element>
+		
+			<element name="StartDate" type="OmniDate">
+				<documentation>
+				Use this element to specify the date the relation became active.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+			
+			<element name="EndDate" type="OmniDate">
+				<documentation>
+				Use this element to specify the date the relation becomes inactive.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+		    
+			<element name="Relation" type="document" contains="Person,Organization" circularTypes="Person,Organization" excludeInDoc="true" excludeFromRamp="true"> 
+				<documentation>
+				Use this element to specify the link to a related Person or Organization.
+				</documentation>
+		
+				<example>
+					<![CDATA[
+					<Person>
+						<SourceName>UnitTest</SourceName>
+						<SourceInstanceId>RelatedSpouse</SourceInstanceId>
+					</Person>
+					]]>
+				</example>
+			</element>
+			
+			<element name="RelatedTo" type="OmniLink" contains="Person,Organization" keys="SourceName, SourceInstanceId" allowCreate="true">
+
+			    <documentation>
+				Use this element to specify the link to a related Person or Organization.
+				</documentation>
+		
+				<example>
+					<![CDATA[
+					<Person>
+						<SourceName>UnitTest</SourceName>
+						<SourceInstanceId>RelatedSpouse</SourceInstanceId>
+					</Person>
+					]]>
+				</example>
+			</element>
+			 
+		</idsSpecification>		
+	</list>
+	
+</idsDocument>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.0.2.0" domain="common" name="User" type="instance"  
+	 		 elementOrder="SourceName, SourceInstanceId, SourceInstanceIdName"
+	 		 implementationClass="com.ibi.omni.patient.model.common.User"
+	 		 excludeFromRamp="true"
+	 		 captureHistory="false">
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	
+	<documentation>
+	Use this structure to feed User information.
+	</documentation>
+	
+	<element name="SourceName" key="true" type="string">
+		<documentation>
+		This element must identify the source system that was responsible for generating this 
+	    data. This value is determined by the integration team and used in combination with 
+	    SourceInstanceId will allow this record to be traced back to its originating source.
+		</documentation>
+	</element>
+
+	<element name="SourceInstanceId" key="true" type="string">
+		<documentation>
+		This element uniquely identifies the reference for this data in
+	    the source system. The combination of SourceName and SourceInstanceId should 
+	    allow this record to be traced back to its originating source.
+		</documentation>
+	</element>
+	
+	<element name="SourceInstanceIdName" type="string">
+		<documentation>
+		This element gives an indication of where the data came from in the source
+	 	system. Used in the 360 viewer for data stewards to trace data.
+		</documentation>
+	</element>
+</idsDocument>

@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.1.7" changeVersion="7" domain="Facility" type="instance"
+			 name="FacilityLocation" 
+	 		 elementOrder="MasterId, PreMergeSurvivor, Facility, Type, SubType, Name, ParentLocation, Addresses, Identifiers, ContactMethods, Relations"
+	 		 implementationClass="com.ibi.omni.patient.model.facility.FacilityLocation">
+	
+	<changeLog>
+		<change version="1.0.0">Initial Revision</change>
+		<change version="2.0.0">Added Type, SubType, Names, Addresses, Identifiers, ContactMethods, Relations, and ParentFacilityLocation</change>
+		<change version="1.1.7_0">Supported Version</change>
+        <change version="1.1.7_1">Added Comment element to FacilityLocationIdentifer</change>
+        <change version="1.1.7_2">Extended Attribute Support</change>
+        <change version="1.1.7_3">Changed Facility and ParentLocation to OmniLinks</change>
+        <change version="1.1.7_4">Updated codeTable reference on ContactMethod.Type</change>
+        <change version="1.1.7_5">Added SourceStatusCode to instance and collection items.</change>
+        <change version="1.1.7_6">Added PreMergeSurvivor element.</change>
+		<change version="1.1.7_7">Added mastering meta-data elements.</change>
+	</changeLog>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+	<include name="MasteringElements" appendToElementOrder="MatchRole,MatchCandidateGroupId,MatchQualityScore,MatchRule"/>
+
+	<documentation>
+	Use this specification to load named locations, such as Floor, Ward, Room, Bed within a Facility. A FacilityLocation 
+	should not be loaded into OmniPatient unless it is within the defined context of a physical Facility.
+	</documentation>
+
+	<element name="MasterId" type="string" hidden="true">
+		<documentation>
+		Links this instance to the master. This value is created and updated by the Omni
+		matching service.
+		</documentation>
+	</element>
+	
+	<element name="Facility" type="OmniLink" contains="Facility" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		Use this element to link the location to a specific Facility.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<Facility>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>OwningFacilityId</SourceInstanceId>
+			</Facility>
+			]]>
+		</example>
+	</element>
+
+	<element name="PreMergeSurvivor" type="OmniLink" contains="FacilityLocation" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>		
+		There are often scenarios in a given source system where multiple instance records may be created 
+		that represent the same logical entity. At some point the source system may detect this issue and
+		would like to convey that information to the processing server.
+		
+		Use this element to indicate the surviving entity when multiple instances represent the same 
+		entity. This element will be used during the matching and merging process to insure that entity
+		instances are properly grouped. 
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<FacilityLocation>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>TestSystem:FacilityLocationSurvivor</SourceInstanceId>
+			</FacilityLocation>
+			]]>
+		</example>		
+	</element>
+	
+	<element name="Type" type="SourceCode">
+		<documentation>
+		Use this element to specify the type of FacilityLocation. Examples of a FacilityLocation type
+		would be a Center, Floor, Ward, Room, BedSpace, etc. 
+		</documentation>
+		
+		<example sourceCodeSet="FacilityLocationTypeCodes" sourceCode="R">Room</example>
+	</element>
+
+	<element name="SubType" type="SourceCode">
+		<documentation>
+		Use this element to further describe the FacilityLocation Type.
+		
+		Examples for Type = Room:
+		Operating Room, Recovery Room, Examining Room, Emergency Room, Nursery  
+		</documentation>
+		
+		<example sourceCodeSet="FacilityLocationSubTypeCodes" sourceCode="OR">Operating Room</example>
+	</element>
+
+	<element name="ParentLocation" type="OmniLink" contains="FacilityLocation" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		Use this element to link to the parent level FacilityLocation, under which this FacilityLocation
+		exists within the heirarchy.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<FacilityLocation>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>ParentFacilityLocationId</SourceInstanceId>
+			</FacilityLocation>
+			]]>
+		</example>		
+	</element>
+	
+	<element name="Name" type="string">
+		<documentation>
+		Use this element to specify the name of the location.
+		</documentation>
+		
+		<example>Primary Operating Room</example>
+	</element>	
+
+	<list name="Addresses">
+		<documentation>
+		Use this collection to specify one or more addresses used by this Facility.
+		</documentation>
+		
+		<idsSpecification name="FacilityLocationAddress" udlName="FacilityLocationAddress" type="instance_child"
+			 		 	  elementOrder="Type, StartDate, EndDate, PreferenceOrder, AddressLine1, AddressLine2,
+					 		       AddressLine3, AddressLine4, City, StateProvince, PostalCode, Country, 
+					 		       CountyRegion, UsageComment, Latitude, Longitude"
+					 	  implementationClass="com.ibi.omni.patient.model.facility.FacilityLocationAddress">
+			
+			<changeLog>
+				<change version="1.0.0">Initial Revision</change>
+			</changeLog>
+			
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+		  	
+			<documentation>
+			Use this specification to load Facility address information into Omni.
+			</documentation>
+			
+			<element name="Type" type="SourceCode" codeTable="0190">
+				<documentation>
+				Use this element to specify the type of address being loaded.
+				</documentation>
+				
+				<example sourceCodeSet="AddressTypeCodes" sourceCode="B">Business Address</example>
+			</element>
+		
+			<element name="StartDate" type="OmniDate">
+				<documentation>
+				Specify the date this address became active.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+			
+			<element name="EndDate" type="OmniDate">
+				<documentation>
+				Specify the date this address becomes inactive.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+		
+			<element name="PreferenceOrder" type="integer">
+				<documentation>
+				This field is for an entity having multiple addresses, indicates which is the 'most preferred' (lowest number) 
+			 	to 'least preferred' (highest number).
+				</documentation>
+				
+				<example>1</example>
+			</element>
+		
+			<element name="AddressLine1" type="string">
+				<documentation>
+				This field specifies the street or mailing address of a person or institution. 
+			 	When referencing an institution, this first component is used to specify the institution 
+			 	name. When used in connection with a person, this component specifies the first line of the address.
+				</documentation>
+				
+				<example>4000 East Ave</example>
+			</element>
+			
+			<element name="AddressLine2" type="string">
+				<documentation>
+				This field specifies the second line of address. In general, it qualifies address. 
+			 	Examples: Suite 555 or Fourth Floor. When referencing an institution, this component 
+			 	specifies the street address.
+				</documentation>
+				
+				<example>Suite 555</example>
+			</element>
+			
+			<element name="AddressLine3" type="string">
+				<documentation>
+				This field specifies the name of the person or organization that should appear as part of the 
+			 	address. This is also known as the "Care of" or "C/O" line.
+				</documentation>
+				
+				<example>ATTN: Jane Smith</example>
+			</element>
+			
+			<element name="AddressLine4" type="string">
+				<documentation>
+				This field specifies more address information.
+				</documentation>
+				
+				<example>Fragile</example>
+			</element>
+			
+			<element name="City" type="string">
+				<documentation>
+				This field specifies the city, district or place where the addressee is located 
+			 	depending upon the national convention for formatting addresses for postal usage.
+				</documentation>
+				
+				<example>Livonia</example>
+			</element>
+			
+			<element name="StateProvince" type="SourceCode"  codeTable="">
+				<documentation>
+				This field specifies the state or province where the addressee is located. State or 
+			 	province should be represented by the official postal service codes for that country. 
+				</documentation>
+				
+				<example sourceCodeSet="StateCodes" sourceCode="NY">New York</example>
+			</element>
+		
+			<element name="PostalCode" type="string">
+				<documentation>
+				This component specifies the zip or postal code where the addressee is located.  Zip or 
+			 	postal codes should be represented by the official codes for that country. In the US, the zip 
+			 	code takes the form 99999[-9999], while the Canadian postal code takes the form A9A9A9 and the 
+			 	Australian Postcode takes the form 9999. 
+				</documentation>
+				
+				<example>14488</example>
+			</element>
+		
+			<element name="Country" type="SourceCode" codeTable="0399">
+				<documentation>
+				This component specifies the country where the addressee is located. HL7 
+			 	specifies that the 3-character (alphabetic) form of ISO 3166 be used for the 
+			 	country code.
+				</documentation>
+				
+				<example sourceCodeSet="CountryCodes" sourceCode="USA">United States</example>
+			</element>
+		
+			<element name="CountyRegion" type="SourceCode" codeTable="">
+				<documentation>
+				This component specifies the county where the addressee is located when applicable.
+				</documentation>
+				
+				<example sourceCodeSet="CountyRegionCodes" sourceCode="LIV">Livingston</example>
+			</element>
+		
+			<element name="UsageComment" type="string" dbColumn="src_usage_comment">
+				<documentation>
+				Descriptive information about the use of the address.
+			 	Example : "Do not ring bell"
+				</documentation>
+				
+				<example>Do not ring bell</example>
+			</element>
+
+			<element name="Latitude" type="double" precision="9" scale="6">
+				<documentation>
+					Contains the Latitude.
+				</documentation>
+				<example>1.1</example>
+			</element>
+
+			<element name="Longitude" type="double" precision="9" scale="6">
+				<documentation>
+					Contains the Longitude.
+				</documentation>
+				<example>2.2</example>
+			</element>
+
+		</idsSpecification>		
+	</list>	
+
+	<list name="Identifiers">
+		<documentation>
+		Use this collection to specify the list of identifiers for this Facility. 
+	 	You may specify any number of identifiers as this is simply a name/value pair structure.
+		</documentation>
+		
+		<idsSpecification name="FacilityLocationIdentifier" udlName="FacilityLocationIdentifier" type="instance_child"
+			 		 elementOrder="Type, StartDate, EndDate, Value, IssuingAuthority,Comment"
+			 		 implementationClass="com.ibi.omni.patient.model.facility.FacilityLocationIdentifier">
+			
+			<changeLog>
+				<change version="1.0.0">Initial Revision</change>
+				<change version="1.0.1">Added IssuingAuthority element</change>
+			</changeLog>
+			
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+		  	
+			<documentation>
+			Use this structure to specify identifiers for a Facility.
+			</documentation>
+			
+			<element name="Type" type="SourceCode" codeTable="0000">
+				<documentation>
+				Use this element to specify the type of identifier. For example
+			 	Block Number, Lot Number, etc...
+				</documentation>
+				
+				<example sourceCodeSet="IdentifierCodes" sourceCode="B">Block Number</example>
+			</element>
+		
+			<element name="StartDate" type="OmniDate">
+				<documentation>
+				Use this element to specify the date the identifier became active.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+			
+			<element name="EndDate" type="OmniDate">
+				<documentation>
+				Use this element to specify the date the identifier becomes inactive.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+		
+			<element name="Value" type="string">
+				<documentation>
+				Use this element to specify the value of the identifier.
+				</documentation>
+				
+				<example>12345678</example>
+			</element>
+			
+			<element name="IssuingAuthority" type="document" contains="Organization" excludeInDoc="true">
+				<documentation>
+				Use this element to specify the Organization that was responsible for 
+				issuing this identification.
+				</documentation>
+				
+				<example>
+					<![CDATA[
+					<Organization>
+						<SourceName>TestSystem</SourceName>
+						<SourceInstanceId>State of New York</SourceInstanceId>
+					</Organization>
+					]]>
+				</example>
+			</element>
+
+            <element name="Comment" type="string">
+                <documentation>
+                    Use this element to store comments about the identifier.
+                </documentation>
+
+                <example>Comment about identifier.</example>
+            </element>
+		</idsSpecification>		
+	</list>	
+
+	<list name="ContactMethods">
+		<documentation>
+		Use this collection to specify the list of email, phone number, fax number, 
+	 	and other contact methods generically associated with this Facility.		
+		</documentation>
+		
+		<idsSpecification name="FacilityLocationContactMethod" udlName="FacilityLocationContactMethod" type="instance_child"
+			 		 elementOrder="Type, StartDate, EndDate, Value, UsageComment"
+			 		 implementationClass="com.ibi.omni.patient.model.facility.FacilityLocationContactMethod">
+			
+			<changeLog>
+				<change version="1.0.0">Initial Revision</change>
+			</changeLog>
+			
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+		  	
+			<documentation>
+			Use this collection to specify one or more contact methods for a patient. 
+			For example you may specify multiple email, phone, or fax numbers. 
+			This document can only be used within a Patient.Identifiers element.
+			</documentation>
+				
+			<element name="Type" type="SourceCode" codeTable="0185">
+				<documentation>
+				Use this element to specify what type of contact method is being 
+			 	described. i.e. Email, Phone, etc..
+				</documentation>
+				
+				<example sourceName="OMNI" sourceCodeSet="0185" sourceCode="F" />
+			</element>
+		
+			<element name="StartDate" type="OmniDate">
+				<documentation>
+				Specify the date this contact method became active.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+			
+			<element name="EndDate" type="OmniDate">
+				<documentation>
+				Specify the date this contact method became inactive.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2050-01-01</example>
+			</element>
+		
+			<element name="Value" type="string">
+				<documentation>
+				Identifies the value of the contact method.
+				</documentation>
+				
+				<example>(222) 234-6879 x9808</example>
+			</element>
+		
+			<element name="UsageComment" type="string">
+				<documentation>
+				Defines the usage comment. Such as 'After 5pm'
+				</documentation>
+				
+				<example>No calls after 5pm</example>
+			</element>
+		</idsSpecification>
+	</list>	
+
+	<list name="Relations">
+		<documentation>
+		Use this collection to specify personal and business relations for this Facility. 
+	 	For example you may specify Owner, Leasee, Occupant, Maintainer, etc...	
+		</documentation>
+		
+		<idsSpecification name="FacilityLocationRelation" udlName="FacilityLocationRelation" type="instance_child"
+			 		 elementOrder="Type, StartDate, EndDate, Relation, RelatedTo"
+			 		 implementationClass="com.ibi.omni.patient.model.facility.FacilityLocationRelation">
+			
+			<changeLog>
+				<change version="1.0.0">Initial Revision</change>
+			</changeLog>
+			
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+				  	
+			<documentation>
+			Use this collection element to specify Personal or Organizational relationships to the Facility.
+			</documentation>
+		
+			<element name="Type" type="SourceCode" codeTable="0000">
+				<documentation>
+				This field contains the actual relationship that the associated party has to
+			 	the Facility.
+				</documentation>
+				
+				<example sourceCodeSet="FacilityRelationCodes" sourceCode="O">Owner</example>
+			</element>
+		
+			<element name="StartDate" type="OmniDate">
+				<documentation>
+				Use this element to specify the date the relation became active.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+			
+			<element name="EndDate" type="OmniDate">
+				<documentation>
+				Use this element to specify the date the relation becomes inactive.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+		
+			<element name="Relation" type="document" contains="Person,Organization" excludeInDoc="true" hidden="true" excludeFromRamp="true"> 
+				<documentation>
+				Use this element to specify the link to a related Person or Organization.
+				</documentation>
+		
+				<!-- Auto generation of IDS will cause circular reference. -->		
+				<example>
+					<![CDATA[
+					<Organization>
+						<SourceName>UnitTest</SourceName>
+						<SourceInstanceId>Owner</SourceInstanceId>
+					</Organization>
+					]]>
+				</example>
+			</element>
+			
+			<element name="RelatedTo" type="link" contains="Person,Organization">
+			    <documentation>
+				Use this element to specify the link to a related Person or Organization.
+				</documentation>
+			</element>			
+		</idsSpecification>		
+	</list>	
+
+</idsDocument>

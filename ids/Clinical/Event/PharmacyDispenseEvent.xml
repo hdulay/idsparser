@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.0.0" changeVersion="0"
+             name="PharmacyDispenseEvent"
+             domain="Clinical.Event"
+             type="instance"
+       elementOrder="EventDateTime, Location, PrescriptionNumber, DispenseCounter, DispenseType, SubstanceCode, RxNormCode,
+       SNOMEDCTCode, NDCCode, OtherDispensedCodes, AdministrationInstructionCode, AdministrationInstructions, Quantity,
+       QuantityUnitOfMeasureCode, DaysSupply, RefillsRemaining, DispenseInterval, DispensedDaysLate, HandedOverDateTime,
+       DosageFormCode, Strength, StrengthUnitOfMeasureCode, StrengthVolume, StrengthVolumeUnitOfMeasureCode,
+       NeedsHumanReviewIndicator, DispensingPharmacyName, DispensingPharmacyNABPNumber, Destination, ReceiverType,
+       SubstitutionTypeCode, SubstitutionReasonCode, SubstitutionStatusCode, BarcodeIdentifier, LotNumber, ExpirationDate,
+       ManufacturerCode, ManufacturerName, DispenseStatus, DosageInstruction, DosageTiming, DosageAsNeededText,
+       RouteOfAdministrationCode, BodySiteCode, AdministrationMethod, DoseRange, DoseQuantity, DoseRate, MaxDosePerPeriod,
+       TotalDailyDose, PBMTransactionId"
+             backingClass="com.ibi.omni.patient.model.clinical.event.ClinicalEvent">
+                 
+  <changeLog>
+    <change version="">Initial Version</change>
+  </changeLog>
+  
+  <customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+  <customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+  <customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+  <customType name="codeList" class="com.ibi.dib.core.ids.types.IdsMultipleCodeType"/>
+
+  <documentation>
+    This captures information related to the dispensing of medications by a pharmacy, in response to a
+    PharmacyPrescriptionOrderEvent. This IDS applies to dispensing events inside a hospital, as well as
+    the dispensing at an outside pharmacy when a patient gets a prescription filled. More than one
+    dispensing event can be tied to a single PharmacyPrescriptionOrderEvent.
+    Much of this structure was driven by FHIR models defined at
+    http://hl7.org/implement/standards/fhir/medicationdispense.html
+  </documentation>
+
+  <include name="EventElements"
+           prependToElementOrder="ParentEvent, Encounter, CarePlanId, CarePlan, CCDCategoryCode"
+           appendToElementOrder="EventProviders, EventNotes, ClinicalBaseFields" />
+
+  <include name="CommonElements"
+           prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+           appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy" />
+  
+
+
+  <element name="EventDateTime" type="OmniDate">
+    <documentation>
+      Date and time that the medication was prepared by the pharmacist.
+    </documentation>
+  </element>
+
+  <element name="Location" type="OmniLink" contains="FacilityLocation" keys="SourceName, SourceInstanceId" allowCreate="true">
+    <documentation>
+      Facility location of the pharmacy that dispensed the substance. Typically only populated for in-hospital pharmacies.
+    </documentation>
+  </element>
+
+  <element name="PrescriptionNumber" type="string">
+    <documentation>
+      Identifies the prescription that triggered the dispensing event.
+    </documentation>
+  </element>
+
+  <element name="DispenseCounter" type="double">
+    <documentation>
+      This element starts with 1 for the first dispensing event associated with an order, and increments by one for each
+      additional dispensing event for the order.
+    </documentation>
+  </element>
+
+  <element name="DispenseType" type="SourceCode" codeSource="OMNI" codeSet="2.16.840.1.113883.1.11.16208">
+    <documentation>
+      Identifies type of dispensing event. (Initial, refill, partial refill, sample, etc.) This can conform to HL7 v2
+      codeset 0484 or to HL7 v3/FHIR specification of ActPharmacySupplyType.
+    </documentation>
+  </element>
+
+  <element name="SubstanceCode" type="SourceCode" codeSource="OMNI">
+    <documentation>
+      Identifies the medical substance/treatment dispensed. In most cases this will be expressed as an NDC code,
+      but other code systems are possible.
+    </documentation>
+  </element>
+
+  <element name="RxNormCode" type="SourceCode" codeSource="RXNORM" codeSet="2.16.840.1.113883.6.88">
+    <documentation>
+      Drug substance expressed as an RxNorm code.
+    </documentation>
+  </element>
+
+  <element name="SNOMEDCTCode" type="SourceCode" codeSource="SNOMEDCT" codeSet="2.16.840.1.113883.6.96">
+    <documentation>
+      Drug substance expressed as a SNOMED code.
+    </documentation>
+  </element>
+
+  <element name="NDCCode" type="SourceCode">
+    <documentation>
+      Drug substance expressed as an NDC code
+    </documentation>
+  </element>
+
+  <element name="OtherDispensedCodes" type="codeList" contains="OtherDispensedCode">
+    <documentation>
+      Drug substance expressed in a custom or proprietary code set.
+    </documentation>
+
+    <example>
+      <OtherDispensedCode sourceName="HL7-V3" sourceCodeSet="2.16.840.1.113883.6.103-ALT" sourceCode="NONE" />
+      <OtherDispensedCode sourceName="HL7-V3" sourceCodeSet="2.16.840.1.113883.6.103-ALT" sourceCode="ONE" />
+    </example>
+  </element>
+
+  <element name="AdministrationInstructionCode" type="SourceCode" codeSource="OMNI" codeSet="0000">
+    <documentation>
+      Identifies the ordering provider's coded instructions to the patient or to the provider administering the drug or
+      treatment.
+    </documentation>
+  </element>
+
+  <element name="AdministrationInstructions" type="string">
+    <documentation>
+      Contains free-form instructions from the ordering provider to the patient or to the provider administering the
+      drug or treatment.
+    </documentation>
+  </element>
+
+  <element name="Quantity" type="double">
+    <documentation>
+      Contains the actual dispensed quantity.
+    </documentation>
+  </element>
+
+  <element name="QuantityUnitOfMeasureCode" type="SourceCode" codeSource="OMNI" codeSet="6020">
+    <documentation>
+      Contains the unit of measure for the medical substance dispense quantity. This could represent a unit, a pack, etc.
+    </documentation>
+  </element>
+
+  <element name="DaysSupply" type="double">
+    <documentation>
+      Contains the number of days that the dispensed quantity should cover.
+    </documentation>
+  </element>
+
+  <element name="RefillsRemaining" type="double">
+    <documentation>
+      Defines the number of times the prescription can be refilled after this dispensing event.
+    </documentation>
+  </element>
+
+  <element name="DispenseInterval" type="double">
+    <documentation>
+      Specifies the minimum number of days that must occur between dispensing substance.
+    </documentation>
+  </element>
+
+  <element name="DispensedDaysLate" type="double">
+    <documentation>
+      Days late of the dispense date. This is either with respect to the prescription date, or the expected refill date.
+      It is an indicator of the diligence of the patient in taking the meds they are prescribed.
+    </documentation>
+  </element>
+
+  <element name="HandedOverDateTime" type="OmniDate">
+    <documentation>
+      Date and time that the product was given out to the person picking up from the pharmacy. For a mail-order
+      situation, the ship date would go here.
+    </documentation>
+  </element>
+
+  <element name="DosageFormCode" type="SourceCode" codeSource="OMNI" codeSet="0000">
+    <documentation>
+      The actual dosage form of the dispensed substance. There are a number of sources of form codes in the industry.
+    </documentation>
+  </element>
+
+  <element name="Strength" type="double">
+    <documentation>
+      The numeric portion of the drug strength dispensed. If the strength is 500mg, then this would contain 500.
+    </documentation>
+  </element>
+
+  <element name="StrengthUnitOfMeasureCode" type="SourceCode" codeSource="OMNI" codeSet="6020">
+    <documentation>
+      Defines the unit of measure portion of the strength of the dispensed medication.
+    </documentation>
+  </element>
+
+  <element name="StrengthVolume" type="double">
+    <documentation>
+      Contains the dispensed volume measurement in which the drug strength concentration is contained. For example,
+      Acetaminophen 120mg/5ml Elixir means that 120mg of the drug is in a solution with a volume of 5ml. The 120 would
+      be mapped to Strength, the mg would be mapped to StrengthUnitOfMeasureCode, the 5 would be mapped to this field
+      and the ml would be mapped to StrengthVolumeUnitOfMeasureCode.
+    </documentation>
+  </element>
+
+  <element name="StrengthVolumeUnitOfMeasureCode" type="SourceCode" codeSource="OMNI" codeSet="6020">
+    <documentation>
+      Contains the requested volumetric unit for the drug strength.
+    </documentation>
+  </element>
+
+  <element name="NeedsHumanReviewIndicator" type="SourceCode" codeSource="OMNI" codeSet="0136">
+    <documentation>
+      Indicates whether the pharmacist or non-pharmacist treatment supplier filling the order needs to pay special
+      attention to the text in the ordering provider's pharmacy/treatment instructions.  If "Yes", a warning is present
+      to review.  If "No", the order has no warning to be reviewed.
+    </documentation>
+  </element>
+
+  <element name="DispensingPharmacyName" type="string">
+    <documentation>
+      Name of the dispensing pharmacy when it is not an internal facility location, such as a commercial store or mail
+      order entity.
+    </documentation>
+  </element>
+
+  <element name="DispensingPharmacyNABPNumber" type="string">
+    <documentation>
+      National Association of Boards of Pharmacy identifier number of the dispensing pharmacy.
+    </documentation>
+  </element>
+
+  <element name="Destination" type="OmniLink" contains="FacilityLocation" keys="SourceName, SourceInstanceId" allowCreate="true">
+    <documentation>
+      Identification of the facility/location where the medication was shipped to, as part of the dispense event
+      (generally in-system only). In HL7-v2 this is the Dispense-to Location.
+    </documentation>
+
+    <example>
+      <![CDATA[
+			<FacilityLocation>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>SourceName:FacilityLocationId</SourceInstanceId>
+			</FacilityLocation>
+			]]>
+    </example>
+  </element>
+
+  <element name="ReceiverType" type="string">
+    <documentation>
+      A string indicating the nature of the type of receiver. This could be the patient, the patient's family member or
+      caregiver, or a provider(in a hospital environment).
+    </documentation>
+  </element>
+
+  <element name="SubstitutionTypeCode" type="SourceCode" codeSource="OMNI" codeSet="2.16.840.1.113883.1.11.16621">
+    <documentation>
+      Indicates whether an actual substitution occurred with another product that may have different ingredients, but
+      having the same biological and therapeutic effects.
+    </documentation>
+  </element>
+
+  <element name="SubstitutionReasonCode" type="SourceCode" codeSource="OMNI" codeSet="2.16.840.1.113883.1.11.19377">
+    <documentation>
+      A coded concept describing the reason that a different medication was substituted from what was prescribed.
+    </documentation>
+  </element>
+
+  <element name="SubstitutionStatusCode" type="SourceCode" codeSource="OMNI" codeSet="0167">
+    <documentation>
+      HL7-v2 code indicating the type of substitution that was dispensed.
+    </documentation>
+  </element>
+
+  <element name="BarcodeIdentifier" type="string">
+    <documentation>
+      Contains the pharmacy system assigned barcode for the dispensed medical substance.
+    </documentation>
+  </element>
+
+  <element name="LotNumber" type="string">
+    <documentation>
+      Contains the lot number of the medical substance dispensed.
+    </documentation>
+  </element>
+
+  <element name="ExpirationDate" type="OmniDate">
+    <documentation>
+      Contains the expiration date of the medical substance dispensed.
+    </documentation>
+
+    <example format="yyyy-MM-dd">1965-02-21</example>
+  </element>
+
+  <element name="ManufacturerCode" type="SourceCode" codeSource="OMNI" codeSet="0227">
+    <documentation>
+      Contains the manufacturer of the medical substance dispensed.
+    </documentation>
+  </element>
+
+  <element name="ManufacturerName" type="string">
+    <documentation>
+      Contains the name of the manufacturer of the substance. This could alternatively be the labeler name.
+    </documentation>
+  </element>
+
+  <element name="DispenseStatus" type="SourceCode" codeSource="OMNI" codeSet="2.16.840.1.113883.4.642.1.192">
+    <documentation>
+      A code specifying the state of the dispense event. Describes the lifecycle of the dispense.
+    </documentation>
+  </element>
+
+  <element name="DosageInstruction" type="string">
+    <documentation>
+      Free text dosage instructions can be used for cases where the instructions are too complex to code. When coded
+      instructions are present, the free text instructions may still be present for display to humans taking or
+      administering the medication.
+    </documentation>
+  </element>
+
+  <element name="DosageTiming" type="string">
+    <documentation>
+      The timing schedule for giving the medication to the patient. The Schedule data type allows many different
+      expressions. For example, "Every 8 hours"; "Three times a day"; "1/2 an hour before breakfast for 10 days from
+      23-Dec 2011:"; "15 Oct 2013, 17 Oct 2013 and 1 Nov 2013".
+    </documentation>
+  </element>
+
+  <element name="DosageAsNeededText" type="string">
+    <documentation>
+      A coded concept identifying the precondition that should be met or evaluated prior to consuming or administering
+      a medication dose. For example "pain", "30 minutes prior to meals", "on flare-up" etc.
+    </documentation>
+  </element>
+
+  <element name="RouteOfAdministrationCode" type="SourceCode">
+    <documentation>
+      This can conform to HL7 v2 codeset 0162 or to HL7 v3/FHIR specification of SNOMED routes of administration codes.
+    </documentation>
+  </element>
+
+  <element name="BodySiteCode" type="SourceCode">
+    <documentation>
+      This can conform to HL7 v2 codeset 0163 or to HL7 v3/FHIR specification of SNOMED body site codes.
+    </documentation>
+  </element>
+
+  <element name="AdministrationMethod" type="SourceCode" codeSource="OMNI" codeSet="0165">
+    <documentation>
+      A coded value indicating the method by which the medication is intended to be or was introduced into or on the body.
+      This can conform to HL7 v2 codeset 0165 or to a future HL7 v3/FHIR specification
+    </documentation>
+  </element>
+
+  <element name="DoseRange" type="string">
+    <documentation>
+      The amount of therapeutic or other substance given at one dose.
+    </documentation>
+  </element>
+
+  <element name="DoseQuantity" type="double">
+    <documentation>
+      Quantity of units of the medication to match the dose. If the dose is 1000mg and the strength of each unit is
+      250mg, then the DoseQuantity is 4.
+    </documentation>
+  </element>
+
+  <element name="DoseRate" type="string">
+    <documentation>
+      Identifies the speed with which the medication was or will be introduced into the patient. Typically the rate for
+      an infusion e.g. 100 ml per 1 hour or 100 ml/hr. May also be expressed as a rate per unit of time e.g. 500 ml
+      per 2 hours. Currently we do not specify a default of '1' in the denominator, but this is being discussed.
+      Other examples: 200 mcg/min or 200 mcg/1 minute; 1 liter/8 hours.
+    </documentation>
+  </element>
+
+  <element name="MaxDosePerPeriod" type="string">
+    <documentation>
+      The maximum total quantity of a therapeutic substance that may be administered to a subject over the period of
+      time, e.g. 1000mg in 24 hours.
+    </documentation>
+  </element>
+
+  <element name="TotalDailyDose" type="string">
+    <documentation>
+      This contains the total daily dose being dispensed as expressed in terms of the actual dispense units.
+    </documentation>
+  </element>
+
+  <element name="PBMTransactionId" type="string">
+    <documentation>
+      Transaction ID generated by a Pharmacy Benefit Manager for this dispensing event.
+    </documentation>
+  </element>
+
+
+
+</idsDocument>

@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.0.0" changeVersion="0" domain="InformationTechnology" type="xinstance"
+			 name="HealthcareITOperations"  
+	 		 elementOrder="Organization, MedicalFacility, MedicalFacilityLocation, PeriodStartDate, PeriodEndDate,
+					PeriodTypeCode, MinutesInPeriod, PlanningCategoryCode, PlanningSubCategoryCode, Reports,
+					SystemDowntime, Issues, ChangeRequests, Demand"
+			 >
+	 		               	
+	<changeLog>
+		<change version="1.0.0">Initial</change>
+	</changeLog>
+	
+
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+	<notes> 
+	</notes>
+			
+	<documentation>
+ 	Healthcare Information Technology (IT) Operations tracks a number of business operational metrics 
+	for an organization including timeliness of reports, system downtime, issues, change requests and system utilization.  
+	Additionally, it includes planning information such as projected, budget, actual and benchmarking 
+	statistics at an organizational level.  If the facility and location are not specified, the reported 
+	metrics apply to the entire organization.
+	</documentation>
+	
+	<element name="Organization" type="link" contains="Organization">
+		<documentation>
+		Identifies the medical organization. This organization consists of a group of 
+		people working together to improve methods of health care delivery.  A single IT department provides 
+		support to all facilities within the organization.
+		</documentation>
+
+		<example>
+			<Organization>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>IT Department</SourceInstanceId>
+			</Organization>
+		</example>			
+	</element>
+
+	<element name="MedicalFacility" type="link" contains="Facility">
+		<documentation>
+		Specifies the physical medical facility where patients receive treatment.  
+		This optional attribute is specified when the reporting metrics are 
+		tagged to a specific facility.
+		</documentation>
+		
+		<example>
+			<Facility>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>Hospital</SourceInstanceId>
+			</Facility>
+		</example>
+	</element>
+	
+	<element name="MedicalFacilityLocation" type="link" contains="FacilityLocation">
+		<documentation>
+		If data pertains to a particular location within the facility such as a specific building, 
+		it is defined here.  This optional attribute is specified when the reporting metrics are 
+		tagged to a specific location within the facility.
+		</documentation>
+		
+		<example>
+			<FacilityLocation>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>Building A</SourceInstanceId>
+			</FacilityLocation>
+		</example>
+	</element>
+
+	<element name="PeriodStartDate" type="datetime">
+		<documentation>
+		Contains the starting date associated with the reported hours.
+		</documentation>
+		
+		<example>
+			<PeriodStartDate format="yyyy-MM-dd">
+				2015-01-01
+			</PeriodStartDate>
+		</example>
+	</element>
+	<element name="PeriodEndDate" type="datetime">
+		<documentation>
+		Contains the ending date associated with the reported hours.
+		</documentation>
+		
+		<example>
+			<PeriodEndDate format="yyyy-MM-dd">
+				2015-02-02
+			</PeriodEndDate>
+		</example>
+	</element>
+
+	<element name="PeriodTypeCode" type="code">
+		<documentation>
+		Identifies the period of time that the hours reported represent.
+		</documentation>
+		
+		<example sourceName="TestSystem" codeSet="PeriodTypeCodes">
+			Year
+		</example>
+	</element>
+
+	<element name="MinutesInPeriod" type="integer">
+		<documentation>
+		Contains the total number of minutes in the reporting period.
+		</documentation>
+		
+		<example>
+			<MinutesInPeriod>
+				4
+			</MinutesInPeriod>
+		</example>
+	</element>
+
+	<element name="PlanningCategoryCode" type="code">
+		<documentation>
+		These IDS's can be used to capture Actuals, Budgeted, Projected or Benchmarks for 
+		any metric for the reporting period. A single IDS can be for only one Planning 			
+		Category/Subcategory combination. If the customer reports this at the facility level, 
+		then each IDS represents one Facility/Category/Subcategory combination. The customer can 
+		generate these at multiple levels if they so choose. IDS's at the facility level, or IDS's 
+		down to the cost center level, or anything and everything in between. 
+
+		The distinction between Budgeted (near-term) and Projected (longer term) is generally accepted, 
+		but how the customer uses these categories is up to them; they just enable a means of making 
+		comparisons. Actuals would capture the real statistics for the reporting period.
+
+		If they are so inclined, they might generate "Benchmark" IDS's if say there is an industry formula 
+		for a hospital or organization of their size. Multiple benchmark IDS's might be generated for 
+		different percentiles, if they exist or are calculable which is probably at the beginning of the 
+		fiscal year, or when industry benchmarks are issued.
+		</documentation>
+		
+		<example sourceName="TestSystem" codeSet="PlanningCategoryCode">
+			Projected
+		</example>
+	</element>
+
+	<element name="PlanningSubCategoryCode" type="code">
+		<documentation>
+		The Planning Subcategory provides a method to generate these Actuals, Budgeted, Projected or 
+		Benchmarks IDS's for different percentiles, if they exist or are calculable.
+		</documentation>
+		
+		<example sourceName="TestSystem" codeSet="PlanningSubCategoryCodes">
+			50th percentile
+		</example>
+	</element>
+
+	<group name="Reports" elementOrder="NumberOfOperativeReports, NumberOfOntimeOperativeReports   ">
+		<documentation>
+		Reports is a group of attributes tracking the timeliness of operative reports at the facility over a specific period of time.
+		</documentation>
+		
+		<element name="NumberOfOperativeReports" type="integer">
+			<documentation>
+			The number of operative reports generated and distributed regardless of their timeliness at the facility over a specific period of time.
+			</documentation>
+		
+			<example>
+				<NumberOfOperativeReports>
+					4
+				</NumberOfOperativeReports>
+			</example>
+		</element>
+
+		<element name="NumberOfOntimeOperativeReports" type="integer">
+			<documentation>
+			The number of operative reports generated and distributed when expected at the facility over a specific period of time.
+			</documentation>
+			
+			<example>
+				<NumberOfOntimeOperativeReports>
+					4
+				</NumberOfOntimeOperativeReports>
+			</example>
+		</element>
+	</group>
+
+	<group name="SystemDowntime" elementOrder="NumberOfSystemDownEvents, TotalSystemDowntime, PlannedSystemDowntime, UnplannedSystemDowntime">
+		<documentation>
+		SystemDowntime is a group of attributes tracking the number of events resulting in systems going 
+		offline and the number of planned and unplanned downtime minutes at the facility over 
+		a specified period of time.
+		</documentation>
+		
+		<element name="NumberOfSystemDownEvents" type="integer">
+			<documentation>
+			The total number of incidents that resulted in a system going offline at the facility over a specific period of time.
+			</documentation>
+		
+			<example>
+				<NumberOfSystemDownEvents>
+					4
+				</NumberOfSystemDownEvents>
+			</example>
+		</element>
+
+		<element name="TotalSystemDowntime" type="integer">
+			<documentation>
+			The total number of minutes that systems were unavailable, regardless if due to planned or unplanned outages, 
+			at the facility over a specific period of time.
+			</documentation>
+			
+			<example>
+				<TotalSystemDowntime>
+					45
+				</TotalSystemDowntime>
+			</example>
+		</element>
+
+		<element name="PlannedSystemDowntime" type="integer">
+			<documentation>
+			The number of minutes that systems were unavailable due to planned outages at the facility over a specific period of time.
+			</documentation>
+			
+			<example>
+				<PlannedSystemDowntime>
+					45
+				</PlannedSystemDowntime>
+			</example>
+		</element>
+
+		<element name="UnplannedSystemDowntime" type="integer">
+			<documentation>
+			The number of minutes that systems were unavailable due to unplanned outages at the facility over a specific period of time.
+			</documentation>
+			
+			<example>
+				<UnplannedSystemDowntime>
+					30
+				</UnplannedSystemDowntime>
+			</example>
+		</element>
+	</group>
+
+	<group name="Issues" elementOrder="NumberOfNewIssuesReported, NumberOfIssuesClosed, NumberOfOutstandingIssues, AverageIssueResponseTime,
+						NumberOfResolutionsIn30Mins, MeanTimeToRepairIssues">
+		<documentation>
+		SystemDowntime is a group of attributes tracking the number of events resulting in systems going 
+		offline and the number of planned and unplanned downtime minutes at the facility over 
+		a specified period of time.
+		</documentation>
+		
+		<element name="NumberOfNewIssuesReported" type="integer">
+			<documentation>
+			The total number of new issues for the IT department at the facility over a specific period of time.
+			</documentation>
+		
+			<example>
+				<NumberOfNewIssuesReported>
+					20
+				</NumberOfNewIssuesReported>
+			</example>
+		</element>
+
+		<element name="NumberOfIssuesClosed" type="integer">
+			<documentation>
+			The total number of issues that were closed for the IT department at the facility over a specific period of time.
+			</documentation>
+			
+			<example>
+				<NumberOfIssuesClosed>
+					10
+				</NumberOfIssuesClosed>
+			</example>
+		</element>
+
+		<element name="NumberOfOutstandingIssues" type="integer">
+			<documentation>
+			The total number of outstanding issues for the IT department at the facility over a specific period of time.
+			</documentation>
+			
+			<example>
+				<NumberOfOutstandingIssues>
+					10
+				</NumberOfOutstandingIssues>
+			</example>
+		</element>
+
+		<element name="AverageIssueResponseTime" type="double">
+			<documentation>
+			The average response time, in minutes, for the IT department for IT related issues at the facility over a specific period of time.
+			</documentation>
+			
+			<example>
+				<AverageIssueResponseTime>
+					30
+				</AverageIssueResponseTime>
+			</example>
+		</element>
+
+		<element name="NumberOfResolutionsIn30Mins" type="integer">
+			<documentation>
+			The number of IT incident resolutions that are completed within 30 minutes from the time they were 
+			reported at the facility over a specific period of time.
+			</documentation>
+			
+			<example>
+				<NumberOfResolutionsIn30Mins>
+					5
+				</NumberOfResolutionsIn30Mins>
+			</example>
+		</element>
+
+		<element name="MeanTimeToRepairIssues" type="double">
+			<documentation>
+			The mean time, in minutes, to repair taken for an IT incident at the facility over a specific period of time.
+			</documentation>
+			
+			<example>
+				<MeanTimeToRepairIssues>
+					30
+				</MeanTimeToRepairIssues>
+			</example>
+		</element>
+	</group>
+
+	<group name="ChangeRequests" elementOrder="NumberOfNewChangeRequests, NumberOfClosedChangeRequests, NumberOfOutstandingChangeRequests,
+							ChangeRequestCycleTime">
+		<documentation>
+		ChangeRequests is a group of attributes tracking the number of new, completed and outstanding change requests 
+		along with the average number of days to complete a change request at the facility over a specified period of time.
+		</documentation>
+		
+		<element name="NumberOfNewChangeRequests" type="integer">
+			<documentation>
+			The total number of new change requests for the IT department at the facility over a specific period of time.
+			</documentation>
+		
+			<example>
+				<NumberOfNewChangeRequests>
+					4
+				</NumberOfNewChangeRequests>
+			</example>
+		</element>
+
+		<element name="NumberOfClosedChangeRequests" type="integer">
+			<documentation>
+			The total number of closed change requests for the IT department at the facility over a specific period of time.
+			</documentation>
+			
+			<example>
+				<NumberOfClosedChangeRequests>
+					45
+				</NumberOfClosedChangeRequests>
+			</example>
+		</element>
+
+		<element name="NumberOfOutstandingChangeRequests" type="integer">
+			<documentation>
+			The total number of outstanding change requests for the IT department at the facility over a specific period of time.
+			</documentation>
+			
+			<example>
+				<NumberOfOutstandingChangeRequests>
+					45
+				</NumberOfOutstandingChangeRequests>
+			</example>
+		</element>
+
+		<element name="ChangeRequestCycleTime" type="double">
+			<documentation>
+			The amount of time, in days, it takes for an IT change request to be completed successfully at the
+			facility over a specific period of time.
+			</documentation>
+			
+			<example>
+				<ChangeRequestCycleTime>
+					10
+				</ChangeRequestCycleTime>
+			</example>
+		</element>
+	</group>
+
+	<group name="Demand" elementOrder="PercentSystemUtilization, AverageNumberOfUsers">
+		<documentation>
+		Demand is a group of attributes containing the average number of users and system utilization rate at the facility over a specific period of time.
+		</documentation>
+		
+		<element name="PercentSystemUtilization" type="double">
+			<documentation>
+			The total utilization rate for IT across various departments at the facility over a specific period of time.
+			</documentation>
+		
+			<example>
+				<PercentSystemUtilization>
+					4
+				</PercentSystemUtilization>
+			</example>
+		</element>
+
+		<element name="AverageNumberOfUsers" type="double">
+			<documentation>
+			Contains the average number of users for the reporting period.
+			</documentation>
+			
+			<example>
+				<AverageNumberOfUsers>
+					4
+				</AverageNumberOfUsers>
+			</example>
+		</element>
+	</group>	
+</idsDocument>

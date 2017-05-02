@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<idsDocument version="1.0.0" changeVersion="0" domain="Facility" type="xinstance" name="FacilitySecurity" elementOrder="MedicalFacility, MedicalFacilityLocation, MedicalOrganization, Department, PeriodStartDate, PeriodEndDate, PeriodTypeCode, PlanningCategoryCode, PlanningSubCategoryCode, CrimesAgainstEmployeesReported, CrimesAgainstPatientsReported, CrimesAgainstPublicReported, ServiceCalls, AverageVIPResponseTime, AverageVIPResponseTimeUnitsCode, AverageIncidentResponseTime, AverageIncidentResponseTimeUnitsCode, AveragePanicAlarmResponseTime, AveragePanicAlarmResponseTimeUnitsCode, FacilityAlarmActivations, SecurityIncidentReportTotals, SecurityIncidents">
+  <include name="CommonElements" prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName" appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+  <notes>TEST</notes>
+  <documentation>Facility Security enables the customer to populate the Actual, Projected, Budget or Benchmark security metrics for a facility, location, organization or department or any combination within that hierarchy for the reporting period.  These security  metrics include counts of crimes reported, average response times to service calls, alarm activations and security incident details.</documentation>
+  <element name="MedicalFacility" type="link" contains="Facility">
+    <documentation>Specifies the physical medical facility where the patient received treatment.</documentation>
+    <example>
+      <Facility>
+        <SourceName>TestSystem</SourceName>
+        <SourceInstanceId>Hospital</SourceInstanceId>
+      </Facility>
+    </example>
+  </element>
+  <element name="MedicalFacilityLocation" type="link" contains="FacilityLocation">
+    <documentation>If data pertains to a particular location within the facility such as a specific building, it is defined here.</documentation>
+    <example>
+      <FacilityLocation>
+        <SourceName>TestSystem</SourceName>
+        <SourceInstanceId>Building A</SourceInstanceId>
+      </FacilityLocation>
+    </example>
+  </element>
+  <element name="MedicalOrganization" type="link" contains="Organization">
+    <documentation>Identifies the medical organization. This organization consists of a group of people working together to improve methods of health care delivery.</documentation>
+    <example>
+      <Organization>
+        <SourceName>TestSystem</SourceName>
+        <SourceInstanceId>Organization XYZ</SourceInstanceId>
+      </Organization>
+    </example>
+  </element>
+  <element name="Department" type="link" contains="OrganizationalUnit">
+    <documentation>If data pertains to a particular department within the organization such as the Emergency Room, it is defined here.</documentation>
+    <example>
+      <OrganizationalUnit>
+        <SourceName>TestSystem</SourceName>
+        <SourceInstanceId>Emergency Room</SourceInstanceId>
+      </OrganizationalUnit>
+    </example>
+  </element>
+  <element name="PeriodStartDate" type="datetime">
+    <documentation>Contains the starting date when the facility statistics were collected.</documentation>
+    <example>
+      <PeriodStartDate format="yyy-MM-dd">2015-01-01</PeriodStartDate>
+    </example>
+  </element>
+  <element name="PeriodEndDate" type="datetime">
+    <documentation>Contains the ending date when the facility statistics were collected.</documentation>
+    <example>
+      <PeriodEndDate format="yyy-MM-dd">2015-01-01</PeriodEndDate>
+    </example>
+  </element>
+  <element name="PeriodTypeCode" type="code">
+    <documentation>Identifies the period of time that the facility statistics represent.</documentation>
+    <example sourceName="TestSystem" codeSet="PeriodTypeCodes">Year</example>
+  </element>
+  <element name="PlanningCategoryCode" type="code">
+    <documentation>These IDS's can be used to capture Actuals, Budgeted, Projected or Benchmarks for any metric for the reporting period. A single IDS can be for only one Planning Category/Subcategory combination. If the customer reports this at the departmental level, then each IDS represents one Department/Category/Subcategory combination. The customer can generate these at multiple levels if they so choose. IDS's at the facility level, or IDS's down to the departmental level, or anything and everything in between. The distinction between Budgeted (near-term) and Projected (longer term) is generally accepted, but how the customer uses these categories is up to them; they just enable a means of making comparisons. Actuals would capture the real statistics for the reporting period. If they are so inclined, they might generate "Benchmark" IDS's if say there is an industry formula for a hospital or department of their size. Multiple benchmark IDS's might be generated for different percentiles, if they exist or are calculable which is probably at the beginning of the fiscal year, or when industry benchmarks are issued.</documentation>
+    <example sourceName="TestSystem" codeSet="PlanningCategoryCodes">Projected</example>
+  </element>
+  <element name="PlanningSubCategoryCode" type="code">
+    <documentation>The Planning Subcategory provides a method to generate these Actuals, Budgeted, Projected or Benchmarks IDS's for different percentiles, if they exist or are calculable.</documentation>
+    <example sourceName="TestSystem" codeSet="PlanningSubCategoryCodes">50th percntile</example>
+  </element>
+  <element name="CrimesAgainstEmployeesReported" type="integer">
+    <documentation>Contains the total number of reported crimes commited againt employees at the facility for the reporting period.</documentation>
+    <example>
+      <CrimesAgainstEmployeesReported>2</CrimesAgainstEmployeesReported>
+    </example>
+  </element>
+  <element name="CrimesAgainstPatientsReported" type="integer">
+    <documentation>Contains the total number of reported crimes commited againt patients at the facility for the reporting period.</documentation>
+    <example>
+      <CrimesAgainstPatientsReported>6</CrimesAgainstPatientsReported>
+    </example>
+  </element>
+  <element name="CrimesAgainstPublicReported" type="integer">
+    <documentation>Contains the total number of reported crimes commited againt the general public at the facility for the reporting period.</documentation>
+    <example>
+      <CrimesAgainstPublicReported>1</CrimesAgainstPublicReported>
+    </example>
+  </element>
+  <element name="ServiceCalls" type="integer">
+    <documentation>Contains the total number of calls for service for the security department at the facility for the reporting period.</documentation>
+    <example>
+      <ServiceCalls>9</ServiceCalls>
+    </example>
+  </element>
+  <element name="AverageVIPResponseTime" type="double">
+    <documentation>Contains the average response time for all incidents where the person involved is a VIP at the facility for the reporting period.</documentation>
+    <example>
+      <AverageVIPResponseTime>23.5</AverageVIPResponseTime>
+    </example>
+  </element>
+  <element name="AverageVIPResponseTimeUnitsCode" type="code">
+    <documentation>Contains the units in which the average response time involving a VIP person was documented.</documentation>
+    <example sourceName="UnitsOfTime" codeSet="6025">h = Hour</example>
+  </element>
+  <element name="AverageIncidentResponseTime" type="double">
+    <documentation>Contains the average response time for all incidents regardless of who was involved at the facility for the reporting period.</documentation>
+    <example>
+      <AverageIncidentResponseTime>15.4</AverageIncidentResponseTime>
+    </example>
+  </element>
+  <element name="AverageIncidentResponseTimeUnitsCode" type="code">
+    <documentation>Contains the units in which the average response time was documented.</documentation>
+    <example sourceName="UnitsOfTime" codeSet="6025">h = Hour</example>
+  </element>
+  <element name="AveragePanicAlarmResponseTime" type="double">
+    <documentation>Contains the average response time when the panic alarm was triggered at the facility for the reporting period.</documentation>
+    <example>
+      <AveragePanicAlarmResponseTime>10.2</AveragePanicAlarmResponseTime>
+    </example>
+  </element>
+  <element name="AveragePanicAlarmResponseTimeUnitsCode" type="code">
+    <documentation>Contains the units for the average response time when the panic alarm was triggered.</documentation>
+    <example sourceName="UnitsOfTime" codeSet="6025">h = Hour</example>
+  </element>
+  <list name="FacilityAlarmActivations">
+    <documentation>FacilityAlarmActivations is a collection of FacilityAlarmActivation instances. Captures the type and count of alarm activations at the facility for the reporting period.</documentation>
+  
+	<idsDocument version="1.0.0" changeVersion="0" domain="Facility" type="xinstance_child" name="FacilityAlarmActivation" elementOrder="FacilityAlarmTypeCode, NumberOfFacilityAlarmActivations">
+	  <include name="CommonElements" prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName" appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	  <notes>TEST</notes>
+	  <documentation>Captures the type and count of alarm activations at the facility for the reporting period.
+	</documentation>
+	  <element name="FacilityAlarmTypeCode" type="code">
+	    <documentation>There are different ways to trigger the facility alarm which represent different types of activations.</documentation>
+	    <example sourceName="TestSystem" codeSet="FacilityAlarmTypeCodes">Door Open</example>
+	  </element>
+	  <element name="NumberOfFacilityAlarmActivations" type="integer">
+	    <documentation>Contains the number of alarm activations that occurred at the facility for the reporting period.</documentation>
+	    <example>
+	      <NumberOfFacilityAlarmActivations>10</NumberOfFacilityAlarmActivations>
+	    </example>
+	  </element>
+	</idsDocument>
+  
+  </list>
+  <list name="SecurityIncidentReportTotals">
+    <documentation>SecurityIncidentReportTotals is a collection of SecurityIncidentReportTotal instances. Tracks the number of security incidents reported by category at the facility for the reporting period.</documentation>
+  
+	<idsDocument version="1.0.0" changeVersion="0" domain="Facility" type="xinstance_child" name="SecurityIncidentReportTotal" elementOrder="SecurityIncidentTypeCode, SecurityIncidentCount">
+	  <include name="CommonElements" prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName" appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	  <notes>TEST</notes>
+	  <documentation>Tracks the number of security incidents reported by category at the facility for the reporting period.</documentation>
+	  <element name="SecurityIncidentTypeCode" type="code">
+	    <documentation>Indicates the type of security incident at the facility for the reporting period used to capture all service calls, requests of assistance for a patient, or a type of crime committed such as theft or assault.</documentation>
+	    <example sourceName="TestSystem" codeSet="SecurityIncidentTypeCodes">Theft</example>
+	  </element>
+	  <element name="SecurityIncidentCount" type="integer">
+	    <documentation>Contains the number of security incidents for the selected incident type that occurred at the facility for the reporting period.</documentation>
+	    <example>
+	      <SecurityIncidentCount>12</SecurityIncidentCount>
+	    </example>
+	  </element>
+	</idsDocument>  
+  </list>
+  <list name="SecurityIncidents">
+    <documentation>SecurityIncidents is a collection of SecurityIncident instances. Captures details on a specific security incident including when the incident was reported, response time, the type of incident and whether it was resolved.</documentation>
+  
+	<idsDocument version="1.0.0" changeVersion="0" domain="Facility" type="xinstance_child" name="SecurityIncident" elementOrder="SecurityIncidentId, AfterHoursPerimeterSecurity, SecurityHours, SecurityIncidentTypeCode, IncidentResponseDateTime, IncidentReportedDateTime, ResolvedFlag">
+	  <include name="CommonElements" prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName" appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	  <notes>TEST</notes>
+	  <documentation>Captures details on a specific security incident including when the incident was reported, response time, the type of incident and whether it was resolved.</documentation>
+	  <element name="SecurityIncidentId" type="string">
+	    <documentation>Uniquely identifies the security incident reported.</documentation>
+	    <example>
+	      <SecurityIncidentId>A67PL78</SecurityIncidentId>
+	    </example>
+	  </element>
+	  <element name="AfterHoursPerimeterSecurity" type="double">
+	    <documentation>The percent rate at which the perimeter is secure after hours at the facility on the day of the incident.</documentation>
+	    <example>
+	      <AfterHoursPerimeterSecurity>4.6</AfterHoursPerimeterSecurity>
+	    </example>
+	  </element>
+	  <element name="SecurityHours" type="double">
+	    <documentation>Contains the total number of hours that security was in place at the facility on the day of the incident.</documentation>
+	    <example>
+	      <SecurityHours>2.4</SecurityHours>
+	    </example>
+	  </element>
+	  <element name="SecurityIncidentTypeCode" type="code">
+	    <documentation>Indicates the type of security incident which could be a request of assistance for a patient to a crime committed such as theft or assault.</documentation>
+	    <example sourceName="TestSystem" codeSet="SecurityIncidentTypeCodes">Theft</example>
+	  </element>
+	  <element name="IncidentResponseDateTime" type="datetime">
+	    <documentation>Contains the date and time when first responders arrived at the scene.</documentation>
+	    <example>
+	      <IncidentResponseDateTime format="yyy-MM-dd">2015-01-01</IncidentResponseDateTime>
+	    </example>
+	  </element>
+	  <element name="IncidentReportedDateTime" type="datetime">
+	    <documentation>Contains the date and time when the incident was reported.</documentation>
+	    <example>
+	      <IncidentReportedDateTime format="yyy-MM-dd">2015-01-01</IncidentReportedDateTime>
+	    </example>
+	  </element>
+	  <element name="ResolvedFlag" type="code">
+	    <documentation>Indicates whether the incident was resolved. If "Yes", incident was resolved. If "No", incident has not been resolved.</documentation>
+	    <example sourceName="Yes/No Indicator" codeSet="Code 0136">Y = Yes</example>
+	  </element>
+	</idsDocument>
+  
+  </list>
+</idsDocument>

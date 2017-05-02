@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.0.1"
+			 name="HospitalBillingAccount" udlName="HospitalBillingAccount" domain="Accounts" type="instance"
+			 dbTable="hosp_bill_accnt"
+	 		 elementOrder="SourceName, SourceInstanceId, SourceInstanceIdName"
+	 		 implementationClass="com.ibi.omni.patient.model.stubs.HospitalBillingAccount"
+	 		 excludeFromRamp="true">
+
+	<changeLog>
+		<change version="1.0.1">Removed any references to SourceCode and replaced with SourceCode</change>
+	</changeLog>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	
+	<documentation>
+	Use this Input Specification to feed Guarantor Account information.
+	</documentation>
+	
+	<element name="SourceName" key="true" type="string" dbColumn="source_name">
+		<documentation>
+		This element must identify the source system that was responsible for generating this 
+	    data. This value is determined by the integration team and used in combination with 
+	    SourceInstanceId will allow this record to be traced back to its originating source.
+		</documentation>
+	</element>
+
+	<element name="SourceInstanceId" key="true" type="string" dbColumn="src_source_instance_id">
+		<documentation>
+		This element should contain an integration manufactured value that uniquely identifies the
+		collection element and can be used to map back to the source system. Whatever value is
+		manufactured must not change over time as it will be used to make updates when data
+		changes in the source system.
+		
+		When processing the IDS the loading system will use the parent document SourceSystem plus
+		this SourceInstanceId to find a previously loaded collection element. If a collection element 
+		was found then it will be merged, otherwise it will be added to current collection.
+		</documentation>
+	</element>
+	
+	<element name="SourceInstanceIdName" type="string" dbColumn="source_instance_id_name">
+		<documentation>
+		This element gives an indication of where the data came from in the source
+	 	system. Used in the 360 viewer for data stewards to trace data.
+		</documentation>
+	</element>
+</idsDocument>

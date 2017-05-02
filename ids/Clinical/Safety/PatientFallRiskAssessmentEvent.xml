@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.0.0" changeVersion="0" domain="Clinical.Event" type="instance"
+			 name="PatientFallRiskAssessmentEvent"  
+	 		 elementOrder="EventDateTime, EventEndDateTime, Location, AssessmentReasonCode,
+					Survey,OverallScoreBasisScaleBottom, OverallScoreBasisScaleTop, 
+					OverallSentimentCode, OtherFallRiskFactors"
+			 backingClass="com.ibi.omni.patient.model.clinical.event.ClinicalEvent">
+
+	<changeLog>
+		<change version="1.0.0">Initial</change>
+		<change version="1.2.3_3">Added ParentEvent, Encounter, CarePlanID, CarePlan, EventProviders, and  EventNote</change>
+	</changeLog>
+
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+
+	<include name="EventElements"
+			 prependToElementOrder="ParentEvent, Encounter, CarePlanId, CarePlan, CCDCategoryCode"
+			 appendToElementOrder="EventProviders, EventNotes, ClinicalBaseFields "/>
+
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+			
+	<documentation>
+ 	Patient Fall Event is a type of clinical event tracking information regarding the patient falling.  
+	It includes contributing factors and reason patient fell, level of injury sustained, likelihood of patient 
+	falling again, assessment of a patient's prior fall, if any, and steps taken to lower the patient's risk of falling.
+	</documentation>
+	
+	<element name="EventDateTime" type="datetime">
+		<documentation>
+		Date and time the assessment protocol was initiated to evaluate the patient's fall risk probability.
+		</documentation>
+	</element>
+
+	<element name="EventEndDateTime" type="datetime">
+		<documentation>
+		Date and time the assessment protocol was completed.
+		</documentation>
+	</element>
+
+	<element name="Location" type="link" contains="FacilityLocation">
+		<documentation>
+		Facility location where the assessment protocol on the patient was conducted.
+		</documentation>
+	</element>
+	
+	<element name="AssessmentReasonCode" type="code">
+		<documentation>
+		Identifies why assessment protocol was performed.
+		</documentation>
+	</element>
+
+	<element name="Survey" type="link" contains="Survey">
+		<documentation>
+		A Survey consists of a collection of questions, each question can have answers, and there 
+		is a scoring mechanism for the answers and for the collection as a whole.  For Patient Fall Risk Assessment, 
+		it captures details on a specific assessment protocol that determines the patient's fall risk probability. 
+		Assessment protocols utilize a predefined set of risk factors and points assigned based on question 
+		responses calculating the patient's overall fall risk score.
+		</documentation>
+	</element>
+
+	<element name="OverallScoreBasisScaleBottom" type="double">
+		<documentation>
+		Lowest possible overall score.
+		</documentation>
+	</element>
+
+	<element name="OverallScoreBasisScaleTop" type="double">
+		<documentation>
+		Highest possible overall score.
+		</documentation>
+	</element>
+
+	<element name="OverallSentimentCode" type="code">
+		<documentation>
+		Responses to survey questions are evaluated and assigned points from which the overall score is determined. 
+		Sentiment analysis uses this score to determine whether the patient fall risk is High risk, Low risk, etc.  
+		For example, the Morse Fall Risk protocol allows for a score ranging from 0 to 125.  
+		A patient can be "No risk", "Low risk" if score is between 0 and 24, "Moderate risk" if between 25 and 44, 
+		or "High risk" if scored 45 or higher. 	
+		</documentation>		
+	</element>
+
+	<list name="OtherFallRiskFactors">
+		<documentation>
+		OtherFallRiskFactors is a collection of FallRiskFactor records containing additional data that is 
+		outside of the assessment protocol used during the fall risk assessment of this patient. 
+		A risk factor is something that increases risk or susceptibility.  The fall risk factor 
+		(e.g. Gait, Dizziness, Vision, Medicated, etc.) is based on the patient's current state and 
+		then assigned a score indicating risk of falling.
+		</documentation>
+		
+		<idsDocument version="1.0.0" changeVersion="0" domain="Clinical" type="instance_child"
+				 name="FallRiskFactor"  
+		 		 elementOrder="FallRiskFactor, FallRiskFactorScore, ScoreBasisScaleBottom, ScoreBasisScaleTop, SentimentCode">
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/> 		               	
+							
+			<documentation>
+		 	Each record contains additional data that is outside of the assessment protocol used during the 
+			fall risk assessment of this patient.  It allows for capturing a free-form risk factor along with its 
+			assigned score and how that score rates on the sentiment scale.
+			</documentation>
+		
+			<element name="FallRiskFactor" type="string">
+				<documentation>
+				Captures the risk factor that would increase the patient's risk or susceptibility of falling.
+				</documentation>
+			</element>
+		
+			<element name="FallRiskFactorScore" type="double">
+				<documentation>
+				Upon completing the evaluation of the risk factor for the patient, a score is given 
+				determining the patient's risk of falling.
+				</documentation>
+			</element>
+		
+			<element name="ScoreBasisScaleBottom" type="double">
+				<documentation>
+				Lowest possible overall score.
+				</documentation>
+			</element>
+		
+			<element name="ScoreBasisScaleTop" type="double">
+				<documentation>
+				Highest possible overall score.
+				</documentation>
+			</element>
+		
+			<element name="SentimentCode" type="code">
+				<documentation>
+				Sentiment analysis interprets this score to determine the patient's risk of falling. 
+				For example, Fall Risk Factor = "Patient is vomiting" with scores ranging from 0 (Not vomiting), 
+				1 (Nauseated), 2 (Convulsively).  A patient can be "No risk" if score is 0, "Moderate risk" if score is 1, 
+				or "High risk" if score is 2.
+				</documentation>		
+			</element>
+		</idsDocument>
+	</list>	
+</idsDocument>

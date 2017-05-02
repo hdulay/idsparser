@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.0.0" changeVersion="0" domain="Clinical" type="instance"
+			 name="SurgeryProcedure"  
+	 		 elementOrder="SurgeryCase, PrimaryProcedureIndicator, Order, Procedure, ProcedureStatusCode, OrderCatalogCode, SurgicalProcedureDescription,
+					SurgicalProcedureCode, CaseProcedureSequence, SurgicalSpecialtyCode, WoundClassCode, BodySiteCode, BodySiteDescription, 
+					Scheduled, Actual, PrimarySurgeon"
+			 >
+	 		               	
+	<changeLog>
+		<change version="1.0.0">Initial</change>
+	</changeLog>
+	
+
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+	<notes> 
+
+	</notes>
+			
+	<documentation>
+ 	Each Surgery Procedure tracks details of a procedure that was performed or is scheduled to be performed on a patient.  
+	It captures whether this was the primary procedure when a surgery case has multiple procedures, references to the Procedure 	
+	Order and Procedure Event instances, surgical specialty required, primary surgeon and scheduled/actual statistics.
+	</documentation>
+
+	<element name="SurgeryCase" type="link" contains="SurgeryCase">
+		<documentation>
+		Represents the surgery case this surgery procedure is assigned to.  When a patient needs surgery, a surgery case can 
+		be defined tracking details such as the associated encounter, surgical specialty required, class of patient, condition 
+		of patient before and after all procedures, participating providers and scheduled/actual statistics for anesthesia, 
+		locations to perform surgery and durations.
+		</documentation>
+		
+		<example>
+			<SurgeryCase>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>Patient X open heart surgery</SourceInstanceId>
+			</SurgeryCase>
+		</example>
+	</element>
+
+	<element name="PrimaryProcedureIndicator" type="code">
+		<documentation>
+		Indicates whether this surgical procedure was the primary procedure in the patient's surgery case.
+		</documentation>
+	
+		<example sourceName="HL7 v2 Tables" codeSet="0136">
+		Y = Yes
+		</example>
+	</element>
+
+	<element name="Order" type="link" contains="ProcedureOrderEvent">
+		<documentation>
+		This Procedure Order Event captures details on the surgical procedure that was ordered for the patient.
+		</documentation>
+		
+		<example>
+			<ProcedureOrderEvent>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>Ordered Procedure for Patient X</SourceInstanceId>
+			</ProcedureOrderEvent>
+		</example>
+	</element>
+
+	<element name="Procedure" type="link" contains="ProcedureEvent">
+		<documentation>
+		This Procedure Event captures details on the surgical procedure that was performed on the patient.
+		</documentation>
+		
+		<example>
+			<ProcedureEvent>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>Procedure details</SourceInstanceId>
+			</ProcedureEvent>
+		</example>
+	</element>
+
+	<element name="ProcedureStatusCode" type="code">
+		<documentation>
+		Indicates the current stage in performing this surgery procedure.
+		</documentation>
+	
+		<example sourceName="TestSystem" codeSet="ProcedureStatusCodes">
+		Pending
+		</example>
+	</element>
+
+	<element name="OrderCatalogCode" type="string">
+		<documentation>
+		Contains the coded string representing the ordered surgical procedure.
+		</documentation>
+		
+		<example>
+			<OrderCatalogCode>
+				Procedure 123
+			</OrderCatalogCode>
+		</example>
+	</element>
+
+	<element name="SurgicalProcedureDescription" type="string">
+		<documentation>
+		Contains additional information on the patient's ordered surgical procedure.
+		</documentation>
+		
+		<example>
+			<SurgicalProcedureDescription>
+				Family present for administration of anesthesia.
+			</SurgicalProcedureDescription>
+		</example>
+	</element>
+
+	<element name="SurgicalProcedureCode" type="code">
+		<documentation>
+		A medical procedure is a course of action intended to achieve a result in the care of the patient.  
+		Procedure codes may contain a modifier code which indicates the description of the service provided was 
+		altered (e.g. a complex operation may have a surgeon and assistant surgeon, a radiological procedure involves 
+		both the equipment usage as well as the provider who interprets the findings).
+		</documentation>
+	
+		<example sourceName="ICD-9-PCS, ICD-10-PCS" codeSet="ICD9-CM-V3">
+		Biopsy of diaphragm
+		</example>
+	</element>
+
+	<element name="CaseProcedureSequence" type="integer">
+		<documentation>
+		Tracks the sequence this surgical procedure was performed within the patient's surgery case.
+		</documentation>
+		
+		<example>
+			<CaseProcedureSequence>
+				2
+			</CaseProcedureSequence>
+		</example>
+	</element>
+
+	<element name="SurgicalSpecialtyCode" type="code">
+		<documentation>
+		Use this element to specify the specialization required of the provider performing the surgical procedure.
+
+		ASC X12N Health Care Provider Taxonomy, Level 3 - Area of Specialization (see Code Sets TAB)
+		</documentation>
+	
+		<example sourceName="HealthCareProviderTaxonomy" codeSet="0454">
+		Hand Surgery
+		</example>
+	</element>
+
+	<element name="WoundClassCode" type="code">
+		<documentation>
+		Contains the classification of surgical wounds as a result of this surgical procedure.
+		</documentation>
+		
+		<example sourceName="TestSystem" codeSet="WoundClassCodes">
+		Clean
+		</example>
+	</element>
+
+	<element name="BodySiteCode" type="code">
+		<documentation>
+		Identifies the anatomical location where the procedure was performed.
+		</documentation>
+		
+		<example sourceName="HL7v2 Tables" codeSet="0163">
+		Left Arm
+		</example>
+	</element>
+
+	<element name="BodySiteDescription" type="string">
+		<documentation>
+		Contains additional information on the anatomical location where the procedure was performed.
+		</documentation>
+		
+		<example>
+			<BodySiteDescription>
+				Top of Lower Left Arm
+			</BodySiteDescription>
+		</example>
+	</element>
+
+	<group name="Scheduled" elementOrder="ProcedureStartDateTime, ProcedureEndDateTime, ProcedureDuration, SurgeryLocation, AnesthesiaTypeCode">
+		<documentation>
+		Scheduled is a group of attributes tracking what was scheduled to occur during this patient's surgical procedure.
+		</documentation>
+
+		<element name="ProcedureStartDateTime" type="datetime">
+			<documentation>
+			Contains the date and time when this patient's surgical procedure was scheduled to start.
+			</documentation>
+			
+			<example>
+				<ProcedureStartDateTime format="yyyy-MM-dd">
+					2015-01-01
+				</ProcedureStartDateTime>
+			</example>
+		</element>
+	
+		<element name="ProcedureEndDateTime" type="datetime">
+			<documentation>
+			Contains the date and time when this patient's surgical procedure was scheduled to end.
+			</documentation>
+			
+			<example>
+				<ProcedureEndDateTime format="yyyy-MM-dd">
+					2015-02-02
+				</ProcedureEndDateTime>
+			</example>
+		</element>
+
+		<element name="ProcedureDuration" type="double">
+			<documentation>
+			Contains the scheduled time, in minutes, estimated to perform this patient's surgical procedure.
+			</documentation>
+			
+			<example>
+				<ProcedureDuration>
+					45
+				</ProcedureDuration>
+			</example>
+		</element>
+
+		<element name="SurgeryLocation" type="link" contains="FacilityLocation">
+			<documentation>
+			Contains the scheduled surgery location within facility to perform this patient's surgical procedure.
+			</documentation>
+		
+			<example>
+				<FacilityLocation>
+					<SourceName>TestSystem</SourceName>
+					<SourceInstanceId>Emergency Room</SourceInstanceId>
+				</FacilityLocation>
+			</example>
+		</element>
+
+		<element name="AnesthesiaTypeCode" type="code">
+			<documentation>
+			This contains the scheduled type of anesthesia to use during this patient's surgical procedure.
+			</documentation>
+		
+			<example sourceName="TestSystem" codeSet="AnesthesiaTypeCodes">
+			Conscious or intravenous (IV) sedation	
+			</example>
+		</element>
+	</group>
+
+	<group name="Actual" elementOrder="ProcedureStartDateTime, ProcedureEndDateTime, ProcedureDuration, SurgeryLocation, AnesthesiaTypeCode">
+		<documentation>
+		Actual is a group of attributes tracking what actaully occurred during this patient's surgical procedure.
+		</documentation>
+
+		<element name="ProcedureStartDateTime" type="datetime">
+			<documentation>
+			Contains the date and time when this patient's surgical procedure actually started.
+			</documentation>
+			
+			<example>
+				<ProcedureStartDateTime format="yyyy-MM-dd">
+					2015-01-01
+				</ProcedureStartDateTime>
+			</example>
+		</element>
+	
+		<element name="ProcedureEndDateTime" type="datetime">
+			<documentation>
+			Contains the date and time when this patient's surgical procedure actually ended.
+			</documentation>
+			
+			<example>
+				<ProcedureEndDateTime format="yyyy-MM-dd">
+					2015-02-02
+				</ProcedureEndDateTime>
+			</example>
+		</element>
+
+		<element name="ProcedureDuration" type="double">
+			<documentation>
+			Contains the actual time, in minutes, to perform this patient's surgical procedure.
+			</documentation>
+			
+			<example>
+				<ProcedureDuration>
+					45
+				</ProcedureDuration>
+			</example>
+		</element>
+
+		<element name="SurgeryLocation" type="link" contains="FacilityLocation">
+			<documentation>
+			Contains the actual surgery location within facility to perform this patient's surgical procedure.
+			</documentation>
+		
+			<example>
+				<FacilityLocation>
+					<SourceName>TestSystem</SourceName>
+					<SourceInstanceId>Emergency Room</SourceInstanceId>
+				</FacilityLocation>
+			</example>
+		</element>
+
+		<element name="AnesthesiaTypeCode" type="code">
+			<documentation>
+			This contains the actual type of anesthesia to use during this patient's surgical procedure.
+			</documentation>
+		
+			<example sourceName="TestSystem" codeSet="AnesthesiaTypeCodes">
+			Conscious or intravenous (IV) sedation	
+			</example>
+		</element>
+	</group>
+
+	<group name="PrimarySurgeon" elementOrder="ScheduledPrimarySurgeon, ActualPrimarySurgeon, TotalNumberOfCasesThisProcedure, HistoricAverageDuration,
+							RecentAverageDuration, NumberOfCasesInRecentAverage">
+		<documentation>
+
+		</documentation>
+
+		<element name="ScheduledPrimarySurgeon" type="link" contains="Provider">
+			<documentation>
+			Represents the primary surgeon who was scheduled to perform the patient's surgical procedure.
+			</documentation>
+		
+			<example>
+				<Provider>
+					<SourceName>TestSystem</SourceName>
+					<SourceInstanceId>Dr.JohnDoe</SourceInstanceId>
+				</Provider>
+			</example>
+		</element>
+
+		<element name="ActualPrimarySurgeon" type="link" contains="Provider">
+			<documentation>
+			Represents the primary surgeon who actually performed the patient's surgical procedure.
+			</documentation>
+		
+			<example>
+				<Provider>
+					<SourceName>TestSystem</SourceName>
+					<SourceInstanceId>Dr.JamesDoe</SourceInstanceId>
+				</Provider>
+			</example>
+		</element>
+	
+		<element name="TotalNumberOfCasesThisProcedure" type="integer">
+			<documentation>
+			Contains the total number of surgery cases the actual primary surgeon performed this surgical procedure.
+			</documentation>
+		
+			<example>
+				<TotalNumberOfCasesThisProcedure>
+					2
+				</TotalNumberOfCasesThisProcedure>
+			</example>
+		</element>
+
+		<element name="HistoricAverageDuration" type="double">
+			<documentation>
+			Contains the historical average duration, in minutes, to perform this surgical procedure by the actual primary surgeon.
+			</documentation>
+		
+			<example>
+				<HistoricAverageDuration>
+					24.5
+				</HistoricAverageDuration>
+			</example>
+		</element>
+		
+		<element name="RecentAverageDuration" type="double">
+			<documentation>
+			Contains the recent average duration, in minutes, to perform this surgical procedure by the actual primary surgeon.
+			</documentation>
+		
+			<example>
+				<RecentAverageDuration>
+					24.5
+				</RecentAverageDuration>
+			</example>
+		</element>
+
+		<element name="NumberOfCasesInRecentAverage" type="integer">
+			<documentation>
+			Contains the number of surgery cases used to calculate value in attribute RecentAverageDuration.
+			</documentation>
+		
+			<example>
+				<NumberOfCasesInRecentAverage>
+					2
+				</NumberOfCasesInRecentAverage>
+			</example>
+		</element>
+	</group>		
+</idsDocument>

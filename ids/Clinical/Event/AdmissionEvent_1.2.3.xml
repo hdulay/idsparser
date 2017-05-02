@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.2.3" changeVersion="2" domain="Clinical.Event" type="instance"
+			 name="AdmissionEvent"  
+	 		 elementOrder="EventDateTime, Location, TypeCode, 
+	 		 			AdmitSourceCode, ReadmitCode, AdmitReason, PatientValuables, PatientValuablesLocation, EstimatedLengthOfStay, ExpectedEventDateTime"
+	 		 implementationClass="com.ibi.omni.patient.model.clinical.event.AdmissionEvent">	 					
+	  	 					
+	<changeLog>
+		<change version="1.2.3_0">Initial Version</change>
+		<change version="1.2.3_1">Updated definition for EstimatedLengthOfStay</change>	
+		<change version="1.2.3_2">Added SourceStatusCode to instance and collection items.</change>
+	</changeLog>
+	
+	<notes>
+	- Changed name of subject to AdmissionEvent to differentiate it as a type of clinicalEvent.
+	- For FacilityLocation, embellished the definition with the following: "For many AdmissionEvents, this corresponds to the bed assigned."
+	- EventDateTime and FacilityLocation are common fields, but are implemented separately here to distinguish their usage/description in this Event.
+	- AdmissionType changed to TypeCode for consistency.
+	- ExpectedAdmitDateTime changes to ExpectedEventDateTime for consistency with EventDateTime.
+	- AdmitSourceCode pointed at table 0023.
+	- Changed definition of EstimatedLengthOfStay to be consistent with Encounter.LengthOfStay
+	
+	</notes>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	
+	<include name="EventElements"
+			 prependToElementOrder="ParentEvent, Encounter, CarePlanId, CarePlan, CCDCategoryCode"
+			 appendToElementOrder="EventProviders, EventNotes"/>
+			 
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	
+	<documentation>	
+Admission is a type of clinical event capturing data specific to when the patient is admitted into the facility. An encounter may not have an admission event such as an outpatient.  If the patient is admitted, there can only be one admission per encounter.
+	</documentation>
+
+	<element name="EventDateTime" type="OmniDate">
+		<documentation>
+		Date and time that the patient was admitted
+		</documentation>
+		
+		<example format="yyyy-MM-dd hh:mm:ss">2000-10-01 11:12:32</example>
+	</element>
+
+	<element name="Location" type="OmniLink" contains="FacilityLocation" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		The facility location the patient was admitted into.  For many AdmissionEvents, this corresponds to the bed assigned.
+		
+		Use this element to specify a FacilityLocation in the system using the FacilityLocation's SourceName and SourceInstanceId. You cannot load FacilityLocation
+		information using this element, however if the FacilityLocation is not found then a "placeholder" will be created that will contain the FacilityLocation
+		when loaded.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<FacilityLocation>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>FacilityLocationId</SourceInstanceId>
+			</FacilityLocation>
+			]]>
+		</example>		
+	</element>
+
+	<element name="TypeCode" type="SourceCode" codeSource="OMNI" codeSet="0007">
+		<documentation>
+		This set of codes can be used to indicate reason for admission.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0007" sourceCode="A"/>
+	</element>
+
+	<element name="AdmitSourceCode" type="SourceCode" codeSource="OMNI" codeSet="0023">
+		<documentation>
+		This set of codes can be used to indicate reason for admission.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0023" sourceCode="1"/>
+	</element>
+
+	<element name="ReadmitCode" type="SourceCode">
+		<documentation>
+		Readmit codes indicate if patient meets conditions defined by the customer flagging the encounter as a readmission.
+		</documentation>
+		
+		<example sourceCodeSet="ReadmitCodes" sourceCode="24-48">Within 48 hours</example>
+	</element>
+	
+	<element name="AdmitReason" type="string">
+		<documentation>
+		Contains a short description of the reason for patient admission.
+		</documentation>
+		
+		<example>Admitted for Observation</example>
+	</element>
+	 		 			
+	<element name="PatientValuables" type="string">
+		<documentation>
+		Contains a short description of patient valuables checked in during admission.
+		</documentation>
+		
+		<example>Admitted for Observation</example>
+	</element>
+
+	<element name="PatientValuablesLocation" type="string">
+		<documentation>
+		Specifies the location of the patient's valuables.
+		</documentation>
+		
+		<example>Wallet, jewelry, and money</example>
+	</element>
+
+	<element name="EstimatedLengthOfStay" type="double">
+		<documentation>
+		Represents the estimated length of stay of inpatient for an encounter, represented in days based on the procedure the patient is undergoing, and/or the seriousness of their condition. 
+		</documentation>
+		
+		<example>1.0</example>
+	</element>
+	
+	<element name="ExpectedEventDateTime" type="OmniDate">
+		<documentation>
+		Contains the date and time that the patient is expected to be admitted.
+		</documentation>
+		
+		<example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+	</element>			
+
+	
+</idsDocument>

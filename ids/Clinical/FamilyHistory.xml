@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.0.0"
+             domain="Clinical"
+             type="instance"
+             name="FamilyHistory"
+             elementOrder="Encounter, Member, Patient, RecordedDateTime, CCDCategoryCode, DiagnosisCode,
+			 ICD9DecimalDiagnosisCode, ICD9NonDecimalDiagnosisCode, ICD10DecimalDiagnosisCode, ICD10NonDecimalDiagnosisCode,
+			 SNOMEDCTDiagnosisCode, OtherDiagnosisCodes, ConditionStatusCode, ConditionSeverityCode, ConditionOutcome,
+			 ConditionNote, OnsetAge, OnsetPeriod, RelatedPatient, FamilyMember">
+
+    <changeLog>
+        <change version="1.0.0">Initial Revision</change>
+    </changeLog>
+
+    <customType name="codeList" class="com.ibi.dib.core.ids.types.IdsMultipleCodeType"/>
+    <customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+    <customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+    <customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+
+    <include name="CommonElements"
+             prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+             appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+    <documentation>
+        This captures significant health events and conditions for a person related to the patient relevant in the
+        context of care for the patient.
+        Much of this structure was driven by FHIR models defined at https://www.hl7.org/fhir/familymemberhistory.html
+    </documentation>
+
+    <element name="Encounter" type="OmniLink" contains="Encounter" keys="SourceName, SourceInstanceId" allowCreate="true">
+        <documentation>
+            Specifies the Encounter when this family history was recorded.
+        </documentation>
+    </element>
+
+    <element name="Member" type="OmniLink" contains="Member" keys="SourceName, SourceInstanceId" allowCreate="true">
+        <documentation>
+            Specifies the Member who's family history is recorded.
+        </documentation>
+    </element>
+
+    <element name="Patient" type="OmniLink" contains="Patient" keys="SourceName, SourceInstanceId" allowCreate="true">
+        <documentation>
+            Specifies the Patient who's family history is recorded.
+        </documentation>
+    </element>
+
+    <element name="RecordedDateTime" type="OmniDate">
+        <documentation>
+            The date when the family history was recorded.
+        </documentation>
+    </element>
+
+    <element name="CCDCategoryCode" type="SourceCode" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.1">
+        <documentation>
+            This data element will be used to indicate the section of the CCD document on which this event will be
+            output. It is expected to be populated with the appropriate LOINC value, indicating the CCD section.
+        </documentation>
+    </element>
+
+    <element name="DiagnosisCode" type="SourceCode">
+        <documentation>
+            Depicts the diagnosed condition based on the standardized diagnosis code value set used in the health system
+            (ICD-9, ICD-10).
+        </documentation>
+    </element>
+
+    <element name="ICD9DecimalDiagnosisCode" type="SourceCode" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.103-ALT">
+        <documentation>
+            Diagnosis code expressed as an ICD-9 code with decimal point.
+        </documentation>
+    </element>
+
+    <element name="ICD9NonDecimalDiagnosisCode" type="SourceCode" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.103">
+        <documentation>
+            Diagnosis code expressed as an ICD-9 code without a decimal point.
+        </documentation>
+    </element>
+
+    <element name="ICD10DecimalDiagnosisCode" type="SourceCode" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.90-ALT">
+        <documentation>
+            Diagnosis code expressed as an ICD-10 code with a decimal point.
+        </documentation>
+    </element>
+
+    <element name="ICD10NonDecimalDiagnosisCode" type="SourceCode" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.90">
+        <documentation>
+            Diagnosis code expressed as an ICD-10 code without a decimal point.
+        </documentation>
+    </element>
+
+    <element name="SNOMEDCTDiagnosisCode" type="SourceCode" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.96">
+        <documentation>
+            Diagnosis code expressed as a SNOMED CT code.
+        </documentation>
+    </element>
+
+    <element name="OtherDiagnosisCodes" type="codeList" contains="OtherDiagnosisCode">
+        <documentation>
+            Diagnosis code(s) expressed in a coding system that is proprietary to the implementation
+            environment.
+        </documentation>
+    </element>
+
+    <element name="ConditionStatusCode" type="SourceCode" codeSource="HL7-V3" codeSet="2.16.840.1.113883.4.642.2.74">
+        <documentation>
+            A code specifying a state of a Family Member History record such as partial/completed/unknown.
+        </documentation>
+    </element>
+
+    <element name="ConditionSeverityCode" type="SourceCode" codeSource="HL7-V3" codeSet="2.16.840.1.113883.4.642.2.76">
+        <documentation>
+            A subjective assessment of the severity of the condition as evaluated by the clinician.
+        </documentation>
+    </element>
+
+    <element name="ConditionOutcome" type="SourceCode" codeSource="HL7-V3" codeSet="2.16.840.1.113883.4.642.2.149">
+        <documentation>
+            A code specifying what happened as a result of this condition. If the condition resulted in death, deceased
+            date is captured on the relation.
+        </documentation>
+    </element>
+
+    <element name="ConditionNote" type="clob">
+        <documentation>
+            Additional note on the condition of family member.
+        </documentation>
+
+        <example> <![CDATA[
+		    <?xml version="1.0" encoding="UTF-8" ?>
+			<ns1:ADT_
+			xmlns:ns1="NS_6E95A90E4BAF43AB9F9A3CBB863278FC20070423183755"
+			Type=""
+			XDataVersion="2.0"
+			Standard="HL7"
+			Version="2.3.1"
+			Page 22 of 25
+			GUID="{DBFA5449-DC41-4969-8833-089882691395}"
+			CreatedBy="XEngine_2114"
+			CreatedDate="2010-10-08T14:11:53"
+			ID=""
+			Name=""
+			xmlns="NS_6E95A90E4BAF43AB9F9A3CBB863278FC20070423183755">
+			 <ns1:CMMMetaData
+			CMMVersion="1.2"
+			CreatedDate="2010-10-08T14:11:53+11:00"
+			ID="33353037373937393733313635333635">
+			 <ns1:RouteDelimiter>,</ns1:RouteDelimiter>
+			 <ns1:RouteHops>CMM_02_Mediator,</ns1:RouteHops>
+			 <ns1:RouteArrivals>2010-10-08T14:11:53+11:00,</ns1:RouteArrivals>
+			 </ns1:CMMMetaData>
+			 <Internal-Properties xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			 <Data-Structure Name="Message">
+			 <Lookup Name="InternatCodeAlternateID"/>
+			 <Lookup Name="TriggerEvent">A01</Lookup>
+			 <Property Name="AcceptAckType">AL</Property>
+			 <Property Name="TriggerEvent">A01</Property>
+			 </Data-Structure>
+			 </Internal-Properties>
+			 <MSH xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			 <MSH.1>|</MSH.1>
+			 <MSH.2>^~\&amp;</MSH.2>
+			 <MSH.3>
+			 <HD.1>SystemA</HD.1>
+			 </MSH.3>
+			 <MSH.4>
+			 <HD.1>HosA</HD.1>
+			 </MSH.4>
+			 </PV1.44>
+			 </PV1>
+			</ns1:ADT_>
+		    ]]>
+        </example>
+    </element>
+
+    <element name="OnsetAge" type="integer">
+        <documentation>
+            Estimated or actual aged of the family member when the condition was first detected.
+        </documentation>
+    </element>
+
+    <element name="OnsetPeriod" type="string">
+        <documentation>
+            Approximate period of time the family member was affected by the problem.
+        </documentation>
+    </element>
+
+    <element name="RelatedPatient" type="OmniLink" contains="Patient" keys="SourceName, SourceInstanceId" allowCreate="true">
+        <documentation>
+            Omni link to the family member who's problem history is recorded.
+        </documentation>
+
+    </element>
+
+
+
+    <group name="FamilyMember"
+           elementOrder="Name, Id, GenderCode, DOB, Age, RelationshipToSubject, DeceasedIndicator, AgeAtDeath, ApproxAgeAtDeath, Note">
+        <documentation></documentation>
+
+        <element name="Name" type="string">
+            <documentation>
+                A name or description of the relative such as Aunt Mary.
+            </documentation>
+        </element>
+
+        <element name="Id" type="string">
+            <documentation>
+                An identifier for the family member.
+            </documentation>
+        </element>
+
+        <element name="GenderCode" type="SourceCode" codeSource="HL7-V3" codeSet="2.16.840.1.113883.4.642.2.1">
+            <documentation>
+                Administrative gender code of the relative
+            </documentation>
+        </element>
+
+        <element name="DOB" type="OmniDate">
+            <documentation>
+                Date of birth of the family member.
+            </documentation>
+        </element>
+
+        <element name="Age" type="integer">
+            <documentation>
+                Current age of Family member.
+            </documentation>
+        </element>
+
+        <element name="RelationshipToSubject" type="SourceCode" codeSource="HL7-V3" codeSet="2.16.840.1.113883.1.11.19579">
+            <documentation>
+                The type of relationship this person has to the patient (father, mother, brother etc.).
+            </documentation>
+        </element>
+
+        <element name="DeceasedIndicator" type="SourceCode" codeSource="OMNI" codeSet="0136">
+            <documentation>
+                This field indicates whether the Subject's relative is deceased (Y or N).
+            </documentation>
+        </element>
+
+        <element name="AgeAtDeath" type="integer">
+            <documentation>
+                Age of the relative at the time of death
+            </documentation>
+        </element>
+
+        <element name="ApproxAgeAtDeath" type="string">
+            <documentation>
+                Approximate age of the relative at the time of death.
+            </documentation>
+        </element>
+
+        <element name="Note" type="clob">
+            <documentation>
+                Additional information about the family member
+            </documentation>
+            <example> <![CDATA[
+		    <?xml version="1.0" encoding="UTF-8" ?>
+			<ns1:ADT_
+			xmlns:ns1="NS_6E95A90E4BAF43AB9F9A3CBB863278FC20070423183755"
+			Type=""
+			XDataVersion="2.0"
+			Standard="HL7"
+			Version="2.3.1"
+			Page 22 of 25
+			GUID="{DBFA5449-DC41-4969-8833-089882691395}"
+			CreatedBy="XEngine_2114"
+			CreatedDate="2010-10-08T14:11:53"
+			ID=""
+			Name=""
+			xmlns="NS_6E95A90E4BAF43AB9F9A3CBB863278FC20070423183755">
+			 <ns1:CMMMetaData
+			CMMVersion="1.2"
+			CreatedDate="2010-10-08T14:11:53+11:00"
+			ID="33353037373937393733313635333635">
+			 <ns1:RouteDelimiter>,</ns1:RouteDelimiter>
+			 <ns1:RouteHops>CMM_02_Mediator,</ns1:RouteHops>
+			 <ns1:RouteArrivals>2010-10-08T14:11:53+11:00,</ns1:RouteArrivals>
+			 </ns1:CMMMetaData>
+			 <Internal-Properties xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			 <Data-Structure Name="Message">
+			 <Lookup Name="InternatCodeAlternateID"/>
+			 <Lookup Name="TriggerEvent">A01</Lookup>
+			 <Property Name="AcceptAckType">AL</Property>
+			 <Property Name="TriggerEvent">A01</Property>
+			 </Data-Structure>
+			 </Internal-Properties>
+			 <MSH xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			 <MSH.1>|</MSH.1>
+			 <MSH.2>^~\&amp;</MSH.2>
+			 <MSH.3>
+			 <HD.1>SystemA</HD.1>
+			 </MSH.3>
+			 <MSH.4>
+			 <HD.1>HosA</HD.1>
+			 </MSH.4>
+			 </PV1.44>
+			 </PV1>
+			</ns1:ADT_>
+		    ]]>
+            </example>
+        </element>
+    </group>
+
+</idsDocument>

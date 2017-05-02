@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<idsDocument version="1.0.0" changeVersion="0" domain="Financial"
+	type="instance" name="Costing"
+	elementOrder="MedicalOrganization, MedicalFacility, CostCenter, SubAccount, SubAccountCode, SubAccountName, 
+				  Patient, PatientIdentifier, PatientAccount, PatientAccountNumber, Encounter, EncounterNumber, Provider, 
+				  ProviderIdentifier, Charge, ChargeIdentifier, StartDate, EndDate, GranularityTypeCode, PlanningCategoryCode,
+				  PlanningSubCategoryCode, CurrencyType, ItemTypeCode, ItemReference, ItemDescription, Procedure, 
+				  ProcedureCode, CPT4ProcedureCode, CDTProcedureCode, HCPCSProcedureCode, ICD9DecimalProcedureCode, ICD9NonDecimalProcedureCode, ICD10PCSProcedureCode, SNOMEDCTProcedureCode, OtherProcedureCodes,  ModifierCode1, ModifierCode2, ModifierCode3, RevenueCode, Quantity, UnitCharge, 
+				  UnitCost, TotalCharge, TotalCost, TotalExpectedPayment, TotalActualPayment">
+
+	<include name="CommonElements"
+		prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+		appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy" />
+
+	<customType name="codeList" class="com.ibi.dib.core.ids.types.IdsMultipleCodeType"/>
+
+	<documentation>TEST</documentation>
+
+	<element name="MedicalOrganization" type="link" contains="Organization">
+		<documentation>Specifies the physical medical facility associated with
+			the accounting transactions being reported.
+		</documentation>
+	</element>
+
+	<element name="MedicalFacility" type="link" contains="Facility">
+		<documentation>Specifies the medical organization associated with the
+			accounting transactions being reported.
+		</documentation>
+	</element>
+
+	<element name="CostCenter" type="link" contains="OrganizationalUnit">
+		<documentation>An Organizational Unit representing a specific cost
+			center. A Cost Center is a segment of an enterprise for which
+			Accounting is performed in the General Ledger.
+		</documentation>
+	</element>
+
+	<element name="SubAccount" type="link" contains="OrganizationalUnit">
+		<documentation>An Organizational Unit representing a subaccount within
+			the cost center. Subaccounts can be setup to separate revenues from
+			expenses, as well as to categorize either.
+		</documentation>
+	</element>
+
+	<element name="SubAccountCode" type="string">
+		<documentation>Identifies the code assigned to a subaccount for
+			tracking revenue and expenditures.
+		</documentation>
+	</element>
+
+	<element name="SubAccountName" type="string">
+		<documentation>Identifies the name assigned to a subaccount for
+			tracking revenue and expenditures.
+		</documentation>
+	</element>
+
+	<element name="Patient" type="link" contains="Patient">
+		<documentation>Reference to the Patient associated with the item. Only
+			required if applicable to the level of granularity of the data.
+		</documentation>
+	</element>
+
+	<element name="PatientIdentifier" type="string">
+		<documentation>Patient number associated with the item. Only required
+			if applicable to the level of granularity of the data.
+		</documentation>
+	</element>
+
+	<element name="PatientAccount" type="link" contains="Account">
+		<documentation>Reference to the patient Account associated with the
+			item. Only required if applicable to the level of granularity of the
+			data.
+		</documentation>
+	</element>
+
+	<element name="PatientAccountNumber" type="string">
+		<documentation>Account number associated with the item. Only required
+			if applicable to the level of granularity of the data.
+		</documentation>
+	</element>
+
+	<element name="Encounter" type="link" contains="Encounter">
+		<documentation>Reference to the Encounter associated with the
+			charge(s). Only required if applicable to the level of granularity of
+			the data.
+		</documentation>
+	</element>
+
+	<element name="EncounterNumber" type="string">
+		<documentation>Encounter number of the patient's encounter. Only
+			required if applicable to the level of granularity of the data.
+		</documentation>
+	</element>
+
+	<element name="Provider" type="link" contains="Provider">
+		<documentation>Reference to the Provider associated with the
+			charge(s). Only required if applicable to the level of granularity of
+			the data.
+		</documentation>
+	</element>
+
+	<element name="ProviderIdentifier" type="string">
+		<documentation>ID of Provider associated with the charge. Only
+			required if applicable to the level of granularity of the data.
+		</documentation>
+	</element>
+
+	<element name="Charge" type="link" contains="Charge">
+		<documentation>Reference to the Charge associated with the item. Only
+			required if applicable to the level of granularity of the data.
+		</documentation>
+	</element>
+
+	<element name="ChargeIdentifier" type="string">
+		<documentation>Charge idenitifer of the item. Only required if
+			applicable to the level of granularity of the data.
+		</documentation>
+	</element>
+
+	<element name="StartDate" type="datetime">
+		<documentation>Contains the starting date this item is based on.
+		</documentation>
+	</element>
+
+	<element name="EndDate" type="datetime">
+		<documentation>Contains the ending date this item is based on.
+		</documentation>
+	</element>
+
+	<element name="GranularityTypeCode" type="code">
+		<documentation>Identifies the period granularity of time this data is
+			based on. This can be an aggregate over time, an aggregate for an
+			encounter, or it can represent individual charges at the finest level
+			of granularity.
+		</documentation>
+	</element>
+
+	<element name="PlanningCategoryCode" type="code">
+		<documentation>These IDS's can be used to capture Actuals, Budgeted,
+			Projected or Benchmarks for any metric. A single IDS can be for only
+			one Category/Subcategory combination. If they report this at the
+			departmental level, then each IDS represents one
+			Department/Category/Subcategory combination. The customer can
+			generate these at multiple levels if they so choose. IDS's at the
+			facility level, or IDS's down to the departmental level, or anything
+			and everything in between. As long as they are consistent, roll-ups
+			and drill downs in the marts will work properly.
+		</documentation>
+	</element>
+
+	<element name="PlanningSubCategoryCode" type="code">
+		<documentation>The Planning Subcategory provides a method to generate
+			these Actuals, Budgeted, Projected or Benchmarks IDS's for different
+			percentiles, if they exist or are calculable.
+		</documentation>
+	</element>
+
+	<element name="CurrencyType" type="code" codeTable="4217">
+		<documentation>Specifies the denomination for all amounts using the
+			industry standard defined in the ISO 4217 code set.
+		</documentation>
+	</element>
+
+	<element name="ItemTypeCode" type="code">
+		<documentation>Defines type code of cost item</documentation>
+	</element>
+
+	<element name="ItemReference" type="string">
+		<documentation>Unique identifier of the cost item</documentation>
+	</element>
+
+	<element name="ItemDescription" type="string">
+		<documentation>Description of the cost item</documentation>
+	</element>
+
+	<element name="Procedure" type="link" contains="ProcedureEvent">
+		<documentation>Reference to the ProcedureEvent associated with the
+			item. Only required if applicable to the level of granularity of the
+			data.
+		</documentation>
+	</element>
+
+	<element name="ProcedureCode" type="code">
+		<documentation>Code defining the procedure associated with the charge.
+			This is typically an ICD9-V3, CPT or HCPCS code.
+		</documentation>
+	</element>
+
+	<element name="CPT4ProcedureCode" type="code" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.12">
+			<documentation>
+				Procedure code expressed as a CPT-4 code.
+			</documentation>
+	</element>
+	
+	<element name="CDTProcedureCode" type="code" >
+		<documentation>
+			Procedure code expressed as a CDT code.
+		</documentation>
+	</element>
+
+	<element name="HCPCSProcedureCode" type="code" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.14">
+		<documentation>
+			Procedure code expressed as a HCPCS code.
+		</documentation>
+	</element>
+
+	<element name="ICD9DecimalProcedureCode" type="code" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.104-ALT">
+		<documentation>
+			Procedure code expressed as an ICD-9 code with decimal point.
+		</documentation>
+	</element>
+
+	<element name="ICD9NonDecimalProcedureCode" type="code" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.104"
+			 dbColumn="icd9_no_dec_procedure_code">
+		<documentation>
+			Procedure code expressed as an ICD-9 code without a decimal point.
+		</documentation>
+	</element>
+
+	<element name="ICD10PCSProcedureCode" type="code" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.4">
+		<documentation>
+			Procedure code expressed as an ICD-10-PCS code.
+		</documentation>
+	</element>
+
+	<element name="SNOMEDCTProcedureCode" type="code" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.96">
+		<documentation>
+			Procedure code expressed as a SNOMED code.
+		</documentation>
+	</element>
+
+	<element name="OtherProcedureCodes" type="codeList" contains="OtherProcedureCode">
+		<documentation>
+			Procedure code expressed in a custom or proprietary code set.
+		</documentation>
+		
+		<example>
+			<OtherProcedureCode sourceName="HL7-V3" sourceCodeSet="2.16.840.1.113883.6.12" sourceCode="Proc1" />
+			<OtherProcedureCode sourceName="HL7-V3" sourceCodeSet="2.16.840.1.113883.6.12" sourceCode="Proc2" />
+		</example>
+	</element>
+	
+	<element name="ModifierCode1" type="code">
+		<documentation>Primary modifier to the Procedure Code</documentation>
+	</element>
+
+	<element name="ModifierCode2" type="code">
+		<documentation>Secondary modifier to the Procedure Code
+		</documentation>
+	</element>
+
+	<element name="ModifierCode3" type="code">
+		<documentation>Tertiary modifier to the Procedure Code</documentation>
+	</element>
+
+	<element name="RevenueCode" type="code">
+		<documentation>Revenue code associated with the charge. This may be a
+			Universal Billing (UB) code.
+		</documentation>
+	</element>
+
+	<element name="Quantity" type="integer">
+		<documentation>Quantity of the cost item for this period
+		</documentation>
+	</element>
+
+	<element name="UnitCharge" type="number" precision="24" scale="12">
+		<documentation>Amount charged per cost item. If this data represents a
+			single transaction, this is the unit price. If it represents an
+			aggregate of multiple transactions, it represents the average unit
+			price.
+		</documentation>
+		<example>123456789012.123456789012</example>
+	</element>
+
+	<element name="UnitCost" type="number" precision="24" scale="12">
+		<documentation>Unit cost per cost item. If this data represents a
+			single transaction, this is the unit cost. If it represents an
+			aggregate of multiple transactions, it represents the average unit
+			price. It also represents the sum of the component costs.
+		</documentation>
+		<example>123456789012.123456789012</example>
+	</element>
+
+	<element name="TotalCharge" type="number" precision="24" scale="12">
+		<documentation>Total amount of the charge which is the quantity times
+			the unit charge
+		</documentation>
+		<example>123456789012.123456789012</example>
+	</element>
+
+	<element name="TotalCost" type="number" precision="24" scale="12">
+		<documentation>Total cost which is the quantity times the unit cost
+		</documentation>
+		<example>123456789012.123456789012</example>
+	</element>
+
+	<element name="TotalExpectedPayment" type="double">
+		<documentation>Total payment expected</documentation>
+	</element>
+
+	<element name="TotalActualPayment" type="double">
+		<documentation>Total payment received</documentation>
+	</element>
+</idsDocument>

@@ -1,0 +1,1674 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.1.7" changeVersion="2" type="instance"
+			 name="GuarantorAccount" udlName="GuarantorAccount" domain="GuarantorAccount" 
+	 		 elementOrder="AccountType, AccountActive, AccountOpenDate, AccountName, AccountCloseDate, 
+			 Guarantor, ReferringProvider,   
+			 ServiceArea, FinancialClass, 
+			 BillinCycle, FollowupCycleForOverdue, BillingStatus,
+			 TotalOutstandingBalance, InsuranceBalance, PatientBalance, UndistributedPayments, 
+			 LastInsurancePaymentDate, LastInsurancePaymentAmount,
+			 LastPatientPaymentDate, LastPatientPaymentAmount,
+			 NextStatementDate,
+			 LastNonDemandEnterpriseStatementDate, LastDemandEnterpriseStatementDate,
+			 LastNonDemandEnterpriseGeneratedStatementDate, LastDemandEnterpriseGeneratedStatementDate, 
+			 PricingContractId, PricingContractExpireDate,
+			 HasCreditBalance, BadDebtBalance, ExternalBadDebtSelfPayBalance, ExternalBadDebtInsuranceBalance,
+			 HospitalAccountRecordId, 
+			 GuarantorRehomed, DistrictCategoryOfAccountAddress, OldGuarantorId,
+			 GuarantorPatient,  
+			 ReimbursementContractId,
+			 IncomeSource,
+			 QuickDisclosureActivity,
+			 PrePayOnlyRequester, 
+			 ConfidentialNameOfPatient,  
+			 HospitalBilling, ClientBilling, ProfessionalBilling, PaymentPlan, ReleaseOfInformation,
+			 Notes, ContactHistory, Coverages, Transactions,
+			 CollectorUser"
+			 implementationClass="com.ibi.omni.patient.model.guarantor_account.GuarantorAccount">
+
+	<changeLog>
+		<change version="1.0.1">Removed any references to SourceCode and replaced with SourceCode</change>
+		<change version="1.1.7_0">Supported Version</change>
+		<change version="1.1.7_1">Extended Attribute Support</change>
+		<change version="1.1.7_2">Added SourceStatusCode to instance and collection items.</change>
+	</changeLog>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	
+	
+	<documentation>
+	Use this Input Specification to feed Guarantor Account information.
+	</documentation>
+	
+	<element name="Guarantor" type="document">
+		<documentation>
+		Use this element to define the person who will guarantee this account.
+		</documentation>
+		
+		<idsSpecification name="GuarantorAccountPerson" udlName="GuarantorAccountPerson" type="instance_child"
+			 		 elementOrder="Name, Gender, DateOfBirth, SocialSecurityNumber, HomePhoneNumber, WorkPhoneNumber, Address,
+								   OccupationDescription, Occupation, EmploymentStatus, EmploymentStartDate, IncomeSource,
+								   PreferredLanguage, VerificationId, VerificationUser, VerificationStatus, NextAccountReviewDate, NextReviewDate,
+								   Employers, OthersGuaranteed, PatientsGuaranteed"
+								   implementationClass="com.ibi.omni.patient.model.guarantor_account.GuarantorAccountPerson">
+			
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 		 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+			
+			<documentation>
+			Use this structure to feed Guarantor Person Information.
+			</documentation>
+				
+			<element name="TransactionDate" type="OmniDate">
+				<documentation>
+				</documentation>
+			</element>
+		
+			<group name="Name" elementOrder="FullName, Prefix, FirstName, MiddleName, LastName, Suffix, Title">
+				<documentation>
+				Guarantor Account Holder name.
+				</documentation>
+				
+				<element name="FullName" type="string">
+					<documentation>
+					Use this element to specify the full name of the Person if the source system does
+					not contain the individual component fields. If this field is being used please do
+					not use the component fields. 
+					</documentation>
+				</element>
+		
+				<element name="Prefix" type="string">
+					<documentation>
+					Use this element to specify the prefix for the Patient's name. (e.g., Dr., Mr, Ms.)
+					</documentation>
+				</element>
+		
+				<element name="FirstName" type="string">
+					<documentation>
+					Use this element to specify the person last name.
+					</documentation>
+				</element>
+		
+				<element name="MiddleName" type="string">
+					<documentation>
+					Use this element to specify the person middle name or middle initial.
+					</documentation>
+				</element>
+				
+				<element name="LastName" type="string">
+					<documentation>
+					Use this element to specify the person last name.
+					</documentation>
+				</element>
+			
+				<element name="Suffix" type="string">
+					<documentation>
+					Use this element to specify the person name suffix. (e.g., Jr. or III)
+					</documentation>
+				</element>
+				
+				<element name="Title" type="string">
+					<documentation>
+					Use this element to specify the person's title. 
+					</documentation>
+				</element>
+			</group>
+			
+			<element name="Gender" type="SourceCode" codeTable="001">
+				<documentation>
+				Guarantor's Sex
+				</documentation>
+			</element>
+			
+			<element name="DateOfBirth" type="OmniDate">
+				<documentation>
+				Guarantor's Date of Birth
+				</documentation>
+			</element>
+			
+			<element name="SocialSecurityNumber" type="string">
+				<documentation>
+				Guarantor SSN
+				</documentation>
+			</element>
+			
+			<element name="HomePhoneNumber" type="string">
+				<documentation>
+				Guarantor Home Phone
+				</documentation>
+			</element>
+		
+			<element name="WorkPhoneNumber" type="string">
+				<documentation>
+				Guarantor Work Phone
+				</documentation>
+			</element>
+			
+			<group name="Address" elementOrder="AddressLine1, AddressLine2, AddressLine3, AddressLine4, City, StateProvince, PostalCode, Country, CountyRegion">
+				<documentation>
+				Address Information.
+				</documentation>
+				
+				<element name="AddressLine1" type="string">
+					<documentation>
+					This field specifies the street or mailing address of a person or institution. 
+					When referencing an institution, this first component is used to specify the institution 
+					name. When used in connection with a person, this component specifies the first line of the address.
+					</documentation>
+				</element>
+			
+				<element name="AddressLine2" type="string">
+					<documentation>
+					This field specifies the second line of address. In general, it qualifies address. 
+					Examples: Suite 555 or Fourth Floor. When referencing an institution, this component 
+					specifies the street address.
+					</documentation>
+				</element>
+			
+				<element name="AddressLine3" type="string">
+					<documentation>
+					This field specifies the name of the person or organization that should appear as part of the 
+					address. This is also known as the "Care of" or "C/O" line.
+					</documentation>
+				</element>
+			
+				<element name="AddressLine4" type="string">
+					<documentation>
+					This field specifies more address information.
+					</documentation>
+				</element>
+			
+				<element name="City" type="string">
+					<documentation>
+					This field specifies the city, district or place where the addressee is located 
+					depending upon the national convention for formatting addresses for postal usage.
+					</documentation>
+				</element>
+			
+				<element name="StateProvince" type="SourceCode" codeTable="???">
+					<documentation>
+					This field specifies the state or province where the addressee is located. State or 
+					province should be represented by the official postal service codes for that country. 
+					</documentation>
+				</element>
+		
+				<element name="PostalCode" type="string">
+					<documentation>
+					This component specifies the zip or postal code where the addressee is located.  Zip or 
+					postal codes should be represented by the official codes for that country. In the US, the zip 
+					code takes the form 99999[-9999], while the Canadian postal code takes the form A9A9A9 and the 
+					Australian Postcode takes the form 9999. 
+					</documentation>
+				</element>
+		
+				<element name="Country" type="SourceCode" codeTable="0399">
+					<documentation>
+					This component specifies the country where the addressee is located. HL7 
+					specifies that the 3-character (alphabetic) form of ISO 3166 be used for the 
+					country code.
+					</documentation>
+				</element>
+		
+				<element name="CountyRegion" type="SourceCode" codeTable="???">
+					<documentation>
+					This component specifies the county where the addressee is located when applicable.
+					</documentation>
+				</element>
+			</group>
+			
+			<element name="OccupationDescription" type="string">
+				<documentation>
+				Occupation of the Guarantor
+				</documentation>
+			</element>
+			
+			<element name="Occupation" type="SourceCode" codeTable="???">
+				<documentation>
+				Occupation of the Guarantor
+				</documentation>
+			</element>
+			
+			<element name="EmploymentStatus" type="SourceCode" codeTable="???">
+				<documentation>
+				Guarantor's employment Status
+				</documentation>
+			</element>
+		
+			<element name="EmploymentStartDate" type="OmniDate" codeTable="???">
+				<documentation>
+				</documentation>
+			</element>
+		
+			<element name="IncomeSource" type="SourceCode">
+				<documentation>
+				Income source
+				</documentation>
+			</element>
+		
+			<element name="PreferredLanguage" type="SourceCode">
+				<documentation>
+				Perferred Language of the Guarantor
+				</documentation>
+			</element>
+		
+			<element name="VerificationId" type="string">
+				<documentation>
+				Verification record of the Guarantor
+				</documentation>
+			</element>
+		
+			<element name="VerificationUser" type="OmniLink" contains="User">
+				<documentation>
+				Last user who verified this Guarantor
+				</documentation>
+				
+				<example>
+					<User>
+						<SourceName>TestSystem</SourceName>
+						<SourceInstanceId>VerificationUser</SourceInstanceId>
+					</User>
+				</example>
+			</element>
+		
+			<element name="VerificationStatus" type="SourceCode">
+				<documentation>
+				Guarantor Verification Status
+				</documentation>
+			</element>
+		
+			<element name="NextAccountReviewDate" type="OmniDate">
+				<documentation>
+				Next review date this Guarantor Account should be reviewed
+				</documentation>
+			</element>
+			
+			<element name="NextReviewDate" type="OmniDate">
+				<documentation>
+				Next review date this Guarantor Account should be reviewd
+				</documentation>
+			</element>
+			
+			<element name="CoveragePlan" type="OmniLink" contains="CoveragePlan">
+				<documentation>
+				Coverage ID links to this Guarantor Account
+				</documentation>
+			</element>
+			
+			<list name="Employers">
+				<documentation>
+				Use this collection to specify employers of the Person (Guarantor) responsible for the Guarantor Account.
+				</documentation>
+				
+				<idsSpecification name="GuarantorAccountPersonEmployer" udlName="GuarantorAccountPersonEmployer" domain="Accounts" type="instance_child"
+					 		 elementOrder="EmployerId, EmployerName, ContactPerson, PhoneNumber, FaxNumber, Address,
+										   ContractId, AccountManager, Industry, Location, NumberOfEmployees"
+							implementationClass="com.ibi.omni.patient.model.guarantor_account.GuarantorAccountPersonEmployer">
+				
+					<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+					<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+
+					<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 		 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+					
+					<documentation>
+					Use this structure to feed Guarantor Person Information.
+					</documentation>
+									
+					<element name="EmployerId" type="string">
+						<documentation>
+						Employer ID associated with this Guarantor Account
+						</documentation>
+					</element>
+				
+					<element name="EmployerName" type="string">
+						<documentation>
+						Guarantor's employer name
+						</documentation>
+					</element>
+				
+					<element name="ContactPerson" type="string">
+						<documentation>
+						Employers contact person
+						</documentation>
+					</element>
+					
+					<element name="PhoneNumber" type="string">
+						<documentation>
+						Phone number of the Employer associated with this account
+						</documentation>
+					</element>
+				
+					<element name="FaxNumber" type="string">
+						<documentation>
+						Guarantor's employers fax
+						</documentation>
+					</element>
+					
+					<group name="Address" elementOrder="AddressLine1, AddressLine2, AddressLine3, AddressLine4, City, StateProvince, PostalCode, Country, CountyRegion">
+						<documentation>
+						Address Information.
+						</documentation>
+						
+						<element name="AddressLine1" type="string">
+							<documentation>
+							This field specifies the street or mailing address of a person or institution. 
+							When referencing an institution, this first component is used to specify the institution 
+							name. When used in connection with a person, this component specifies the first line of the address.
+							</documentation>
+						</element>
+					
+						<element name="AddressLine2" type="string">
+							<documentation>
+							This field specifies the second line of address. In general, it qualifies address. 
+							Examples: Suite 555 or Fourth Floor. When referencing an institution, this component 
+							specifies the street address.
+							</documentation>
+						</element>
+					
+						<element name="AddressLine3" type="string">
+							<documentation>
+							This field specifies the name of the person or organization that should appear as part of the 
+							address. This is also known as the "Care of" or "C/O" line.
+							</documentation>
+						</element>
+					
+						<element name="AddressLine4" type="string">
+							<documentation>
+							This field specifies more address information.
+							</documentation>
+						</element>
+					
+						<element name="City" type="string">
+							<documentation>
+							This field specifies the city, district or place where the addressee is located 
+							depending upon the national convention for formatting addresses for postal usage.
+							</documentation>
+						</element>
+					
+						<element name="StateProvince" type="SourceCode" codeTable="???">
+							<documentation>
+							This field specifies the state or province where the addressee is located. State or 
+							province should be represented by the official postal service codes for that country. 
+							</documentation>
+						</element>
+				
+						<element name="PostalCode" type="string">
+							<documentation>
+							This component specifies the zip or postal code where the addressee is located.  Zip or 
+							postal codes should be represented by the official codes for that country. In the US, the zip 
+							code takes the form 99999[-9999], while the Canadian postal code takes the form A9A9A9 and the 
+							Australian Postcode takes the form 9999. 
+							</documentation>
+						</element>
+				
+						<element name="Country" type="SourceCode" codeTable="0399">
+							<documentation>
+							This component specifies the country where the addressee is located. HL7 
+							specifies that the 3-character (alphabetic) form of ISO 3166 be used for the 
+							country code.
+							</documentation>
+						</element>
+				
+						<element name="CountyRegion" type="SourceCode" codeTable="???">
+							<documentation>
+							This component specifies the county where the addressee is located when applicable.
+							</documentation>
+						</element>
+					</group>
+				
+					<element name="ContractId" type="string">
+						<documentation>
+						Pricing contract set up with the employer
+						</documentation>
+					</element>
+				
+					<element name="AccountManager" type="OmniLink" contains="User">
+						<documentation>
+						Staff person assigned to this employer
+						</documentation>
+						
+						<example>
+							<User>
+								<SourceName>TestSystem</SourceName>
+								<SourceInstanceId>AccountManager</SourceInstanceId>
+							</User>
+						</example>
+					</element>
+				
+					<element name="Industry" type="SourceCode">
+						<documentation>
+						Employers Standard Industry Code
+						</documentation>
+					</element>
+				
+					<element name="Location" type="string">
+						<documentation>
+						Location of the Employer
+						</documentation>
+					</element>
+				
+					<element name="NumberOfEmployees" type="string">
+						<documentation>
+						Approx number of people employed with this employer
+						</documentation>
+					</element>
+				</idsSpecification>				
+			</list>
+			
+			<list name="OthersGuaranteed">
+				<documentation>
+				Use this collection to specify other people that the this Gurantor guarantees.
+				</documentation>
+				
+				<idsSpecification name="GuarantorAccountGuaranteeOther" udlName="GuarantorAccountGuaranteeOther"  type="instance_child"
+					 		 elementOrder="RelationToGuarantor, Name, Address"
+					 		 implementationClass="com.ibi.omni.patient.model.guarantor_account.GuarantorAccountGuaranteeOther">
+				
+					<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+					<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+
+					<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 		 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+					
+					<documentation>
+					Use this structure to feed Guarantor Person Information.
+					</documentation>
+					
+					<element name="RelationToGuarantor" type="SourceCode">
+						<documentation>
+						Relationship of Patient ID to this Guarantor Account
+						</documentation>
+					</element>
+				
+					<group name="Name" elementOrder="FullName, Prefix, FirstName, MiddleName, LastName, Suffix, Title">
+						<documentation>
+						Guarantor Account Holder name.
+						</documentation>
+						
+						<element name="FullName" type="string">
+							<documentation>
+							Use this element to specify the full name of the Person if the source system does
+							not contain the individual component fields. If this field is being used please do
+							not use the component fields. 
+							</documentation>
+						</element>
+				
+						<element name="Prefix" type="string">
+							<documentation>
+							Use this element to specify the prefix for the Patient's name. (e.g., Dr., Mr, Ms.)
+							</documentation>
+						</element>
+				
+						<element name="FirstName" type="string">
+							<documentation>
+							Use this element to specify the person last name.
+							</documentation>
+						</element>
+				
+						<element name="MiddleName" type="string">
+							<documentation>
+							Use this element to specify the person middle name or middle initial.
+							</documentation>
+						</element>
+						
+						<element name="LastName" type="string">
+							<documentation>
+							Use this element to specify the person last name.
+							</documentation>
+						</element>
+					
+						<element name="Suffix" type="string">
+							<documentation>
+							Use this element to specify the person name suffix. (e.g., Jr. or III)
+							</documentation>
+						</element>
+						
+						<element name="Title" type="string">
+							<documentation>
+							Use this element to specify the person's title. 
+							</documentation>
+						</element>
+					</group>
+					
+					<group name="Address" elementOrder="AddressLine1, AddressLine2, AddressLine3, AddressLine4, City, StateProvince, PostalCode, Country, CountyRegion">
+						<documentation>
+						Address Information.
+						</documentation>
+						
+						<element name="AddressLine1" type="string">
+							<documentation>
+							This field specifies the street or mailing address of a person or institution. 
+							When referencing an institution, this first component is used to specify the institution 
+							name. When used in connection with a person, this component specifies the first line of the address.
+							</documentation>
+						</element>
+					
+						<element name="AddressLine2" type="string">
+							<documentation>
+							This field specifies the second line of address. In general, it qualifies address. 
+							Examples: Suite 555 or Fourth Floor. When referencing an institution, this component 
+							specifies the street address.
+							</documentation>
+						</element>
+					
+						<element name="AddressLine3" type="string">
+							<documentation>
+							This field specifies the name of the person or organization that should appear as part of the 
+							address. This is also known as the "Care of" or "C/O" line.
+							</documentation>
+						</element>
+					
+						<element name="AddressLine4" type="string">
+							<documentation>
+							This field specifies more address information.
+							</documentation>
+						</element>
+					
+						<element name="City" type="string">
+							<documentation>
+							This field specifies the city, district or place where the addressee is located 
+							depending upon the national convention for formatting addresses for postal usage.
+							</documentation>
+						</element>
+					
+						<element name="StateProvince" type="SourceCode" codeTable="???">
+							<documentation>
+							This field specifies the state or province where the addressee is located. State or 
+							province should be represented by the official postal service codes for that country. 
+							</documentation>
+						</element>
+				
+						<element name="PostalCode" type="string">
+							<documentation>
+							This component specifies the zip or postal code where the addressee is located.  Zip or 
+							postal codes should be represented by the official codes for that country. In the US, the zip 
+							code takes the form 99999[-9999], while the Canadian postal code takes the form A9A9A9 and the 
+							Australian Postcode takes the form 9999. 
+							</documentation>
+						</element>
+				
+						<element name="Country" type="SourceCode" codeTable="0399">
+							<documentation>
+							This component specifies the country where the addressee is located. HL7 
+							specifies that the 3-character (alphabetic) form of ISO 3166 be used for the 
+							country code.
+							</documentation>
+						</element>
+				
+						<element name="CountyRegion" type="SourceCode" codeTable="???">
+							<documentation>
+							This component specifies the county where the addressee is located when applicable.
+							</documentation>
+						</element>
+					</group>					
+				</idsSpecification>
+			</list>
+			
+			<list name="PatientsGuaranteed">
+				<documentation>
+				Use this collection to specify other patients that the this Gurantor guarantees.
+				</documentation>
+				
+				<idsSpecification name="GuarantorAccountGuaranteePatient" udlName="GuarantorAccountGuaranteePatient" domain="Accounts"  type="instance_child"
+					 		 elementOrder="Patient, RelationToGuarantor, RequisitionRelationship"
+					 		 implementationClass="com.ibi.omni.patient.model.guarantor_account.GuarantorAccountGuaranteePatient">
+				
+					<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+					<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+
+					<include name="CommonElements"
+							 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 		 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+					
+					<documentation>
+					Use this structure to feed Guarantor Person Information.
+					</documentation>
+					
+					<element name="Patient" type="OmniLink" contains="Patient">
+						<documentation>
+						</documentation>
+						
+					</element>
+				
+					<element name="RelationToGuarantor" type="SourceCode">
+						<documentation>
+						Relationship of Patient ID to this Guarantor Account
+						</documentation>
+					</element>
+				
+					<element name="RequisitionRelationship" type="SourceCode">
+						<documentation>
+						Guarantor to Requisition Grouper Patient relationship (Aunt, Brother, Daugther, Son, Sister, etc.,)
+						</documentation>
+					</element>
+				</idsSpecification>
+			</list>
+		</idsSpecification>
+	</element>
+
+	<element name="AccountName" type="string">
+		<documentation>
+		Guarantor Account Name
+		</documentation>
+	</element>
+
+	<element name="AccountOpenDate" type="string">
+		<documentation>
+		</documentation>
+	</element>
+
+	<element name="AccountCloseDate" type="string">
+		<documentation>
+		</documentation>
+	</element>
+
+	<element name="AccountActive" type="SourceCode">
+		<documentation>
+		Guarantor account is active ?
+		</documentation>
+	</element>
+
+	<element name="AccountType" type="SourceCode">
+		<documentation>
+		Guarantor Account type such as Personal, Family , Worker Compensation et
+		</documentation>
+	</element>
+	
+	<element name="ReferringProvider" type="OmniLink" contains="Provider">
+		<documentation>
+		Referral Source of this account
+		</documentation>
+	</element>
+	
+	<element name="ServiceArea" type="string">
+		<documentation>
+		Service Area of this Account
+		</documentation>
+	</element>
+
+	<element name="FinancialClass" type="SourceCode">
+		<documentation>
+		Financial Class of the account (like Self Pay, Medicare, Commerial, HMO etc)
+		</documentation>
+	</element>
+
+	<element name="TotalOutstandingBalance" type="double">
+		<documentation>
+		Total Outstanding Balance as of now
+		</documentation>
+	</element>
+
+	<element name="InsuranceBalance" type="double">
+		<documentation>
+		Insurance balance as of now
+		</documentation>
+	</element>
+
+	<element name="PatientBalance" type="double">
+		<documentation>
+		Patient balance (Patient Responsibility) as of now
+		</documentation>
+	</element>
+
+	<element name="BillinCycle" type="SourceCode">
+		<documentation>
+		Billing Cycle of the Account
+		</documentation>
+	</element>
+	
+	<element name="FollowupCycleForOverdue" type="SourceCode">
+		<documentation>
+		Followup Cycle for Over due notices to be sent
+		</documentation>
+	</element>
+	
+	<element name="BillingStatus" type="SourceCode">
+		<documentation>
+		Billing status used for Handling statement - like Age , hold, Age and send
+		</documentation>
+	</element>
+
+	<element name="LastInsurancePaymentDate" type="OmniDate">
+		<documentation>
+		Most recent insurance payment received date
+		</documentation>
+	</element>
+
+	<element name="LastInsurancePaymentAmount" type="double">
+		<documentation>
+		Most recent insurance payment amount
+		</documentation>
+	</element>
+	
+	<element name="LastPatientPaymentDate" type="OmniDate">
+		<documentation>
+		Most recent insurance payment amount
+		</documentation>
+	</element>
+
+	<element name="LastPatientPaymentAmount" type="double">
+		<documentation>
+		Most recent Patient payment received amount
+		</documentation>
+	</element>
+
+	<element name="PricingContractId" type="string">
+		<documentation>
+		Pricing contract ID set for the Guarantor Account
+		</documentation>
+	</element>
+
+	<element name="PricingContractExpireDate" type="OmniDate">
+		<documentation>
+		Pricing contract expiriy date for this Guarantor Account
+		</documentation>
+	</element>
+
+	<element name="CollectorUser" type="OmniLink" contains="User">
+		<documentation>
+		Collector Assigned to this Account
+		</documentation>
+	</element>
+	
+	<element name="UndistributedPayments" type="SourceCode">
+		<documentation>
+		Account has any undistributed payment ?. 
+		</documentation>
+	</element>
+
+	<element name="HasCreditBalance" type="SourceCode">
+		<documentation>
+		Account has any Credit balance ?  
+		</documentation>
+	</element>
+
+	<element name="BadDebtBalance" type="double">
+		<documentation>
+		Value of the Bad Debt on this Account 
+		</documentation>
+	</element>
+
+	<element name="LastNonDemandEnterpriseStatementDate" type="OmniDate">
+		<documentation>
+		Last Non Demand Enterprise Statement Date
+		</documentation>
+	</element>
+
+	<element name="LastDemandEnterpriseStatementDate" type="OmniDate">
+		<documentation>
+		Last demand enterprise statement date
+		</documentation>
+	</element>
+
+	<element name="HospitalAccountRecordId" type="string">
+		<documentation>
+		Default hospital_account ID of the Guarantor. . .points to separate table ..that has accont_Id and Pat_id
+		</documentation>
+	</element>
+
+	<element name="LastNonDemandEnterpriseGeneratedStatementDate" type="OmniDate">
+		<documentation>
+		Date of last non-demand enterprise statement generated
+		</documentation>
+	</element>
+
+	<element name="LastDemandEnterpriseGeneratedStatementDate" type="OmniDate">
+		<documentation>
+		Date of last demand enterprise statement generated
+		</documentation>
+	</element>
+
+	<element name="GuarantorRehomed" type="SourceCode">
+		<documentation>
+		new guarantor was created as a result of running the rehoming report and performing the rehome account action
+		</documentation>
+	</element>
+
+	<element name="DistrictCategoryOfAccountAddress" type="SourceCode">
+		<documentation>
+		District catergory of Account Address. . . related to rehomed
+		</documentation>
+	</element>
+
+	<element name="OldGuarantorId" type="string">
+		<documentation>
+		Old Guarantor ID
+		</documentation>
+	</element>
+
+	<element name="GuarantorPatient" type="OmniLink" contains="Patient">
+		<documentation>
+		Guarantor same person as the Patient - Patient ID of the Guarantor
+		</documentation>
+	</element>
+
+	<element name="NextStatementDate" type="OmniDate">
+		<documentation>
+		Next statement date
+		</documentation>
+	</element>
+
+	<element name="ReimbursementContractId" type="string">
+		<documentation>
+		Reimbursement Contract associated with this client
+		</documentation>
+	</element>
+
+	<element name="IncomeSource" type="string">
+		<documentation>
+		Income source
+		</documentation>
+	</element>
+
+	<element name="QuickDisclosureActivity" type="SourceCode">
+		<documentation>
+		Request can appear for quick disclosure acitivity ? 
+		</documentation>
+	</element>
+	
+
+	<element name="PrePayOnlyRequester" type="SourceCode">
+		<documentation>
+		Pre Pay only requester ? 
+		</documentation>
+	</element>
+
+	<element name="ConfidentialNameOfPatient" type="string">
+		<documentation>
+		Confidential Name of the Patient 
+		</documentation>
+	</element>
+
+	<element name="ExternalBadDebtSelfPayBalance" type="double">
+		<documentation>
+		External Bad Debt Self Pay Balance
+		</documentation>
+	</element>
+
+	<element name="ExternalBadDebtInsuranceBalance" type="double">
+		<documentation>
+		External Bad Debt Insurance Balance
+		</documentation>
+	</element>
+	
+	<group name="HospitalBilling" 
+	       elementOrder="Account, Balance, PreBilledBalance, InsuranceBalance, SelfPayBalance, BadDebtBalance, UndistributedBalance, 
+	       	             BadDebtSelfPayBalance, BadDebtInsuranceBalance, BadDebtUndistributedBalance,
+	                     SelfPayAgingDate, InsuranceAgingDate,
+	                     LastInsurancePaymentDate, LastSelfPayPaymentDate,
+	                     PaymentPlanInitialBalance, PaymentPlanAmountDue, PaymentPlanCurrentBalance, PaymentPlanMonthlyDue, PaymentPlanCurrentDue,
+	                     GuarantorLastStatementDate, GuarantorNextStatementDate, GuarantorLastDemandStatementDate,
+	                     GuarantorNoteExpirationDate">
+		<documentation>
+		Grouping of Hospital Related elements.
+		</documentation>
+
+		<element name="Account" type="OmniLink" contains="HospitalBillingAccount">
+			<documentation>
+			Unique EPIC ID of the Account
+			</documentation>
+		</element>
+
+
+		<element name="Balance" type="double">
+			<documentation>
+			Hospital Billing Balance
+			</documentation>
+		</element>
+
+		<element name="PreBilledBalance" type="double">
+			<documentation>
+			Hospital Billing Pre-Billed balance on the account.
+			</documentation>
+		</element>
+
+		<element name="SelfPayBalance" type="double">
+			<documentation>
+			Hospital Billing Self Pay balance.
+			</documentation>
+		</element>
+
+		<element name="InsuranceBalance" type="double">
+			<documentation>
+			Hospital Billing insurance balance.
+			</documentation>
+		</element>
+
+		<element name="BadDebtBalance" type="double">
+			<documentation>
+			Hospital Billing Bad Debt balance.
+			</documentation>
+		</element>
+
+		<element name="UndistributedBalance" type="double">
+			<documentation>
+			Hospital Billing Undistributed balance
+			</documentation>
+		</element>
+
+		<element name="BadDebtSelfPayBalance" type="double">
+			<documentation>
+			Hospital Billing Bad Debt in self pay balance
+			</documentation>
+		</element>
+
+		<element name="BadDebtInsuranceBalance" type="double">
+			<documentation>
+			Hospital Billing Bad Debt in Insurance Balance
+			</documentation>
+		</element>
+
+		<element name="BadDebtUndistributedBalance" type="double">
+			<documentation>
+			Hospital Billing Bad Debt Undistributed Balance
+			</documentation>
+		</element>
+
+		<element name="SelfPayAgingDate" type="OmniDate">
+			<documentation>
+			Hospital Billing Self Pay aging date Oldest
+			</documentation>
+		</element>
+
+		<element name="InsuranceAgingDate" type="OmniDate">
+			<documentation>
+			Hospital Billing Insurance aging date
+			</documentation>
+		</element>
+
+		<element name="LastInsurancePaymentDate" type="OmniDate">
+			<documentation>
+			Hospital Billing Last Insurance payment date
+			</documentation>
+		</element>
+
+		<element name="LastSelfPayPaymentDate" type="OmniDate">
+			<documentation>
+			Hospital Billing Last Self Pay payment date
+			</documentation>
+		</element>
+
+		<element name="PaymentPlanInitialBalance" type="double">
+			<documentation>
+			Initial Amount Balance on Hospital Billing when Payment Plan starts.
+			</documentation>
+		</element>
+
+		<element name="PaymentPlanAmountDue" type="double">
+			<documentation>
+			Current amount due on the Hospital Billing Payment Plan 
+			</documentation>
+		</element>
+	
+		<element name="PaymentPlanCurrentBalance" type="double">
+			<documentation>
+			Current Balance on the Hospital Billing Payment Plan
+			</documentation>
+		</element>
+
+		<element name="PaymentPlanMonthlyDue" type="double">
+			<documentation>
+			Hospital Billing Monthly Payment Plan due
+			</documentation>
+		</element>
+
+		<element name="PaymentPlanCurrentDue" type="double">
+			<documentation>
+			Hospital Billing Current Amount due on the monthly Payment Plan
+			</documentation>
+		</element>
+
+		<element name="GuarantorLastStatementDate" type="OmniDate">
+			<documentation>
+			Date the last statement sent to the Guarantor
+			</documentation>
+		</element>
+
+		<element name="GuarantorNextStatementDate" type="OmniDate">
+			<documentation>
+			Date the next statement send to the Guarantor
+			</documentation>
+		</element>
+
+		<element name="GuarantorLastDemandStatementDate" type="OmniDate">
+			<documentation>
+			Date of the last demand statement to be sent to the Guarantor
+			</documentation>
+		</element>
+
+		<element name="GuarantorNoteExpirationDate" type="OmniDate">
+			<documentation>
+			Expiration date of the Billing Note for this guarantor account
+			</documentation>
+		</element>
+
+	</group>
+
+	<group name="ReleaseOfInformation" 
+	       elementOrder="PatientAccount, Balance, RequesterTaxExempt,
+	                     BillingHouseNumber, BillingDistrict, BillingAddressCounty">
+	       
+		<documentation>
+		Grouping of Release Of Information elements.
+		</documentation>
+
+		<element name="PatientAccount" type="SourceCode">
+			<documentation>
+			ROI Patient Account ? Y/N
+			</documentation>
+		</element>
+
+		<element name="Balance" type="double">
+			<documentation>
+			ROI Balance - Only if Profee Billing is not used
+			</documentation>
+		</element>
+
+		<element name="BillingHouseNumber" type="string">
+			<documentation>
+			House number of ROI billing address 
+			</documentation>
+		</element>
+
+		<element name="BillingDistrict" type="string">
+			<documentation>
+			District of ROI billing district
+			</documentation>
+		</element>
+
+		<element name="BillingAddressCounty" type="string">
+			<documentation>
+			County Address of ROI Billing Address
+			</documentation>
+		</element>
+
+		<element name="RequesterTaxExempt" type="SourceCode">
+			<documentation>
+			Release of information of this requester are tax exempt ? 
+			</documentation>
+		</element>
+
+	</group>
+
+	<group name="PaymentPlan" 
+	       elementOrder="StartDate, TotalAmount, Amount, Duration, Frequency, DayOfMonthDue, IsTimely, OnTime,
+	                     LinkedToStatementDate">
+	       
+		<documentation>
+		Grouping of Payment Plan elements.
+		</documentation>
+
+		<element name="StartDate" type="OmniDate">
+			<documentation>
+			Payment Plan start date
+			</documentation>
+		</element>
+
+		<element name="TotalAmount" type="double">
+			<documentation>
+			Payment Plan total amount
+			</documentation>
+		</element>
+
+		<element name="Amount" type="double">
+			<documentation>
+			Dollar amount to be paid through the Payment Plan
+			</documentation>
+		</element>
+
+		<element name="Duration" type="string">
+			<documentation>
+			Payment plan duration
+			</documentation>
+		</element>
+
+		<element name="Frequency" type="SourceCode">
+			<documentation>
+			Payment Frequency through the Payment Plan if selected (weekly, semi-monthly, Monthly etc)
+			</documentation>
+		</element>
+
+		<element name="DayOfMonthDue" type="integer">
+			<documentation>
+			Day of the month the Payment is due in Payment Plan
+			</documentation>
+		</element>
+
+		<element name="IsTimely" type="SourceCode">
+			<documentation>
+			Payment is on time always ? 
+			</documentation>
+		</element>
+
+		<element name="OnTime" type="SourceCode">
+			<documentation>
+			Payment Plan effective until balance paid off ?
+			</documentation>
+		</element>
+
+		<element name="LinkedToStatementDate" type="SourceCode">
+			<documentation>
+			Payment Plan due date is linked to statement date ? 
+			</documentation>
+		</element>
+	</group>
+
+	<group name="ClientBilling" 
+	       elementOrder="AccountId, Frequency, FrequencyDay, DayOfMonth">
+	       
+		<documentation>
+		Grouping of Client Billing elements.
+		</documentation>
+
+		<element name="AccountId" type="string">
+			<documentation>
+			Client Account
+			</documentation>
+		</element>
+
+		<element name="Frequency" type="SourceCode">
+			<documentation>
+			Client billing Frequency like weekly, monthly, bi-weekly
+			</documentation>
+		</element>
+
+		<element name="FrequencyDay" type="SourceCode">
+			<documentation>
+			Client Billing weekday like Monday, Sunday, Tuesday etc.,
+			</documentation>
+		</element>
+	
+		<element name="DayOfMonth" type="integer">
+			<documentation>
+			Client Billing day of the Month
+			</documentation>
+		</element>	
+	</group>
+
+	<group name="ProfessionalBilling" 
+	       elementOrder="NextStatementDate, ExternalSelfPayBalance, ExternalInsuranceBalance">
+	       
+		<documentation>
+		Professional Billing elements.
+		</documentation>
+
+		<element name="NextStatementDate" type="OmniDate">
+			<documentation>
+			Date of the next statement to be sent to Guarantor for Profee Billing Drop Cycle
+			</documentation>
+		</element>
+
+		<element name="ExternalSelfPayBalance" type="double">
+			<documentation>
+			PB external self pay Balance
+			</documentation>
+		</element>
+
+		<element name="ExternalInsuranceBalance" type="double" dbColumn="pb_ext_insur_balance">
+			<documentation>
+			PB external insurance Balance
+			</documentation>
+		</element>
+	</group>
+
+	<list name="Notes">
+		<documentation>
+		Use this collection to capture notes related to a GuarantorAccount.
+		</documentation>
+		
+		<idsSpecification name="GuarantorAccountNote" udlName="GuarantorAccountNote" type="instance_child"
+			 		 elementOrder="AccountId, NotepadType, Summary, ActiveInactiveStatus, ExpirationDate,
+								   CreatedByUser, CreatedOnDate, Homed, Remote, Prioritized"
+					implementationClass="com.ibi.omni.patient.model.guarantor_account.GuarantorAccountNote">
+		
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 		 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+			
+			<documentation>
+			Use this structure to feed Guarantor Account Notes.
+			</documentation>
+			
+			<element name="AccountId" type="string">
+				<documentation>
+				Account ID associated with this Note
+				</documentation>
+			</element>
+		
+			<element name="NotepadType" type="SourceCode">
+				<documentation>
+				Notepad type (General, letter, Bill, Claim, Collection, insurance etc.,)
+				</documentation>
+			</element>
+			
+			<element name="Summary" type="string">
+				<documentation>
+				Short description of the Note
+				</documentation>
+			</element>
+			
+			<element name="ActiveInactiveStatus" type="SourceCode">
+				<documentation>
+				Note status Active / Inactive
+				</documentation>
+			</element>
+			
+			<element name="ExpirationDate" type="OmniDate">
+				<documentation>
+				Note expiry Date
+				</documentation>
+			</element>
+			
+			<element name="CreatedByUser" type="OmniLink" contains="User">
+				<documentation>
+				User who created this note
+				</documentation>
+			</element>
+		
+			<element name="CreatedOnDate" type="OmniDate">
+				<documentation>
+				The date and time the note was created.
+				</documentation>
+			</element>
+		
+			<element name="Homed" type="SourceCode">
+				<documentation>
+				Noted Homed Y/ N ? 
+				</documentation>
+			</element>
+			
+			<element name="Remote" type="SourceCode">
+				<documentation>
+				Remote Note Y/ N ? 
+				</documentation>
+			</element>
+		
+			<element name="Prioritized" type="SourceCode">
+				<documentation>
+				The Note is prioritized y/ n ? 
+				</documentation>
+			</element>
+		
+			<element name="InvoiceStatementNumber" type="string">
+				<documentation>
+				Invoice Number associated with this note
+				</documentation>
+			</element>
+		</idsSpecification>
+	</list>
+
+	<list name="ContactHistory">
+		<documentation>
+		Use this collection to capture contact history related to this GuarantorAccount.
+		</documentation>
+		
+		<idsSpecification name="GuarantorAccountContactHistory" udlName="GuarantorAccountContactHistory" type="instance_child"
+			 		 elementOrder="OccurredNumbeOfTimes, ContactDate, RecordedByUser, CollectionStaffActivity, ReContactDate,
+					 CollectionAgencyLetterNumber, CollectionAgencyLetterLibrary, CollectionQueue, RecordedDate,
+					 AdditionalInformation, FollowupWorkQueueActivity, RefundRequestId, RefundRequestStatus,
+					 RefundRequestAmount, RefundRequesTransactionNumber, FollowupTransactions, FollowupCurrentInsuranceBalance,
+					 FollowupCurrentPatientBalance, FollowupTotalAttributedPaymentAmount, AccountType,
+					 FollowupInformationNeeded, FollowupWorkQueueId, SummaryOfLetterSent, LetterStatus,
+					 CollectionSubQueue, FollowupNote, LetterName, PaperlessMyChartBillingStatus"
+					 implementationClass="com.ibi.omni.patient.model.guarantor_account.GuarantorAccountContactHistory">
+		
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 		 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+			
+			<documentation>
+			Use this structure to feed Guarantor Account Notes.
+			</documentation>
+					
+			<element name="OccurredNumbeOfTimes" type="integer">
+				<documentation>
+				Line number (No of times) this contact occurred
+				</documentation>
+			</element>
+		
+			<element name="ContactDate" type="OmniDate">
+				<documentation>
+				Contact date
+				</documentation>
+			</element>
+			
+			<element name="RecordedByUser" type="OmniLink" contains="User">
+				<documentation>
+				User Id the person who recorded this contact
+				</documentation>
+			</element>
+			
+			<element name="CollectionStaffActivity" type="SourceCode">
+				<documentation>
+				Activity performed by the collection staff (Like - No contact, Check Mailed, Letter, 
+				Promised payment etc.,)
+				</documentation>
+			</element>
+			
+			<element name="ReContactDate" type="OmniDate">
+				<documentation>
+				The date the account should be contacted again
+				</documentation>
+			</element>
+		
+			<element name="CollectionAgencyLetterNumber" type="string">
+				<documentation>
+				Letter Number of the collection agency linked to this account
+				</documentation>
+			</element>
+		
+			<element name="CollectionAgencyLetterLibrary" type="string">
+				<documentation>
+				The breeze library where the collection letter can be found
+				</documentation>
+			</element>
+			
+			<element name="CollectionQueue" type="string">
+				<documentation>
+				Collection queue to which account belongs
+				</documentation>
+			</element>
+			
+			<element name="RecordedDate" type="OmniDate">
+				<documentation>
+				Date and Time the contact was recorded
+				</documentation>
+			</element>
+		
+			<element name="AdditionalInformation" type="string">
+				<documentation>
+				Any additional information about the contact
+				</documentation>
+			</element>
+			
+			<element name="FollowupWorkQueueActivity" type="SourceCode">
+				<documentation>
+				Followup activity work queue (Created, Updated, Denied, Note, transfer etc.,)
+				</documentation>
+			</element>
+		
+			<element name="RefundRequestId" type="string">
+				<documentation>
+				Refund Request Id
+				</documentation>
+			</element>
+		
+			<element name="RefundRequestStatus" type="SourceCode">
+				<documentation>
+				Refund request status (Submitted, reviewed, approved, rejected etc.,)
+				</documentation>
+			</element>
+		
+			<element name="RefundRequestAmount" type="double">
+				<documentation>
+				Amount the refund requested
+				</documentation>
+			</element>
+			
+			<element name="RefundRequesTransactionNumber" type="string">
+				<documentation>
+				Transaction Number of the Refund request
+				</documentation>
+			</element>
+			
+			<element name="FollowupTransactions" type="string">
+				<documentation>
+				Followup transactions
+				</documentation>
+			</element>
+		
+			<element name="FollowupCurrentInsuranceBalance" type="double">
+				<documentation>
+				Followup current insurance balance
+				</documentation>
+			</element>
+		
+			<element name="FollowupCurrentPatientBalance" type="double">
+				<documentation>
+				followup current patient balance
+				</documentation>
+			</element>
+		
+			<element name="FollowupTotalAttributedPaymentAmount" type="double">
+				<documentation>
+				Followup total attributed payment amount
+				</documentation>
+			</element>
+		
+			<element name="AccountType" type="SourceCode">
+				<documentation>
+				Based activity or Associated activity
+				</documentation>
+			</element>
+			
+			<element name="FollowupInformationNeeded" type="string">
+				<documentation>
+				Activity information to be displayed 
+				</documentation>
+			</element>
+		
+			<element name="FollowupWorkQueueId" type="string">
+				<documentation>
+				Followup Work queue ID 
+				</documentation>
+			</element>
+			
+			<element name="SummaryOfLetterSent" type="string">
+				<documentation>
+				Short summary of the letter sent  
+				</documentation>
+			</element>
+		
+			<element name="LetterStatus" type="SourceCode">
+				<documentation>
+				letter status (Sent, printed etc.)  
+				</documentation>
+			</element>
+		
+			<element name="CollectionSubQueue" type="string">
+				<documentation>
+				sub queue within the collection queue  
+				</documentation>
+			</element>
+		
+			<element name="FollowupNote" type="string">
+				<documentation>
+				Followup Note 
+				</documentation>
+			</element>
+		
+			<element name="LetterName" type="string">
+				<documentation>
+				name of the letter 
+				</documentation>
+			</element>
+		
+			<element name="PaperlessMyChartBillingStatus" type="SourceCode">
+				<documentation>
+				Paperless my chart billing status 
+				</documentation>
+			</element>
+		</idsSpecification>		
+	</list>
+
+	<list name="Coverages">
+		<documentation>
+		Use this collection to capture the account coverages assigned to this GuarantorAccount.
+		</documentation>
+		
+		<idsSpecification name="GuarantorAccountCoverage" udlName="GuarantorAccountCoverage" type="instance_child"
+			 		 elementOrder="NumberOfCoverages, AccountId, ServiceArea, AccountType, LineNumber,
+					 Active, RecordId, FinancialClass, GuardianPatientRelationship, Episode,
+					 Comment, Description, PrimaryClaimId, Payer, BenefitPlan, Patient"
+					 implementationClass="com.ibi.omni.patient.model.guarantor_account.GuarantorAccountCoverage">
+		
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+			<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+			
+			<documentation>
+			Use this structure to feed Guarantor Account Notes.
+			</documentation>
+
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 		 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+					
+			<element name="NumberOfCoverages" type="integer" dbColumn="nbr_of_coverages">
+				<documentation>
+				Line Number (Multiple coverages a patient might have)
+				</documentation>
+			</element>
+		
+			<element name="AccountId" type="string">
+				<documentation>
+				Account Id associated with this Covergae
+				</documentation>
+			</element>
+		
+			<element name="ServiceArea" type="string">
+				<documentation>
+				Service Area to which this account belongs
+				</documentation>
+			</element>
+		
+			<element name="AccountType" type="SourceCode">
+				<documentation>
+				Type of Account (Family / Account / Worker compensation etc.,)
+				</documentation>
+			</element>
+		
+			<element name="LineNumber" type="string">
+				<documentation>
+				Line number of Account type
+				</documentation>
+			</element>
+		
+			<element name="Active" type="SourceCode">
+				<documentation>
+				Account Active ? 
+				</documentation>
+			</element>
+		
+			<element name="RecordId" type="string">
+				<documentation>
+				Coverage record associated with this Patient / Account
+				</documentation>
+			</element>
+		
+			<element name="FinancialClass" type="SourceCode">
+				<documentation>
+				Financial Class of the account (like Self Pay, Medicare, Commerial, HMO etc)
+				</documentation>
+			</element>
+		
+			<element name="GuardianPatientRelationship" type="SourceCode">
+				<documentation>
+				Relationship between the Patient and Guarantor
+				</documentation>
+			</element>
+			
+			<element name="Episode" type="string">
+				<documentation>
+				Episode associated with this account
+				</documentation>
+			</element>
+		
+			<element name="Comment" type="string">
+				<documentation>
+				Free form comment
+				</documentation>
+			</element>
+			
+			<element name="Description" type="string">
+				<documentation>
+				</documentation>
+			</element>
+		
+			<element name="PrimaryClaimId" type="string">
+				<documentation>
+				Patient's Primary Claim
+				</documentation>
+			</element>
+		
+			<element name="Payer" type="OmniLink" contains="Payer">
+				<documentation>
+				payer associated with the coverage record
+				</documentation>
+			</element>
+		
+			<element name="BenefitPlan" type="OmniLink" contains="BenefitPlan">
+				<documentation>
+				Benefit Plan associated with the coverage record
+				</documentation>
+			</element>
+		
+			<element name="Patient" type="OmniLink" contains="Patient">
+				<documentation>
+				
+				</documentation>
+			</element>	
+		</idsSpecification>
+	</list>
+
+	<list name="Transactions">
+		<documentation>
+		Use this collection to capture the account coverages assigned to this GuarantorAccount.
+		</documentation>
+		
+		<idsSpecification name="GuarantorAccountTransaction" udlName="GuarantorAccountTransaction" type="instance_child"
+			 		 	 elementOrder="TransactionDate, Type, Amount, EndingBalance"
+			 		 	 implementationClass="com.ibi.omni.patient.model.guarantor_account.GuarantorAccountTransaction">
+		
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 		 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+			
+			<documentation>
+			Use this structure to feed Guarantor Account Notes.
+			</documentation>
+			
+			<element name="TransactionDate" type="OmniDate">
+				<documentation>
+				</documentation>
+			</element>
+		
+			<element name="Type" type="SourceCode">
+				<documentation>
+				</documentation>
+			</element>
+		
+			<element name="Amount" type="double">
+				<documentation>
+				</documentation>
+			</element>
+		
+			<element name="EndingBalance" type="double">
+				<documentation>
+				</documentation>
+			</element>	
+		</idsSpecification>
+	</list>
+
+</idsDocument>

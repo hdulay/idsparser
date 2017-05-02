@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<idsDocument version="1.0.0" changeVersion="0" domain="Clinical" type="instance" name="SurgeryMovement" elementOrder="SurgeryCase, SurgicalProcedure, MovementEvent, PhaseCode, TimePointDescription, TimePointTypeCode, MoverTypeCode, InOutCode, ActualOrScheduledCode, ProviderRelievedIndicator, RelievedReasonCode, RelievedReasonText">
+  <include name="CommonElements" prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName" appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+  <notes></notes>
+  <documentation>This subject captures the Surgical context of MovementEvents related to SurgeryCases. These events can relate to movements of the Patient from one location to another, movements of Providers in and out of the operating room, or movements of carts and/or equipment in and out of surgery.</documentation>
+  <element name="SurgeryCase" type="link" contains="SurgeryCase">
+    <documentation>Reference to the SurgeryCase for this movement</documentation>
+    <example>
+      <SurgeryCase>
+        <SourceName>TestSystem</SourceName>
+        <SourceInstanceId>Case Alpha</SourceInstanceId>
+      </SurgeryCase>
+    </example>
+  </element>
+  <element name="SurgicalProcedure" type="link" contains="SurgeryProcedure">
+    <documentation>Reference to the SurgeryProcedure for this movement, if it is specificed at this level</documentation>
+    <example>
+      <SurgeryProcedure>
+        <SourceName>TestSystem</SourceName>
+        <SourceInstanceId>Procedure Beta</SourceInstanceId>
+      </SurgeryProcedure>
+    </example>
+  </element>
+  <element name="MovementEvent" type="link" contains="MovementEvent">
+    <documentation>Reference to the MovementEvent representing this event. The Movement event carries the date/time, location and provider(s) associated with the event. The MovementEvent must be created separately from this event.</documentation>
+    <example>
+      <MovementEvent>
+        <SourceName>TestSystem</SourceName>
+        <SourceInstanceId>MovementEvent ABC</SourceInstanceId>
+      </MovementEvent>
+    </example>
+  </element>
+  <element name="PhaseCode" type="code">
+    <documentation>Identifies the stage or step in the process of this surgery case. For example, phases could begin from before the surgery to include the operating room preparation to pre-operative followed by operative and finally post-operative to operating room cleanup.</documentation>
+    <example sourceName="TestSystem" codeSet="PhaseCodes">PreOp</example>
+  </element>
+  <element name="TimePointDescription" type="string">
+    <documentation>Contains description of type of TimePoint.</documentation>
+    <example>
+      <TimePointDescription></TimePointDescription>
+    </example>
+  </element>
+  <element name="TimePointTypeCode" type="code">
+    <documentation>Contains the "point-in-time" activity performed during this phase.</documentation>
+    <example sourceName="TestSystem" codeSet="TimePointerTypeCodes">Patient Arrival</example>
+  </element>
+  <element name="MoverTypeCode" type="code">
+    <documentation>Code indicates whether the time point relates to a movement of the Patient (e.g., movement of patient into OR) or movement of Provider (entry/exit into/from the OR). This could also relate to movement of the case cart, equipment, etc.</documentation>
+    <example sourceName="TestSystem" codeSet="MoverTypeCodes">Patient</example>
+  </element>
+  <element name="InOutCode" type="code">
+    <documentation>Indicates whether the point-in-time references an entry(in) or an exit(out). In general, the time interval between associated In and Out time points of the same type become a measurable interval.</documentation>
+    <example sourceName="TestSystem" codeSet="InputCodes">In</example>
+  </element>
+  <element name="ActualOrScheduledCode" type="code">
+    <documentation>Specifies whether this instance represents an actual movement or a scheduled one.</documentation>
+    <example sourceName="TestSystem" codeSet="ActualOrScheduledCodes">Actual</example>
+  </element>
+  <element name="ProviderRelievedIndicator" type="code">
+    <documentation>Applicable only to movements of Providers, indicates whether the participant was relieved of duty during the surgery.</documentation>
+    <example sourceName="Yes/No Indicator" codeSet="Code0136">Yes/No</example>
+  </element>
+  <element name="RelievedReasonCode" type="code">
+    <documentation>Applicable only to movements of Providers, specifies the reason code for why the participant was relieved of duty during the patient's surgery.</documentation>
+    <example sourceName="TestSystem" codeSet="RelievedReasonCodes">Sick</example>
+  </element>
+  <element name="RelievedReasonText" type="string">
+    <documentation>Applicable only to movements of Providers, specifies the reason the participant was relieved of duty during the patient's surgery as a text value, for cases where a coded reason is not available.</documentation>
+    <example>
+      <RelievedReasonText>Stomach Pain, fever, aches, and pains.</RelievedReasonText>
+    </example>
+  </element>
+</idsDocument>

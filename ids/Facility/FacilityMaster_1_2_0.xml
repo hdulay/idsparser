@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.2.0" changeVersion="3" domain="Facility" type="master"
+			 name="FacilityMaster" 
+	 		 elementOrder="Type, Name, Addresses, Identifiers, ContactMethods, Relations"
+	 		 implementationClass="com.ibi.omni.patient.model.facility.master.FacilityMaster">
+	 		               	
+	<changeLog>
+		<change version="1.2.0_1">Initial Creation</change>
+		<change version="1.2.0_2">Updated codeTable reference on ContactMethod.Type</change>
+		<change version="1.2.0_3">Added MasterStatusCode</change>
+	</changeLog>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="MasterOmniCode" class="com.ibi.dib.core.ids.types.IdsMasterCodeType"/>
+	<customType name="MasterOmniLink" class="com.ibi.dib.core.ids.types.IdsMasterLinkType"/>
+
+	<include name="CommonElements" prependToElementOrder="MasterId, MasterStatus, MasterStatusReason, MasterStatusCode"/>
+		
+	<documentation>
+	A Facility represents a physical plot of land that may be owned, bought, sold, or leased. This IDS
+	can be used to load the base level Facility information such as physical location, owner, contact methods
+	and name.
+	
+	Note: Due to the hierarchy nature of locations within a facility, please use FacilityLocation to organize
+	all relevant physical/logical structures within the Facility. For example, using FacilityLocation will allow you to specify
+	a Room, the Floor the room resides on, and the ward that floor is associated with. From a data warehouse
+	perspective this information will be available in a hierarchy orientation. 
+	</documentation>
+	
+	<element name="Type" type="MasterOmniCode">
+		<documentation>
+		Use this element to specify the type of facility being loaded. For example Hospital, Parking Garage,
+		Administrative Building, etc...
+		</documentation>
+		
+		<example omniSourceName="OMNI" omniCodeSet="FacilityTypeCodes" omniCode="H">Hospital</example>
+	</element>
+	
+	<element name="Name" type="string">
+		<documentation>
+		Use this element to specify the name of the Facility. This should be the primary name of the Facility
+		and if it's known by other names they can be stored in the identifiers collection.
+		</documentation>
+		
+		<example>TestFacilityMaster</example>
+	</element>	
+
+	<list name="Addresses">
+		<documentation>
+		Use this collection to specify one or more addresses used by this Facility. Any given facility may
+		have multiple address locations such as Loading Dock, Administrative, etc...
+		</documentation>
+
+		<idsSpecification name="FacilityAddressMaster" udlName="FacilityAddressMaster" 
+			 		 elementOrder="Type, StartDate, EndDate, PreferenceOrder, AddressLine1, AddressLine2,
+					 		       AddressLine3, AddressLine4, City, StateProvince, PostalCode, Country, 
+					 		       CountyRegion, UsageComment, Latitude, Longitude"
+					implementationClass="com.ibi.omni.patient.model.facility.master.FacilityAddressMaster">
+						
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="MasterOmniCode" class="com.ibi.dib.core.ids.types.IdsMasterCodeType"/>
+			<customType name="MasterOmniLink" class="com.ibi.dib.core.ids.types.IdsMasterLinkType"/>
+		
+			<include name="CommonElements" prependToElementOrder="MasterChildId, MasterStatus, MasterStatusReason, MasterStatusCode"/>		  	
+			
+			<documentation>
+			Use this specification to load Facility address information into Omni.
+			</documentation>
+			
+			<element name="Type" type="MasterOmniCode" codeTable="0190">
+				<documentation>
+				Use this element to specify the type of address being loaded.
+				</documentation>
+				
+				<example omniSourceName="OMNI" omniCodeSet="AddressTypeCodes" omniCode="B">Business Address</example>
+			</element>
+		
+			<element name="StartDate" type="OmniDate">
+				<documentation>
+				Specify the date this address became active.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+			
+			<element name="EndDate" type="OmniDate">
+				<documentation>
+				Specify the date this address becomes inactive.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+		
+			<element name="PreferenceOrder" type="integer">
+				<documentation>
+				This field is for an entity having multiple addresses, indicates which is the 'most preferred' (lowest number) 
+			 	to 'least preferred' (highest number).
+				</documentation>
+				
+				<example>1</example>
+			</element>
+		
+			<element name="AddressLine1" type="string">
+				<documentation>
+				This field specifies the street or mailing address of a person or institution. 
+			 	When referencing an institution, this first component is used to specify the institution 
+			 	name. When used in connection with a person, this component specifies the first line of the address.
+				</documentation>
+				
+				<example>4000 East Ave</example>
+			</element>
+			
+			<element name="AddressLine2" type="string">
+				<documentation>
+				This field specifies the second line of address. In general, it qualifies address. 
+			 	Examples: Suite 555 or Fourth Floor. When referencing an institution, this component 
+			 	specifies the street address.
+				</documentation>
+				
+				<example>Suite 555</example>
+			</element>
+			
+			<element name="AddressLine3" type="string">
+				<documentation>
+				This field specifies the name of the person or organization that should appear as part of the 
+			 	address. This is also known as the "Care of" or "C/O" line.
+				</documentation>
+				
+				<example>ATTN: Jane Smith</example>
+			</element>
+			
+			<element name="AddressLine4" type="string">
+				<documentation>
+				This field specifies more address information.
+				</documentation>
+				
+				<example>Fragile</example>
+			</element>
+			
+			<element name="City" type="string">
+				<documentation>
+				This field specifies the city, district or place where the addressee is located 
+			 	depending upon the national convention for formatting addresses for postal usage.
+				</documentation>
+				
+				<example>Livonia</example>
+			</element>
+			
+			<element name="StateProvince" type="MasterOmniCode"  codeTable="">
+				<documentation>
+				This field specifies the state or province where the addressee is located. State or 
+			 	province should be represented by the official postal service codes for that country. 
+				</documentation>
+				
+				<example omniSourceName="OMNI" omniCodeSet="StateCodes" omniCode="NY">New York</example>
+			</element>
+		
+			<element name="PostalCode" type="string">
+				<documentation>
+				This component specifies the zip or postal code where the addressee is located.  Zip or 
+			 	postal codes should be represented by the official codes for that country. In the US, the zip 
+			 	code takes the form 99999[-9999], while the Canadian postal code takes the form A9A9A9 and the 
+			 	Australian Postcode takes the form 9999. 
+				</documentation>
+				
+				<example>14488</example>
+			</element>
+		
+			<element name="Country" type="MasterOmniCode" codeTable="0399">
+				<documentation>
+				This component specifies the country where the addressee is located. HL7 
+			 	specifies that the 3-character (alphabetic) form of ISO 3166 be used for the 
+			 	country code.
+				</documentation>
+				
+				<example omniSourceName="OMNI" omniCodeSet="CountryCodes" omniCode="USA">United States</example>
+			</element>
+		
+			<element name="CountyRegion" type="MasterOmniCode" codeTable="">
+				<documentation>
+				This component specifies the county where the addressee is located when applicable.
+				</documentation>
+				
+				<example omniSourceName="OMNI" omniCodeSet="CountyRegionCodes" omniCode="LIV">Livingston</example>
+			</element>
+		
+			<element name="UsageComment" type="string">
+				<documentation>
+				Descriptive information about the use of the address.
+			 	Example : "Do not ring bell"
+				</documentation>
+				
+				<example>Do not ring bell</example>
+			</element>
+
+			<element name="Latitude" type="double" precision="9" scale="6">
+				<documentation>
+					Contains the Latitude.
+				</documentation>
+				<example>1.1</example>
+			</element>
+
+			<element name="Longitude" type="double" precision="9" scale="6">
+				<documentation>
+					Contains the Longitude.
+				</documentation>
+				<example>2.2</example>
+			</element>
+		</idsSpecification>
+	</list>	
+
+	<list name="Identifiers">
+		<documentation>
+		Use this collection to specify the list of identifiers for this Facility. 
+	 	For example Block, Lot #, etc...
+		</documentation>
+		
+		<idsSpecification name="FacilityIdentifierMaster" udlName="FacilityIdentifierMaster" 
+			 		 elementOrder="Type, StartDate, EndDate, Value, IssuingAuthority,Comment"
+			 		 implementationClass="com.ibi.omni.patient.model.facility.master.FacilityIdentifierMaster">
+			
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="MasterOmniCode" class="com.ibi.dib.core.ids.types.IdsMasterCodeType"/>
+			<customType name="MasterOmniLink" class="com.ibi.dib.core.ids.types.IdsMasterLinkType"/>
+		
+			<include name="CommonElements" prependToElementOrder="MasterChildId, MasterStatus, MasterStatusReason, MasterStatusCode"/>		  	
+		  	
+			<documentation>
+			Use this structure to specify identifiers for a Facility.
+			</documentation>
+			
+			<element name="Type" type="MasterOmniCode" codeTable="0000">
+				<documentation>
+				Use this element to specify the type of identifier. For example
+			 	Block Number, Lot Number, etc...
+				</documentation>
+				
+				<example omniSourceName="OMNI" omniCodeSet="IdentifierCodes" omniCode="B">Block Number</example>
+			</element>
+		
+			<element name="StartDate" type="OmniDate">
+				<documentation>
+				Use this element to specify the date the identifier became active.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+			
+			<element name="EndDate" type="OmniDate">
+				<documentation>
+				Use this element to specify the date the identifier becomes inactive.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+		
+			<element name="Value" type="string">
+				<documentation>
+				Use this element to specify the value of the identifier.
+				</documentation>
+				
+				<example>12345678</example>
+			</element>
+			
+			<element name="IssuingAuthority" type="MasterOmniLink" contains="OrganizationMaster" keys="MasterId" allowCreate="true">
+				<documentation>
+				Use this element to specify the Master Organization that was responsible for 
+				issuing this identification.
+				</documentation>
+				
+				<example>
+					<![CDATA[
+					<OrganizationMaster>
+						<MasterId>IssuingAuthorityMasterId</MasterId>
+					</OrganizationMaster>
+					]]>
+				</example>
+			</element>
+
+            <element name="Comment" type="string">
+                <documentation>
+                    Use this element to store comments about the identifier.
+                </documentation>
+
+                <example>Comment about identifier.</example>
+            </element>
+		</idsSpecification>		
+	</list>	
+
+	<list name="ContactMethods">
+		<documentation>
+		Use this collection to specify the list of email, phone number, fax number, 
+	 	and other contact methods generically associated with this Facility.		
+		</documentation>
+		
+		<idsSpecification name="FacilityContactMethodMaster" udlName="FacilityContactMethodMaster" 
+			 		 	  elementOrder="Type, StartDate, EndDate, PreferenceOrder, Protection, Value, UsageComment"
+			 		 	  implementationClass="com.ibi.omni.patient.model.facility.master.FacilityContactMethodMaster">
+			
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="MasterOmniCode" class="com.ibi.dib.core.ids.types.IdsMasterCodeType"/>
+			<customType name="MasterOmniLink" class="com.ibi.dib.core.ids.types.IdsMasterLinkType"/>
+		
+			<include name="CommonElements" prependToElementOrder="MasterChildId, MasterStatus, MasterStatusReason, MasterStatusCode"/>		  	
+		  	
+			<documentation>
+			Use this collection to specify one or more contact methods for a patient. 
+			For example you may specify multiple email, phone, or fax numbers. 
+			This document can only be used within a Patient.Identifiers element.
+			</documentation>
+				
+			<element name="Type" type="MasterOmniCode" codeTable="0185">
+				<documentation>
+				Use this element to specify what type of contact method is being 
+			 	described. i.e. Email, Phone, etc..
+				</documentation>
+				
+				<example omniSourceName="OMNI" omniCodeSet="0185" omniCode="F" />
+			</element>
+		
+			<element name="StartDate" type="OmniDate">
+				<documentation>
+				Specify the date this contact method became active.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+			
+			<element name="EndDate" type="OmniDate">
+				<documentation>
+				Specify the date this contact method became inactive.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2050-01-01</example>
+			</element>
+		
+			<element name="PreferenceOrder" type="integer">
+				<documentation>
+				For a patient having contact methods, indicates which is the 'most preferred' (lowest number) 
+			 	to 'least preferred' (highest number).
+				</documentation>
+				
+				<example>1</example>
+			</element>
+			
+			<element name="Protection" type="MasterOmniCode" codeTable="0618">
+				<documentation>
+				Identifies that the contact method needs to be treated with special care or sensitivity.
+				</documentation>
+				
+				<example omniSourceName="OMNI" omniCodeSet="ProtectionCodes" omniCode="UP">Unpublished</example>
+			</element>
+			
+			<element name="Value" type="string">
+				<documentation>
+				Identifies the value of the contact method.
+				</documentation>
+				
+				<example>(222) 234-6879 x9808</example>
+			</element>
+		
+			<element name="UsageComment" type="string">
+				<documentation>
+				Defines the usage comment. Such as 'After 5pm'
+				</documentation>
+				
+				<example>No calls after 5pm</example>
+			</element>			
+		</idsSpecification>		
+	</list>	
+
+	<list name="Relations">
+		<documentation>
+		Use this collection to specify personal and business relations for this Facility. 
+	 	For example you may specify Owner, Leasee, Occupant, Maintainer, etc...	
+		</documentation>
+
+		<idsSpecification name="FacilityRelationMaster" udlName="FacilityRelationMaster" 
+			 		 elementOrder="Type, StartDate, EndDate, Relation"
+			 		 implementationClass="com.ibi.omni.patient.model.facility.master.FacilityRelationMaster">
+			
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="MasterOmniCode" class="com.ibi.dib.core.ids.types.IdsMasterCodeType"/>
+		
+			<include name="CommonElements" prependToElementOrder="MasterChildId, MasterStatus, MasterStatusReason, MasterStatusCode"/>		  	
+				  	
+			<documentation>
+			Use this collection element to specify Personal or Organizational relationships to the Facility.
+			</documentation>
+		
+			<element name="Type" type="MasterOmniCode" codeTable="0000">
+				<documentation>
+				This field contains the actual relationship that the associated party has to
+			 	the Facility.
+				</documentation>
+				
+				<example omniSourceName="OMNI" omniCodeSet="FacilityRelationCodes" omniCode="O">Owner</example>
+			</element>
+		
+			<element name="StartDate" type="OmniDate">
+				<documentation>
+				Use this element to specify the date the relation became active.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+			
+			<element name="EndDate" type="OmniDate">
+				<documentation>
+				Use this element to specify the date the relation becomes inactive.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+		
+			<element name="Relation" type="MasterOmniLink" contains="OrganizationMaster" keys="MasterId">
+				<documentation>
+				Use this element to specify the link to a related Person or Organization.
+				</documentation>
+		
+				<!-- Auto generation of IDS will cause circular reference. -->		
+				<example>
+					<![CDATA[
+					<OrganizationMaster>
+						<MasterId>OwnerMasterId</MasterId>
+					</OrganizationMaster>
+					]]>
+				</example>
+			</element>
+		</idsSpecification>				
+	</list>	
+ 
+</idsDocument>

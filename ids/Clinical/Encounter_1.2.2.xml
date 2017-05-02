@@ -1,0 +1,1606 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.2.2" changeVersion="6" domain="Clinical" type="instance"
+			 name="Encounter"
+			 elementOrder="EncounterNumber, TypeCode, SubTypeCode, Description, EpisodeOfCare, ServiceLineId, ServiceLine, Patient, PatientClassCode, PatientTypeCode, PatientConditionCode,
+								 EmploymentRelatedIndicator, HospitalServiceCode, RecurringServiceCode, EncounterUserCode, SpecialProgramCode, AdmissionLevelOfCareCode,
+								 ArrivalDateTime, ModeOfArrivalCode, DepartureDateTime, LengthOfStay, Triage, Classification, PatientAccommodation, PatientInformation,
+								 Allergies, Medications, ChronicConditions, Symptoms, Complications, SubstancesUsed, HealthPlanCoverages, RelatedEncounters, Consents,
+								 RegistrationDateTime, DischargeDateTime, DispositionCode, Facility, Account, EDCheckinDateTime, EDCheckoutDateTime,
+								  PreadmissionDateTime, EscortedByCode, EMSAgency"
+			 implementationClass="com.ibi.omni.patient.model.clinical.Encounter">
+
+	<changeLog>
+		<change version="1.2.2_0">Initial Version</change>
+		<change version="1.2.2_1">Changed RelatedEncounter.Encounter to RelatedEncounter.OtherEncounter</change>
+		<change version="1.2.2_2">Added Symptom.ChiefComplaintIndicator</change>
+		<change version="1.2.2_3">Deprecated ServiceLineId and added ServiceLine.</change>
+		<change version="1.2.2_4">Updated LengthOfStay definition. Changed CodeTable reference for RecurringServiceCode, Triage.TriageSeverityCode, PatientAccomodation.DietRestrictionCode, Complication.ComplicationCode, SubstanceUsage.SubstanceCode, SubstanceUsage.SubstanceTypeCode, SubstanceUsageCode, SubstanceFormCode, all AgeUnit elements.</change>
+		<change version="1.2.8_0">Deprecated HealthPlanCoverageId and added PatientHealthClaim</change>
+		<change version="1.2.2_5">Added Medications/MedicationDosage/MedicationText</change>
+		<change version="1.2.2_6">Added SourceStatusCode to instance and collection items.</change>
+		<change version="1.2.2_7">Added RegistrationDateTime and DischargeDateTime.</change>
+		<change version="1.2.2_8">Added DispositionCode.</change>
+		<change version="1.2.2_9">Added Facility.</change>
+		<change version="1.2.2_10">Added ICD9DecimalAllergenCode, ICD9NonDecimalAllergenCode, ICD10AllergenCode, SNOMEDCTAllergenCode, and OtherAllergenCodes</change>
+		<change version="1.2.2_11">Added RxNormMedicationCode, SNOMEDCTMedicationCode, and OtherSubstanceCodes</change>
+		<change version="1.2.2_12">Added ICD9DecimalDiagnosisCode, ICD9NonDecimalDiagnosisCode, ICD10DiagnosisCode, SNOMEDCTDiagnosisCode, and OtherChronicDiagnosisCodes</change>
+		<change version="1.2.2_13">Added ICD9DecimalSymptomCode, ICD9NonDecimalSymptomCode, ICD10SymptomCode, SNOMEDCTSymptomCode, and OtherSymptomCodes</change>
+		<change version="1.2.2_14">Added I EDCheckinDateTime, EDCheckoutDateTime, PreadmissionDateTime, EscortedByCode, and EMSAgency</change>
+	</changeLog>
+	
+	<notes>
+	
+	</notes>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	<customType name="SourceCodeList" class="com.ibi.dib.core.ids.types.IdsCodeListType"/>
+
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+	<documentation>
+An Encounter is a specific instance of a patient coming in contact with one or more health care providers for the purposes of receiving health care services.  An Encounter can be thought of as a set of services or Events, that occur within a specific period of time (and on a specific date) (e.g. a single office visit; a single surgical procedure; a consultation with a specialist).  An Encounter is sometimes called a "Visit", especially when referring to an outpatient Encounter.
+	</documentation>
+
+	<element name="EncounterNumber" type="string">
+		<documentation>
+		The identifier by which the source system references this specific Encounter.
+		</documentation>
+
+		<example>EncounterNumber</example>
+	</element>
+
+	<element name="TypeCode" type="SourceCode" codeSource="OMNI" codeSet="6000">
+		<documentation>
+Describes the type of interaction between a patient and healthcare participant(s) for the purpose of providing patient service(s) or assessing the health status of a patient. For example, outpatient visit to multiple departments, home health support (including physical therapy), inpatient hospital stay, emergency room visit, field visit (e.g., traffic accident), office visit, occupational therapy, telephone call.
+
+Ambulatory:  A comprehensive term for health care provided in a healthcare facility on a nonresident basis. The term ambulatory usually implies that the patient has come to the location and is not assigned to a bed.  Sometimes referred to as an outpatient encounter.
+Emergency:  A patient encounter that takes place at a dedicated healthcare service delivery location where the patient receives immediate evaluation and treatment, provided until the patient can be discharged or responsibility for the patient's care is transferred elsewhere (for example, the patient could be admitted as an inpatient or transferred to another facility).
+Field:  A patient encounter that takes place both outside a dedicated service delivery location and outside a patient's residence.
+Home Health:  Healthcare encounter that takes place in the residence of the patient or a designee.
+Inpatient Encounter:  A patient encounter where a patient is admitted by a hospital or equivalent facility, assigned to a location where patients generally stay at least overnight and provided with room, board, and continuous nursing service.
+Inpatient Acute:  An acute inpatient encounter.  Acute conditions are severe and sudden in onset (e.g. broken bone, asthma attack).
+Inpatient Non-Acute:  Any category of inpatient encounter except "acute".  Non-acute, or chronic, conditions have a long-developing syndrome, such as osteoporosis or asthma.
+Pre-admission:  A patient encounter where patient is scheduled or planned to receive service delivery in the future, and the patient is given a pre-admission account number. When the patient comes back for subsequent service, the pre-admission encounter is selected and is encapsulated into the service registration, and a new account number is generated.  Usage Note: This is intended to be used in advance of encounter types such as ambulatory, inpatient encounter, virtual, etc.
+Short Stay:  An encounter where the patient is admitted to a health care facility for a predetermined length of time, usually less than 24 hours.
+Virtual:  A patient encounter where the patient and the practitioner(s) are not in the same physical location.
+		</documentation>
+
+		<example sourceName="OMNI" sourceCodeSet="6000" sourceCode="VR"/>
+	</element>
+
+	<element name="SubTypeCode" type="SourceCode">
+		<documentation>
+		The encounter subtype further categorizes the type of visit.
+		</documentation>
+
+		<example sourceCodeSet="SubTypeCodes" sourceCode="telephone">Telephone Call</example>
+	</element>
+
+	<element name="Description" type="string" maxLength="1000">
+		<documentation>
+		Contains a general description of the encounter.
+		</documentation>
+
+		<example>EncounterDescription</example>
+	</element>
+
+	<element name="EpisodeOfCare" type="OmniLink" contains="Episode" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		Use this element to specify an Episode in the system using the Episode's SourceName and SourceInstanceId. You cannot load Episode
+		information using this element, however if the Episode is not found then a "placeholder" will be created that will contain the Episode
+		when loaded.
+		</documentation>
+
+		<example>
+			<![CDATA[
+			<Episode>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>EpisodeId</SourceInstanceId>
+			</Episode>
+			]]>
+		</example>
+	</element>
+
+	<element name="ServiceLineId" type="string">
+		<documentation>
+		DEPRECATED: This element should no longer be used. Please use the ServiceLine element.
+		</documentation>
+	</element>
+
+	<element name="ServiceLine" type="OmniLink" contains="OrganizationalUnit" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		A single organizational unit, maintained in the Organization domain, will be assigned to each service line. A service line provides the healthcare industry the ability to determine the profitability of its diverse services.  These are typically limited to a handful of well defined, mutually exclusive categories or groupings of individual services or interventions.  They are often associated with the DRG.  A service line can be tied to multiple physical locations (Oncology is provided at Facility1 and Facility2, Orthopedics is provided at Facility2 and Facility3).
+Use this element to specify a ServiceLine in the system using the OrganizationalUnit's SourceName and SourceInstanceId. You cannot load OrganizationalUnit
+		information using this element, however if the OrganizationalUnit is not found then a "placeholder" will be created that will contain the OrganizationalUnit
+		when loaded.
+		</documentation>
+
+		<example>
+			<![CDATA[
+			<OrganizationalUnit>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>ServiceLineId</SourceInstanceId>
+			</OrganizationalUnit>
+			]]>
+		</example>
+	</element>
+
+	<element name="Patient" type="OmniLink" contains="Patient" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		Patient represents data about the individual who received health care services during the encounter.
+
+		Use this element to specify a Patient in the system using the Patient's SourceName and SourceInstanceId. You cannot load Patient
+		information using this element, however if the Patient is not found then a "placeholder" will be created that will contain the Patient
+		when loaded.
+		</documentation>
+
+		<example>
+			<![CDATA[
+			<Patient>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>PatientId</SourceInstanceId>
+			</Patient>
+			]]>
+		</example>
+	</element>
+
+	<element name="PatientClassCode" type="SourceCode" codeSource="OMNI" codeSet="0004">
+		<documentation>
+		Identifies a general classification of the patient.
+		</documentation>
+
+		<example sourceName="OMNI" sourceCodeSet="0004" sourceCode="B"/>
+	</element>
+
+	<element name="PatientTypeCode" type="SourceCode" codeSource="OMNI" codeSet="0018">
+		<documentation>
+		Contains site-specific values that identify the patient type.
+		</documentation>
+
+		<example sourceName="OMNI" sourceCodeSet="0018" sourceCode="CustomerCreated"/>
+	</element>
+
+	<element name="PatientConditionCode" type="SourceCode" codeSource="OMNI" codeSet="0434">
+		<documentation>
+		Indicates the patient's current medical condition for the purpose of communicating to non-medical outside parties, e.g., family, employer, religious minister, media, etc.
+		</documentation>
+
+		<example sourceName="OMNI" sourceCodeSet="0434" sourceCode="S"/>
+	</element>
+
+	<element name="EmploymentRelatedIndicator" type="SourceCode" codeSource="OMNI" codeSet="0136">
+		<documentation>
+		Specifies whether the patient's illness was job-related.  If "Yes", patient's illness was job-related.  If "No", patient's illness was not job-related.
+		</documentation>
+
+		<example sourceName="OMNI" sourceCodeSet="0136" sourceCode="Y"/>
+	</element>
+
+	<element name="HospitalServiceCode" type="SourceCode" codeSource="OMNI" codeSet="0069">
+		<documentation>
+		Contains the treatment or type of surgery that the patient is scheduled to receive.
+		</documentation>
+
+		<example sourceName="OMNI" sourceCodeSet="0069" sourceCode="CAR"/>
+	</element>
+
+	<element name="RecurringServiceCode" type="SourceCode" codeSource="OMNI" codeSet="0219">
+		<documentation>
+		Indicates whether treatment is continuous.
+		</documentation>
+
+		<example sourceCodeSet="RecurringServiceCodes" sourceCode="custDef">Customer Defined</example>
+	</element>
+
+	<element name="EncounterUserCode" type="SourceCode" codeSource="OMNI" codeSet="0130">
+		<documentation>
+		Categorizes a patient's visit with respect to an individual institution's needs.
+		</documentation>
+
+		<example sourceName="OMNI" sourceCodeSet="0130" sourceCode="TE"/>
+	</element>
+
+	<element name="SpecialProgramCode" type="SourceCode" codeSource="OMNI" codeSet="0214">
+		<documentation>
+		Specifies the health insurance program for an encounter required for healthcare reimbursement.
+		</documentation>
+
+		<example sourceName="OMNI" sourceCodeSet="0214" sourceCode="FP"/>
+	</element>
+
+	<element name="AdmissionLevelOfCareCode" type="SourceCode" codeSource="OMNI" codeSet="0432">
+		<documentation>
+		Indicates the acuity level assigned to the patient at the time of admission.
+		</documentation>
+
+		<example sourceName="OMNI" sourceCodeSet="0432" sourceCode="AC"/>
+	</element>
+
+	<element name="ArrivalDateTime" type="OmniDate">
+		<documentation>
+		Tracks the date and time the patient arrived at the facility.  This is different than the date the patient is admitted (applies to inpatient only).
+		</documentation>
+
+		<example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+	</element>
+
+	<element name="ModeOfArrivalCode" type="SourceCode" codeSource="OMNI" codeSet="0430">
+		<documentation>
+		Identifies how the patient was brought to the healthcare facility.
+		</documentation>
+
+		<example sourceName="OMNI" sourceCodeSet="0430" sourceCode="F"/>
+	</element>
+
+	<element name="DepartureDateTime" type="OmniDate">
+		<documentation>
+		Tracks the date and time the patient leaves the facility for both inpatient and outpatient.  For inpatient, can be different than discharge date.
+		</documentation>
+
+		<example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+	</element>
+
+	<element name="LengthOfStay" type="double">
+		<documentation>
+		Generally calculated as the discharge date minus the admit date. A patient admitted and discharged on the same date will have a length of stay of one day. Reported in whole days.
+		</documentation>
+
+		<example>1.0</example>
+	</element>
+
+
+<!--
+ - Triage Information
+ -->
+
+	<group name="Triage"
+	       elementOrder="TriageSeverityCode, TriageStartDateTime, TriageEndDateTime" udlName="trg">
+		<documentation>
+		Triage is commonly used in crowded emergency rooms and walk-in clinics to determine which patients should be seen and treated immediately. Triage may be used to prioritize the use of space or equipment, such as operating rooms, in a crowded medical facility.
+		</documentation>
+
+		<element name="TriageSeverityCode" type="SourceCode" codeSource="OMNI" codeSet="0422">
+			<documentation>
+			Triage is a group of attributes commonly used in crowded emergency rooms and walk-in clinics to determine which patients should be seen and treated immediately. Triage may be used to prioritize the use of space or equipment, such as operating rooms, in a crowded medical facility.
+			</documentation>
+
+			<example sourceName="OMNI" sourceCodeSet="0422" sourceCode="2" />
+		</element>
+
+		<element name="TriageStartDateTime" type="OmniDate">
+			<documentation>
+			Tracks the date and time the triage process is started for a patient in the emergency room.
+			</documentation>
+
+			<example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+		</element>
+
+		<element name="TriageEndDateTime" type="OmniDate">
+			<documentation>
+			Tracks the date and time the triage process is completed for a patient in the emergency room.
+			</documentation>
+
+			<example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+		</element>
+	</group>
+
+<!--
+ - Classification Information
+ -->
+
+	<group name="Classification"
+	       elementOrder="MajorDiagnosticCategoryCode, DiagnosisRelatedGroupCode, RiskOfMortalityCode, SeverityOfIllnessCode,
+	       MSDRGCode, APDRGCode, APRDRGCode, APSDRGCode, OtherDRGCodes" udlName="cls">
+		<documentation>
+		Classification is a group of attributes that provide a way to group related healthcare services to determine payment/reimbursement for services.  A mix of cases in a hospital reflects the diversity, clinical complexity and the needs for resources in the population of patients in a hospital. Patients who have been treated in hospitals are classified in groups where other patients have the same condition (based on main and secondary diagnosis, procedures, age), complexity (comorbidities) and needs.
+		</documentation>
+
+		<element name="MajorDiagnosticCategoryCode" type="SourceCode" codeSource="OMNI" codeSet="6005">
+			<documentation>
+			Diagnoses and Diagnosis Related Groups (DRG) are grouped by Major Diagnostic Category (MDC).
+			</documentation>
+
+			<example sourceName="OMNI" sourceCodeSet="6005" sourceCode="01"/>
+		</element>
+
+		<element name="DiagnosisRelatedGroupCode" type="SourceCode" codeSource="OMNI" codeSet="6010">
+			<documentation>
+			A DRG (Diagnosis Related Group) is a mix of cases in a hospital that reflect the diversity, clinical complexity and the needs for resources in the population of patients in a hospital.  DRGs apply to inpatients and not to outpatients.  These DRGs group related healthcare services to determine payment/reimbursement for services.  They are calculated when the patient is discharged.  They can be of type Surgical or Medical and can be associated with an Organization Unit (Service Line) and MDC.
+			</documentation>
+
+			<example sourceName="OMNI" sourceCodeSet="6010" sourceCode="001"/>
+		</element>
+
+		<element name="RiskOfMortalityCode" type="SourceCode" codeSource="OMNI" codeSet="6015">
+			<documentation>
+			Risk of Mortality (ROM) is the likelihood of dying
+			</documentation>
+
+			<example sourceName="OMNI" sourceCodeSet="6015" sourceCode="1"/>
+		</element>
+
+		<element name="SeverityOfIllnessCode" type="SourceCode" codeSource="OMNI" codeSet="6016">
+			<documentation>
+			Severity of Illness (SOI) is the extent of organ system derangement or physiologic decompensation for a patient
+			</documentation>
+
+			<example sourceName="OMNI" sourceCodeSet="6016" sourceCode="2"/>
+		</element>
+
+		<element name="MSDRGCode" type="SourceCode" codeSource="OMNI" codeSet="6005">
+			<documentation>
+				This captures a Medicare Severity DRG (MS-DRG) code assigned to this encounter.
+			</documentation>
+		</element>
+
+		<element name="APDRGCode" type="SourceCode" codeSource="OMNI" codeSet="6005">
+			<documentation>
+				This captures a 3M-developed All Patient DRG (AP-DRG) code assigned to this encounter.
+			</documentation>
+		</element>
+
+		<element name="APRDRGCode" type="SourceCode" codeSource="OMNI" codeSet="6005">
+			<documentation>
+				This captures a 3M-developed All Patient Refined DRG (APR-DRG) code assigned to this encounter.
+			</documentation>
+		</element>
+
+		<element name="APSDRGCode" type="SourceCode" codeSource="OMNI" codeSet="6005">
+			<documentation>
+				This captures an HSS/Ingenix-developed All Payer Severity-adjusted DRG (APS-DRG) code assigned to this
+				encounter.
+			</documentation>
+		</element>
+
+		<element name="OtherDRGCodes" type="SourceCodeList" contains="OtherDRGCode">
+			<documentation>
+				This captures a list of other DRG codes assigned to this encounter
+			</documentation>
+
+			<![CDATA[
+					<OtherProcedureCode sourceName="ICD9" sourceCodeSet="2.16.840.1.113883.6.103-AL" sourceCode="NONE"/>
+					<OtherProcedureCode sourceName="ICD9" sourceCodeSet="2.16.840.1.113883.6.103-AL" sourceCode="ONE"/>
+				]]>
+		</element>
+
+	</group>
+
+<!--
+ - Patient Accommodation Information
+ -->
+
+	<group name="PatientAccommodation"
+	 	       elementOrder="DietRestrictionCode, CourtesyCode, PatientImportanceCode, AccommodationCode, PublicityCode, PriorityCode, PrecautionCode, NotifyClergyCode" udlName="pai">
+		<documentation>
+		PatientAccommodation is a group of attributes containing patient specific requirements, conditions and preferences used to provide the most comfortable environment possible during the patient's encounter experience.
+		</documentation>
+
+		<element name="DietRestrictionCode" type="SourceCode" codeSource="OMNI" codeSet="0114">
+			<documentation>
+		Dietary restrictions for the patient.  While normally applies to inpatient only, could apply to outpatient or ED in certain scenarios such as:
+		(1) Patient is moved from ED to Inpatient, but admission was never processed.
+		(2) Outpatient is held for observation night without an admission.
+		(3) Bed reservation and meals management systems may not be dependent on each other.
+			  Patients in a bed at meal time are likely to get a meal.
+			</documentation>
+
+			<example sourceCodeSet="DietRestrictionCodes" sourceCode="veg">Vegetarian</example>
+		</element>
+
+		<element name="CourtesyCode" type="SourceCode" codeSource="OMNI" codeSet="0045">
+			<documentation>
+			Indicates whether the patient will be extended certain special courtesies.
+			</documentation>
+
+			<example sourceName="OMNI" sourceCodeSet="0045" sourceCode="STF"/>
+		</element>
+
+		<element name="PatientImportanceCode" type="SourceCode" codeSource="OMNI" codeSet="0099">
+			<documentation>
+			Indicates whether the patient will be extended certain special courtesies.
+			</documentation>
+
+			<example sourceName="OMNI" sourceCodeSet="0099" sourceCode="GOVT"/>
+		</element>
+
+		<element name="AccommodationCode" type="SourceCode" codeSource="OMNI" codeSet="0129">
+			<documentation>
+			This field indicates the specific patient accommodations for this visit.
+			</documentation>
+
+			<example sourceName="OMNI" sourceCodeSet="0129" sourceCode="SP"/>
+		</element>
+
+		<element name="PublicityCode" type="SourceCode" codeSource="OMNI" codeSet="0215">
+			<documentation>
+			This field contains a user-defined code indicating what level of publicity is allowed for a specific visit.
+			</documentation>
+
+			<example sourceName="OMNI" sourceCodeSet="0215" sourceCode="F"/>
+		</element>
+
+		<element name="PriorityCode" type="SourceCode" codeSource="OMNI" codeSet="0217">
+			<documentation>
+			This field contains the priority of the visit.
+			</documentation>
+
+			<example sourceName="OMNI" sourceCodeSet="0217" sourceCode="1"/>
+		</element>
+
+		<element name="PrecautionCode" type="SourceCode" codeSource="OMNI" codeSet="0433">
+			<documentation>
+			Indicates non-clinical precautions that need to be taken with the patient.
+			</documentation>
+
+			<example sourceName="OMNI" sourceCodeSet="0433" sourceCode="A"/>
+		</element>
+
+		<element name="NotifyClergyCode" type="SourceCode" codeSource="OMNI" codeSet="0534">
+			<documentation>
+			Allows the patient to indicate whether the clergy should be notified.
+			</documentation>
+
+			<example sourceName="OMNI" sourceCodeSet="0534" sourceCode="L"/>
+		</element>
+	</group>
+
+<!--
+ - Patient Information
+ -->
+	<group name="PatientInformation"
+	 	       elementOrder="Gender, Race, Age, AgeUnitsCode, AmbulatoryStatus, OrganDonor, LivingWill, LivingWillDate, AdvanceDirectiveCode, AdvanceDirectiveLastVerifiedDateTime" udlName="pi">
+		<documentation>
+		PatientInformation is a group of attributes containing patient specific information gathered at the time of the encounter.
+		</documentation>
+
+		<element name="Gender" type="SourceCode" codeSource="OMNI" codeSet="0001" HL7="PID-8 Administrative Sex">
+			<documentation>
+			This field contains the patient's sex.
+			</documentation>
+
+			<example sourceCodeSet="GenderCodes" sourceCode="F">Female</example>
+		</element>
+
+		<element name="Race" type="SourceCode" codeSource="OMNI" codeSet="0005" HL7="PID-10 Race">
+			<documentation>
+			This field refers to the Persons race.
+			</documentation>
+
+			<example sourceCodeSet="RaceCodes" sourceCode="WH">White</example>
+		</element>
+
+		<element name="Age" type="double">
+			<documentation>
+			Contains the patient's age documented at the time of the encounter.
+			</documentation>
+
+			<example>2.5</example>
+		</element>
+
+		<element name="AgeUnitsCode" type="SourceCode" codeSource="OMNI" codeSet="0560">
+			<documentation>
+			Contains the units in which the patient's age documented at the time of the encounter.  Days, Weeks, Months,Years
+			</documentation>
+
+			<example sourceName="OMNI" sourceCodeSet="0560" sourceCode="YY"/>
+		</element>
+
+		<element name="AmbulatoryStatus" type="SourceCode" codeSource="OMNI" codeSet="0009">
+			<documentation>
+			Indicates any permanent or transient handicapped conditions.
+			</documentation>
+
+			<example sourceCodeSet="AmbulatoryStatusCodes" sourceCode="A5">Vision Impaired</example>
+		</element>
+
+		<element name="OrganDonor" type="SourceCode" codeSource="OMNI" codeSet="0316">
+			<documentation>
+			This element specifies whether the patient wants to donate his/her organs and
+			whether an organ donor card or similar documentation is on file with the
+			healthcare organization.
+			</documentation>
+
+			<example sourceName="OMNI" sourceCodeSet="0316" sourceCode="Y"/>
+		</element>
+
+		<element name="LivingWill" type="SourceCode" codeSource="OMNI" codeSet="0315" HL7="PD1-7,PV2-43 Living Will Code">
+			<documentation>
+			This element indicates the status of whether or not the patient has a living will and, if so, whether
+			a copy of the living will is on file at the healthcare facility. If the patient does
+			not have a living will, the value of this field indicates whether the patient
+			was provided information on a living will.
+			</documentation>
+
+			<example sourceCodeSet="LivingWill" sourceCode="I">No, Patient does not have a living will but information was provided.</example>
+		</element>
+
+		<element name="LivingWillDate" type="OmniDate">
+			<documentation>
+			This element is used to specify the date the patient supplied a living will.
+			</documentation>
+
+			<example format="yyyy-MM-dd">2000-01-01</example>
+		</element>
+
+		<element name="AdvanceDirectiveCode" type="SourceCode" codeSource="OMNI" codeSet="0435">
+			<documentation>
+			Indicates the patient's instructions to the healthcare facility.
+			</documentation>
+
+			<example sourceName="OMNI" sourceCodeSet="0435" sourceCode="DNR"/>
+		</element>
+
+		<element name="AdvanceDirectiveLastVerifiedDateTime" type="OmniDate">
+			<documentation>
+			Indicates the date and time that the advance directive specified was last verified.
+			</documentation>
+
+			<example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+		</element>
+	</group>
+	<list name="Allergies">
+		<documentation>
+		Allergies is a collection of Allergy records.  Contains the patient's allergies documented at the time of the encounter.
+		</documentation>
+
+		<idsSpecification name="Allergy" udlName="Allergy" type="instance_child"
+						  elementOrder="AllergenCode, ICD9DecimalAllergenCode, ICD9NonDecimalAllergenCode,
+			 		 		ICD10AllergenCode, SNOMEDCTAllergenCode, OtherAllergenCodes,
+			 		 		AllergenTypeCode, SeverityCode, AllergyReaction, AllergyNote"
+						  implementationClass="com.ibi.omni.patient.model.clinical.Allergy">
+
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+			<documentation>
+			Record of a specific patient allergy documented at the time of the encounter, including characteristics of the Allergen and the Patient's reaction to the Allergen.
+			</documentation>
+
+			<element name="AllergenCode" type="SourceCode">
+				<documentation>
+				Identifies the allergen that the patient is allergic to.
+				</documentation>
+
+				<example sourceCodeSet="AllergenCodes" sourceCode="treeNuts">Tree Nuts</example>
+			</element>
+
+			<element name="ICD9DecimalAllergenCode" type="SourceCode" codeSource="ICD9" codeSet="2.16.840.1.113883.6.103-ALT">
+				<documentation>
+					Allergen code expressed as an ICD-9 code with decimal point..
+				</documentation>
+
+				<example sourceName="ICD9" sourceCodeSet="2.16.840.1.113883.6.103-ALT" sourceCode="052.8"/>
+			</element>
+
+			<element name="ICD9NonDecimalAllergenCode" type="SourceCode" codeSource="ICD9" codeSet="2.16.840.1.113883.6.103" dbColumn="icd9_no_dec_diagnosis_code">
+				<documentation>
+					Allergen code expressed as an ICD-9 code without a decimal point.
+				</documentation>
+
+				<example sourceName="ICD9" sourceCodeSet="2.16.840.1.113883.6.103" sourceCode="0528"/>
+			</element>
+
+			<element name="ICD10AllergenCode" type="SourceCode" codeSource="ICD10" codeSet="2.16.840.1.113883.6.90">
+				<documentation>
+					Allergen code expressed as an ICD-10 code.
+				</documentation>
+
+				<example sourceName="ICD10" sourceCodeSet="2.16.840.1.113883.6.90" sourceCode="052.8"/>
+			</element>
+
+			<element name="SNOMEDCTAllergenCode" type="SourceCode" codeSource="SNOMEDCT" codeSet="2.16.840.1.113883.6.96">
+				<documentation>
+					Allergen code expressed as a SNOMED CT code.
+				</documentation>
+
+				<example sourceName="SNOMEDCT" sourceCodeSet="2.16.840.1.113883.6.96" sourceCode="052.8"/>
+			</element>
+
+			<element name="OtherAllergenCodes" type="SourceCodeList" contains="OtherAllergenCode">
+				<documentation>
+					Allergen code(s) expressed in a coding system that is proprietary to the implementation environment.
+				</documentation>
+
+				<![CDATA[
+					<OtherProcedureCode sourceName="ICD9" sourceCodeSet="2.16.840.1.113883.6.103-AL" sourceCode="NONE" />
+					<OtherProcedureCode sourceName="ICD9" sourceCodeSet="2.16.840.1.113883.6.103-AL" sourceCode="ONE" />
+				]]>
+			</element>
+
+			<element name="AllergenTypeCode" type="SourceCode" codeSource="OMNI" codeSet="0127">
+				<documentation>
+				Specifies the general allergy category.
+				</documentation>
+
+				<example sourceName="OMNI" sourceCodeSet="0127" sourceCode="FA"/>
+			</element>
+
+			<element name="SeverityCode" type="SourceCode" codeSource="OMNI" codeSet="0128">
+				<documentation>
+				Indicates the general severity of the allergy.
+				</documentation>
+
+				<example sourceName="OMNI" sourceCodeSet="0128" sourceCode="SV"/>
+			</element>
+
+			<element name="AllergyReaction" type="string" maxLength="1000">
+				<documentation>
+				Identifies the specific allergic reaction that was documented (e.g.  Convulsions, Rash, Sneeze, etc.).
+				</documentation>
+
+				<example>AllergyReaction</example>
+			</element>
+
+			<element name="AllergyNote" type="string" maxLength="1000">
+				<documentation>
+				Contains any additional pertinent information about the allergy.
+				</documentation>
+
+				<example>AllergyNote</example>
+			</element>
+
+		</idsSpecification>
+	</list>
+	<list name="Medications">
+		<documentation>
+		Medications is a collection of MedicationDosage records.  Contains the patient's medications documented at the time of the encounter.
+		</documentation>
+
+		<idsSpecification name="MedicationDosage" udlName="MedicationDosage" type="instance_child"
+						  elementOrder="MedicationCode, RxNormMedicationCode, SNOMEDCTMedicationCode, OtherSubstanceCodes,
+			 		 		MedicationText, MedicationFormCode, Quantity, UnitOfMeasureCode, Frequency, UnitOfTimeCode,  MedicationDosageNote"
+						  implementationClass="com.ibi.omni.patient.model.clinical.MedicationDosage">
+
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+			<documentation>
+			For each medication, it includes the form it comes in (tablet, liquid), the dosage to take (2 tablet, 1 injection), dosage UOM (mg, tablespoon) and frequency (day, week) in which to consume the dosage.
+			</documentation>
+
+			<element name="MedicationCode" type="SourceCode">
+				<documentation>
+				Identifies the medication that is being consumed by the patient.
+				</documentation>
+
+				<example sourceCodeSet="MedicationCodes" sourceCode="oxycodone">Oxycodone</example>
+			</element>
+
+			<element name="RxNormMedicationCode" type="SourceCode" codeSource="RXNORM" codeSet="2.16.840.1.113883.6.88">
+				<documentation>
+					Drug substance expressed as an RxNorm code.
+				</documentation>
+
+				<example sourceName="RXNORM" sourceCodeSet="2.16.840.1.113883.6.88" sourceCode="052.8"/>
+			</element>
+
+			<element name="SNOMEDCTMedicationCode" type="SourceCode" codeSource="SNOMEDCT" codeSet="2.16.840.1.113883.6.96">
+				<documentation>
+					Drug substance expressed as a SNOMED code.
+				</documentation>
+
+				<example sourceName="SNOMEDCT" sourceCodeSet="2.16.840.1.113883.6.96" sourceCode="052.8"/>
+			</element>
+
+			<element name="OtherSubstanceCodes" type="SourceCodeList" contains="OtherSubstanceCode">
+				<documentation>
+					Drug substance expressed in a custom or proprietary code set.
+				</documentation>
+
+				<![CDATA[
+					<OtherSubstanceCode sourceName="RXNORM" sourceCodeSet="2.16.840.1.113883.6.88" sourceCode="NONE" />
+					<OtherSubstanceCode sourceName="RXNORM" sourceCodeSet="2.16.840.1.113883.6.88" sourceCode="ONE" />
+				]]>
+			</element>
+
+			<element name="MedicationText" type="string">
+				<documentation>
+				Textual information about the medication dosage.
+				</documentation>
+
+				<example>.05ML</example>
+			</element>
+
+			<element name="MedicationFormCode" type="SourceCode">
+				<documentation>
+				The physical form a medication comes in. Medication form would be "tablet" in "Take 1 tablet 2 times a day".
+				</documentation>
+
+				<example sourceCodeSet="MedicationFormCode" sourceCode="capsule">Capsule</example>
+			</element>
+
+			<element name="Quantity" type="double">
+				<documentation>
+				Quantity indicates how many are in the dosage to be consumed.
+				</documentation>
+
+				<example>2.5</example>
+			</element>
+
+			<element name="UnitOfMeasureCode" type="SourceCode" codeSource="OMNI" codeSet="6020">
+				<documentation>
+				Represents the unit of measure to be used with the dosage.
+				</documentation>
+
+				<example sourceName="OMNI" sourceCodeSet="6020" sourceCode="Tbs"/>
+			</element>
+
+			<element name="Frequency" type="double">
+				<documentation>
+				Frequency indicates how often the medication dosage should be consumed.
+				</documentation>
+
+				<example>2.5</example>
+			</element>
+
+			<element name="UnitOfTimeCode" type="SourceCode" codeSource="OMNI" codeSet="6025">
+				<documentation>
+					A unit of time (UOT) for the frequency.  UOT would represent "day" in "Take 1 tablet 2 times a day"
+				</documentation>
+
+				<example sourceName="OMNI" sourceCodeSet="6025" sourceCode="d"/>
+			</element>
+
+			<element name="MedicationDosageNote" type="string" maxLength="1000">
+				<documentation>
+					Contains any additional pertinent information about the allergy.
+				</documentation>
+
+				<example>MedicationDosageNote</example>
+			</element>
+		</idsSpecification>
+	</list>
+
+	<list name="ChronicConditions">
+		<documentation>
+			ChronicConditions is a collection of ChronicCondition records.  Contains the patient's chronic conditions documented at the time of the encounter.
+		</documentation>
+
+		<idsSpecification name="ChronicCondition" udlName="ChronicCondition" type="instance_child"
+						  elementOrder="DiagnosisCode, ICD9DecimalDiagnosisCode, ICD9NonDecimalDiagnosisCode, ICD10DiagnosisCode,
+						  SNOMEDCTDiagnosisCode, OtherChronicDiagnosisCodes,
+			 		 		AssertionDate, ChronicConditionNote"
+						  implementationClass="com.ibi.omni.patient.model.clinical.ChronicCondition">
+
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+			<documentation>
+				A chronic condition is a human health condition or disease that is persistent or otherwise long-lasting in its effects.
+			</documentation>
+
+			<element name="DiagnosisCode" type="SourceCode" codeSource="OMNI" codeSet="ICD9">
+				<documentation>
+					Depicts the diagnosed condition based on the standardized diagnosis code value set used in the health system (ICD-9, ICD-10).
+				</documentation>
+
+				<example sourceName="OMNI" sourceCodeSet="ICD9" sourceCode="052.8"/>
+			</element>
+
+			<element name="ICD9DecimalDiagnosisCode" type="SourceCode" codeSource="ICD9" codeSet="2.16.840.1.113883.6.103-ALT">
+				<documentation>
+					Allergen code expressed as an ICD-9 code with decimal point..
+				</documentation>
+
+				<example sourceName="ICD-9-CM" sourceCodeSet="2.16.840.1.113883.6.103-ALT" sourceCode="052.8"/>
+			</element>
+
+			<element name="ICD9NonDecimalDiagnosisCode" type="SourceCode" codeSource="ICD9" codeSet="2.16.840.1.113883.6.103" dbColumn="icd9_no_dec_diagnosis_code">
+				<documentation>
+					Allergen code expressed as an ICD-9 code without a decimal point.
+				</documentation>
+
+				<example sourceName="ICD-9-CM" sourceCodeSet="2.16.840.1.113883.6.103" sourceCode="0528"/>
+			</element>
+
+			<element name="ICD10DiagnosisCode" type="SourceCode" codeSource="ICD10" codeSet="2.16.840.1.113883.6.90">
+				<documentation>
+					Allergen code expressed as an ICD-10 code.
+				</documentation>
+
+				<example sourceName="ICD-10-CM" sourceCodeSet="2.16.840.1.113883.6.90" sourceCode="052.8"/>
+			</element>
+
+			<element name="SNOMEDCTDiagnosisCode" type="SourceCode" codeSource="SNOMEDCT" codeSet="2.16.840.1.113883.6.96">
+				<documentation>
+					Allergen code expressed as a SNOMED CT code.
+				</documentation>
+
+				<example sourceName="SNOMED-CT" sourceCodeSet="2.16.840.1.113883.6.96" sourceCode="052.8"/>
+			</element>
+
+			<element name="OtherChronicDiagnosisCodes" type="SourceCodeList" contains="OtherChronicDiagnosisCode">
+				<documentation>
+					Drug substance expressed in a custom or proprietary code set.
+				</documentation>
+
+				<![CDATA[
+					<OtherChronicDiagnosisCode sourceName="ICD-9" sourceCodeSet="2.16.840.1.113883.6.88" sourceCode="NONE" />
+					<OtherChronicDiagnosisCode sourceName="ICD-9" sourceCodeSet="2.16.840.1.113883.6.88" sourceCode="ONE" />
+				]]>
+			</element>
+
+			<element name="AssertionDate" type="OmniDate">
+				<documentation>
+					Estimated or actual date the chronic condition was first detected for the patient.
+				</documentation>
+
+				<example format="yyyy-MM-dd">2013-01-01</example>
+			</element>
+
+			<element name="ChronicConditionNote" type="string" maxLength="1000">
+				<documentation>
+					Contains notes about the chronic condition.
+				</documentation>
+
+				<example>ChronicConditionNote</example>
+			</element>
+
+		</idsSpecification>
+	</list>
+	<list name="Symptoms">
+		<documentation>
+			Symptoms is a collection of Symptom records.  Contains details on symptoms reported by the patient during the encounter.  Sequence can be utilized to list more severe symptoms first.
+		</documentation>
+
+		<idsSpecification name="Symptom" udlName="Symptom" type="instance_child"
+						  elementOrder="Sequence, SymptomCode, ICD9DecimalSymptomCode, ICD9NonDecimalSymptomCode, ICD10SymptomCode, SNOMEDCTSymptomCode, OtherSymptomCodes,
+			 		 		ChiefComplaintIndicator, AssertionDateTime, SymptomNote"
+						  implementationClass="com.ibi.omni.patient.model.clinical.Symptom">
+
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+			<documentation>
+				A symptom is a change in the body or mind which indicates that a disease is present.
+			</documentation>
+
+			<element name="Sequence" type="double">
+				<documentation>
+					Tracks the sequence of symptoms for the encounter as described by patient in order of importance.
+				</documentation>
+
+				<example>1.0</example>
+			</element>
+
+			<element name="SymptomCode" type="SourceCode">
+				<documentation>
+					Describes the symptoms as defined by the patient during the encounter.
+				</documentation>
+
+				<example sourceCodeSet="SymptomCodes" sourceCode="fever">Fever</example>
+			</element>
+
+			<element name="ICD9DecimalSymptomCode" type="SourceCode" codeSource="ICD9" codeSet="2.16.840.1.113883.6.103-ALT">
+				<documentation>
+					Allergen code expressed as an ICD-9 code with decimal point..
+				</documentation>
+
+				<example sourceName="ICD-9-CM" sourceCodeSet="2.16.840.1.113883.6.103-ALT" sourceCode="052.8"/>
+			</element>
+
+			<element name="ICD9NonDecimalSymptomCode" type="SourceCode" codeSource="ICD9" codeSet="2.16.840.1.113883.6.103" dbColumn="icd9_no_dec_diagnosis_code">
+				<documentation>
+					Allergen code expressed as an ICD-9 code without a decimal point.
+				</documentation>
+
+				<example sourceName="ICD-9-CM" sourceCodeSet="2.16.840.1.113883.6.103" sourceCode="0528"/>
+			</element>
+
+			<element name="ICD10SymptomCode" type="SourceCode" codeSource="ICD10" codeSet="2.16.840.1.113883.6.90">
+				<documentation>
+					Allergen code expressed as an ICD-10 code.
+				</documentation>
+
+				<example sourceName="ICD-10-CM" sourceCodeSet="2.16.840.1.113883.6.90" sourceCode="052.8"/>
+			</element>
+
+			<element name="SNOMEDCTSymptomCode" type="SourceCode" codeSource="SNOMEDCT" codeSet="2.16.840.1.113883.6.96">
+				<documentation>
+					Allergen code expressed as a SNOMED CT code.
+				</documentation>
+
+				<example sourceName="SNOMED-CT" sourceCodeSet="2.16.840.1.113883.6.96" sourceCode="052.8"/>
+			</element>
+
+			<element name="OtherSymptomCodes" type="SourceCodeList" contains="OtherSymptomCode">
+				<documentation>
+					Drug substance expressed in a custom or proprietary code set.
+				</documentation>
+
+				<![CDATA[
+					<OtherProcedureCode sourceName="ICD-9" sourceCodeSet="2.16.840.1.113883.6.88" sourceCode="NONE" />
+					<OtherProcedureCode sourceName="ICD-9" sourceCodeSet="2.16.840.1.113883.6.88" sourceCode="ONE" />
+				]]>
+			</element>
+
+			<element name="ChiefComplaintIndicator" type="SourceCode" codeSource="OMNI" codeSet="0136">
+				<documentation>
+					Specifies which symptom(s) represent the chief complaint to the patient.  If "Yes", symptom is a chief complaint.  If "No", symptom is not a chief complaint.
+				</documentation>
+
+				<example sourceName="OMNI" sourceCodeSet="0136" sourceCode="Y"/>
+			</element>
+
+			<element name="AssertionDateTime" type="OmniDate">
+				<documentation>
+					Estimated or actual date and time (if applicable) the symptom was first detected by the patient.
+				</documentation>
+
+				<example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+			</element>
+
+			<element name="SymptomNote" type="string" maxLength="1000">
+				<documentation>
+					Contains any additional pertinent information about the symptom
+				</documentation>
+
+				<example>SymptomNote</example>
+			</element>
+		</idsSpecification>
+	</list>
+	<list name="Complications">
+		<documentation>
+			Complications is a collection of Complication records.  Contains details on complications that occurred during the encounter that are not the direct result of a specific procedure.  Each encounter can have a sequential set of complications tracked in the order they occur (e.g. Patient developed fever).
+		</documentation>
+
+		<idsSpecification name="Complication" udlName="Complication" type="instance_child"
+						  elementOrder="Sequence, ComplicationCode, ComplicationNote"
+						  implementationClass="com.ibi.omni.patient.model.clinical.Complication">
+
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+			<documentation>
+				Contains details on each complication that occurred during the encounter that are not the direct result of a specific procedure.  Each encounter can have a sequential set of complications tracked in the order they occur (e.g. Patient developed fever).
+			</documentation>
+
+			<element name="Sequence" type="double">
+				<documentation>
+					Tracks the sequence of Complications for the encounter as described by patient in order of importance.
+				</documentation>
+
+				<example>1.0</example>
+			</element>
+
+			<element name="ComplicationCode" type="SourceCode" codeSource="OMNI" codeSet="ICD9">
+				<documentation>
+					Describes the Complication that occurred during the encounter that was not the direct result of a specific procedure.  Complication codes can be a custom set of values defined by the customer or an industry standard such as diagnosis codes (e.g. ICD-9, ICD-10).
+				</documentation>
+
+				<example sourceName="OMNI" sourceCodeSet="ICD9" sourceCode="0528"/>
+			</element>
+
+			<element name="ComplicationNote" type="string" maxLength="1000">
+				<documentation>
+					Contains any additional pertinent information about the Complication
+				</documentation>
+
+				<example>ComplicationNote</example>
+			</element>
+		</idsSpecification>
+	</list>
+	<list name="SubstancesUsed">
+		<documentation>
+			SubstancesUsed is a collection of SubstanceUsage records.  Contains the patient's substance use documented at the time of the encounter.
+		</documentation>
+
+		<idsSpecification name="SubstanceUsage" udlName="SubstanceUsage" type="instance_child"
+						  elementOrder="SubstanceCode, SubstanceTypeCode, SubstanceUsageCode,  SubstanceFormCode, Quantity, UnitOfMeasureCode, Frequency, UnitOfTimeCode,
+												SubstanceStartDate, SubstanceEndDate, TreatmentProgramStartDate, TreatmentProgramEndDate, TreatmentProgramStatusCode, 
+												FirstUseAge, FirstUseAgeUnitsCode, LastUseAge, LastUseAgeUnitsCode, SubstanceUsageNote"
+						  implementationClass="com.ibi.omni.patient.model.clinical.SubstanceUsage">
+
+
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+			<documentation>
+				Each SustanceUsage record includes the substance (Cocaine, Oxycodone, Cigarette Smoke, Beer), type of substance (Drugs, Alcohol, Tobacco), usage level (Light, Moderate, Heavy), details on dosage consumption, substance use time period, information on treatment program participation, and age when first and last used substance.
+			</documentation>
+
+			<element name="SubstanceCode" type="SourceCode" codeSource="OMNI" codeSet="0431">
+				<documentation>
+					Defines the substance consumed by the patient.
+				</documentation>
+
+				<example sourceName="OMNI" sourceCodeSet="0431" sourceCode="C" />
+			</element>
+
+			<element name="SubstanceTypeCode" type="SourceCode" codeSource="OMNI" codeSet="6080">
+				<documentation>
+					Categorizes the type of substance being consumed by the patient.
+				</documentation>
+
+				<example sourceName="OMNI" sourceCodeSet="6080" sourceCode="tobacco" />
+			</element>
+
+			<element name="SubstanceUsageCode" type="SourceCode" codeSource="OMNI" codeSet="6085">
+				<documentation>
+					Identifies the patient's current usage level of the substance.
+				</documentation>
+
+				<example sourceName="OMNI" sourceCodeSet="6085" sourceCode="heavy" />
+			</element>
+
+			<element name="SubstanceFormCode" type="SourceCode" codeSource="OMNI" codeSet="6075">
+				<documentation>
+					The physical form a Substance comes in. Substance form would be "cigarette" in "1 cigarette 5 times a day".
+				</documentation>
+
+				<example sourceName="OMNI" sourceCodeSet="6075" sourceCode="600" />
+			</element>
+
+			<element name="Quantity" type="double">
+				<documentation>
+					Quantity indicates how many are in the dosage to be consumed. Quantity would be "1" in "Take 1 tablet 2 times a day".
+				</documentation>
+
+				<example>1.0</example>
+			</element>
+
+			<element name="UnitOfMeasureCode" type="SourceCode" codeSource="OMNI" codeSet="6020">
+				<documentation>
+					Represents the unit of measure to be used with the dosage. UOM would be "tablespoon" in "Take 2 tablespoons 4 times a day".
+				</documentation>
+
+				<example sourceName="OMNI" sourceCodeSet="6020" sourceCode="Tbs"/>
+			</element>
+
+			<element name="Frequency" type="double">
+				<documentation>
+					Frequency indicates how often the Substance dosage should be consumed.
+				</documentation>
+
+				<example>5.0</example>
+			</element>
+
+			<element name="UnitOfTimeCode" type="SourceCode" codeSource="OMNI" codeSet="6025">
+				<documentation>
+					A unit of time (UOT) for the frequency.  UOT would represent "day" in "Take 1 tablet 2 times a day"
+				</documentation>
+
+				<example sourceName="OMNI" sourceCodeSet="6025" sourceCode="d"/>
+			</element>
+
+			<element name="SubstanceStartDate" type="OmniDate">
+				<documentation>
+					Identifies the date the patient first used the substance.
+				</documentation>
+
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+
+			<element name="SubstanceEndDate" type="OmniDate">
+				<documentation>
+					Identifies the date the patient last used the substance.
+				</documentation>
+
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+
+			<element name="TreatmentProgramStartDate" type="OmniDate">
+				<documentation>
+					Identifies the date the patient last started a treatment program.
+				</documentation>
+
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+
+			<element name="TreatmentProgramEndDate" type="OmniDate">
+				<documentation>
+					Identifies the date the patient last ended a treatment program.
+				</documentation>
+
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+
+			<element name="TreatmentProgramStatusCode" type="SourceCode">
+				<documentation>
+					Identifies the patient's status of the treatment program participation.
+				</documentation>
+
+				<example sourceCodeSet="TreatmentProgramStatusCode" sourceCode="dropout">Dropped Out</example>
+			</element>
+
+			<element name="FirstUseAge" type="double">
+				<documentation>
+					Identifies the patient's age when first used the substance.
+				</documentation>
+
+				<example>16.0</example>
+			</element>
+
+			<element name="FirstUseAgeUnitsCode" type="SourceCode" codeSource="OMNI" codeSet="0560">
+				<documentation>
+					Contains the units in which the patient's first use age was documented at the time of the encounter.
+				</documentation>
+
+				<example sourceName="OMNI" sourceCodeSet="0560" sourceCode="YY"/>
+			</element>
+
+			<element name="LastUseAge" type="double">
+				<documentation>
+					Identifies the patient's age when last used the substance.
+				</documentation>
+
+				<example>16.0</example>
+			</element>
+
+			<element name="LastUseAgeUnitsCode" type="SourceCode" codeSource="OMNI" codeSet="0560">
+				<documentation>
+					Contains the units in which the patient's last use age was documented at the time of the encounter.
+				</documentation>
+
+				<example sourceName="OMNI" sourceCodeSet="0560" sourceCode="YY"/>
+			</element>
+
+			<element name="SubstanceUsageNote" type="string" maxLength="1000">
+				<documentation>
+					Contains any additional pertinent information about the substance use.
+				</documentation>
+
+				<example>SubstanceUsageNote</example>
+			</element>
+		</idsSpecification>
+	</list>
+	<list name="HealthPlanCoverages">
+		<documentation>
+			HealthPlanCoverages is a collection of EncounterHealthPlanCoverage records.  Each encounter can have multiple health plan coverages.  Claims will be submitted to health plan coverages for payment based on the sequence defined for each.  Each health plan coverage can also capture whether it represents the primary or secondary insurance.
+		</documentation>
+
+		<idsSpecification name="EncounterHealthPlanCoverage" udlName="EncounterHealthPlanCoverage" type="instance_child"
+						  elementOrder="InsuranceCoverageTypeCode, Sequence, HealthPlanCoverageId, PatientHealthPlan"
+						  implementationClass="com.ibi.omni.patient.model.clinical.EncounterHealthPlanCoverage">
+
+
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+			<documentation>
+				Encounter Health Plan Coverage lists the HealthPlanCoverage records, as well as the order in which they are applied, for the Encounter.
+			</documentation>
+
+			<element name="InsuranceCoverageTypeCode" type="SourceCode">
+				<documentation>
+					Indicates whether the health plan coverage is considered the primary or secondary insurance on this encounter.
+				</documentation>
+
+				<example sourceCodeSet="InsuranceCoverageTypeCodes" sourceCode="primary">Primary Insurance</example>
+			</element>
+
+			<element name="Sequence" type="double">
+				<documentation>
+					Specifies the order in which charges are applied to health care plans.
+				</documentation>
+
+				<example>1.0</example>
+			</element>
+
+			<element name="HealthPlanCoverageId" type="string">
+				<documentation>
+					deprecated: UNDER CONSTRUCTION: HealthPlanCoverage has not been completed. Add unique HealthPlanCoverageId until this element is changed to a link.
+
+					Use this element to specify the HealthPlanCoverage.
+				</documentation>
+			</element>
+
+			<element name="PatientHealthPlan" type="OmniLink" contains="PatientHealthPlan" keys="SourceName, SourceInstanceId" allowCreate="true">
+				<documentation>
+					Patient Health Plan record associated with the encounter.  This is maintained in the Payer domain.
+
+					Use this element to specify a PatientHealthPlan in the system using the PatientHealthPlan's SourceName and SourceInstanceId. You cannot load PatientHealthPlan
+					information using this element, however if the PatientHealthPlan is not found then a "placeholder" will be created that will contain the PatientHealthPlan
+					when loaded.
+				</documentation>
+
+				<example>
+					<![CDATA[
+					<PatientHealthPlan>
+						<SourceName>TestSystem</SourceName>
+						<SourceInstanceId>PatientHealthPlanId</SourceInstanceId>
+					</PatientHealthPlan>
+					]]>
+				</example>
+			</element>
+
+		</idsSpecification>
+	</list>
+	<list name="RelatedEncounters">
+		<documentation>
+			RelatedEncounters is a collection of RelatedEncounters records containing encounters of the same recurring condition or encounters that are related in some way. This may be a required field for billing certain illnesses (e.g., accident related) to a third party.
+		</documentation>
+
+		<idsSpecification name="RelatedEncounter" udlName="RelatedEncounter" type="instance_child"
+						  elementOrder="TypeCode, OtherEncounter"
+						  implementationClass="com.ibi.omni.patient.model.clinical.RelatedEncounter">
+
+
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+			<documentation>
+				This object is used to depict the type of relationship that exists between the Encounter and another Encounter.
+			</documentation>
+
+			<element name="TypeCode" type="SourceCode">
+				<documentation>
+					Specifies how an encounter is related to this encounter.  Example:  Initial encounter was an automobile accident resulting in a broken leg.  That encounter would be related to an encounter where the cast was removed or any encounter involving physical therapy for leg rehabilitation.
+				</documentation>
+
+				<example sourceCodeSet="TypeCodes" sourceCode="RelatedReason">Related Reason</example>
+			</element>
+
+			<element name="OtherEncounter" type="OmniLink" contains="Encounter" keys="SourceName, SourceInstanceId" allowCreate="true">
+				<documentation>
+					Encounter represents data about the individual who received health care services during the encounter.
+
+					Use this element to specify a Encounter in the system using the Encounter's SourceName and SourceInstanceId. You cannot load Encounter
+					information using this element, however if the Encounter is not found then a "placeholder" will be created that will contain the Encounter
+					when loaded.
+				</documentation>
+
+				<example>
+					<![CDATA[
+					<Encounter>
+						<SourceName>TestSystem</SourceName>
+						<SourceInstanceId>EncounterId</SourceInstanceId>
+					</Encounter>
+					]]>
+				</example>
+			</element>
+
+		</idsSpecification>
+	</list>
+	<list name="Consents">
+		<documentation>
+			Consents is a collection of Consent records used to identify patient consent information and forms filled out during the encounter by the patient or designated contact of the patient.
+		</documentation>
+
+		<idsSpecification name="Consent" udlName="Consent" type="instance_child"
+						  elementOrder="ConsentNumber, TypeCode, FormVersion, ConsentText, SubjectSpecificConsent, ConsentBackgroundInformation, SubjectSpecificBackground, ConsenterImposedLimitations,
+			 		 		ModeCode, StatusCode, DiscussionDateTime, DecisionDateTime, EffectiveDateTime, EndDateTime, CompetenceIndicator, ConsenterRelationshipCode, 
+			 		 		NonSubjectConsenterReasonCode, NonSubjectConsenter, TranslatorAssistIndicator, TranslatedToLanguageCode, InformationalMaterialSuppliedIndicator, ConsentBypassReasonCode, 
+			 		 		ConsentDisclosureCode, ConsentNonDisclosureCode"
+						  implementationClass="com.ibi.omni.patient.model.clinical.Consent">
+
+
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+			<documentation>
+				Contains information about the type of consent and the person that provided the consent on behalf of the patient.
+			</documentation>
+
+			<element name="ConsentNumber" type="string">
+				<documentation>
+					Uniquely identifies a specific recorded consent. This may be the number assigned to an electronic consent, or may be the number on a printed consent form.
+				</documentation>
+
+				<example>ConsentNumber</example>
+			</element>
+
+			<element name="TypeCode" type="SourceCode" codeSource="OMNI" codeSet="0496">
+				<documentation>
+					Identifies what the subject is consenting to such as type of service, surgical procedure, information access/release or other event.
+				</documentation>
+
+				<example sourceName="OMNI" sourceCodeSet="0496" sourceCode="2"/>
+			</element>
+
+			<element name="FormVersion" type="string">
+				<documentation>
+					Identifies a specific form and version used to record the consent.  A given version of a consent form implies a particular set of wording that appears on the form.
+				</documentation>
+
+				<example>FormVersion</example>
+			</element>
+
+			<element name="ConsentText" type="string">
+				<documentation>
+					Describes the specific procedures/information releases/events the subject is consenting to.
+				</documentation>
+
+				<example>ConsentText</example>
+			</element>
+
+			<element name="SubjectSpecificConsent" type="string" maxLength="1000">
+				<documentation>
+					Describes any additions or variations to the standard procedures/information releases/events from a standard consent that are applicable to the subject whose consent is sought.
+				</documentation>
+
+				<example>SubjectSpecificConsentText</example>
+			</element>
+
+			<element name="ConsentBackgroundInformation" type="string" maxLength="1000">
+				<documentation>
+					Describes any additional information relating to the procedure/information release/event that needs to be understood by the subject for informed consent. May include the reason for the service, the expected benefit, risks, etc.
+				</documentation>
+
+				<example>ConsentBackgroundInformationText</example>
+			</element>
+
+			<element name="SubjectSpecificBackground" type="string" maxLength="1000">
+				<documentation>
+					Describes any additions or variations to the standard additional information that needs to be understood by the patient for informed consent. May include a description of benefits and risks that are specific to the subject from whom consent is sought. May also include an indication that there are no subject-specific risks/benefits.
+				</documentation>
+
+				<example>SubjectSpecificBackgroundText</example>
+			</element>
+
+			<element name="ConsenterImposedLimitations" type="string" maxLength="1000">
+				<documentation>
+					Describes any restrictions or limitations placed on their consent by the subject.
+				</documentation>
+
+				<example>ConsenterImposedLimitationsText</example>
+			</element>
+
+			<element name="ModeCode" type="SourceCode" codeSource="OMNI" codeSet="0497">
+				<documentation>
+					Specifies the method in which a subject provides consent.
+				</documentation>
+
+				<example sourceName="OMNI" sourceCodeSet="0497" sourceCode="W"/>
+			</element>
+
+			<element name="StatusCode" type="SourceCode" codeSource="OMNI" codeSet="0498">
+				<documentation>
+					Indicates whether consent has been sought and granted.
+				</documentation>
+
+				<example sourceName="OMNI" sourceCodeSet="0498" sourceCode="A"/>
+			</element>
+
+			<element name="DiscussionDateTime" type="OmniDate">
+				<documentation>
+					Identifies the date and time when consent was discussed with the subject.
+				</documentation>
+
+				<example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+			</element>
+
+			<element name="DecisionDateTime" type="OmniDate">
+				<documentation>
+					Identifies the date and time when the decision to grant/refuse consent was made.
+				</documentation>
+
+				<example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+			</element>
+
+			<element name="EffectiveDateTime" type="OmniDate">
+				<documentation>
+					Identifies the date and time the consent became effective.
+				</documentation>
+
+				<example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+			</element>
+
+			<element name="EndDateTime" type="OmniDate">
+				<documentation>
+					Identifies the date and time the consent becomes ineffective.
+				</documentation>
+
+				<example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+			</element>
+
+			<element name="CompetenceIndicator" type="SourceCode" codeSource="OMNI" codeSet="0136">
+				<documentation>
+					Identifies whether the subject was deemed competent to provide consent.  If "Yes", subject was competent.  If "No", subject was not competent.
+				</documentation>
+
+				<example sourceName="OMNI" sourceCodeSet="0136" sourceCode="Y"/>
+			</element>
+
+			<element name="ConsenterRelationshipCode" type="SourceCode" codeSource="OMNI" codeSet="0548">
+				<documentation>
+					Identifies the relationship of the consenter to the patient/subject.
+				</documentation>
+
+				<example sourceName="OMNI" sourceCodeSet="0548" sourceCode="2"/>
+			</element>
+
+			<element name="NonSubjectConsenterReasonCode" type="SourceCode" codeSource="OMNI" codeSet="0502">
+				<documentation>
+					Identifies why consent was granted by a person other than the subject of the consent.
+				</documentation>
+
+				<example sourceName="OMNI" sourceCodeSet="0502" sourceCode="MIN"/>
+			</element>
+
+			<element name="NonSubjectConsenter" type="document" contains="Person" immediate="false" excludeInDoc="true">
+				<documentation>
+					The Patient is generally assumed to be the consenter in the Consent record.  However, there are situations where the Patient is not the MedicalConsenter for themselves.  This data element is used to communicate information about a non-subject consenter.
+				</documentation>
+			</element>
+
+
+			<element name="TranslatorAssistIndicator" type="SourceCode" codeSource="OMNI" codeSet="0136">
+				<documentation>
+					Identifies whether translation was required to obtain informed consent from the subject.  If "Yes", translation was required.  If "No", translation was not required.
+				</documentation>
+
+				<example sourceName="OMNI" sourceCodeSet="0136" sourceCode="Y"/>
+			</element>
+
+			<element name="TranslatedToLanguageCode" type="SourceCode" codeSource="OMNI" codeSet="0296">
+				<documentation>
+					Identifies the language the consent form is written in. HL7 recommends using the ISO table 639 for suggested values.
+				</documentation>
+
+				<example sourceName="OMNI" sourceCodeSet="0296" sourceCode="eng" />
+			</element>
+
+			<element name="InformationalMaterialSuppliedIndicator" type="SourceCode" codeSource="OMNI" codeSet="0136">
+				<documentation>
+					Identifies whether additional educational or reference material was provided to the subject as part of the consent process.  If "Yes", additional material was provided.  If "No", additional material was not provided.
+				</documentation>
+
+				<example sourceName="OMNI" sourceCodeSet="0136" sourceCode="Y"/>
+			</element>
+
+			<element name="ConsentBypassReasonCode" type="SourceCode" codeSource="OMNI" codeSet="0499">
+				<documentation>
+					Identifies why the subject's consent was not sought.
+				</documentation>
+
+				<example sourceName="OMNI" sourceCodeSet="0499" sourceCode="E" />
+			</element>
+
+			<element name="ConsentDisclosureCode" type="SourceCode" codeSource="OMNI" codeSet="0500">
+				<documentation>
+					Identifies how much information was disclosed to the subject as part of the informed consent process.
+				</documentation>
+
+				<example sourceName="OMNI" sourceCodeSet="0500" sourceCode="F" />
+			</element>
+
+			<element name="ConsentNonDisclosureCode" type="SourceCode" codeSource="OMNI" codeSet="0501">
+				<documentation>
+					Identifies why the subject did not receive full disclosure.
+				</documentation>
+
+				<example sourceName="OMNI" sourceCodeSet="0501" sourceCode="E" />
+			</element>
+		</idsSpecification>
+	</list>
+	<element name="RegistrationDateTime" type="OmniDate">
+		<documentation>
+			Tracks the date and time the patient registered at the facility.
+		</documentation>
+
+		<example format="yyyy-MM-dd hh:mm">2015-07-28 08:00</example>
+	</element>
+
+	<element name="DischargeDateTime" type="OmniDate">
+		<documentation>
+			Tracks the date and time the patient registered at the facility.
+		</documentation>
+
+		<example format="yyyy-MM-dd hh:mm">2015-07-28 08:00</example>
+	</element>
+
+	<element name="DispositionCode" type="SourceCode" codeSource="OMNI" codeSet="0112">
+		<documentation>
+			Identifies the reason the patient is discharged from the hospital.
+		</documentation>
+
+		<example sourceName="OMNI" sourceCodeSet="0112" sourceCode="01"/>
+	</element>
+
+	<element name="Facility" type="OmniLink" contains="Facility" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+			Facility is the primary facility where person received health care services during the
+			encounter.
+
+			Use this element to specify a Facility in the system using the Facility's SourceName and
+			SourceInstanceId. You cannot load Facility information using this element, however if the
+			Facility is not found then a "placeholder" will be created that will contain the Facility
+			when loaded.
+		</documentation>
+
+		<example>
+			<![CDATA[
+					<Facility>
+						<SourceName>TestSystem</SourceName>
+						<SourceInstanceId>HospitalA</SourceInstanceId>
+					</Facility>
+					]]>
+		</example>
+	</element>
+
+	<element name="Account" type="OmniLink" contains="Account" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+			This is a reference to an Omni-Patient Account which indicates which account in the billing system this
+			encounter is related to. In some cases, this will reference a record from a different source system than
+			the encounter, particularly when an HL7 registration message has been transmitted to the EMR system.
+		</documentation>
+
+		<example>
+			<![CDATA[
+			<Account>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>AccountId</SourceInstanceId>
+			</Account>
+			]]>
+		</example>
+	</element>
+
+	<element name="EDCheckinDateTime" type="OmniDate">
+		<documentation>
+			Tracks the date and time the patient was checked in to the Emergency Department.
+		</documentation>
+
+		<example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+	</element>
+
+	<element name="EDCheckoutDateTime" type="OmniDate">
+		<documentation>
+			Tracks the date and time the patient was checked out of the Emergency Department.
+		</documentation>
+
+		<example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+	</element>
+
+	<element name="PreadmissionDateTime" type="OmniDate">
+		<documentation>
+			Tracks the date and time, typically in the future, that the patient is expected to be admitted.
+		</documentation>
+
+		<example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+	</element>
+
+	<element name="EscortedByCode" type="SourceCode"  codeSource="OMNI" codeSet="0112">
+		<documentation>
+			Indicates the type of escort the patient had in arriving at the medical facility.
+			This could indicate a type of family member, police, EMS, etc.
+		</documentation>
+
+		<example sourceName="OMNI" sourceCodeSet="0112" sourceCode="01"/>
+	</element>
+
+	<element name="EMSAgency" type="OmniLink" contains="Organization">
+		<documentation>
+			This contains a reference to an Organization representing the EMS company or agency that transported the
+			patient to the facility. These are typically regulated entities who have local government issued ID's.
+		</documentation>
+	</element>
+
+</idsDocument>

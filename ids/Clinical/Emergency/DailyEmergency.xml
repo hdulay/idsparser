@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.0.0" changeVersion="0" domain="Clinical" type="instance"
+			 name="DailyEmergency"  
+	 		 elementOrder="MedicalFacility, MedicalFacilityLocation, Department, PlanningCategoryCode, PlanningSubCategoryCode, ReportingDate, EmergencyStats,
+					EDVisits"
+			 >
+	 		               	
+	<changeLog>
+		<change version="1.0.0">Initial</change>
+	</changeLog>
+	
+
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+	<notes> 
+
+	</notes>
+			
+	<documentation>
+	Daily Emergency enables the customer to populate the Actual, Projected, Budget or Benchmark totals by facility, 
+	location or department for a particular date.  It includes aggregated emergency department visit statistics tracking 
+	counts of visits, patients admitted, average minutes spent processing patients from arrival, triage, bed assignment 
+	and deciding whether to admit.  For individual visits, it allows capturing the time patient arrives, is triaged, 
+	assigned to a bed, if admitted and when, disposition assigned and time departs.
+	</documentation>
+
+	<element name="MedicalFacility" type="link" contains="Facility">
+		<documentation>
+		Specifies the physical medical facility where the patient received treatment.
+		</documentation>
+		
+		<example>
+			<Facility>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>Hospital</SourceInstanceId>
+			</Facility>
+		</example>
+	</element>
+
+	<element name="MedicalFacilityLocation" type="link" contains="FacilityLocation">
+		<documentation>
+		If data pertains to a particular location within the facility such as a specific building, nurse unit, 
+		floor or ward, it is defined here.
+		</documentation>
+
+		<example>
+			<FacilityLocation>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>Hospital floor 3</SourceInstanceId>
+			</FacilityLocation>
+		</example>			
+	</element>
+
+	<element name="Department" type="link" contains="OrganizationalUnit">
+		<documentation>
+		Specifies the department (Emergency Room, Neonatal Unit, ICU, Radiology, Oncology, etc.) within the organization.
+		</documentation>
+
+		<example>
+			<OrganizationalUnit>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>Emergency Room</SourceInstanceId>
+			</OrganizationalUnit>
+		</example>			
+	</element>
+
+	<element name="PlanningCategoryCode" type="code">
+		<documentation>
+		These IDS's can be used to capture Actuals, Budgeted, Projected or Benchmarks for any metric for the reporting date.  
+		A single IDS can be for only one Planning Category/Subcategory combination. If the customer reports this at the 
+		departmental level, then each IDS represents one Department/Category/Subcategory combination. The customer can 
+		generate these at multiple levels if they so choose. IDS's at the facility level, or IDS's down to the departmental 
+		level, or anything and everything in between. 
+
+		The distinction between Budgeted (near-term) and Projected (longer term) is generally accepted, but how the customer 
+		uses these categories is up to them; they just enable a means of making comparisons.  Actuals would capture the real 
+		statistics for the reporting date.
+		
+		If they are so inclined, they might generate "Benchmark" IDS's if say there is an industry formula for a hospital or 
+		department of their size. Multiple benchmark IDS's might be generated for different percentiles, if they exist or are 
+		calculable.
+		</documentation>
+		
+		<example sourceName="TestSystem" codeSet="PlanningCategoryCodes">
+		Projected
+		</example>
+	</element>
+
+	<element name="PlanningSubCategoryCode" type="code">
+		<documentation>
+		The Planning Subcategory provides a method to generate these Actuals, Budgeted, Projected or Benchmarks IDS's for different 
+		percentiles, if they exist or are calculable.
+		</documentation>
+		
+		<example sourceName="TestSystem" codeSet="PlanningSubCategoryCodes">
+		50th percentile
+		</example>
+	</element>
+
+	<element name="ReportingDate" type="datetime">
+		<documentation>
+		Represents the reporting period. This IDS tracks metrics for a single given date only.
+		</documentation>
+			
+		<example>
+			<ReportingDate format="yyyy-MM-dd">
+				2015-01-01
+			</ReportingDate>
+		</example>
+	</element>
+
+	<group name="EmergencyStats" elementOrder="TotalIEDVisits, EDPatientsAdmitted, AverageArrivalToDepartureTime, AverageDecisionToAdmitTime, 
+												AverageArrivalToTriageTime, AverageTriageToBedTime">
+		<documentation>
+		EmergencyStats is a group of aggregated emergency department visit metrics at the facility for the reporting date.
+		</documentation>
+
+		<element name="TotalIEDVisits" type="integer">
+			<documentation>
+			Total number of emergency department visits at the facility for the reporting date.
+			</documentation>
+		
+			<example>
+				<TotalIEDVisits>
+					12
+				</TotalIEDVisits>
+			</example>
+		</element>
+		
+		<element name="EDPatientsAdmitted" type="integer">
+			<documentation>
+			Total number of emergency department visits that resulted in patients being admitted at the facility for the reporting date.
+			</documentation>
+		
+			<example>
+				<EDPatientsAdmitted>
+					12
+				</EDPatientsAdmitted>
+			</example>
+		</element>
+		
+		<element name="AverageArrivalToDepartureTime" type="double">
+			<documentation>
+			The average time, in minutes, it takes for ED arrival time to ED departure times for ED admits at the facility for the reporting date.
+			</documentation>
+		
+			<example>
+				<AverageArrivalToDepartureTime>
+					15
+				</AverageArrivalToDepartureTime>
+			</example>
+		</element>
+		
+		<element name="AverageDecisionToAdmitTime" type="double">
+			<documentation>
+			</documentation>
+		
+			<example>
+				<AverageDecisionToAdmitTime>
+					15
+				</AverageDecisionToAdmitTime>
+			</example>
+		</element>
+		
+		<element name="AverageArrivalToTriageTime" type="double">
+			<documentation>
+			The average time, in minutes, it takes for ED arrival time to ED Triage times for ED admits at the facility for the reporting date.
+			</documentation>
+		
+			<example>
+				<AverageArrivalToTriageTime>
+					15
+				</AverageArrivalToTriageTime>
+			</example>
+		</element>
+		
+		<element name="AverageTriageToBedTime" type="double">
+			<documentation>
+			The average time, in minutes, it takes for ED Triage time to ED Room time for ED admits at the facility for the reporting date.
+			</documentation>
+		
+			<example>
+				<AverageTriageToBedTime>
+					15
+				</AverageTriageToBedTime>
+			</example>
+		</element>
+	</group>
+	
+	<list name="EDVisits">
+		<documentation>
+		EDVisits is a collection of EDVisit instances which track the various times of the emergency department visit such as when arrived, 
+		triaged, assigned to a bed, departed, etc., at the facility for the reporting date.
+		</documentation>
+		
+		<idsDocument version="1.0.0" changeVersion="0" domain="Clinical" type="instance_child"
+			 name="EDVisit"  
+	 		 elementOrder="ArrivalTime, TriageTime, EDBedTime, AdmitTime, AdmitDecisionTime, EDDepartTime,  EDDispositionCode, AdmittedIndicator"
+			 >
+		<include name="CommonElements"
+				 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+				 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/> 		               	
+		<changeLog>
+			<change version="1.0.0">Initial</change>
+		</changeLog>
+	
+		<notes> 
+		</notes>
+				
+		<documentation>
+		Tracks the various times of the emergency department visit such as when arrived, triaged, assigned to a bed, departed, etc., 
+		at the facility for the reporting date.
+		</documentation>
+		
+		<element name="ArrivalTime" type="time">
+			<documentation>
+			Tracks the time on the reporting date the patient arrived in the emergency department.
+			</documentation>
+			
+			<example>
+				<ArrivalTime format="hh:mm">
+					12:10
+				</ArrivalTime>
+			</example>
+		</element>
+		
+		<element name="TriageTime" type="time">
+			<documentation>
+			Tracks the time on the reporting date the triage process is started for a patient in the emergency department.
+			</documentation>
+			
+			<example>
+				<TriageTime format="hh:mm">
+					12:10
+				</TriageTime>
+			</example>
+		</element>
+		
+		<element name="EDBedTime" type="time">
+			<documentation>
+			Tracks the time on the reporting date the patient is assigned to a bed in the emergency department.
+			</documentation>
+			
+			<example>
+				<EDBedTime format="hh:mm">
+					12:10
+				</EDBedTime>
+			</example>
+		</element>
+		
+		<element name="AdmitTime" type="time">
+			<documentation>
+			For a patient in the emergency department, tracks the time on the reporting date when the patient was admitted.
+			</documentation>
+			
+			<example>
+				<AdmitTime format="hh:mm">
+					12:10
+				</AdmitTime>
+			</example>
+		</element>
+		
+		<element name="AdmitDecisionTime" type="time">
+			<documentation>
+			For a patient in the emergency department, tracks the time on the reporting date when it was decided to admit the patient.
+			</documentation>
+			
+			<example>
+				<AdmitDecisionTime format="hh:mm">
+					12:10
+				</AdmitDecisionTime>
+			</example>
+		</element>
+		
+		<element name="EDDepartTime" type="time">
+			<documentation>
+			Tracks the time on the reporting date when the patient left the emergency department.
+			</documentation>
+			
+			<example>
+				<EDDepartTime format="hh:mm">
+					12:10
+				</EDDepartTime>
+			</example>
+		</element>
+		
+		<element name="EDDispositionCode" type="code">
+			<documentation>
+			Identifies the reason the patient is discharged from the emergency department.
+			</documentation>
+			
+			<example sourceName="HL7 Value Set" codeSet="0112">
+			Routine Discharge
+			</example>
+		</element>
+		
+		<element name="AdmittedIndicator" type="code">
+			<documentation>
+			Indicates whether patient was admitted during this emergency department visit.
+			</documentation>
+			
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y = Yes
+			</example>
+		</element>	
+	</idsDocument>
+	</list>	
+</idsDocument>

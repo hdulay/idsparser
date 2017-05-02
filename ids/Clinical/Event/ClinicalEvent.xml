@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.0.0" changeVersion="0" domain="Clinical.Event" type="instance"
+			 name="ClinicalEvent"  
+	 		 elementOrder=""
+	 		 implementationClass="com.ibi.omni.patient.model.clinical.event.ClinicalEvent">
+	  	 					
+	<changeLog>
+		<change version="1.0.0_0">Initial Version</change>
+	</changeLog>
+	
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	
+	<include name="EventElements"
+			 prependToElementOrder="ParentEvent, Encounter, CarePlanId, CarePlan"
+			 appendToElementOrder="EventProviders, EventNotes"/>
+
+			 
+</idsDocument>

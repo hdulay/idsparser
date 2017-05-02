@@ -1,0 +1,944 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument
+	idsVersion="2.0" 
+	version="1.1.1" 
+	changeVersion="3"
+	type="instance"
+	domain="Member"
+	name="Member" 
+	elementOrder="MasterId, PreMasteredId, MemberNumber, MemberSuffixNumber, SubscriberPolicyNumber, SubscriberRelationshipCode, PlanId, PlanEffectiveDate, PlanExpirationDate,
+		  		  GroupName, GroupNumber, GroupEmployerName, GroupEmployerId, TaxIdTypeCode, TaxId, FullName, NamePrefix, FirstName, LastName, MiddleName,
+	 		 	  NameSuffix, PhoneNumber, EMail, MailingAddress, GenderCode, LanguageCode, WrittenLanguageCode, EthnicGroupCode, RaceCode, DateOfBirth, DateOfDeath, DeceasedFlagCode,
+	 		 	  Names, Addresses, Identifiers, Emails, PhoneNumbers"
+	implementationClass="com.ibi.omni.patient.model.member.Member">
+	
+	<include name="CommonElements"
+			 prependToElementOrder="SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="OmniStatus, OmniStatusReason, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+	<changeLog>
+		<change version="1.0.0">Initial Version</change>
+		<change version="1.1.0_1">
+			Changes to new Code format. Previous format will be accepted, however the new format will be required in
+			the near future.
+		</change>
+		<change version="1.1.1">
+			Added PhoneNumber and EMail
+		</change>
+		<change version="1.1.1_2">Added SourceStatusCode</change>
+		<change version="1.1.1_3">Added mastering meta-data elements.</change>
+	</changeLog>
+			
+	<documentation>
+	This IDS defines a Member.
+	</documentation>
+
+	<include name="MasteringElements" appendToElementOrder="MatchRole,MatchCandidateGroupId,MatchQualityScore,MatchRule"/>
+
+	<element name="SourceName" key="true" type="string" required="true">
+		<documentation>
+		Use this element to identify the source system that was responsible for generating this 
+	    data. This value is determined by the integration team and used in combination with 
+	    SourceInstanceId will allow this record to be traced back to its originating source.
+		</documentation>
+
+		<example>TestSystem</example>
+	</element>
+
+	<element name="SourceInstanceId" key="true" type="string" required="true" >
+		<documentation>
+		This element must contain an integration manufactured value that uniquely identifies this
+		element and can be used to map back to the source system. Whatever value is
+		manufactured must not change over time as it will be used to make updates when data
+		changes in the source system.
+		</documentation>
+		
+		<example>TestMember</example>
+	</element>
+
+	<element name="MasterId" type="string" maxLength="255" hidden="true">
+		<documentation>
+		Links this instance to the master. This value is created and updated by the Omni
+		matching service.
+		</documentation>
+		
+		<example>1</example>
+	</element>
+
+	<element name="PreMasteredId" type="string" maxLength="255">
+		<documentation>
+		If the Payer organization already masters its Members in another system, this data element 
+		is used to communicate the masterId of the external system.
+		</documentation>
+		
+		<example>12345678</example>
+	</element>
+
+	<element name="MemberNumber" type="string" maxLength="255">
+		<documentation>
+		Used to uniquely identify this member in the source system.  Member Number is often a combination of the SubscriberPolicyNumber and the MemberSuffixNumber.
+		</documentation>
+		
+		<example>12345678-2</example>
+	</element>
+
+	<element name="MemberSuffixNumber" type="string" maxLength="255">
+		<documentation>
+		The number used to distinguish one member from another within the Subscriber contract. 
+		</documentation>
+		
+		<example>2</example>
+	</element>
+
+	<element name="SubscriberPolicyNumber" type="string" maxLength="255">
+		<documentation>
+		The Subscriber's Policy Number for this Member from the source system.
+		</documentation>
+		
+		<example>12345678</example>
+	</element>
+
+	<element name="SubscriberRelationshipCode" type="code">
+		<documentation>
+		Specifies the relationship of the member of the health plan to the subscriber.
+		</documentation>
+		
+		<example sourceName="HL7" codeSet="0063">SPO</example>
+	</element>
+
+	<element name="PlanId" type="string" maxLength="255">
+		<documentation>
+		A value identifying the HealthPlan of the Group in which the Subscriber has been enrolled.
+		</documentation>
+		
+		<example>Plan 12345678</example>
+	</element>
+
+	<element name="PlanEffectiveDate" type="datetime">
+		<documentation>
+		Date the HealthPlan took effect for the Subscriber.
+		</documentation>
+		
+		<example format="yyyy-MM-dd">2013-01-01</example>
+	</element>
+
+	<element name="PlanExpirationDate" type="datetime">
+		<documentation>
+		Date the HealthPlan expired for the Subscriber.
+		</documentation>
+		
+		<example format="yyyy-MM-dd">2013-12-31</example>
+	</element>
+
+	<element name="GroupName" type="string" maxLength="255">
+		<documentation>
+		Identifies the name of the group assigned to this health plan.
+		</documentation>
+		
+		<example>GroupA</example>
+	</element>
+
+	<element name="GroupNumber" type="string" maxLength="255">
+		<documentation>
+		Identifies the number for the group name assigned to this health plan.
+		</documentation>
+		
+		<example>12345</example>
+	</element>
+
+	<element name="GroupEmployerName" type="string" maxLength="255">
+		<documentation>
+		Identifies the subscriber's employer name assigned to this health plan.
+		</documentation>
+		
+		<example>Group A Employer</example>
+	</element>
+
+	<element name="GroupEmployerId" type="string" maxLength="255">
+		<documentation>
+		Identifies the tax id for the GroupEmployerName designated above. 
+		</documentation>
+		
+		<example>GREI1234</example>
+	</element>
+
+	<element name="TaxIdTypeCode" type="code">
+			<documentation>
+			Use this element to specify the type of Tax identifier. For example
+			SS - Social Security Number, TAX - Tax ID, etc...
+			</documentation>
+
+ 		    <example sourceName="HL7" codeSet="0203">SS</example>
+	</element>
+
+	<element name="TaxId" type="string" maxLength="255">
+		<documentation>
+		Use this element to specify the Tax identifier value
+		</documentation>
+		
+		<example>123-12-1234</example>
+	</element>
+
+	<element name="FullName" type="string" maxLength="255">
+		<documentation>
+		Use this element to specify the full name of the Member if the source system does
+		not contain the individual component fields. If this field is being used please do
+		not use the component fields. 
+		</documentation>
+		
+		<example>Jane E. Smith</example>
+	</element>
+
+	<element name="NamePrefix" type="string" maxLength="255">
+		<documentation>
+		Use this element to specify the prefix for the Member's name. (e.g., Dr., Mr, Ms.)
+		</documentation>
+		
+		<example>Ms</example>
+	</element>
+
+	<element name="FirstName" type="string" maxLength="255">
+		<documentation>
+		Use this element to specify the first name of the Member.
+		</documentation>
+		
+		<example>Jane</example>
+	</element>
+
+	<element name="LastName" type="string" maxLength="255">
+		<documentation>
+		Use this element to specify the last name of the Member.
+		</documentation>
+		
+		<example>Smith</example>
+	</element>
+
+	<element name="MiddleName" type="string" maxLength="255">
+		<documentation>
+		Use this element to specify the middle name or middle initial of the Member.
+		</documentation>
+		
+		<example>E</example>
+	</element>
+	
+	<element name="NameSuffix" type="string" maxLength="255">
+		<documentation>
+		Use this element to specify the suffix for the Member's name. (e.g., Jr. or III)
+		</documentation>
+		
+		<example>III</example>
+	</element>
+
+	<element name="PhoneNumber" type="string" maxLength="255">
+		<documentation>
+		Use this element to specify the most appropriate phone number for this Member.
+		</documentation>
+		
+		<example>(585) 123-4567</example>
+	</element>
+
+	<element name="EMail" type="string" maxLength="255">
+		<documentation>
+		Use this element to specify the most appropriate email for this Member.
+		</documentation>
+		
+		<example>a.b@company.com</example>
+	</element>
+
+<!--
+ - Mailing Address Information 
+ -->	
+	
+	<group name="MailingAddress" 
+		   elementOrder="AddressLine1, AddressLine2, AddressLine3, AddressLine4, City, StateProvince, PostalCode, Country,   CountyRegion" udlName="addr">
+		
+		<documentation>
+		Element in this group may be used to specify primary Mailing Address information for the Member.
+		</documentation>
+
+		<element name="AddressLine1" type="string" maxLength="255">
+			<documentation>
+			This field specifies the street or mailing address of a person or institution. 
+			When referencing an institution, this first component is used to specify the institution 
+			name. When used in connection with a person, this component specifies the first line of the address.
+			</documentation>
+			
+			<example>4000 East Ave</example>
+		</element>
+		
+		<element name="AddressLine2" type="string" maxLength="255">
+			<documentation>
+			This field specifies the second line of address. In general, it qualifies address. 
+			Examples: Suite 555 or Fourth Floor. When referencing an institution, this component 
+			specifies the street address.
+			</documentation>
+			
+			<example>Suite 555</example>
+		</element>
+		
+		<element name="AddressLine3" type="string" maxLength="255">
+			<documentation>
+			This field specifies the name of the person or organization that should appear as part of the 
+			address. This is also known as the "Care of" or "C/O" line.
+			</documentation>
+			
+			<example>ATTN: Jane Smith</example>
+		</element>
+		
+		<element name="AddressLine4" type="string" maxLength="255">
+			<documentation>
+			This field specifies more address information.
+			</documentation>
+			
+			<example>Fragile</example>
+		</element>
+		
+		<element name="City" type="string" maxLength="255">
+			<documentation>
+			This field specifies the city, district or place where the addressee is located 
+			depending upon the national convention for formatting addresses for postal usage.
+			</documentation>
+			
+			<example>Livonia</example>
+		</element>
+		
+		<element name="StateProvince" type="string" maxLength="255">
+			<documentation>
+			This field specifies the state or province where the addressee is located. State or 
+			province should be represented by the official postal service codes for that country. 
+			</documentation>
+			
+			<example>NY</example>
+		</element>
+	
+		<element name="PostalCode" type="string" maxLength="255">
+			<documentation>
+			This component specifies the zip or postal code where the addressee is located.  Zip or 
+			postal codes should be represented by the official codes for that country. In the US, the zip 
+			code takes the form 99999[-9999], while the Canadian postal code takes the form A9A9A9 and the 
+			Australian Postcode takes the form 9999. 
+			</documentation>
+			
+			<example>14488</example>
+		</element>
+	
+		<element name="Country" type="string" maxLength="255">
+			<documentation>
+			This component specifies the country where the addressee is located.
+			</documentation>
+
+			<example>
+				<Country>USA</Country>
+			</example>
+		</element>
+	
+		<element name="CountyRegion" type="string" maxLength="255">
+			<documentation>
+			This component specifies the county where the addressee is located when applicable.
+			</documentation>
+			
+			<example>Livingston</example>
+		</element>
+	</group>
+
+	<element name="GenderCode" type="code">
+		<documentation>
+		This field contains the Member's sex. 
+		</documentation>
+		
+		<example sourceName="HL7" codeSet="0001">F</example>
+	</element>
+
+	<element name="LanguageCode" type="code">
+		<documentation>
+		Use this element to specify the Member's primary language. 
+		</documentation>
+		
+		<example sourceName="HL7" codeSet="0296">ENG</example>
+	</element>
+	
+	<element name="WrittenLanguageCode" type="code">
+		<documentation>
+		This field determine the preferred written language of the Member, if different than Language above.
+		</documentation>
+		
+		<example sourceName="HL7" codeSet="0296">ENG</example>
+	</element>
+
+	<element name="EthnicGroupCode" type="code">
+		<documentation>
+		Use this element to supply the information related to a Member's ethnicity. 
+		</documentation>
+		
+		<example sourceName="HL7" codeSet="0189">H</example>
+	</element>
+
+	<element name="RaceCode" type="code">
+		<documentation>
+		Use this element to supply the information related to a Member's race. 
+		</documentation>
+		
+		<example sourceName="HL7" codeSet="0005">2106-3</example>>
+	</element>
+	
+	<element name="DateOfBirth" type="datetime" >
+		<documentation>
+		This field contains the Member's date and time of birth. 
+		</documentation>
+		
+		<example format="yyyy-MM-dd">1965-02-21</example>
+	</element>
+
+	<element name="DateOfDeath" type="datetime">
+		<documentation>
+		This field contains the date at which the Member death occurred.  
+		The time may additionally be specified if known. 
+		</documentation>
+		
+		<example format="yyyy-MM-dd">2050-02-21</example>
+	</element>
+
+	<element name="DeceasedFlagCode" type="code">
+		<documentation>
+		This field indicates whether the Member is deceased, in the event that the DateOfDeath is not yet available. 
+		</documentation>
+		
+		<example sourceName="HL7" codeSet="0136">N</example>
+	</element>
+
+	<list name="Names">
+		<documentation>
+		Use this collection to specify one or more names used by this Member.
+		</documentation>
+		
+		<idsDocument idsVersion="1.0" name="MemberName" domain="Member" 
+			 		 elementOrder="Type, StartDate, EndDate, FullName, NamePrefix, FirstName, LastName, MiddleName, NameSuffix"
+			 		 implementationClass="com.ibi.omni.patient.model.member.MemberName">
+						
+			<include name="CommonElements"
+					 prependToElementOrder="SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="OmniStatus, OmniStatusReason, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+				  	
+			<documentation>
+			Use this collection element to specify one or more possible names used or
+		 	associated with a Member. This may include things like maiden name, legal
+		 	name, nicknames, etc...
+			</documentation>
+
+			<element name="SourceName" key="true" type="string" required="true">
+				<documentation>
+				This element must identify the source system that was responsible for generating this 
+			    data. This value is determined by the integration team and used in combination with 
+			    SourceInstanceId will allow this record to be traced back to its originating source.
+				</documentation>
+		
+				<example>TestSystem</example>
+			</element>
+		
+			<element name="SourceInstanceId" key="true" type="string" required="true" >
+				<documentation>
+				This element must contain an integration manufactured value that uniquely identifies the
+				collection element and can be used to map back to the source system. Whatever value is
+				manufactured must not change over time as it will be used to make updates when data
+				changes in the source system.
+				</documentation>
+				
+				<example>TestMember:TestMemberName</example>
+			</element>
+				
+			<element name="Type" type="code">
+				<documentation>
+				Use this element to specify the type of name.
+				</documentation>
+				
+				<example sourceName="Hl7" codeSet="0200">L</example>
+			</element>
+		
+			<element name="StartDate" type="datetime">
+				<documentation>
+				Use this element to specify the date that the name became active.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">1965-02-21</example>
+			</element>
+			
+			<element name="EndDate" type="datetime">
+				<documentation>
+				Use this element to specify the date that the name will become inactive for this
+				Member.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2050-01-01</example>
+			</element>
+		
+			<element name="FullName" type="string" maxLength="255">
+				<documentation>
+				Use this element to specify the full name of the Member if the source system does
+				not contain the individual component fields. If this field is being used please do
+				not use the component fields. 
+				</documentation>
+				
+				<example>Jane E. Smith</example>
+			</element>
+		
+			<element name="NamePrefix" type="string" maxLength="255">
+				<documentation>
+				Use this element to specify the prefix for the Member's name. (e.g., Dr., Mr, Ms.)
+				</documentation>
+				
+				<example>Ms</example>
+			</element>
+
+			<element name="FirstName" type="string" maxLength="255">
+				<documentation>
+				Use this element to specify the first name.
+				</documentation>
+				
+				<example>Jane</example>
+			</element>
+
+			<element name="LastName" type="string" maxLength="255">
+				<documentation>
+				Use this element to specify the last name.
+				</documentation>
+				
+				<example>Smith</example>
+			</element>
+						
+			<element name="MiddleName" type="string" maxLength="255">
+				<documentation>
+				Use this element to specify the last name or middle initial of the Member.
+				</documentation>
+				
+				<example>E</example>
+			</element>
+			
+			<element name="NameSuffix" type="string" maxLength="255">
+				<documentation>
+				Use this element to specify the suffix for the Member's name. (e.g., Jr. or III)
+				</documentation>
+				
+				<example>III</example>
+			</element>
+		</idsDocument>		
+	</list>	
+
+	<list name="Addresses">
+		<documentation>
+		Use this collection to specify one or more addresses used by this Person.
+		</documentation>
+
+		<idsDocument name="MemberAddress" domain="Member"
+			 		 	  elementOrder="Type, StartDate, EndDate, PreferenceOrder, AddressLine1, AddressLine2,
+					 		       AddressLine3, AddressLine4, City, StateProvince, PostalCode, Country, 
+					 		       CountyRegion"
+					 	  implementationClass="com.ibi.omni.patient.model.member.MemberAddress">
+						
+			<include name="CommonElements"
+					 prependToElementOrder="SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="OmniStatus, OmniStatusReason, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+					
+			<documentation>
+			Use this specification to load Member address information into Omni.
+			</documentation>
+
+			<element name="SourceName" key="true" type="string" required="true">
+				<documentation>
+				This element must identify the source system that was responsible for generating this 
+			    data. This value is determined by the integration team and used in combination with 
+			    SourceInstanceId will allow this record to be traced back to its originating source.
+				</documentation>
+		
+				<example>TestSystem</example>
+			</element>
+		
+			<element name="SourceInstanceId" key="true" type="string" required="true" >
+				<documentation>
+				This element should contain an integration manufactured value that uniquely identifies the
+				collection element and can be used to map back to the source system. Whatever value is
+				manufactured must not change over time as it will be used to make updates when data
+				changes in the source system.
+				</documentation>
+				
+				<example>TestMember:TestMemberAddress</example>
+			</element>
+
+			<element name="Type" type="code">
+				<documentation>
+				Use this element to specify the type of address being loaded.
+				</documentation>
+				
+				<example sourceName="HL7" codeSet="0190">H</example>
+			</element>
+		
+			<element name="StartDate" type="datetime">
+				<documentation>
+				Specify the date this address became active.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+			
+			<element name="EndDate" type="datetime">
+				<documentation>
+				Specify the date this address becomes inactive.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+		
+			<element name="PreferenceOrder" type="integer">
+				<documentation>
+				For a Member having multiple emails, indicates which is the 'most preferred' (lowest number) 
+			 	to 'least preferred' (highest number).
+				</documentation>
+				
+				<example>1</example>
+			</element>
+					
+			<element name="AddressLine1" type="string" maxLength="255">
+				<documentation>
+				This field specifies the street or mailing address of a person or institution. 
+				When referencing an institution, this first component is used to specify the institution 
+				name. When used in connection with a person, this component specifies the first line of the address.
+				</documentation>
+				
+				<example>4000 East Ave</example>
+			</element>
+			
+			<element name="AddressLine2" type="string" maxLength="255">
+				<documentation>
+				This field specifies the second line of address. In general, it qualifies address. 
+				Examples: Suite 555 or Fourth Floor. When referencing an institution, this component 
+				specifies the street address.
+				</documentation>
+				
+				<example>Suite 555</example>
+			</element>
+			
+			<element name="AddressLine3" type="string" maxLength="255">
+				<documentation>
+				This field specifies the name of the person or organization that should appear as part of the 
+				address. This is also known as the "Care of" or "C/O" line.
+				</documentation>
+				
+				<example>ATTN: Jane Smith</example>
+			</element>
+			
+			<element name="AddressLine4" type="string" maxLength="255">
+				<documentation>
+				This field specifies more address information.
+				</documentation>
+				
+				<example>Fragile</example>
+			</element>
+			
+			<element name="City" type="string" maxLength="255">
+				<documentation>
+				This field specifies the city, district or place where the addressee is located 
+				depending upon the national convention for formatting addresses for postal usage.
+				</documentation>
+				
+				<example>Livonia</example>
+			</element>
+			
+			<element name="StateProvince" type="string" maxLength="255">
+				<documentation>
+				This field specifies the state or province where the addressee is located. State or 
+				province should be represented by the official postal service codes for that country. 
+				</documentation>
+				
+				<example>NY</example>
+			</element>
+		
+			<element name="PostalCode" type="string" maxLength="255">
+				<documentation>
+				This component specifies the zip or postal code where the addressee is located.  Zip or 
+				postal codes should be represented by the official codes for that country. In the US, the zip 
+				code takes the form 99999[-9999], while the Canadian postal code takes the form A9A9A9 and the 
+				Australian Postcode takes the form 9999. 
+				</documentation>
+				
+				<example>14488</example>
+			</element>
+		
+			<element name="Country" type="string" maxLength="255">
+				<documentation>
+				This component specifies the country where the addressee is located.
+				</documentation>
+	
+				<example>USA</example>
+			</element>
+		
+			<element name="CountyRegion" type="string" maxLength="255">
+				<documentation>
+				This component specifies the county where the addressee is located when applicable.
+				</documentation>
+				
+				<example>Livingston</example>
+			</element>
+		</idsDocument>
+	</list>	
+
+	<list name="Identifiers">
+		<documentation>
+		Use this collection to specify the list of identifiers for this Member. 
+	 	You may specify any number of identifiers as this is simply a name/value pair structure.
+		</documentation>
+		
+		<idsDocument name="MemberIdentifier" domain="Member"
+			 		 	  elementOrder="Type, StartDate, EndDate, Value, Comment"
+			 		 	  implementationClass="com.ibi.omni.patient.model.member.MemberIdentifier">
+				
+			<include name="CommonElements"
+					 prependToElementOrder="SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="OmniStatus, OmniStatusReason, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+			<documentation>
+			Use this structure to specify identifiers for a Member.
+			</documentation>
+
+			<element name="SourceName" key="true" type="string" required="true">
+				<documentation>
+				This element must identify the source system that was responsible for generating this 
+			    data. This value is determined by the integration team and used in combination with 
+			    SourceInstanceId will allow this record to be traced back to its originating source.
+				</documentation>
+		
+				<example>TestSystem</example>
+			</element>
+		
+			<element name="SourceInstanceId" key="true" type="string" required="true" >
+				<documentation>
+				This element should contain an integration manufactured value that uniquely identifies the
+				collection element and can be used to map back to the source system. Whatever value is
+				manufactured must not change over time as it will be used to make updates when data
+				changes in the source system.
+				</documentation>
+				
+				<example>TestMember:TestMemberIdentifier</example>
+			</element>
+					
+			<element name="Type" type="code">
+				<documentation>
+				Use this element to specify the type of identifier. For example
+			 	MC - Patient's Medicare Number, etc...
+				</documentation>
+				
+				<example sourceName="Hl7" codeSet="0203">MC</example>
+			</element>
+		
+			<element name="StartDate" type="datetime">
+				<documentation>
+				Use this element to specify the date the identifier became active, if known.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+			
+			<element name="EndDate" type="datetime">
+				<documentation>
+				Use this element to specify the date the identifier becomes inactive, if known.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+		
+			<element name="Value" type="string" maxLength="255">
+				<documentation>
+				Use this element to specify the value of the identifier.
+				</documentation>
+				
+				<example>12345678</example>
+			</element>
+
+            <element name="Comment" type="string" maxLength="255">
+                <documentation>
+                    Use this element to store comments about the identifier.
+                </documentation>
+
+                <example>Comment about identifier.</example>
+            </element>
+		</idsDocument>
+	</list>	
+
+	<list name="Emails">
+		<documentation>
+		Use this collection to specify the list of known emails associated with this Member		
+		</documentation>
+		
+		<idsDocument name="MemberEmail" domain="Member"
+			 		 	  elementOrder="Type, StartDate, EndDate, PreferenceOrder, ProtectionCode, Value"
+			 		 	  implementationClass="com.ibi.omni.patient.model.member.MemberEmail">
+			
+			<include name="CommonElements"
+					 prependToElementOrder="SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="OmniStatus, OmniStatusReason, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+							  	
+			<documentation>
+			Use this collection to specify one or more emails for a Member.
+			</documentation>
+
+			<element name="SourceName" key="true" type="string" required="true">
+				<documentation>
+				This element must identify the source system that was responsible for generating this 
+			    data. This value is determined by the integration team and used in combination with 
+			    SourceInstanceId will allow this record to be traced back to its originating source.
+				</documentation>
+		
+				<example>TestSystem</example>
+			</element>
+		
+			<element name="SourceInstanceId" key="true" type="string" required="true" >
+				<documentation>
+				This element should contain an integration manufactured value that uniquely identifies the
+				collection element and can be used to map back to the source system. Whatever value is
+				manufactured must not change over time as it will be used to make updates when data
+				changes in the source system.
+				</documentation>
+				
+				<example>TestMember:TestMemberEmail</example>
+			</element>
+						
+			<element name="Type" type="code">
+				<documentation>
+				Use this element to specify what type of contact method is being 
+			 	described. i.e. Home, Work, etc..
+				</documentation>
+				
+				<example sourceName="HL7" codeSet="0185">H</example>
+			</element>
+		
+			<element name="StartDate" type="datetime">
+				<documentation>
+				Specify the date this email became active, if known.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+			
+			<element name="EndDate" type="datetime">
+				<documentation>
+				Specify the date this email became inactive, if known.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2050-01-01</example>
+			</element>
+		
+			<element name="PreferenceOrder" type="integer">
+				<documentation>
+				For a Member having multiple emails, indicates which is the 'most preferred' (lowest number) 
+			 	to 'least preferred' (highest number).
+				</documentation>
+				
+				<example>1</example>
+			</element>
+			
+			<element name="ProtectionCode" type="code">
+				<documentation>
+				Identifies that the email needs to be treated with special care or sensitivity.
+				</documentation>
+				
+				<example sourceName="HL7" codeSet="0618">UP</example>
+			</element>
+			
+			<element name="Value" type="string" maxLength="255">
+				<documentation>
+				Identifies the value of the email.
+				</documentation>
+
+				<example>scott@gmail.com</example>
+			</element>
+		</idsDocument>
+	</list>	
+	
+	<list name="PhoneNumbers">
+		<documentation>
+		Use this collection to specify the list of phone number or fax numbers associated with this Member.		
+		</documentation>
+		
+		<idsDocument name="MemberPhoneNumber" domain="Member"
+			 		 	  elementOrder="Type, StartDate, EndDate, PreferenceOrder, ProtectionCode, Value"
+			 		 	  implementationClass="com.ibi.omni.patient.model.member.MemberPhoneNumber">
+			
+			<include name="CommonElements"
+			 		 prependToElementOrder="SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="OmniStatus, OmniStatusReason, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+							  	
+			<documentation>
+			Use this collection to specify one or more phone or fax numbers for a Member.
+			</documentation>
+
+			<element name="SourceName" key="true" type="string" required="true">
+				<documentation>
+				This element must identify the source system that was responsible for generating this 
+			    data. This value is determined by the integration team and used in combination with 
+			    SourceInstanceId will allow this record to be traced back to its originating source.
+				</documentation>
+		
+				<example>TestSystem</example>
+			</element>
+		
+			<element name="SourceInstanceId" key="true" type="string" required="true" >
+				<documentation>
+				This element should contain an integration manufactured value that uniquely identifies the
+				collection element and can be used to map back to the source system. Whatever value is
+				manufactured must not change over time as it will be used to make updates when data
+				changes in the source system.
+				</documentation>
+				
+				<example>TestMember:TestMemberPhoneNumber</example>
+			</element>
+
+			<element name="Type" type="code">
+				<documentation>
+				Use this element to specify what type of phone number is being 
+			 	described. i.e. Fax, Home Phone, Work Phone, etc..
+				</documentation>
+				
+				<example sourceName="HL7" codeSet="0185">H</example>
+			</element>
+		
+			<element name="StartDate" type="datetime">
+				<documentation>
+				Specify the date this phone number became active.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+			
+			<element name="EndDate" type="datetime">
+				<documentation>
+				Specify the date this phone number became inactive.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2050-01-01</example>
+			</element>
+		
+			<element name="PreferenceOrder" type="integer">
+				<documentation>
+				For a Member having phone numbers, indicates which is the 'most preferred' (lowest number) 
+			 	to 'least preferred' (highest number).
+				</documentation>
+				
+				<example>1</example>
+			</element>
+			
+			<element name="ProtectionCode" type="code">
+				<documentation>
+				Identifies that the phone number needs to be treated with special care or sensitivity.
+				</documentation>
+				
+				<example sourceName="HL7" codeSet="0618">UP</example>
+			</element>
+			
+			<element name="Value" type="string" maxLength="255">
+				<documentation>
+				Identifies the value of the phone number.
+				</documentation>
+
+				<example>(222) 234-6879 x9808</example>
+			</element>
+		</idsDocument>
+	</list>	
+</idsDocument>

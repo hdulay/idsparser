@@ -1,0 +1,42 @@
+<idsDocument name="EventProvider" type="instance" access="shared" domain="Clinical.Event"
+	 		 		elementOrder="ProviderRoleCode, Provider"
+	 		 		implementationClass="com.ibi.omni.patient.model.clinical.event.EventProvider">
+	 
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+			 	  	
+	<documentation>
+	Represents data about the individuals who provided health care services during this clinical event on the encounter.
+	</documentation>
+
+	<element name="ProviderRoleCode" type="SourceCode" codeSource="OMNI" codeSet="0443">
+		<documentation>
+		Describes the role the provider played during the clinical event. 
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0443" sourceCode="pp" />
+	</element>
+	
+	<element name="Provider" type="OmniLink" contains="Provider" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		Use this element to specify the Provider who provided health care services during this clinical event using the Provider's SourceName and SourceInstanceId. You cannot load Provider
+		information using this element, however if the Provider is not found then a "placeholder" will be created that will contain the 
+		Provider when loaded.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<Provider>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>SourceName:ProviderId</SourceInstanceId>
+			</Provider>
+			]]>
+		</example>		
+	</element>
+
+</idsDocument>

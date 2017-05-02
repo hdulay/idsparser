@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.2.8" changeVersion="1" type="instance"
+			 name="PatientHealthPlan" udlName="PatientHealthPlan" domain="Payer"
+	 		 elementOrder="Patient, HealthPlan, PolicyNumber, PolicyScopeCode, PlanEffectiveDate, PlanExpirationDate, TerminationReasonCode, SubscriberRelationshipToPatientCode, Subscriber"
+	 		 implementationClass="com.ibi.omni.patient.model.payer.PatientHealthPlan">
+
+	<changeLog>
+		<change version="1.2.8_0">Initial Version</change>
+		<change version="1.2.8_1">Added SourceStatusCode to instance and collection items.</change>
+	</changeLog>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+		
+	<documentation>
+Each Patient Health Plan record ties a Patient to a Health Plan in which a Subscriber is enrolled.  The patient will be listed as a member on the subscriber's policy.   Each encounter can have multiple health plan coverages for a patient designating which is the primary or secondary insurance.  Claims will be submitted to health plan administrators for payment based on the sequence defined for each on the encounter.  Only after all health plan coverages have been processed, will the remaining balance, if any, be billed to the patient or guarantor. 
+	</documentation>
+	
+	<element name="Patient" type="OmniLink" contains="Patient" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		The Patient is a member on the benefit plan that the subscriber enrolled in, and the individual who received health care services during the encounter.
+		
+		Use this element to specify a Patient in the system using the Patient's SourceName and SourceInstanceId. You cannot load Patient
+		information using this element, however if the Patient is not found then a "placeholder" will be created that will contain the Patient
+		when loaded.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<Patient>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>PatientId</SourceInstanceId>
+			</Patient>
+			]]>
+		</example>		
+	</element>
+
+	<element name="HealthPlan" type="OmniLink" contains="HealthPlan" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+Contains the health plan that the subscriber enrolled in.  Each plan defines the services covered along with deductibles, limits, copay amounts and is the administrator for payments on services rendered for the patient.
+		
+Use this element to specify a HealthPlan in the system using the HealthPlan's SourceName and SourceInstanceId. You cannot load HealthPlan	information using this element, however if the HealthPlan is not found then a "placeholder" will be created that will contain the Patient when loaded.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<HealthPlan>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>HealthPlanId</SourceInstanceId>
+			</HealthPlan>
+			]]>
+		</example>		
+	</element>
+
+		
+	<element name="PolicyNumber" type="string">
+		<documentation>
+		Contains the individual policy number of the insured to uniquely identify the subscriber in the health plan.  Often, this is the same as the subscriber number.
+		</documentation>
+		
+		<example>12345678</example>
+	</element>
+		
+	<element name="PolicyScopeCode" type="SourceCode" codeTable="0312">
+		<documentation>
+		Designates the extent of the coverage for this health plan for this subscriber.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0312" sourceCode="family" />
+	</element>
+
+	<element name="PlanEffectiveDate" type="OmniDate">
+		<documentation>
+		Date the health plan took effect for this subscriber.
+		</documentation>
+		
+		<example format="yyyy-MM-dd">2013-01-01</example>
+	</element>
+
+	<element name="PlanExpirationDate" type="OmniDate">
+		<documentation>
+		Date the health plan expired for this subscriber.
+		</documentation>
+		
+		<example format="yyyy-MM-dd">2013-12-31</example>
+	</element>
+
+	<element name="TerminationReasonCode" type="SourceCode">
+		<documentation>
+		If the health plan coverage is no longer in effect, this indicates the reason the coverage was terminated for this subscriber.
+		</documentation>
+		
+		<example sourceCodeSet="TerminationReasonCodes" sourceCode="expired">Expired</example>
+	</element>
+
+	<element name="SubscriberRelationshipToPatientCode" type="SourceCode" codeTable="0063">
+		<documentation>
+		Specifies the relationship of the subscriber of the health plan to the patient.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0063" sourceCode="SPO" />
+	</element>
+
+	<element name="Subscriber" type="document" contains="Person" excludeInDoc="true">
+		<documentation>
+		Person who subscribed to this benefit plan.  Identifies all the personal information including subscriber number, military identification, Medicaid and Medicare health insurance numbers as well as employment status.
+		</documentation>
+	</element>
+
+</idsDocument>

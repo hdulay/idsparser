@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.0.0" type="ignore"
+             name="PatientAllergy" 
+			 domain="Allergy" dbTable="patient_allergy" 
+			 elementOrder="">
+  
+	<changeLog>
+		<change version="1.0.0">Initial Creation</change>
+	</changeLog>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+  
+	<documentation>
+	Use to feed individual allergies.
+	</documentation>
+	
+</idsDocument>

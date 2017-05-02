@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.2.8" changeVersion="1" type="instance"
+			 name="Guarantor" udlName="Guarantor" domain="Clinical" 
+	 		 elementOrder="GuarantorNumber, TypeCode, GuarantorPerson, GuarantorOrganization, RelationshipToPatientCode,
+	 		 Sequence, FinancialClassCode, GuaranteePeriodStartDate, GuaranteePeriodEndDate, BillingHoldIndicator,
+	 		 CreditRatingCode, ChargeAdjustmentCode, Employment"
+	 		 implementationClass="com.ibi.omni.patient.model.payer.Guarantor">
+
+	<changeLog>
+		<change version="1.2.8_0">Initial Version</change>
+		<change version="1.2.8_1">Added SourceStatusCode to instance and collection items.</change>
+	</changeLog>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	
+	
+	<documentation>
+Guarantor represents the person or organization who will provide payment of the account should the insurance companies and patient not be able to pay. There can be more than one Guarantor per Account.
+	</documentation>
+	
+	<element name="GuarantorNumber" type="string">
+		<documentation>
+		Contains the business number that uniquely identifies the guarantor.
+		</documentation>
+		
+		<example>123456789</example>
+	</element>
+	
+	<element name="TypeCode" type="SourceCode" codeTable="0068">
+		<documentation>
+		Represents the particular kind of guarantor such as an individual or institution.
+		</documentation>
+		
+		<example sourceCodeSet="GuarantorTypeCodes" sourceCode="employer"/>
+	</element>
+
+	<element name="GuarantorPerson" type="document" contains="Person" excludeInDoc="true">
+		<documentation>
+		 If the guarantor is a person, this specifies the person that identifies the guarantor.
+		</documentation>
+	</element>
+
+	<element name="GuarantorOrganization" type="OmniLink" contains="Organization" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		If the guarantor is an organization, this specifies the organization that represents the guarantor.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<Organization>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>SourceName:OrganizationId</SourceInstanceId>
+			</Organization>
+			]]>
+		</example>		
+	</element>	
+
+	<element name="RelationshipToPatientCode" type="SourceCode" codeTable="0063">
+		<documentation>
+		Specifies the relationship of the guarantor to the patient.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0063" sourceCode="GRD"/>
+	</element>
+
+	<element name="Sequence" type="double">
+		<documentation>
+		Order of priority for responsibility for payment of the encounter/account.
+		</documentation>
+		
+		<example>1.0</example>
+	</element>
+
+	<element name="FinancialClassCode" type="SourceCode" codeTable="5000">
+		<documentation>
+		Identifies the financial class assigned to the guarantor for the purpose of identifying sources of reimbursement.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="5000" sourceCode="1001"/>
+	</element>
+
+	<element name="GuaranteePeriodStartDate" type="OmniDate">
+		<documentation>
+		Specifies the start of period when guarantor is responsible.
+		</documentation>
+		
+		<example format="yyyy-MM-dd">1965-02-21</example>
+	</element>
+
+	<element name="GuaranteePeriodEndDate" type="OmniDate">
+		<documentation>
+		Specifies the end of period when guarantor is responsible.
+		</documentation>
+		
+		<example format="yyyy-MM-dd">1965-02-21</example>
+	</element>
+
+	<element name="BillingHoldIndicator" type="SourceCode" codeTable="0136">
+		<documentation>
+		Indicates whether billing to the guarantor is on hold.  If "Yes", billing is on hold.  If "No", billing is not on hold.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0136" sourceCode="Y"/>
+	</element>
+
+	<element name="CreditRatingCode" type="SourceCode" codeTable="0341">
+		<documentation>
+Specifies the guarantor's credit rating assigned based on his credit score.
+		</documentation>
+		
+		<example sourceCodeSet="CreditRatingCodes" sourceCode="excellent"/>
+	</element>
+
+	<element name="ChargeAdjustmentCode" type="SourceCode" codeTable="0218">
+		<documentation>
+Contains codes that indicate which adjustments should be made to this guarantor's charges. For example, when the hospital agrees to adjust this guarantor's charges to a sliding scale.  A sliding scale value could be based on the guarantor''s ability to pay.
+		</documentation>
+		
+		<example sourceCodeSet="ChargeAdjustmentCodes" sourceCode="sliding_25_percent"/>
+	</element>
+
+	<group name="Employment" elementOrder="HireEffectiveDate, StopDate, JobTitle, JobClass, JobStatusCode">
+		<documentation>
+		Employment is a group of attributes representing guarantor's employment information.
+		</documentation>
+		
+	
+		<element name="HireEffectiveDate" type="OmniDate">
+			<documentation>
+			Specifies the guarantor's starting employment date.
+			</documentation>
+			
+			<example format="yyyy-MM-dd">1965-02-21</example>
+		</element>
+		
+		<element name="StopDate" type="OmniDate">
+			<documentation>
+			Specifies the guarantor's last date of employment.
+			</documentation>
+			
+			<example format="yyyy-MM-dd">2050-01-01</example>
+		</element>
+	
+		<element name="JobTitle" type="string">
+			<documentation>
+			Identifies the job title of the guarantor.
+			</documentation>
+			
+			<example>CEO</example>
+		</element>
+
+		<element name="JobClass" type="string">
+			<documentation>
+			Identifies the job classification of the guarantor.
+			</documentation>
+			
+			<example>Officer</example>
+		</element>
+
+		<element name="JobStatusCode" type="SourceCode" codeTable="0311">
+			<documentation>
+			Specifies the type of employment held by the guarantor.
+			</documentation>
+			
+			<example sourceName="OMNI" sourceCodeSet="0311" sourceCode="P"/>
+		</element>
+	</group>
+</idsDocument>

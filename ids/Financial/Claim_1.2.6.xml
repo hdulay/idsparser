@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.2.6" changeVersion="1" domain="Financial" type="instance"
+			 name="Claim"
+	 		 elementOrder="ClaimNumber, Account, PayToLocation, HealthPlanCoverageId, PatientHealthPlan, ProcedureCode, DiagnosisCode, StatusCode, 
+	 		 DenialReasonCode, ClaimDateTime,CorrectionDate, Amounts, CPT4ProcedureCode, HCPCSProcedureCode, ICD9DecimalProcedureCode,
+	 		 			ICD9NonDecimalProcedureCode, ICD10PCSProcedureCode, SNOMEDCTProcedureCode,
+	 		 			ICD9DecimalDiagnosisCode, ICD9NonDecimalDiagnosisCode, ICD10DiagnosisCode, SNOMEDCTDiagnosisCode, OtherClaimProcedureCodes,
+	 		 			OtherClaimDiagnosisCodes"
+	 		 implementationClass="com.ibi.omni.patient.model.financial.Claim">	 					
+	  	 					
+	<changeLog>
+		<change version="1.2.6_0">Initial Version</change>
+		<change version="1.2.8_0">Deprecated HealthPlanCoverageId and added PatientHealthClaim</change>
+		<change version="1.2.8_1">Added SourceStatusCode to instance and collection items.</change>
+		<change version="2.3.0_0">Added  CPT4ProcedureCode, HCPCSProcedureCode, ICD9DecimalProcedureCode,
+			ICD9NonDecimalProcedureCode, ICD10PCSProcedureCode, SNOMEDCTProcedureCode, OtherClaimDiagnosisCodes</change>
+		<change version="2.3.0_1">Added ICD9DecimalDiagnosisCode, ICD9NonDecimalDiagnosisCode, ICD10DiagnosisCode,
+			SNOMEDCTDiagnosisCode, and OtherClaimProcedureCodes</change>
+
+	</changeLog>
+	
+	<notes>
+	- Reordered.
+	- Do RoomAndBedAmount, AncillaryAmount, ProfessionalFeeAmount, AdjustmentAmount need their own currency codes?
+	</notes>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	<customType name="SourceCodeList" class="com.ibi.dib.core.ids.types.IdsCodeListType"/>
+
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	
+	<documentation>	
+	</documentation>
+
+	<element name="ClaimNumber" type="string">
+		<documentation>
+		The customer-facing number which identifies the Claim.
+		</documentation>
+		
+		<example>12345678</example>
+	</element>
+
+	<element name="Account" type="OmniLink" contains="Account" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		Use this element to specify an Account in the system using the Account's SourceName and SourceInstanceId. You cannot load Account
+		information using this element, however if the Account is not found then a "placeholder" will be created that will contain the Account
+		when loaded.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<Account>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>AccountId</SourceInstanceId>
+			</Account>
+			]]>
+		</example>		
+	</element>
+
+	<element name="PayToLocation" type="OmniLink" contains="FacilityLocation" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		The FacilityLocation to which payment for the claim should be directed.
+		
+		Use this element to specify a FacilityLocation in the system using the FacilityLocation's SourceName and SourceInstanceId. You cannot load FacilityLocation
+		information using this element, however if the FacilityLocation is not found then a "placeholder" will be created that will contain the FacilityLocation
+		when loaded.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<FacilityLocation>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>FacilityLocationId</SourceInstanceId>
+			</FacilityLocation>
+			]]>
+		</example>		
+	</element>
+
+	<element name="HealthPlanCoverageId" type="string">
+		<documentation>
+		deprecated: UNDER CONSTRUCTION: HealthPlanCoverage has not been completed. Add unique HealthPlanCoverageId until this element is changed to a link.
+		
+		Use this element to specify the HealthPlanCoverage. 
+		</documentation>	
+	</element>	
+
+ 	<element name="PatientHealthPlan" type="OmniLink" contains="PatientHealthPlan" keys="SourceName, SourceInstanceId" allowCreate="true">
+	  <documentation>
+				Patient Health Plan record associated with the claim.  This is maintained in the Payer domain.
+				
+				Use this element to specify a PatientHealthPlan in the system using the PatientHealthPlan's SourceName and SourceInstanceId. You cannot load PatientHealthPlan
+				information using this element, however if the PatientHealthPlan is not found then a "placeholder" will be created that will contain the PatientHealthPlan
+				when loaded.
+		</documentation>
+				
+		<example>
+				<![CDATA[
+				<PatientHealthPlan>
+					<SourceName>TestSystem</SourceName>
+					<SourceInstanceId>PatientHealthPlanId</SourceInstanceId>
+				</PatientHealthPlan>
+				]]>
+		</example>		
+  </element>
+
+	<element name="ProcedureCode" type="SourceCode" codeTable="ICD9-CM-V3">
+		<documentation>
+		A medical procedure is a course of action intended to achieve a result in the care of the patient.  Procedure codes may contain a modifier code which indicates the description of the service provided was altered 
+		(e.g. a complex operation may have a surgeon and assistant surgeon, a radiological procedure involves both the equipment usage as well as the provider who interprets the findings).
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="ICD9-CM-V3" sourceCode="0002"/>
+	</element>
+
+	<element name="DiagnosisCode" type="SourceCode" codeTable="ICD9">
+		<documentation>
+		Depicts the diagnosed condition based on the standardized diagnosis code value set used in the health system (ICD-9, ICD-10).
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="ICD9" sourceCode="052.8"/>
+	</element>
+
+	<element name="StatusCode" type="SourceCode">
+		<documentation>
+		Set of codes for status of Claim within the claims process.
+		</documentation>
+		
+		<example sourceCodeSet="BillStatusCodes" sourceCode="2">2nd Notice</example>
+	</element>
+
+	<element name="DenialReasonCode" type="SourceCode" codeTable="0460">
+		<documentation>
+		The reason why a particular line item on a Claim was denied or rejected.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0460" sourceCode="0"/>
+	</element>
+
+	<element name="ClaimDateTime" type="OmniDate">
+		<documentation>
+		Date and time the Claim was created for the account.   
+		</documentation>
+		
+		<example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+	</element>
+	<element name="CorrectionDate" type="OmniDate">
+		<documentation>
+		Date and time the Claim was corrected for the account.   
+		</documentation>
+		
+		<example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+	</element>
+
+	<group name="Amounts"
+	 	       elementOrder="CurrencyCode, ClaimAmount, RoomAndBedAmount, AncillaryAmount, ProfessionalFeeAmount, AdjustmentAmount, PaidAmount, CopayAmount, CoinsuranceAmount, DeniedAmount" udlName="amt">
+		<documentation>
+		Definition TBD.
+		</documentation>
+
+		<element name="CurrencyCode" type="SourceCode" codeTable="4217">
+			<documentation>
+			The monetary unit in which all Amounts in the Claim are denominated.
+			</documentation>
+			
+			<example sourceName="OMNI" sourceCodeSet="4217" sourceCode="USD"/>
+		</element>
+
+		<element name="ClaimAmount" type="double">
+			<documentation>
+			The total monetary amount of the Claim.
+			</documentation>
+		</element>
+
+		<element name="RoomAndBedAmount" type="double">
+			<documentation>
+			The monetary amount of the Claim that is attributable to room and bed charges.
+			</documentation>
+		</element>
+		
+		<element name="AncillaryAmount" type="double">
+			<documentation>
+			The monetary amount of the Claim that is attributable to ancillary charges.
+			</documentation>
+		</element>
+		
+		<element name="ProfessionalFeeAmount" type="double">
+			<documentation>
+			The monetary amount of the Claim that is attributable to professional fee charges.
+			</documentation>
+		</element>
+
+		<element name="AdjustmentAmount" type="double">
+			<documentation>
+			The monetary amount of the Claim that is attributable to adjustments charges.
+			</documentation>
+		</element>
+
+		<element name="PaidAmount" type="double">
+			<documentation>
+			The monetary amount of the Claim that has been paid to date.
+			</documentation>
+		</element>
+
+		<element name="CopayAmount" type="double">
+			<documentation>
+			The monetary amount which is deemed to be the responsibility of the Patient, rather than the insurer, as a copay. (A copay is the amount that the patient pays directly to the healthcare provider (doctor, hospital etc.) at every visit.
+			</documentation>
+		</element>
+
+		<element name="CoinsuranceAmount" type="double">
+			<documentation>
+			The monetary amount which is deemed to be the responsibility of the Patient, rather than the insurer, as a coinsurance. (Coinsurance is the remaining balance after the insurance company has covered its percentage (usually 60-90 percent, depending upon the plan) of the fees.
+			</documentation>
+		</element>
+
+		<element name="DeniedAmount" type="double">
+			<documentation>
+			The monetary amount of the Claim which has been denied payment to date.
+			</documentation>
+		</element>
+	</group>
+	<element name="CPT4ProcedureCode" type="SourceCode" codeSource="CPT-4" codeSet="2.16.840.1.113883.6.12">
+		<documentation>
+			Procedure code expressed as a CPT-4 code.
+		</documentation>
+
+		<example sourceName="CPT-4" sourceCodeSet="2.16.840.1.113883.6.12" sourceCode="0528"/>
+	</element>
+
+	<element name="HCPCSProcedureCode" type="SourceCode" codeSource="HCPCS" codeSet="2.16.840.1.113883.6.14">
+		<documentation>
+			Procedure code expressed as a HCPCS code.
+		</documentation>
+
+		<example sourceName="HCPCS" sourceCodeSet="2.16.840.1.113883.6.14" sourceCode="0528"/>
+	</element>
+
+	<element name="ICD9DecimalProcedureCode" type="SourceCode" codeSource="ICD9" codeSet="2.16.840.1.113883.6.104-ALT">
+		<documentation>
+			Procedure code expressed as an ICD-9 code with decimal point.
+		</documentation>
+
+		<example sourceName="ICD9" sourceCodeSet="2.16.840.1.113883.6.104-ALT" sourceCode="052.8"/>
+	</element>
+
+	<element name="ICD9NonDecimalProcedureCode" type="SourceCode" codeSource="ICD9" codeSet="2.16.840.1.113883.6.104" dbColumn="icd9_no_dec_procedure_code">
+		<documentation>
+			Procedure code expressed as an ICD-9 code without a decimal point.
+		</documentation>
+
+		<example sourceName="ICD9" sourceCodeSet="2.16.840.1.113883.6.104" sourceCode="0528"/>
+	</element>
+
+	<element name="ICD10PCSProcedureCode" type="SourceCode" codeSource="SNOMEDCT" codeSet="2.16.840.1.113883.6.4">
+		<documentation>
+			Procedure code expressed as an ICD-10-PCS code.
+		</documentation>
+
+		<example sourceName="ICD10" sourceCodeSet="2.16.840.1.113883.6.4" sourceCode="052.8"/>
+	</element>
+
+	<element name="SNOMEDCTProcedureCode" type="SourceCode" codeSource="ICD10" codeSet="2.16.840.1.113883.6.96">
+		<documentation>
+			Procedure code expressed as a SNOMED code.
+		</documentation>
+
+		<example sourceName="ICD10" sourceCodeSet="2.16.840.1.113883.6.96" sourceCode="052.8"/>
+	</element>
+
+	<element name="OtherClaimDiagnosisCodes" type="SourceCodeList" contains="OtherClaimDiagnosisCode">
+		<documentation>
+			Procedure code expressed in a custom or proprietary code set.
+		</documentation>
+
+		<![CDATA[
+			<OtherClaimDiagnosisCode sourceName="ICD9" sourceCodeSet="2.16.840.1.113883.6.103-AL" sourceCode="NONE" />
+			<OtherClaimDiagnosisCode sourceName="ICD9" sourceCodeSet="2.16.840.1.113883.6.103-AL" sourceCode="ONE" />
+			]]>
+	</element>
+
+	<element name="ICD9DecimalDiagnosisCode" type="SourceCode" codeSource="ICD9" codeSet="2.16.840.1.113883.6.103-ALT">
+		<documentation>
+			Allergen code expressed as an ICD-9 code with decimal point..
+		</documentation>
+
+		<example sourceName="ICD-9-CM" sourceCodeSet="2.16.840.1.113883.6.103-ALT" sourceCode="052.8"/>
+	</element>
+
+	<element name="ICD9NonDecimalDiagnosisCode" type="SourceCode" codeSource="ICD9" codeSet="2.16.840.1.113883.6.103" dbColumn="icd9_no_dec_diagnosis_code">
+		<documentation>
+			Allergen code expressed as an ICD-9 code without a decimal point.
+		</documentation>
+
+		<example sourceName="ICD-9-CM" sourceCodeSet="2.16.840.1.113883.6.103" sourceCode="0528"/>
+	</element>
+
+	<element name="ICD10DiagnosisCode" type="SourceCode" codeSource="ICD10" codeSet="2.16.840.1.113883.6.90">
+		<documentation>
+			Allergen code expressed as an ICD-10 code.
+		</documentation>
+
+		<example sourceName="ICD-10-CM" sourceCodeSet="2.16.840.1.113883.6.90" sourceCode="052.8"/>
+	</element>
+
+	<element name="SNOMEDCTDiagnosisCode" type="SourceCode" codeSource="SNOMEDCT" codeSet="2.16.840.1.113883.6.96">
+		<documentation>
+			Allergen code expressed as a SNOMED CT code.
+		</documentation>
+
+		<example sourceName="SNOMED-CT" sourceCodeSet="2.16.840.1.113883.6.96" sourceCode="052.8"/>
+	</element>
+
+	<element name="OtherClaimProcedureCodes" type="SourceCodeList" contains="OtherClaimProcedureCode">
+		<documentation>
+			Drug substance expressed in a custom or proprietary code set.
+		</documentation>
+
+		<![CDATA[
+					<OtherClaimProcedureCode sourceName="ICD-9" sourceCodeSet="2.16.840.1.113883.6.88" sourceCode="NONE" />
+					<OtherClaimProcedureCode sourceName="ICD-9" sourceCodeSet="2.16.840.1.113883.6.88" sourceCode="ONE" />
+				]]>
+	</element>
+</idsDocument>

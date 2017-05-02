@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.2.6" changeVersion="1" domain="Financial" type="instance"
+			 name="AccountTransaction"  
+	 		 elementOrder="TransactionNumber, Account, Remitter, HealthPlanCoverageId, PatientHealthPlan, ServiceLine,
+	 		  Location, TransactionTypeCode, TransactionCurrencyCode, PaymentAdjustmentCode, TransactionDateTime,ReplacedDate,
+	 		  TransactionAmount, TransactionDescription, CostCenter, RemitterTypeCode"
+	 		 implementationClass="com.ibi.omni.patient.model.financial.AccountTransaction">	 					
+	  	 					
+	<changeLog>
+		<change version="1.2.6_0">Initial Version</change>
+		<change version="1.2.8_0">Deprecated HealthPlanCoverageId and added PatientHealthClaim</change>
+		<change version="1.2.8_1">Added SourceStatusCode to instance and collection items.</change>
+		<change version="1.2.8_2">GuarantorAccount changed to a reference to Guarantor.</change>
+		<change version="1.2.8_3">Added CostCenter.</change>
+	</changeLog>
+	
+	<notes>
+	- Should there be a reference to a Claim or a Bill on the Transaction? How else can you determine the balance of a specific bill or claim?
+	- Did not implement TransactionQuantity
+	- Documentation for AccountTransaction is not accurate. It is broader than that.
+	</notes>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	
+	<documentation>	
+	Definition TBD
+	</documentation>
+
+	<element name="TransactionNumber" type="string">
+		<documentation>
+		The customer-facing number which identifies the Account Transaction.
+		</documentation>
+		
+		<example>12345678</example>
+	</element>
+
+	<element name="Account" type="OmniLink" contains="Account" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		Use this element to specify an Account in the system using the Account's SourceName and SourceInstanceId. You cannot load Account
+		information using this element, however if the Account is not found then a "placeholder" will be created that will contain the Account
+		when loaded.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<Account>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>AccountId</SourceInstanceId>
+			</Account>
+			]]>
+		</example>		
+	</element>
+
+	<element name="Remitter" type="OmniLink" contains="Payer, Patient, Guarantor" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		Use this element to specify a Remitter (Payer, Patient, or Guarantor) in the system using the Remitter's SourceName and SourceInstanceId. You cannot load Payer, Patient, or 
+		Guarantor information using this element, however if the specific entity is not found then a "placeholder" will be created that will contain the entity
+		when loaded.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<Payer>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>PayerId</SourceInstanceId>
+			</Payer>
+			]]>
+		</example>		
+	</element>
+
+	<element name="HealthPlanCoverageId" type="string">
+		<documentation>
+		deprecated: UNDER CONSTRUCTION: HealthPlanCoverage has not been completed. Add unique HealthPlanCoverageId until this element is changed to a link.
+		
+		Use this element to specify the HealthPlanCoverage. 
+		</documentation>	
+	</element>	
+
+  <element name="PatientHealthPlan" type="OmniLink" contains="PatientHealthPlan" keys="SourceName, SourceInstanceId" allowCreate="true">
+    <documentation>
+        Patient Health Plan record associated with the transaction.  This is maintained in the Payer domain.
+        
+        Use this element to specify a PatientHealthPlan in the system using the PatientHealthPlan's SourceName and SourceInstanceId. You cannot load PatientHealthPlan
+        information using this element, however if the PatientHealthPlan is not found then a "placeholder" will be created that will contain the PatientHealthPlan
+        when loaded.
+    </documentation>
+        
+    <example>
+        <![CDATA[
+        <PatientHealthPlan>
+          <SourceName>TestSystem</SourceName>
+          <SourceInstanceId>PatientHealthPlanId</SourceInstanceId>
+        </PatientHealthPlan>
+        ]]>
+    </example>    
+  </element>
+  
+	<element name="ServiceLine" type="OmniLink" contains="OrganizationalUnit" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		A single organizational unit, maintained in the Organization domain, will be assigned to each service line. A service line provides the healthcare industry the ability to determine the profitability of its diverse services.  These are typically limited to a handful of well defined, mutually exclusive categories or groupings of individual services or interventions.  They are often associated with the DRG.  A service line can be tied to multiple physical locations (Oncology is provided at Facility1 and Facility2, Orthopedics is provided at Facility2 and Facility3).
+		Use this element to specify a ServiceLine in the system using the OrganizationalUnit's SourceName and SourceInstanceId. You cannot load OrganizationalUnit
+		information using this element, however if the OrganizationalUnit is not found then a "placeholder" will be created that will contain the OrganizationalUnit
+		when loaded.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<OrganizationalUnit>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>ServiceLineId</SourceInstanceId>
+			</OrganizationalUnit>
+			]]>
+		</example>		
+	</element>
+
+	<element name="Location" type="OmniLink" contains="FacilityLocation" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		Use this element to specify a FacilityLocation in the system using the FacilityLocation's SourceName and SourceInstanceId. You cannot load FacilityLocation
+		information using this element, however if the FacilityLocation is not found then a "placeholder" will be created that will contain the FacilityLocation
+		when loaded.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<FacilityLocation>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>FacilityLocationId</SourceInstanceId>
+			</FacilityLocation>
+			]]>
+		</example>		
+	</element>
+
+	<element name="TransactionTypeCode" type="SourceCode" codeTable="0017">
+		<documentation>
+			Code indicating the specific, detailed transaction type from the source system. A source system can have a
+			few or hundreds of types of payments and/or adjustments..
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0017" sourceCode="PY"/>
+	</element>
+
+	<element name="TransactionCurrencyCode" type="SourceCode" codeTable="4217">
+		<documentation>
+		The monetary unit in which Amount is denominated.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="4217" sourceCode="USD"/>
+	</element>
+
+	<element name="PaymentAdjustmentCode" type="SourceCode" codeTable="0468">
+		<documentation>
+			Code indicating whether this represents a payment or an adjustment.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0468" sourceCode="1"/>
+	</element>
+
+	<element name="TransactionDateTime" type="OmniDate">
+		<documentation>
+		Date and time the transaction was recorded on the account.
+		</documentation>
+		
+		<example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+	</element>
+
+	<element name="ReplacedDate" type="OmniDate">
+		<documentation>
+			Date and time the transaction was replaced on the account.
+		</documentation>
+		
+		<example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+	</element>
+
+	<element name="TransactionAmount" type="double">
+		<documentation>
+		Dollar amount of the particular transaction.  This code normally encompasses whether the dollar amount adds to or subtracts from the balance of the account.
+		</documentation>
+	</element>
+
+	<element name="TransactionDescription" type="string">
+		<documentation>
+		Description of the transaction.
+		</documentation>
+	</element>
+
+	<element name="CostCenter" type="OmniLink" contains="OrganizationalUnit">
+		<documentation>
+			An Organizational Unit representing a specific cost
+			center. A Cost Center is a segment of an enterprise for which
+			Accounting is performed in the General Ledger.
+		</documentation>
+	</element>
+
+	<element name="RemitterTypeCode" type="SourceCode">
+		<documentation>
+			Generally applies to payments, a coded element that distinguishes between self (patient) pay, guarantor and payers.
+			In many source systems all payers, whether they are individuals or insurance companies, are a single codeset.
+			These can be mapped directly to this code without change and then harmonized through parent codes.
+			Categorization can then be achieved through code maps if desired.
+		</documentation>
+
+	</element>
+</idsDocument>

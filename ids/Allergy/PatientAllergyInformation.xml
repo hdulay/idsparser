@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.0.0" 
+             name="PatientAllergyInformation" type="ignore" 
+			 domain="Allergy" dbTable="patient_allergy" 
+			 elementOrder="ReviewStatus, ReviewReason, ReviewNotes, LastUpdateDate, LastUpdateBy, LastVerifiedDate,
+			 		       Allergies">
+  
+	<changeLog>
+		<change version="1.0.0">Initial Creation</change>
+	</changeLog>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	
+	<documentation>
+	Use this document to load allergy information for a patient.
+	</documentation>
+	
+
+  	<element name="ReviewStatus" type="SourceCode" dbColumn="review_status_code">
+		<documentation>
+		Use this element to specify the status of the review of allergies. For Example:
+		Mark as Reviewed, Verified, Viewed Only, Fully Reviewed, Partially Reviewed, 
+		Unable to Assess
+		</documentation>
+	</element>
+
+	<element name="ReviewReason" type="SourceCode" dbColumn="review_reason_code">
+		<documentation>
+		Use this element to specify a the reason for the current review status.
+
+		For Example: Patient unable to communicate, Patient unreliable, Patient not present,
+		Language Barrier, Parent, Guardian or Caregiver unavailable.
+		</documentation>
+	</element>
+
+	<element name="ReviewNotes" type="string" dbColumn="review_notes">
+		<documentation>
+		Use this element to capture the comment for the last review of allergies.
+		</documentation>
+	</element>
+
+	<element name="LastUpdateDate" type="OmniDate" dbColumn="last_update_dt">
+		<documentation>
+		Use this element to specify the last date/time the patients allergies where 
+		updated.
+		</documentation>
+	</element>
+	
+	<element name="LastUpdateBy" type="string" dbColumn="last_update_by">
+		<documentation>
+		Use this element to specify the last person to update the patients
+		allergy information. You can specify a user id of name.
+		</documentation>
+	</element>
+
+	<element name="LastVerifiedDate" type="OmniDate" dbColumn="last_verified_dt">
+		<documentation>
+		Use this element to specify the last date/time the patients allergies where verified.
+		</documentation>
+	</element>
+
+	<list name="Allergies" contains="PatientAllergy">
+		<documentation>
+		You may use this collection to load/update patient allergy information.
+		</documentation>
+	</list>
+
+</idsDocument>

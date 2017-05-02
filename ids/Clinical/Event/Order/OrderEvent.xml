@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.0.0" changeVersion="2" domain="Clinical" type="instance"
+			 name="OrderEvent"  
+	 		 elementOrder=""
+	 		 implementationClass="com.ibi.omni.patient.model.clinical.event.order.OrderEvent">
+	
+</idsDocument>

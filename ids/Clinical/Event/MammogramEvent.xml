@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<idsDocument version="1.0.0" changeVersion="0"
+	name="MammogramEvent"
+	domain="Clinical.Event"
+	type="instance"
+	elementOrder="EventDateTime, Location, ControlNumber, PatientProfileStatusCode, PatientProfileCompleteDate,
+			 	  ExamDataStatusCode, ExamDataCompleteDate, RecommendationsStatusCode, RecommendationsCompleteDate,
+			 	  DataStatusCode, DataCompleteDate, FindingsStatusCode, FindingsCompleteDate, PatientProfile, ExamData,
+			 	  PriorBreastSurgeries, AdditionalRecommendations"
+	backingClass="com.ibi.omni.patient.model.clinical.event.ClinicalEvent">
+
+	<changeLog>
+		<change version="1.2.6_0">Initial Version</change>
+	</changeLog>
+
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+
+	<documentation>
+		This subject captures an integrated view of the end to
+		end process from the ordering, execution, assessment of results,
+		biopsy, recommendations, surgery, notification and follow-up for a
+		mammogram. It conforms with industry standard definitions for process
+		quality and evaluation of the results of the mammogram, which enables
+		measures of volumes, outcomes and quality compliance.
+	</documentation>
+
+	<include name="EventElements" 
+			 prependToElementOrder="ParentEvent, Encounter, CarePlanId, CarePlan, CCDCategoryCode" 
+		     appendToElementOrder="EventProviders, EventNotes, ClinicalBaseFields" />
+
+	<include name="CommonElements"
+		prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+		appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy" />
+
+	<element name="EventDateTime" type="OmniDate">
+		<documentation>Date and time of the mammogram. If this record is
+			created prior to the execution of the mammogram, this can contain the
+			scheduled date and time of the mammogram</documentation>
+	</element>
+
+	<element name="Location" type="OmniLink" contains="FacilityLocation">
+		<documentation>FacilityLocation where the mammogram took place</documentation>
+	</element>
+
+	<element name="ControlNumber" type="string">
+		<documentation>Identifying number for the case</documentation>
+	</element>
+
+	<element name="PatientProfileStatusCode" type="SourceCode">
+		<documentation>Contains the status of the completion of the Patient
+			Profile </documentation>
+	</element>
+
+	<element name="PatientProfileCompleteDate" type="OmniDate">
+		<documentation>Date that the Patient Profile was completed</documentation>
+	</element>
+
+	<element name="ExamDataStatusCode" type="SourceCode">
+		<documentation>Contains the status of the exam data entry</documentation>
+	</element>
+
+	<element name="ExamDataCompleteDate" type="OmniDate">
+		<documentation>Date that the exam data entry was completed </documentation>
+	</element>
+
+	<element name="RecommendationsStatusCode" type="SourceCode">
+		<documentation>Contains the status of the completion of the recommendations</documentation>
+	</element>
+
+	<element name="RecommendationsCompleteDate" type="OmniDate">
+		<documentation>Date that the Recommedations were completed</documentation>
+	</element>
+
+	<element name="DataStatusCode" type="SourceCode">
+		<documentation>Contains the status of the evaluation data entry</documentation>
+	</element>
+
+	<element name="DataCompleteDate" type="OmniDate">
+		<documentation>Date that the evaluation data was completed</documentation>
+	</element>
+
+	<element name="FindingsStatusCode" type="SourceCode">
+		<documentation>Contains the status of the findings data entry</documentation>
+	</element>
+
+	<element name="FindingsCompleteDate" type="OmniDate">
+		<documentation>Date that the findings data was completed</documentation>
+	</element>
+
+	<group name="PatientProfile" udlName="patProfile"
+		   elementOrder="MenarcheAge, FirstBirthAge, StillMenstruating, Hysterectomy, PatientOnHormones,
+		   		         PastMenopause, FamilyHistory, ClinicalSymptoms, PalpableMassPrior, PriorBreastSurgery">
+
+		<documentation>
+		Contains the Elements pertaining to a patients profile in regard to mammogram exam.
+		</documentation>
+
+		<element name="MenarcheAge" type="integer">
+			<documentation>The age the patient began menstruation</documentation>
+		</element>
+
+		<element name="FirstBirthAge" type="integer">
+			<documentation>The age of the patient when her first child was born</documentation>
+		</element>
+
+		<element name="StillMenstruating" type="SourceCode">
+			<documentation>Indicate whether patient is still menstruating</documentation>
+		</element>
+
+		<element name="Hysterectomy" type="SourceCode">
+			<documentation>Indicate whether patient has had a hysterectomy</documentation>
+		</element>
+
+		<element name="PatientOnHormones" type="SourceCode">
+			<documentation>Indicate whether patient is on hormones</documentation>
+		</element>
+
+		<element name="PastMenopause" type="SourceCode">
+			<documentation>Indicate whether patient is past menopause</documentation>
+		</element>
+
+		<element name="FamilyHistory" type="SourceCode">
+			<documentation>Indicate whether patient has a family history of
+				breast cancer
+			</documentation>
+		</element>
+
+		<element name="ClinicalSymptoms" type="SourceCode">
+			<documentation>Indicate whether patient has clinical symptoms
+			</documentation>
+		</element>
+
+		<element name="PalpableMassPrior" type="SourceCode">
+			<documentation>Indicate whether patient has a palpable mass that was
+				detected prior to the mammogram
+			</documentation>
+		</element>
+
+		<element name="PriorBreastSurgery" type="SourceCode">
+			<documentation>Indicate whether patient has had prior breast surgery
+			</documentation>
+		</element>
+	</group>
+
+	<list name="PriorBreastSurgeries">
+		<documentation>Contains the PriorBreastSurgery information</documentation>
+
+		<idsDocument version="1.0.0" changeVersion="0"
+			domain="Clinical.Event"
+			type="instance_child"
+			name="MammogramEventBreastSurgery"
+			elementOrder="SurgeryDate, SurgeryTypeCode, BreastSurgeryLateralityCode, OutcomeCode">
+
+			<include name="CommonElements"
+				prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+				appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy" />
+
+			<documentation>TEST</documentation>
+
+			<element name="SurgeryDate" type="OmniDate">
+				<documentation>Date of prior breast surgery</documentation>
+			</element>
+
+			<element name="SurgeryTypeCode" type="SourceCode">
+				<documentation>Type of breast surgery</documentation>
+			</element>
+
+			<element name="BreastSurgeryLateralityCode" type="SourceCode">
+				<documentation>Side of the body that surgery occurred on</documentation>
+			</element>
+
+			<element name="OutcomeCode" type="SourceCode">
+				<documentation>Outcome of the surgery</documentation>
+			</element>
+		</idsDocument>
+	</list>
+
+	<group name="ExamData" udlName="exam"
+		elementOrder="MammogramOrder, MammogramOrderNumber, Procedure, ProcedureIdentifier,
+				      ExamNumber, ExamDate, ReadDate, ExamTypeCode, MammogramTypeCode, BreastCompositionCode,
+				      AssessmentBIRADCode, AssessmentMQSAClassCode, NottinghamClassificationCode,
+				      NotificationCode, RecallCode, FindingTypeCode, CancerTypeCode, PalpableCancerRetrospective,
+				      SizeCode, SizeDescription, CancerStage, TNMCancerTStage, TNMCancerNStage, TNMCancerMStage,
+				      TumorGrade, TFPNCode, CancerFoundLater, CancerFoundLaterDate, BiopsyType">
+
+		<documentation>Contains elements pertaining to ExamData.</documentation>
+
+		<element name="MammogramOrder" type="OmniLink" contains="RadiologyOrderEvent">
+			<documentation>A link to the RadiologyOrderEvent for the mammogram
+			</documentation>
+		</element>
+
+		<element name="MammogramOrderNumber" type="string">
+			<documentation>Order number for the Mammogram</documentation>
+		</element>
+
+		<element name="Procedure" type="OmniLink" contains="ProcedureEvent">
+			<documentation>A link to the ProcedureEvent for the mammogram</documentation>
+		</element>
+
+		<element name="ProcedureIdentifier" type="string">
+			<documentation>Identifier string for the procedure event</documentation>
+		</element>
+
+		<element name="ExamNumber" type="string">
+			<documentation>Identifying number for the exam. This may differ from
+				the control number representing the case</documentation>
+		</element>
+
+		<element name="ExamDate" type="OmniDate">
+			<documentation>Date of the mammogram exam</documentation>
+		</element>
+
+		<element name="ReadDate" type="OmniDate">
+			<documentation>Date the mammogram images were read</documentation>
+		</element>
+
+		<element name="ExamTypeCode" type="SourceCode">
+			<documentation>This code indicates whether this is a screening or
+				diagnostic exam. A diagnostic exam is done when symptoms have been
+				reported. A screening exam is done as a precautionary measure before
+				any symptoms are known.</documentation>
+		</element>
+
+		<element name="MammogramTypeCode" type="SourceCode">
+			<documentation>This captures the type of mammogram with respect to
+				the patient. This typically captures whether this is the first
+				mammogram, a regularly scheduled return, an early return, etc.</documentation>
+		</element>
+
+		<element name="BreastCompositionCode" type="SourceCode">
+			<documentation>This code describes the breast composition based on
+				induustry standard BI-RADS codes.</documentation>
+		</element>
+
+		<element name="AssessmentBIRADCode" type="SourceCode">
+			<documentation>This captures the industry standard BI-RADS code which
+				describes the assessment for the mammogram.
+			</documentation>
+		</element>
+
+		<element name="AssessmentMQSAClassCode" type="SourceCode">
+			<documentation>This captures the industry standard MQSA
+				classification code which describes the assessment class for the
+				mammogram.</documentation>
+		</element>
+
+		<element name="NottinghamClassificationCode" type="SourceCode">
+			<documentation>This captures the industry standard Nottingham
+				classification code which describes the assessment class for the
+				mammogram.</documentation>
+		</element>
+
+		<element name="NotificationCode" type="SourceCode">
+			<documentation>Indicates the appropriate type of message to send to
+				the patient based on results</documentation>
+		</element>
+
+		<element name="RecallCode" type="SourceCode">
+			<documentation>Indicates the time interval suggested for next
+				mammogram</documentation>
+		</element>
+
+		<element name="FindingTypeCode" type="SourceCode">
+			<documentation>Contains the code for the high-level finding of this
+				exam</documentation>
+		</element>
+
+		<element name="CancerTypeCode" type="SourceCode">
+			<documentation>If the finding type is Cancer, this describes the type
+				of cancer detected</documentation>
+		</element>
+
+		<element name="PalpableCancerRetrospective" type="SourceCode">
+			<documentation>Indicates that cancer was diagnosed after mammogram.
+				This is used in TPFN determination.</documentation>
+		</element>
+
+		<element name="SizeCode" type="SourceCode">
+			<documentation>Encodes the size of the lesion or tumor</documentation>
+		</element>
+
+		<element name="SizeDescription" type="string">
+			<documentation>Describes the size of the lesion or tumor for
+				situations where this is not encoded data</documentation>
+		</element>
+
+		<element name="CancerStage" type="SourceCode">
+			<documentation>Allows tracking of activities performed during each
+				phase of the surgery case.</documentation>
+		</element>
+
+		<element name="TNMCancerTStage" type="SourceCode">
+			<documentation>This is typically the letter T followed by a number
+				from 0 to 4 describes the tumor's size and spread to the skin or to
+				the chest wall under the breast. Higher T numbers mean a larger
+				tumor and/or wider spread to tissues near the breast.
+			</documentation>
+		</element>
+
+		<element name="TNMCancerNStage" type="SourceCode">
+			<documentation>This is typically the letter N followed by a number
+				from 0 to 3 indicates whether the cancer has spread to lymph nodes
+				near the breast and, if so, how many lymph nodes are affected.
+			</documentation>
+		</element>
+
+		<element name="TNMCancerMStage" type="SourceCode">
+			<documentation>This is typically the letter M followed by a 0 or 1
+				indicates whether the cancer has spread to distant organs -- for
+				example, the lungs or bones.</documentation>
+		</element>
+
+		<element name="TumorGrade" type="SourceCode">
+			<documentation>This is the American Joint Committee on Cancer
+				definition of the grade of the tumor</documentation>
+		</element>
+
+		<element name="TFPNCode" type="SourceCode">
+			<documentation>This is a high level summarization of the findings of
+				the mammogram. True positive: A positive mammogram with cancer
+				diagnosed by the end of follow-up. False positive: A positive
+				mammogram with no cancer diagnosed by the end follow-up. True
+				negative: A negative mammogram with no cancer diagnosed by the end
+				of follow-up. False negative: A negative mammogram with cancer
+				diagnosed by the end of follow-up.</documentation>
+		</element>
+
+		<element name="CancerFoundLater" type="SourceCode">
+			<documentation>Is the patient known to have been diagnosed with
+				cancer at a date in the future, sometime after this mammogram?
+			</documentation>
+		</element>
+
+		<element name="CancerFoundLaterDate" type="OmniDate">
+			<documentation>If the patient is known to have been diagnosed with
+				cancer at a date in the future, sometime after this mammogram, this
+				captures the date of that diagnosis.
+			</documentation>
+		</element>
+
+		<element name="BiopsyType" type="SourceCode">
+			<documentation>Type of biopsy procedure performed</documentation>
+		</element>
+	</group>
+
+	<list name="AdditionalRecommendations">
+		<documentation>Contains the IDS Recommendation</documentation>
+
+		<idsDocument version="1.0.0" changeVersion="0"
+			domain="Clinical.Event"
+			type="instance_child"
+			name="MammogramEventRecommendation"
+			elementOrder="TypeCode, ExecutedIndicator, ExecutedDate, Description">
+
+			<include name="CommonElements"
+				prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+				appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy" />
+
+			<documentation>Recommendation</documentation>
+
+			<element name="TypeCode" type="SourceCode">
+				<documentation>Type of recommendation</documentation>
+				<example sourceName="TestSystem" codeSet="TypeCodes">Additional Views
+				</example>
+			</element>
+
+			<element name="ExecutedIndicator" type="SourceCode">
+				<documentation>Indicates whether the recommendation was executed</documentation>
+			</element>
+
+			<element name="ExecutedDate" type="OmniDate">
+				<documentation>If the recommendation was executed, indicates the date it was executed</documentation>
+			</element>
+
+			<element name="Description" type="string">
+				<documentation>This is the description of the recommendation</documentation>
+			</element>
+		</idsDocument>
+	</list>
+</idsDocument>

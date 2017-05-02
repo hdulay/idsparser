@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<idsDocument version="1.0.0" changeVersion="0" domain="Clinical" type="instance" name="SurgeryCaseCart"
+			 elementOrder="SurgeryCase, SurgicalProcedure, SurgicalArea, CartNumber, CartStatus, TimePointTypeDescription, CartItems">
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+	<notes>TEST</notes>
+	<documentation>The basic function of a case cart system is to ensure that the right instruments and supplies are
+		available at the right time for the right procedure. The case cart may contain supplies for a single case or for
+		multiple cases in separate drawers. After each procedure, used items are then reloaded onto the cart and
+		returned
+		to central services for processing, sterilization, or disposal. Carts can also be kept supplied and available in
+		the OR for the most common emergency procedures.
+	</documentation>
+
+	<element name="SurgeryCase" type="link" contains="SurgeryCase">
+		<documentation>Reference to the SurgeryCase for this movement</documentation>
+		<example>
+			<SurgeryCase>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>Surgery Case Alpha</SourceInstanceId>
+			</SurgeryCase>
+		</example>
+	</element>
+
+	<element name="SurgicalProcedure" type="link" contains="SurgeryProcedure">
+		<documentation>Reference to the SurgeryProcedure for this movement, if it is specificed at this level
+		</documentation>
+		<example>
+			<SurgeryProcedure>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>Procedure Beta</SourceInstanceId>
+			</SurgeryProcedure>
+		</example>
+	</element>
+
+	<element name="SurgicalArea" type="link" contains="FacilityLocation">
+		<documentation>Reference to the MovementEvent representing this event. The Movement event carries the date/time,
+			location and provider(s) associated with the event. The MovementEvent must be created separately from this
+			event.
+		</documentation>
+		<example>
+			<FacilityLocation>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>West Wing</SourceInstanceId>
+			</FacilityLocation>
+		</example>
+	</element>
+
+	<element name="CartNumber" type="string">
+		<documentation>Identifies the stage or step in the process of this surgery case. For example, phases could begin
+			from before the surgery to include the operating room preparation to pre-operative followed by operative and
+			finally post-operative to operating room cleanup.
+		</documentation>
+		<example>
+			<CartNumber>AGJ123</CartNumber>
+		</example>
+	</element>
+
+	<element name="CartStatus" type="code">
+		<documentation>Contains description of type of CartStatus</documentation>
+		<example sourceName="TestSystem" codeSet="CartStatusCodes">Filled</example>
+	</element>
+
+	<element name="TimePointTypeDescription" type="string">
+		<documentation>Contains the "point-in-time" activity performed during this phase.</documentation>
+		<example>
+			<TimePointTypeDescription>Unknown</TimePointTypeDescription>
+		</example>
+	</element>
+
+
+
+	<list name="CartItems">
+		<documentation>A group of attributes that describe the individual items in the case cart</documentation>
+		<idsDocument name="CartItem" udlName="CartItem" type="instance_child"
+						  elementOrder="ItemNumber, ItemDescription, ItemTypeCode, FillLocation, ReturnLocation, RequestQuantity,
+        FillQuantity, HoldQuantity, OpenQuantity, ReturnQuantity, UsedQuantity, WastedQuantity, WastedReasonCode,
+        WastedReason, ChargedQuantity, UnitCost, CostTypeCode, AverageCost, LastCost">
+
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+
+
+			<element name="ItemNumber" type="string">
+				<documentation>Item identifier for the item</documentation>
+				<example>
+					<ItemNumber>RT456</ItemNumber>
+				</example>
+			</element>
+
+			<element name="ItemDescription" type="string">
+				<documentation>Description of the item</documentation>
+				<example>
+					<ItemDescription>Syringe Caps for 3 in Syringes</ItemDescription>
+				</example>
+			</element>
+
+			<element name="ItemTypeCode" type="code">
+				<documentation>Equipment, Supplies, Medication, Implant</documentation>
+				<example sourceName="TestSystem" codeSet="ItemTypeCodes">Equipment</example>
+			</element>
+
+			<element name="FillLocation" type="link" contains="FacilityLocation">
+				<documentation>The inventory location this case cart pick list item was filled from</documentation>
+				<example>
+					<FacilityLocation>
+						<SourceName>TestSystem</SourceName>
+						<SourceInstanceId>Storage Unit A</SourceInstanceId>
+					</FacilityLocation>
+				</example>
+			</element>
+
+			<element name="ReturnLocation" type="link" contains="FacilityLocation">
+				<documentation>The inventory location that this case cart item was returned to.</documentation>
+				<example>
+					<FacilityLocation>
+						<SourceName>TestSystem</SourceName>
+						<SourceInstanceId>Storage Unit B</SourceInstanceId>
+					</FacilityLocation>
+				</example>
+			</element>
+
+			<element name="RequestQuantity" type="double">
+				<documentation>The quantity of this case cart item that was requested</documentation>
+				<example>
+					<RequestQuantity>100.1</RequestQuantity>
+				</example>
+			</element>
+
+			<element name="FillQuantity" type="double">
+				<documentation>The quantity of this item that was filled, i.e., placed in the cart</documentation>
+				<example>
+					<FillQuantity>67.9</FillQuantity>
+				</example>
+			</element>
+
+			<element name="HoldQuantity" type="double">
+				<documentation>The requested hold quantity for this item.</documentation>
+				<example>
+					<HoldQuantity>45.78</HoldQuantity>
+				</example>
+			</element>
+
+			<element name="OpenQuantity" type="double">
+				<documentation>The requested open quantity associated with this case cart item</documentation>
+				<example>
+					<OpenQuantity>23.16</OpenQuantity>
+				</example>
+			</element>
+
+			<element name="ReturnQuantity" type="double">
+				<documentation>The quantity of this case cart item that was returned to inventory</documentation>
+				<example>
+					<ReturnQuantity>19.44</ReturnQuantity>
+				</example>
+			</element>
+
+			<element name="UsedQuantity" type="double">
+				<documentation>The quantity of this case cart item that was used</documentation>
+				<example>
+					<UsedQuantity>1.89</UsedQuantity>
+				</example>
+			</element>
+
+			<element name="WastedQuantity" type="double">
+				<documentation>The quantity of this case cart item that was wasted</documentation>
+				<example>
+					<WastedQuantity>34.5</WastedQuantity>
+				</example>
+			</element>
+
+			<element name="WastedReasonCode" type="code">
+				<documentation>The reason code for why this item was wasted</documentation>
+				<example sourceName="TestSystem" codeSet="WastedReasonCodes">Damage</example>
+			</element>
+
+			<element name="WastedReason" type="string">
+				<documentation>The reason this item was wasted</documentation>
+				<example>
+					<WastedReason>Container fell and cracked</WastedReason>
+				</example>
+			</element>
+
+			<element name="ChargedQuantity" type="double">
+				<documentation>Charge Qty for the item</documentation>
+				<example>
+					<ChargedQuantity>100</ChargedQuantity>
+				</example>
+			</element>
+
+			<element name="UnitCost" type="double">
+				<documentation>Cost per unit of the item</documentation>
+				<example>
+					<UnitCost>10</UnitCost>
+				</example>
+			</element>
+
+			<element name="CostTypeCode" type="code">
+				<documentation>Type of cost captured for the item</documentation>
+				<example sourceName="TestSystem" codeSet="CostTypeCodes">Average Cost</example>
+			</element>
+
+			<element name="AverageCost" type="double">
+				<documentation>Average cost of the item.</documentation>
+				<example>
+					<AverageCost>10</AverageCost>
+				</example>
+			</element>
+
+			<element name="LastCost" type="double">
+				<documentation>Last cost of the item</documentation>
+				<example>
+					<LastCost>8</LastCost>
+				</example>
+			</element>
+		</idsDocument>
+	</list>
+
+
+
+</idsDocument>

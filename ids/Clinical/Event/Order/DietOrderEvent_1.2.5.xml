@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.2.5" changeVersion="0" domain="Clinical.Event.Order" type="instance"
+			 name="DietOrderEvent" udlName="DietOrderEvent"  
+	 		 elementOrder="DietSpecificationCode, ServicePeriodCode, ProductCode, TextInstruction"
+	 		 implementationClass="com.ibi.omni.patient.model.clinical.event.order.DietOrderEvent">	 					
+	  	 					
+	<changeLog>
+		<change version="1.2.5_0">Initial Version</change>
+	</changeLog>
+	
+	<notes>
+	
+	</notes>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	<customType name="SourceCodeList" class="com.ibi.omni.patient.ids.SourceCodeListType"/>
+	
+	<include name="OrderElements"
+			 prependToElementOrder="EventDateTime, Location, OrderNumber, OrderTypeCode, PriorityCode, OrderReason, OrderOutcomeStatusCode, OrderDetailNumber, Sequence, OrderDetailStatusCode, OrderSetNumber, OrderSetName"
+			 appendToElementOrder="OrderDetailReasons"/>
+			 
+	<include name="EventElements"
+			 prependToElementOrder="ParentEvent, Encounter, CarePlanId, CarePlan, CCDCategoryCode"
+			 appendToElementOrder="EventProviders, EventNotes"/>
+			 
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	
+	<documentation>	
+Each order event captures the requests made by a Provider for a Patient's handling, diagnosis, treatment, etc. as part of an Encounter. 
+	</documentation>
+
+	<element name="DietSpecificationCode" type="SourceCode" codeSource="OMNI" codeSet="0159">
+		<documentation>
+		Identifies if the dietary product ordered was based on dietary restrictions, patient preference or as a supplemental product for consumption.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0159" sourceCode="D"/>
+	</element>
+
+	<element name="ServicePeriodCode" type="SourceCode" >
+		<documentation>
+		Specifies period of time to deliver the order. 
+		</documentation>
+		
+		<example sourceCodeSet="servicePeriodCodes" sourceCode="breakfast">Breakfast</example>
+	</element>
+	
+	<element name="ProductCode" type="SourceCode" codeSource="OMNI" codeSet="6070">
+		<documentation>
+		Identifies if the dietary product ordered was based on dietary restrictions, patient preference or as a supplemental product for consumption.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="6070" sourceCode="vegan"/>
+	</element>
+
+	<element name="TextInstruction" type="string" maxLength="1000">
+		<documentation>
+		Specifies dietary instructions.
+		</documentation>
+		
+		<example>This patient shall have a vegan meal</example>
+	</element>	
+	
+
+
+</idsDocument>

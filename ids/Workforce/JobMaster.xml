@@ -1,0 +1,315 @@
+<idsDocument name="JobMaster" tableName="worker_job_m" 
+		     type="master_child"
+		     domain="Workforce"
+			 elementOrder="MasterChildId, MasterStatus, MasterStatusReason, MasterStatusCode,
+					 	   Title, Job, Position, ReportsToPosition, Supervisor, PayrollStatus, RegularTemporary, FullPartTime, 
+				           StandardHours, StandardHoursFrequency, FullTimeEquivalent, HireDate, LastHireDate, LastWorkedDate, ExpectedReturnDate, 
+				           HRCompany, HRBusinessUnit, HRDepartment, HRLocation, HolidaySchedule, Compensation, Union">
+
+	<customType name="MasterCode" class="com.ibi.dib.core.ids.types.IdsMasterCodeType" />
+	<customType name="MasterOmniLink" class="com.ibi.dib.core.ids.types.IdsMasterLinkType" />
+
+	<documentation>
+		Use this IDS to feed Job-related information for a Worker at a particular
+		company.
+		A Worker may hold many jobs.
+	</documentation>
+
+	<element name="MasterChildId" key="true" type="string">
+		<documentation>
+		Id for children linked to a master. 
+		</documentation>
+	</element>  
+	
+	<element name="MasterStatus" type="string">
+		<documentation>
+		Use this element to set the status of this record. This field will default to 'ACTIVE'
+		if not supplied. Possible values are: 'ACTIVE', 'INACTIVE', 'MERGED', 'LINKED', 'UNLINK'
+		</documentation>
+	</element>
+	
+	<element name="MasterStatusReason" type="string">
+		<documentation>
+		Use this element to specify the reason for the current status. This can be used for 
+		a simple note to help understand why the current status has been set.
+		</documentation>
+	</element>  
+
+	<element name="MasterStatusCode" type="MasterCode" udlName="masterStatus">
+		<documentation>
+		This element is used by merging to define a status to the master. This status may
+		be used to provide enhanced filtering when viewed in the UI.
+		</documentation>
+	</element>
+	
+	<element name="Title" type="string">
+		<documentation>
+			The title of this job, which might be different then the worker's
+			official title.
+		</documentation>
+	</element>
+
+	<element name="Job" type="MasterCode">
+		<documentation>
+			The Job Code value associated with this job.
+		</documentation>
+	</element>
+
+	<element name="Position" type="MasterCode">
+		<documentation>
+			If the HR system is driven by position, use this data element to
+			identify
+			the position associated with the job.
+		</documentation>
+	</element>
+
+	<element name="ReportsToPosition" type="MasterCode">
+		<documentation>
+			If the HR system is driven by position, use this data element to
+			identify
+			the position that this position reports to (this is the Supervisor's
+			position).
+		</documentation>
+	</element>
+
+	<element name="Supervisor" type="MasterOmniLink" contains="WorkerMaster" dbColumn="supervisor_m_id">
+		<documentation>
+			Use this element to link or define the supervisor for this Job.
+		</documentation>
+	</element>
+
+	<element name="PayrollStatus" type="MasterCode">
+		<documentation>
+			Displays the payroll status of the current job record.
+
+			Some examples: Active, Deceased, Leave with Pay, Leave of Absence,
+			Retired, Retired with Pay,
+			Retired-Pension Administration, Suspended, Terminated, Terminated with Pay,
+			Terminated Pension Payout
+		</documentation>
+	</element>
+
+	<element name="RegularTemporary" type="MasterCode">
+		<documentation>
+			Indicates whether the worker is a regular employee or temporary employee.
+		</documentation>
+
+		<example omniSourceName="OMNI" omniCodeSet="RegularTemporaryCodes"
+			omniCode="R">Regular</example>
+	</element>
+
+	<element name="FullPartTime" type="MasterCode">
+		<documentation>
+			Indicates whether the worker is full-time or part-time.
+		</documentation>
+	</element>
+
+	<element name="StandardHours" type="double" dbColumn="std_hours">
+		<documentation>
+			Indicates the standard hours for the worker.
+		</documentation>
+	</element>
+
+	<element name="StandardHoursFrequency" type="MasterCode"
+		table="6025" dbColumn="std_hours_frequency_code">
+		<documentation>
+			Indicates the time period during which workers must complete the standard
+			hours.
+			Ex. Day, Week, Month, Year, etc.
+		</documentation>
+	</element>
+
+	<element name="FullTimeEquivalent" type="double">
+		<documentation>
+			Indicates the percentage of full-time work that the worker should normally
+			work in this job. This value is based on the standard hours entry for
+			this job and
+			the standard work period. Full time positions will generally be eqaul to
+			1.0.
+		</documentation>
+	</element>
+
+	<element name="HireDate" type="date">
+		<documentation>
+			Indicates the Hire Date for the job.
+		</documentation>
+	</element>
+
+	<element name="LastHireDate" type="date">
+		<documentation>
+			Indicates the Last Hire Date for the job.
+		</documentation>
+	</element>
+
+	<element name="LastWorkedDate" type="date">
+		<documentation>
+			The day before the termination effective date as the termination date
+			and the date
+			last worked. If the person is rehired, these fields should be cleared.
+			When a person returns from leave, this field should be cleared.
+		</documentation>
+	</element>
+
+	<element name="ExpectedReturnDate" type="date">
+		<documentation>
+			Use this element to specify when an inactive Worker is expected to
+			return to active status.
+		</documentation>
+	</element>
+
+	<element name="HRCompany" type="MasterCode">
+		<documentation>
+			The Company defined in the HR system that is associated with this job.
+		</documentation>
+	</element>
+
+	<element name="HRBusinessUnit" type="MasterCode">
+		<documentation>
+			The Business Unit defined in the HR system that is associated with this
+			job.
+		</documentation>
+	</element>
+
+	<element name="HRDepartment" type="MasterCode">
+		<documentation>
+			The Department defined in the HR system that is associated with this
+			job.
+		</documentation>
+	</element>
+
+	<element name="HRLocation" type="MasterCode">
+		<documentation>
+			The Location defined in the HR system that is associated with this job.
+		</documentation>
+	</element>
+
+	<element name="HolidaySchedule" type="MasterCode">
+		<documentation>
+			The Holiday Schedule that is associated with this job.
+		</documentation>
+	</element>
+
+	<group name="Compensation"
+		elementOrder="PayGroup, Rate, Frequency, Currency, Shift, ShiftDifferentialRate, ShiftDifferentialFactor"
+		udlName="compensation" dbColumnPrefix="comp">
+		<documentation>
+			Identifies compensation information associated with this job.
+		</documentation>
+
+		<element name="PayGroup" type="MasterCode">
+			<documentation>
+				Identifies the pay group under which this job will be paid.
+			</documentation>
+		</element>
+
+		<element name="Rate" type="double">
+			<documentation>
+				Indicates the compensation rate for the person, which is the sum of all
+				base pay salary components.
+			</documentation>
+		</element>
+
+		<element name="Frequency" type="MasterCode" table="6025">
+			<documentation>
+				Indicates the time period in which workers will earn their compensation
+				rate. Ex. Hourly, Weekly, Monthly, Yearly, etc.
+			</documentation>
+		</element>
+
+		<element name="Currency" type="MasterCode">
+			<documentation>
+				Indicates the currency code for the Compensation Rate.
+			</documentation>
+		</element>
+
+		<element name="Shift" type="MasterCode">
+			<documentation>
+				The designated shift associated with this job.
+			</documentation>
+		</element>
+
+		<element name="ShiftDifferentialRate" type="double">
+			<documentation>
+				The shift differential represented as a flat amount. May be populated
+				in combination with ShiftDifferentialFactor.
+			</documentation>
+		</element>
+
+		<element name="ShiftDifferentialFactor" type="double">
+			<documentation>
+				The shift differential represented as a percentage. May be populated in
+				combination with ShiftDifferentialRate.
+			</documentation>
+		</element>
+	</group>
+
+	<group name="Union"
+		elementOrder="Union, BargainingUnit, LaborAgreement, EmployeeCategory, EmployeeSubCategory, EmployeeSubCategory2, 
+			PayUnionFee, SeniorityDate, CategoryEntryDate"
+		udlName="union">
+		<documentation>
+			Identifies union information associated with this job.
+		</documentation>
+
+		<element name="Union" type="MasterCode" dbColumn="union_code">
+			<documentation>
+				Identifies the union code associated with this job.
+			</documentation>
+		</element>
+
+		<element name="BargainingUnit" type="MasterCode">
+			<documentation>
+				Identifies the specific bargaining unit within the union associated with this
+				job.
+			</documentation>
+		</element>
+
+		<element name="LaborAgreement" type="MasterCode">
+			<documentation>
+				Identifies the union labor agreement associated with this job.
+			</documentation>
+		</element>
+
+		<element name="EmployeeCategory" type="MasterCode">
+			<documentation>
+				Identifies the category of employee within the union associated with this job.
+			</documentation>
+		</element>
+
+		<element name="EmployeeSubCategory" type="MasterCode"
+			dbColumn="union_employee_subcat_code">
+			<documentation>
+				Identifies the sub category of employee within the union associated with this
+				job.
+			</documentation>
+		</element>
+
+		<element name="PayUnionFee" type="MasterCode">
+			<documentation>
+				Does employee pay union fees
+			</documentation>
+		</element>
+
+		<element name="EmployeeSubCategory2" type="MasterCode"
+			dbColumn="union_employee_subcat2_code">
+			<documentation>
+				Identifies the second sub category of employee within the union associated
+				with this job.
+			</documentation>
+		</element>
+
+		<element name="SeniorityDate" type="date">
+			<documentation>
+				Use this element to specify the date on which the worker enters the
+				union.
+			</documentation>
+		</element>
+
+		<element name="CategoryEntryDate" type="date">
+			<documentation>
+				Use this element to specify specify the date on which the worker enters
+				the category.
+			</documentation>
+		</element>
+	</group>
+</idsDocument>

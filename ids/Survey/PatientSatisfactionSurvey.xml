@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.0.0" changeVersion="0" domain="Survey"
+	type="instance" name="PatientSatisfactionSurvey"
+	elementOrder="MedicalFacility, MedicalFacilityLocation, MedicalOrganization, Department, ServiceLine, ServiceLineId,
+					ServiceLineName, Provider, Patient, Encounter, Survey, HCAHPSServiceLineInfo, PlanningCategoryCode,
+					PlanningSubCategoryCode, HCAHPSPatientInfo, HCAHPSEncounterInfo, HCAHPSSurveyData, OverallScoreBasisScaleBottom,
+					OverallScoreBasisScaleTop, OverallSentimentCode">
+
+	<changeLog>
+		<change version="1.0.0">Initial</change>
+		<change version="1.0.1">Added HCAHPSServiceLineInfo, HCAHPSEncounterInfo, HCAHPSPatientInfo, and HCAHPSSurveyData </change>
+	</changeLog>
+
+	<include name="CommonElements"
+		prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+		appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy" />
+
+	<documentation>
+		Surveys are used to poll customers on their level of satisfaction with a
+		service or product.
+		This IDS represents a general purpose survey to use when a there is no
+		tailored survey
+		(i.e. Patient Satisfaction, Provider Satisfaction, Safety Survey, etc).
+	</documentation>
+
+	<element name="MedicalFacility" type="link" contains="Facility">
+		<documentation>
+			Specifies the physical medical facility where the patient received treatment.
+		</documentation>
+	</element>
+
+	<element name="MedicalFacilityLocation" type="link" contains="FacilityLocation">
+		<documentation>
+			If data pertains to a particular location within the facility such as a
+			specific
+			building, it is defined here.
+		</documentation>
+	</element>
+
+	<element name="MedicalOrganization" type="link" contains="Organization">
+		<documentation>
+			Identifies the medical organization. This organization consists of a group of
+			people
+			working together to improve methods of health care delivery.
+		</documentation>
+	</element>
+
+	<element name="Department" type="link" contains="OrganizationalUnit">
+		<documentation>
+			Specifies the department (Emergency Room, Neonatal Unit, ICU, Radiology,
+			Oncology, etc.)
+			within the organization.
+		</documentation>
+	</element>
+
+	<element name="ServiceLine" type="link" contains="OrganizationalUnit">
+		<documentation>
+			A service line provides the healthcare industry the ability to
+			determine the profitability
+			of its diverse services. These are typically limited to a handful of
+			well defined, mutually exclusive categories
+			or groupings of individual services or interventions. They are often
+			associated with the DRG (diagnosis related group).
+			A service line can be tied to multiple physical locations (Oncology is
+			provided at Facility1 and Facility2, Orthopedics
+			is provided at Facility2 and Facility3).
+		</documentation>
+	</element>
+
+	<element name="ServiceLineId" type="string">
+		<documentation>
+			Identifies a number assigned to represent a specific service line. The
+			ServiceLineId
+			attribute should be used when the client hasn't implemented the
+			OrganizationalUnit defined as
+			type Service Line in the Organization IDS.
+		</documentation>
+	</element>
+
+	<element name="ServiceLineName" type="string">
+		<documentation>
+			Identifies a name assigned to represent a specific service line. The
+			ServiceLineName
+			attribute should be used when the client hasn't implemented the
+			OrganizationalUnit defined as
+			type Service Line in the Organization IDS.
+		</documentation>
+	</element>
+
+	<element name="Provider" type="link" contains="Provider">
+		<documentation>
+			Represents data about the individual who provided health care services during
+			the encounter.
+			The provider may or may not be relevant to this survey.
+		</documentation>
+	</element>
+
+	<group name="Patient"
+		elementOrder="Patient, Gender, Race, AgeAtArrival, AgeAtArrivalUnitCode">
+
+		<documentation>
+			Patient is a group of attributes containing patient specific information
+			gathered at the
+			time of the encounter. This data may or may not be relevant to this
+			survey.
+		</documentation>
+
+		<element name="Patient" type="link" contains="Patient">
+			<documentation>
+				Patient represents data about the individual who received health care
+				services during the encounter.
+			</documentation>
+		</element>
+
+		<element name="Gender" type="code">
+			<documentation>
+				Contains the patient's gender documented at the time of the encounter.
+			</documentation>
+		</element>
+
+		<element name="Race" type="code">
+			<documentation>
+				Contains the patient's race documented at the time of the encounter.
+			</documentation>
+		</element>
+
+		<element name="AgeAtArrival" type="integer">
+			<documentation>
+				Contains the patient's age when arrived for the encounter.
+			</documentation>
+		</element>
+
+		<element name="AgeAtArrivalUnitCode" type="code">
+			<documentation>
+				Contains the units in which the patient's age at arrival was documented.
+			</documentation>
+		</element>
+	</group>
+
+	<group name="Encounter"
+		elementOrder="Encounter, EncounterTypeCode, AdmissionDateTime, DischargeDateTime, PrincipalDiagnosisCode, LengthOfStay">
+
+		<documentation>
+			Encounter is a group of attributes containing details pertaining to the
+			patient's visit
+			and health care services received. This data may or may not be relevant
+			to this survey.
+		</documentation>
+
+		<element name="Encounter" type="link" contains="Encounter">
+			<documentation>
+				An Encounter is a specific instance of a patient coming in contact
+				with one or more
+				health care providers for the purpose of receiving health care services.
+			</documentation>
+		</element>
+
+		<element name="EncounterTypeCode" type="code">
+			<documentation>
+				Describes the type of interaction between a patient and healthcare
+				participants for
+				the purpose of providing patient services or assessing the health
+				status of a patient.
+				The encounter type value may be different than the initial type
+				assigned to the encounter if it changed over time.
+
+				Ambulatory: A comprehensive term for health care provided in a healthcare
+				facility on a nonresident basis.
+				The term ambulatory usually implies that the patient has come to the
+				location and is not assigned to a bed.
+				Sometimes referred to as an outpatient encounter.
+
+				Emergency: A patient encounter that takes place at a dedicated healthcare
+				service delivery location where
+				the patient receives immediate evaluation and treatment, provided until
+				the patient can be discharged or
+				responsibility for the patient's care is transferred elsewhere (for example, the
+				patient could be admitted
+				as an inpatient or transferred to another facility).
+
+				Field: A patient encounter that takes place both outside a dedicated
+				service delivery location and outside
+				a patient's residence (for example, traffic accident).
+				Home Health: Healthcare encounter that takes place in the residence of
+				the patient or a designee
+				(including physical therapy).
+
+				Inpatient Acute: A patient encounter where a patient is admitted by a
+				hospital or equivalent facility,
+				assigned to a location where patients generally stay at least overnight and
+				provided with room, board,
+				and continuous nursing service. Acute conditions are severe and sudden
+				in onset such as a heart attack.
+
+				Inpatient Non-Acute: A patient encounter where a patient is admitted by a
+				hospital or equivalent facility,
+				assigned to a location where patients generally stay at least overnight and
+				provided with room, board,
+				and continuous nursing service. Non-acute, or chronic, conditions have
+				a long-developing syndrome,
+				such as osteoporosis or asthma.
+
+				Pre-Admission: A patient encounter where patient is scheduled or planned to
+				receive service delivery
+				in the future, and the patient is given a pre-admission account
+				number. When the patient comes back for
+				subsequent service, the pre-admission encounter is selected and is
+				encapsulated into the service registration,
+				and a new account number is generated. Usage Note: This is intended to
+				be used in advance of encounter types
+				such as ambulatory, inpatient encounter, virtual, etc.
+
+				Short Stay: An encounter where the patient is admitted to a health care
+				facility for a predetermined
+				length of time, usually less than 24 hours.
+
+				Virtual: A patient encounter where the patient and the practitioner(s) are
+				not in the same physical location.
+			</documentation>
+		</element>
+
+		<element name="AdmissionDateTime" type="datetime">
+			<documentation>
+				Date and time the patient was admitted into the facility.
+			</documentation>
+		</element>
+
+		<element name="DischargeDateTime" type="datetime">
+			<documentation>
+				Date and time the patient was discharged into the facility.
+			</documentation>
+		</element>
+
+		<element name="PrincipalDiagnosisCode" type="code">
+			<documentation>
+				Depicts the principal diagnosed condition based on the standardized
+				diagnosis
+				code value set used in the health system (ICD-9, ICD-10).
+			</documentation>
+		</element>
+
+		<element name="LengthOfStay" type="integer">
+			<documentation>
+				Length of stay of inpatient for an encounter, represented in days. General
+				calculation
+				is the number of days from the Admission Date to the Discharge Date on
+				an Inpatient encounter. Each customer
+				may calculate this value based on different set of criteria. For
+				example, a customer may or may not truncate
+				the time portion of the Admission Date and Discharge Date which can
+				change the result by an entire day.
+			</documentation>
+		</element>
+	</group>
+
+	<group name="HCAHPSServiceLineInfo" elementOrder="HCAHPSServiceLineCode, HCAHPSServiceLineMethodCode ">
+		<documentation>
+			HCAHPSServiceLineInfo is a group of elements pertaining to the service line referenced on this HCAHPS survey.
+		</documentation>
+
+		<element name="HCAHPSServiceLineCode" type="code">
+			<documentation>
+				Contains the HCAHPS predefined values representing the service line pertaining to this survey.
+			</documentation>
+
+			<example sourceName="HCAHPS" codeSet="HCAHPSServiceLineCodes">
+				1 = Maternity Care
+			</example>
+		</element>
+
+		<element name="HCAHPSServiceLineMethodCode" type="code">
+			<documentation>
+				Contains the HCAHPS predefined values representing the method used to determine the HCAHPS service line.
+			</documentation>
+
+			<example sourceName="HCAHPS" codeSet="HCAHPSServiceLineMethodCodes">
+				1
+			</example>
+		</element>
+	</group>
+
+	<element name="PlanningCategoryCode" type="code">
+		<documentation>
+			These IDS's can be used to capture Actuals, Budgeted, Projected or Benchmarks for
+			any metric for the reporting period. A single IDS can be for only one Planning
+			Category/Subcategory combination. If the customer reports this at the facility level,
+			then each IDS represents one Facility/Category/Subcategory combination. The customer can
+			generate these at multiple levels if they so choose. IDS's at the facility level, or IDS's
+			down to the cost center level, or anything and everything in between.
+
+			The distinction between Budgeted (near-term) and Projected (longer term) is generally accepted,
+			but how the customer uses these categories is up to them; they just enable a means of making
+			comparisons. Actuals would capture the real statistics for the reporting period.
+
+			If they are so inclined, they might generate "Benchmark" IDS's if say there is an industry formula
+			for a hospital or organization of their size. Multiple benchmark IDS's might be generated for
+			different percentiles, if they exist or are calculable which is probably at the beginning of the
+			fiscal year, or when industry benchmarks are issued.
+		</documentation>
+
+		<example sourceName="TestSystem" codeSet="PlanningCategoryCode">
+			Projected
+		</example>
+	</element>
+
+	<element name="PlanningSubCategoryCode" type="code">
+		<documentation>
+			The Planning Subcategory provides a method to generate these Actuals, Budgeted, Projected or
+			Benchmarks IDS's for different percentiles, if they exist or are calculable.
+		</documentation>
+
+		<example sourceName="TestSystem" codeSet="PlanningSubCategoryCodes">
+			50th percentile
+		</example>
+	</element>
+
+	<group name="HCAHPSPatientInfo" elementOrder="HCAHPSAgeRangeCode, HCAHPSEducationLevelCode, HCAHPSSelfRatedHealthLevelCode, HCAHPSPatientLanguageCode ">
+		<documentation>
+			HCAHPSPatientInfo is a group of elements pertaining to the patient referenced on this HCAHPS survey.
+		</documentation>
+
+		<element name="HCAHPSAgeRangeCode" type="code">
+			<documentation>
+				Contains the HCAHPS predefined values representing the patient's age in years at the time of admission.
+			</documentation>
+
+			<example sourceName="HCAHPS" codeSet="HCAHPSAgeRangeCodes">
+				1 = 18 to 24
+			</example>
+		</element>
+
+		<element name="HCAHPSEducationLevelCode" type="code">
+			<documentation>
+				Contains the HCAHPS predefined values representing the patient's level of education.
+			</documentation>
+
+			<example sourceName="HCAHPS" codeSet="HCAHPSEducationLevelCodes">
+				3 = High school graduate or GED
+			</example>
+		</element>
+
+		<element name="HCAHPSSelfRatedHealthLevelCode" type="code">
+			<documentation>
+				Contains the HCAHPS predefined values representing how the patient rates his/her overall health.
+			</documentation>
+
+			<example sourceName="HCAHPS" codeSet="HCAHPSSelfRatedHealthLevelCodes">
+				3 = Good
+			</example>
+		</element>
+
+		<element name="HCAHPSPatientLanguageCode" type="code">
+			<documentation>
+				Contains the HCAHPS predefined values representing the patient's preferred language.
+			</documentation>
+
+			<example sourceName="HCAHPS" codeSet="HCAHPSPatientLanguageCodes">
+				1 = English
+			</example>
+		</element>
+	</group>
+
+
+	<group name="HCAHPSEncounterInfo" elementOrder=" HCAHPSAdmitSourceCode, HCAHPSDischargeStatusCode ">
+		<documentation>
+			HCAHPSEncounterInfo is a group of elements pertaining to the patient's admit source and discharge status referenced on this HCAHPS survey.
+		</documentation>
+
+		<element name="HCAHPSAdmitSourceCode" type="code">
+			<documentation>
+				Contains the HCAHPS predefined values representing the admit source pertaining to this survey.
+				The admit source represents from where the patient came in.
+			</documentation>
+
+			<example sourceName="HCAHPS" codeSet="HCAHPSAdmitSourceCodes">
+				1 = Non-healthcare Facility Point of Origin
+			</example>
+		</element>
+
+		<element name="HCAHPSDischargeStatusCode" type="code">
+			<documentation>
+				Contains the HCAHPS predefined values representing the reason the patient was discharged
+				from the hospital or where the patient was discharged to.
+			</documentation>
+
+			<example sourceName="HCAHPS" codeSet="HCAHPSDischargeStatusCodes">
+				66 = Critical Access Hospital
+			</example>
+		</element>
+	</group>
+
+	<group name="HCAHPSSurveyData" elementOrder="HCAHPSSurveyModeCode, HCAHPSSurveyCompletionModeCode, HCAHPSSurveyStatusCode, HCAHPSSurveyAttemptsPhoneCode,
+							 HCAHPSSurveyAttemptsMailCode">
+		<documentation>
+			HCAHPSSurveyData is a group of elements pertaining to how the survey was administered,
+			current status of survey completion and number of attempts to contact patient referenced
+			on this HCAHPS survey.
+		</documentation>
+
+		<element name="HCAHPSSurveyModeCode" type="code">
+			<documentation>
+				Specifies how the survey was administered such as by Mail, Telephone, Mail w/Telephone
+				Follow-up (Mixed) or IVR (Interactive Voice Response). IVR is a technology allowing a computer to interact with
+				a person using voice recognition and push-button telephones.
+			</documentation>
+
+			<example sourceName="HCAHPS" codeSet="HCAHPSSurveyModeCodes">
+				2 = Telephone only
+			</example>
+		</element>
+
+		<element name="HCAHPSSurveyCompletionModeCode" type="code">
+			<documentation>
+				Specifies how the survey was completed required only if Survey Mode is "Mixed mode" or
+				"IVR" and Survey Status is "Completed Survey" or "Non-response: Break off".
+			</documentation>
+
+			<example sourceName="HCAHPS" codeSet="HCAHPSSurveyCompletionModeCodes">
+				1 = Mixed mode-mail
+			</example>
+		</element>
+
+		<element name="HCAHPSSurveyStatusCode" type="code">
+			<documentation>
+				Indicates whether the survey has been completed, was ineligible for inclusion, received no response or is missing.
+			</documentation>
+
+			<example sourceName="HCAHPS" codeSet="HCAHPSSurveyStatusCodes">
+				1 = Completed Survey
+			</example>
+		</element>
+
+		<element name="HCAHPSSurveyAttemptsPhoneCode" type="code">
+			<documentation>
+				Specifies the number of telephone attempts to complete the survey required only
+				if the Survey Mode is "Telephone only", "Mixed mode" or "IVR" with Survey
+				Completion Mode of "Mixed mode-phone".
+			</documentation>
+
+			<example sourceName="HCAHPS" codeSet="HCAHPSSurveyAttemptsPhoneCodes">
+				2 = Second Telephone attempt
+			</example>
+		</element>
+
+		<element name="HCAHPSSurveyAttemptsMailCode" type="code">
+			<documentation>
+				Specifies the number of times the survey was mailed to the patient required
+				only if the Survey Mode is "Mail only".
+			</documentation>
+
+			<example sourceName="HCAHPS" codeSet="HCAHPSSurveyAttemptsMailCodes">
+				2 = Second wave mailing
+			</example>
+		</element>
+	</group>
+
+	<element name="Survey" type="link" contains="Survey">
+		<documentation>
+			Captures specific attributes for the focus and identification of the survey,
+			the approved
+			vendor that administered the survey, when it was taken, and the list of
+			questions and answers provided by
+			the person who filled out the survey.
+		</documentation>
+	</element>
+
+	<element name="OverallScoreBasisScaleBottom" type="double">
+		<documentation>
+			Lowest possible overall score.
+		</documentation>
+	</element>
+
+	<element name="OverallScoreBasisScaleTop" type="double">
+		<documentation>
+			Highest possible overall score.
+		</documentation>
+	</element>
+
+	<element name="OverallSentimentCode" type="code">
+		<documentation>
+			Responses to survey questions are evaluated and assigned points from which the
+			overall score is determined.
+			Sentiment analysis involves the classification of text to represent positive,
+			negative and neutral categories.
+		</documentation>
+	</element>
+</idsDocument>

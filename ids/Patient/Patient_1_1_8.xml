@@ -1,0 +1,693 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.1.8" changeVersion="5" domain="Patient" type="instance"
+			 name="Patient"  
+	 		 elementOrder="MasterId, PreMergeSurvivor, PatientType,FamilyGroupingIdentifier, DrugAllergies, DiseaseAlert, Occupation, Disability, LivingArrangement,
+					       LivingDependancy, Adopted, FosterChild, MultipleBirth, MultipleBirthTotal, BirthOrder,
+					       OrganDonor, LivingWill, LivingWillDate, BadDebt, IdentityUnknown, MyChartSignedupDate,
+					       Education, Habits, Gynecological, PreferredProviderPreferences,  
+	 		 	           Person, PreferredProviders, Overrides"
+	 		implementationClass="com.ibi.omni.patient.model.patient.Patient">
+	  	 					
+	<changeLog>
+		<change version="1.0.2">Added addendum data to Patient. This replaces the PatientAdditional information.</change>
+		<change version="1.0.3">Updated examples.</change>
+		<change version="1.0.4">Added the common change management fields.</change>
+		<change version="1.0.5">Added Override collection</change>
+		<change version="1.0.6">Added PatientType</change>
+		<change version="1.1.7_0">Supported Version</change>
+		<change version="1.1.8">
+		Added standardized Person element, which models after Provider and Worker.
+		
+		Removed MedicalRecordNumber this must be fed on Person.identifiers
+		
+		Removed SocialSecurityNumber this must be fed on Person.identifiers
+		
+		Following elements exist on Person and where removed from Patient.
+		Publicity, Protection, Gender, MaritalStatus, Language,
+	    CareLanguage, WrittenLanguage, EnglishFluency, InterpreterRequired, Citizenship, EthnicGroup,
+	    Race, Religion, PlaceOfWorship, MotherMaidenName, DateOfBirth, Deceased, DateOfDeath, CauseOfDeath,
+	    Handicap, HearingImpaired, VisuallyImpaired, Blind, Deaf, AmbulatoryStatus
+	    
+	    PatientAddendum has been combined with Patient with the following elements.
+	    FamilyGroupingIdentifier, DrugAllergies, DiseaseAlert, Occupation, Disability, LivingArrangement,
+		LivingDependancy, Adopted, FosterChild, MultipleBirth, MultipleBirthTotal, BirthOrder,
+		OrganDonor, LivingWill, LivingWillDate, BadDebt, IdentityUnknown, MyChartSignedupDate,
+		Education, Military, Habits, Gynecological, PreferredProviderPreferences
+		</change>
+		<change version="1.1.8_1">Changed Occupation to use code table 5010, and EducationLevel to use code table 5020.</change>
+		<change version="1.1.8_2">Extended Attribute Support</change>
+		<change version="1.1.8_3">Added SourceStatusCode to instance and collection items.</change>
+		<change version="1.1.8_4">Added PreMergeSurvivor element.</change>
+		<change version="1.1.8_5">Added mastering meta-data elements.</change>
+	</changeLog>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+	<include name="MasteringElements" appendToElementOrder="MatchRole,MatchCandidateGroupId,MatchQualityScore,MatchRule"/>
+	
+	<documentation>
+	Use this structure to feed base level Patient demographics information.
+	</documentation>
+
+	<element name="MasterId" type="string" hidden="true">
+		<documentation>
+		Links this instance to the master. This value is created and updated by the Omni
+		matching service.
+		</documentation>
+	</element>
+
+	<element name="PreMergeSurvivor" type="OmniLink" contains="Patient" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>		
+		There are often scenarios in a given source system where multiple instance records may be created 
+		that represent the same logical entity. At some point the source system may detect this issue and
+		would like to convey that information to the processing server.
+		
+		Use this element to indicate the surviving entity when multiple instances represent the same 
+		entity. This element will be used during the matching and merging process to insure that entity
+		instances are properly grouped. 
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<Patient>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>TestSystem:PatientSurvivor</SourceInstanceId>
+			</Patient>
+			]]>
+		</example>		
+	</element>
+			
+	<element name="PatientType" type="SourceCode">
+		<documentation>
+		Use this element to specify the type of patient. Examples: Confidential, Employee, Verified with no Medicare,
+		Prisoner, VIP, etc...) 
+		</documentation>
+		
+		<example sourceCodeSet="PatientTypeCodes" sourceCode="07">VIP</example>
+	</element>
+		
+		
+	<element name="PatientType" type="SourceCode">
+		<documentation>
+		Use this element to specify the type of patient. Examples: Confidential, Employee, Verified with no Medicare,
+		Prisoner, VIP, etc...) 
+		</documentation>
+		
+		<example sourceCodeSet="PatientTypeCodes" sourceCode="07">VIP</example>
+	</element>
+	
+	<element name="Person" type="document" contains="Person" immediate="false" excludeInDoc="true">
+		<documentation>
+		Use this element to specify Person related information. This can be used for Name, Addresses
+		ContactMethods, and Relations. Note: A Person MUST be fed only in context with another
+		object. Loading Person first then trying to link to it will not work.
+		</documentation>
+	</element>
+		
+	<element name="FamilyGroupingIdentifier" type="string">
+    	<documentation>
+    	Use this element to specify an identifier that can be used to group family members together. 
+    	Each member of the family who is a patient may carry this same identifier, thus can be
+    	grouped together.
+    	</documentation>
+    	
+    	<example>SMITH123</example>
+  	</element>
+
+  	<element name="DrugAllergies" type="SourceCode" codeTable="0136">
+		<documentation>
+		Use this element to indicate whether the patient has drug allergies or not.
+		</documentation>
+		
+		<example sourceCodeSet="YesNo" sourceCode="Y">Yes</example>
+	</element>
+
+	<element name="DiseaseAlert" type="SourceCode" codeTable="0136">
+		<documentation>
+		Use this element to flag a disease alert situation for the patient.
+		</documentation>
+		
+		<example sourceCodeSet="YesNo" sourceCode="Y">Yes</example>
+	</element>
+
+	<element name="Occupation" type="SourceCode" codeTable="5010">
+		<documentation>
+		Use this elemen to specify the occupation of the Patient.
+		</documentation>
+		
+		<example sourceCodeSet="Occupations" sourceCode="01">Software Developer</example>
+	</element>
+
+	<element name="Disability" type="SourceCode" codeTable="0000">
+		<documentation>
+		This fields defines the disability status of the Patient.
+		</documentation>
+				
+		<example sourceCodeSet="Disabilities" sourceCode="22">Blind</example>
+	</element>
+
+	<element name="LivingArrangement" type="SourceCode" codeTable="0220" HL7="PD1-2 Living Arrangement">
+		<documentation>
+		Use this element to identify the situation that where an associated party lives at the 
+		patients residential address. 
+		</documentation>
+		
+		<example sourceCodeSet="LivingArrangement" sourceCode="A">Alone</example>
+	</element>
+
+	<element name="LivingDependancy" type="SourceCode" codeTable="0223" HL7="PD1-1 Living Dependency" >
+		<documentation>
+		Use this element to identify specific living conditions that are relevant to an evaluation of the 
+		patient's health care needs. This information can be used for discharge planning. 
+		
+		Examples might include Spouse Dependent, Medical Supervision Required, Small Children Dependent.
+		</documentation>
+
+		<example sourceCodeSet="LivingDependancy" sourceCode="02">Spouse Dependant</example>
+	</element>
+
+	<element name="Adopted" type="SourceCode" codeTable="0136">
+		<documentation>
+		Use this element to specify whether the patient was adopted.
+		</documentation>
+		
+		<example sourceCodeSet="YesNo" sourceCode="Y">Yes</example>
+	</element>
+
+	<element name="FosterChild" type="SourceCode" codeTable="0136">
+		<documentation>
+		Use this element to specify whether the patient was a foster child.
+		</documentation>
+		
+		<example sourceCodeSet="YesNo" sourceCode="N">No</example>
+	</element>
+
+	<element name="MultipleBirth" type="SourceCode" codeTable="0136" HL7="PID-24 Multiple Birth Indicator" >
+		<documentation>
+ 		Use this element to indicate whether the patient was part of a multiple birth.
+		</documentation>
+		
+		<example sourceCodeSet="YesNo" sourceCode="Y">Yes</example>
+	</element>
+
+	<element name="MultipleBirthTotal" type="integer">
+		<documentation>
+		Specify the total number of births when a multiple birth situation is encountered. 
+	 	Specify the number such as; 2-Twins, 3-Triplets, etc...
+		</documentation>
+
+		<example>2</example>
+	</element>
+
+	<element name="BirthOrder" type="integer" HL7="PID-25 Birth Order" >
+		<documentation>
+		When a patient was part of a multiple birth, enter the value indicating the 
+		patient's birth order.
+		</documentation>
+
+		<example>1</example>
+	</element>
+
+	<element name="OrganDonor" type="SourceCode" codeTable="0136">
+		<documentation>
+		This element specifies whether the patient wants to donate his/her organs and 
+	 	whether an organ donor card or similar documentation is on file with the 
+	 	healthcare organization. 
+		</documentation>
+				
+		<example sourceCodeSet="YesNo" sourceCode="Y">Yes</example>
+	</element>
+
+	<element name="LivingWill" type="SourceCode" codeTable="0315" HL7="PD1-7,PV2-43 Living Will Code">
+		<documentation>
+		This element indicates the status of whether or not the patient has a living will and, if so, whether 
+	 	a copy of the living will is on file at the healthcare facility. If the patient does 
+	 	not have a living will, the value of this field indicates whether the patient 
+	 	was provided information on a living will. 
+		</documentation>
+		
+		<example sourceCodeSet="LivingWill" sourceCode="I">No, Patient does not have a living will but information was provided.</example>
+	</element>
+
+	<element name="LivingWillDate" type="OmniDate">
+		<documentation>
+		This element is used to specify the date the patient supplied a living will.
+		</documentation>
+		
+		<example format="yyyy-MM-dd">2000-01-01</example>
+	</element>
+	
+	<element name="BadDebt" type="SourceCode" codeTable="0136">
+		<documentation>
+		Use this element to specify a bad debt state of the Patient. 
+		</documentation>
+		
+		<example sourceCodeSet="YesNo" sourceCode="Y">Yes</example>
+	</element>
+	
+	<element name="IdentityUnknown" type="SourceCode" codeTable="0136">
+		<documentation>
+		This element indicates whether or not the patients identity is known. 
+		</documentation>
+		
+		<example sourceCodeSet="YesNo" sourceCode="N">No</example>
+	</element>
+
+	<element name="MyChartSignedupDate" type="OmniDate">
+		<documentation>
+		Use this element to specify the date the patient signed up for mychart access.
+		</documentation>
+		
+		<example format="yyyy-MM-dd">2010-12-12</example>
+	</element>
+
+<!--
+ - Education Information 
+ -->	
+	
+	<group name="Education" elementOrder="Student, SchoolName, EducationLevel, DegreeComplete" udlName="education">
+		<documentation>
+		Element in this group may be used to specify education information about the patient.
+		</documentation>
+		
+		<element name="Student" type="SourceCode" codeTable="0231" HL7="PD1-5 Student Indicator">
+			<documentation>
+			Use this element to identify whether the patient is currently a student or not.
+			This field does not indicate the degree (high school, college) of the student 
+			or the field of study. 
+			</documentation>
+			
+			<example sourceCodeSet="Student" sourceCode="F">Full Time Student</example>
+		</element>
+
+		<element name="SchoolName" type="string">
+			<documentation>
+			Use this element to specify the School that the patient is attending.
+			</documentation>
+			
+			<example>University of Somewhere</example>
+		</element>
+
+		<element name="EducationLevel" type="SourceCode" codeTable="5020">
+			<documentation>
+			Use this element to specify the education level of the Patient.
+			</documentation>
+
+			<example sourceCodeSet="EductionLevel" sourceCode="G">Graduate School</example>
+		</element>
+		
+		<element name="DegreeComplete" type="string">
+			<documentation>
+			Use this element to specify highest degree that the Patient has attained.
+			</documentation>
+			
+			<example>Master's</example>
+		</element>
+	</group>
+
+<!--
+ - Habits 
+ -->	
+		
+	<group name="Habits" 
+	       elementOrder="AlcoholUse, AlcoholOunces, 
+			  	         TobaccoUse, TobaccoYears, ChewUse, SnuffUse, SmokingStartDate, SmokingQuitDate, TobaccoPkPerDay,
+						 CigarUse, CigaretteUse, PipeUse,
+						 IllicitDrugUse, IllicitFrequency, IVDrugUse" udlName="habit">
+		<documentation>
+		Elements in this grouping can be used to indicate potential habits the patient
+		may have.
+		</documentation>
+	
+		<element name="AlcoholUse" type="SourceCode" codeTable="0136">
+			<documentation>
+			Use this element to indicate the patients use of alcohol.
+			</documentation>
+			
+			<example sourceCodeSet="YesNo" sourceCode="Y">Yes</example>
+		</element>
+
+		<element name="AlcoholOunces" type="integer">
+			<documentation>
+			Use this element to specify the number of ounces of alcohol per day consumed
+			by the patient.
+			</documentation>
+			
+			<example>16</example>
+		</element>
+
+		<element name="TobaccoUse" type="SourceCode" codeTable="0136">
+			<documentation>
+			Use this element to specify whether the patient uses tobacco products on a 
+			regular basis.
+			</documentation>
+			
+			<example sourceCodeSet="YesNo" sourceCode="Y">Yes</example>
+		</element>
+
+		<element name="TobaccoYears" type="integer">
+			<documentation>
+			Use this element to specify the number of years the patient has been using
+			tobacco products.
+			</documentation>
+			
+			<example>15</example>
+		</element>
+
+		<element name="ChewUse" type="SourceCode" codeTable="0136">
+			<documentation>
+			Use this element to indicate whether the patient uses chew.
+			</documentation>
+			
+			<example sourceCodeSet="YesNo" sourceCode="Y">Yes</example>
+		</element>
+
+		<element name="SnuffUse" type="SourceCode" codeTable="0136">
+			<documentation>
+			Does patient use snuff.
+			</documentation>
+			
+			<example sourceCodeSet="YesNo" sourceCode="Y">Yes</example>
+		</element>
+		
+		<element name="SmokingStartDate" type="OmniDate">
+			<documentation>
+			Use this element to specify the date the patient began smoking.
+			</documentation>
+			
+			<example format="yyyy-MM-dd">1990-01-01</example>			
+		</element>
+
+		<element name="SmokingQuitDate" type="OmniDate">
+			<documentation>
+			Use this element to specify the date the patient stopped smoking.
+			</documentation>
+			
+			<example format="yyyy-MM-dd">2005-01-01</example>
+		</element>
+
+		<element name="TobaccoPkPerDay" type="integer">
+			<documentation>
+			Use this element to specify the packs of cigarettes the patient consumes
+			per day.
+			</documentation>
+			
+			<example>5</example>
+		</element>
+
+		<element name="CigarUse" type="SourceCode" codeTable="0136">
+			<documentation>
+			Use this element to indicate whether the patient smokes cigars.
+			</documentation>
+			
+			<example sourceCodeSet="YesNo" sourceCode="Y">Yes</example>
+		</element>
+
+		<element name="CigaretteUse" type="SourceCode" codeTable="0136">
+			<documentation>
+			Use this element to indicate whether the patient smokes cigarettes.
+			</documentation>
+			
+			<example sourceCodeSet="YesNo" sourceCode="Y">Yes</example>
+		</element>
+
+		<element name="PipeUse" type="SourceCode" codeTable="0136">
+			<documentation>
+			Use this element to indicate whether the patient smokes a pipe.
+			</documentation>
+			
+			<example sourceCodeSet="YesNo" sourceCode="Y">Yes</example>
+		</element>
+		
+		<element name="IllicitDrugUse" type="SourceCode" codeTable="0136">
+			<documentation>
+			Use this element to indicate whether the patient uses illicit drugs.
+			</documentation>
+			
+			<example sourceCodeSet="YesNo" sourceCode="Y">Yes</example>
+		</element>
+
+		<element name="IllicitFrequency" type="string">
+			<documentation>
+			Use this element to specify the frequency with which the patient consumes illicit
+			drugs.
+			</documentation>
+			
+			<example>3 per day</example>
+		</element>
+
+		<element name="IVDrugUse" type="SourceCode" codeTable="0136">
+			<documentation>
+			Use this element to specify whether the patient used IV drugs.
+			</documentation>
+			
+			<example sourceCodeSet="YesNo" sourceCode="Y">Yes</example>
+		</element>	
+	</group>
+
+<!--
+ - Gynecological
+ -->	
+    
+	<group name="Gynecological" udlName="gyn"
+	       elementOrder="GynecologicalNote, AgeAtMenarche, AgeAtMenopause, AgeAtFirstPregnancy, ExpectedDeliveryDate, ExpectedDeliveryDateComment,
+	                     ExpectedDeliveryDateEntered, MonthsSpentBreastfeeding">
+		<documentation>
+		Use elements in this grouping to specify general gynecological information for a patient.		
+		</documentation>
+
+		<element name="GynecologicalNote" type="string">
+			<documentation>
+			Use this element to specify a note for the patient.
+			</documentation>
+			
+			<example>Patient in good health.</example>
+		</element>
+
+		<element name="AgeAtMenarche" type="integer">
+			<documentation>
+			Use this element to specify the patients age at menarche.
+			</documentation>
+
+			<example>13</example>
+		</element>
+
+		<element name="AgeAtMenopause" type="integer">
+			<documentation>
+			Use this element to specify the patients age at menopause.
+			</documentation>
+			
+			<example>50</example>
+		</element>
+
+		<element name="AgeAtFirstPregnancy" type="integer">
+			<documentation>
+			Use this element to specify the patients age at first pregnancy.
+			</documentation>
+			
+			<example>21</example>
+		</element>
+
+		<element name="ExpectedDeliveryDate" type="OmniDate">
+			<documentation>
+			Use this element to specify a patients expected date of delivery.
+			</documentation>
+
+			<example format="yyyy-mm-dd">2000-11-11</example>
+		</element>
+
+		<element name="ExpectedDeliveryDateComment" type="string">
+			<documentation>
+			Use this element to capture an expected date of delivery comment.
+			</documentation>
+			
+			<example>Delivery should be on time.</example>
+		</element>
+  
+		<element name="ExpectedDeliveryDateEntered" type="OmniDate">
+			<documentation>
+			Use this element to specify the date that the expected date of delivery was entered
+			</documentation>
+
+			<example format="yyyy-MM-dd">2000-01-01</example>
+		</element>
+  
+		<element name="MonthsSpentBreastfeeding" type="integer">
+			<documentation>
+			Use this element to specify the number of months the patient spent breastfeeding.
+			</documentation>
+			
+			<example>22</example>
+		</element>
+	</group>
+  
+<!--
+ - Preferred Provider Preferences
+ -->
+    
+	<group name="PreferredProviderPreferences" udlName="preferredProvider" 
+		   elementOrder="Language, Gender, Specialty">
+		   
+		<documentation>
+		Use the elements in this grouping to specify general preferred provider preferences.
+		The Patient will contain the actual list of preferred providers.
+		</documentation>
+
+	  	<element name="Language" type="SourceCode" codeTable="0296">
+			<documentation>
+			Use this element to specify the preferred language for the patients Primary
+			Care Physician (PCP).
+			</documentation>
+			
+			<example sourceCodeSet="Language" sourceCode="E">English</example>
+		</element>
+
+		<element name="Gender" type="SourceCode" codeTable="0001">
+			<documentation>
+			Use this element to specify the preferred gender of the patients Primary
+			Care Physician (PCP).
+			</documentation>
+			
+			<example sourceCodeSet="Gender" sourceCode="F">Female</example>
+		</element>
+
+		<element name="Specialty" type="SourceCode" codeTable="0265">
+			<documentation>
+			Use this element to specify the preferred specialty of the patient's Primary Care
+			Physician (PCP).
+			</documentation>
+
+			<example sourceCodeSet="Specialities" sourceCode="CAN">Cancer</example>
+		</element>
+	</group>		
+
+	<list name="PreferredProviders">
+		<documentation>
+		Use this collection to specify the list of Preferred Providers used by this Patient instance.	
+		</documentation>
+		
+		<idsSpecification name="PatientPreferredProvider" udlName="PatientPreferredProvider" type="instance_child"
+			 		 		elementOrder="Type, StartDate, EndDate, Provider"
+			 		 		implementationClass="com.ibi.omni.patient.model.patient.PatientPreferredProvider">
+			 
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+					 	  	
+			<documentation>
+			Use this element to specify a preferred provider for a patient.
+			</documentation>
+		
+			<element name="Type" type="SourceCode" codeTable="">
+				<documentation>
+				Use this element to specify the type of provider being linked to
+			 	the patient. (i.e. ALLERGY, CARDIOLOGY, OBGYN, etc.)
+				</documentation>
+				
+				<example sourceCodeSet="PreferredProviderTypeCodes" sourceCode="ALLERGY">Allergy Doctor</example>
+			</element>
+		
+			<element name="StartDate" type="OmniDate">
+				<documentation>
+				Specify the date this preferred provider became active.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+		
+			<element name="EndDate" type="OmniDate">
+				<documentation>
+				Specify the date this preferred provider becomes inactive. 
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+		 
+			<element name="Provider" type="link" contains="Provider" keys="SourceName, SourceInstanceId" excludeInDoc="true">
+				<documentation>
+				Provide a link to a Provider. If provider does not exist then a placeholder will be created.
+				</documentation>
+				
+				<example>
+					<![CDATA[
+					<Provider>
+						<SourceName>TestSystem</SourceName>
+						<SourceInstanceId>AllergyDoctorId</SourceInstanceId>
+					</Provider>
+					]]>
+				</example>
+			</element>
+		</idsSpecification>
+	</list>	
+	
+	<list name="Overrides">
+		<documentation>
+		Use this collection to specify manual overrides between this Patient and 
+		the other specified Patient.	
+		</documentation>
+		
+		<idsSpecification name="PatientManualOverride" udlName="PatientManualOverride" type="instance_child"
+			 		 elementOrder="OverrideType, OtherPatient"
+			 		 implementationClass="com.ibi.omni.patient.model.patient.PatientManualOverride">
+			 		               	
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="ExtendedAttributes, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+				
+			<documentation>
+			Use this IDS to force a specific manual override between patients in Omni. The processing of the override
+			will be specific to the OverrideType and Patients specified. 
+			</documentation>
+			
+		 	<element name="OverrideType" type="SourceCode" codeTable="0000">
+				<documentation>
+				Use this element to specify what type of manual override should be performed between
+				the this Patient and the OtherPatient specified.
+				
+				Example: Link Patient - Should force the specified Patients to share the same Master record.
+		
+				HL7 Notes (Link):		
+				The A24 event is used when the first PID segment needs to be linked to the second PID segment 
+				and when both patient identifiers identify the same patient. Linking two or more patients 
+				does not require the actual merging of patient information; following a link event, 
+				the affected patient data records should remain distinct. For example, this event could 
+				be used in a hospital network environment in which there are multiple campuses and in 
+				which records need to be linked. For example, hospital A, hospital B, and hospital C 
+				would each keep their own records on a patient, but an A24 link event would be sent 
+				to a corporate-wide MPI to enable the coupling of ID information with the corporate 
+				ID number. It is used for corporate data repositories, etc.
+				</documentation>
+				
+				<example sourceCodeSet="OverrideTypeCodes" sourceCode="LP">Link Patients</example> 
+			</element>
+				
+		 	<element name="OtherPatient" type="document" contains="Patient">
+				<documentation>
+				Use this element to specify the other Patient effected by this manual override request.
+				</documentation>
+		
+				<example>
+					<![CDATA[
+					<Patient>
+						<SourceName>TestSystem</SourceName>
+						<SourceInstanceId>MRN:98765432</SourceInstanceId>
+					</Patient>
+					]]>
+				</example>
+			</element>
+		</idsSpecification>		
+	</list>	
+	
+</idsDocument>

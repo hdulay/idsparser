@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.2.5" changeVersion="0" domain="Clinical.Event.Order" type="instance"
+			 name="ServiceOrderEvent" udlName="ServiceOrderEvent"  
+	 		 elementOrder="ServiceCode"
+	 		 implementationClass="com.ibi.omni.patient.model.clinical.event.order.ServiceOrderEvent">	 					
+	  	 					
+	<changeLog>
+		<change version="1.2.5_0">Initial Version</change>
+	</changeLog>
+	
+	<notes>
+	
+	</notes>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	<customType name="SourceCodeList" class="com.ibi.omni.patient.ids.SourceCodeListType"/>
+	
+	<include name="OrderElements"
+			 prependToElementOrder="EventDateTime, Location, OrderNumber, OrderTypeCode, PriorityCode, OrderReason, OrderOutcomeStatusCode, OrderDetailNumber, Sequence, OrderDetailStatusCode, OrderSetNumber, OrderSetName"
+			 appendToElementOrder="OrderDetailReasons"/>
+			 
+	<include name="EventElements"
+			 prependToElementOrder="ParentEvent, Encounter, CarePlanId, CarePlan, CCDCategoryCode"
+			 appendToElementOrder="EventProviders, EventNotes"/>
+			 
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+
+	<element name="ServiceCode" type="SourceCode">
+		<documentation>
+			Contains the code representing the ordered service.
+		</documentation>
+
+	</element>
+
+
+
+</idsDocument>

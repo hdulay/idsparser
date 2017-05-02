@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.0.0" changeVersion="0" domain="Financial" type="xinstance"
+			 name="Receivables"  
+	 		 elementOrder="MedicalFacility, MedicalOrganization, CostCenter, AccountCode, AccountName, PeriodStartDate, PeriodEndDate, 
+					PeriodTypeCode, PlanningCategoryCode, PlanningSubCategoryCode, CurrencyCode, ReceivablesAging, ReceivablesAmounts">
+	 		               	
+	<changeLog>
+		<change version="1.0.0">Initial</change>
+	</changeLog>
+	
+
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+	<notes> 
+	 
+	</notes>
+			
+	<documentation>
+	Receivables enables the customer to populate aggregated totals by aging bucket, populate individual receivables, 
+	or both. What information is supplied is determined by the customer's reporting needs and desire for drill down.
+	</documentation>
+
+	<element name="MedicalFacility" type="link" contains="Facility">
+		<documentation>
+		Specifies the physical medical facility associated with the accounting transactions being reported.
+		</documentation>
+		
+		<example>
+			<Facility>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>Hospital</SourceInstanceId>
+			</Facility>
+		</example>
+	</element>
+
+	<element name="MedicalOrganization" type="link" contains="Organization">
+		<documentation>
+		Specifies the medical organization associated with the accounting transactions being reported.
+		</documentation>
+
+		<example>
+			<Organization>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>Medical Center</SourceInstanceId>
+			</Organization>
+		</example>
+			
+	</element>
+
+	<element name="CostCenter" type="link" contains="OrganizationalUnit">
+		<documentation>
+		An Organizational Unit is a specific group or entity for organizing or managing resources 
+		within the enterprise.  Usually, these are made up of people or locations which cooperate 
+		in specified objectives.  These may be Departments, Divisions, Nursing Units, Service Lines, 
+		Regions, Cost Centers, etc.  A G/L Cost Center is a segment of an enterprise for which Accounting 
+		is performed in the General Ledger.  G/L Cost Centers are arranged into a hierarchy which allows 
+		roll-ups and drill-downs on financial information within the enterprise.  Low-level Cost Centers 
+		may be Nursing Units if the hierarchy is based on physical location, or may be Service Specialty 
+		if the hierarchy is based on Service Line.
+		</documentation>
+		
+		<example>
+			<OrganizationalUnit>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>Accounting Department</SourceInstanceId>
+			</OrganizationalUnit>
+		</example>
+	</element>
+	
+	<element name="AccountCode" type="string">
+		<documentation>
+		Identifies the code assigned to an account for tracking receivables.
+		</documentation>
+		
+		<example>
+			<AccountCode>
+				1345
+			</AccountCode>
+		</example>
+	</element>
+
+	<element name="AccountName" type="string">
+		<documentation>
+		Identifies the name assigned to an account for tracking receivables.
+		</documentation>
+		
+		<example>
+			<AccountName>
+				JohnDoeAccountName
+			</AccountName>
+		</example>
+	</element>
+	
+
+	<element name="PeriodStartDate" type="datetime">
+		<documentation>
+		Contains the starting date for the receivables transactions.
+		</documentation>
+		
+		<example>
+			<PeriodStartDate format="yyyy-MM-dd">
+				2015-01-01
+			</PeriodStartDate>
+		</example>
+	</element>
+	<element name="PeriodEndDate" type="datetime">
+		<documentation>
+		Contains the ending date for the receivable transactions.
+		</documentation>
+		
+		<example>
+			<PeriodEndDate format="yyyy-MM-dd">
+				2015-02-02
+			</PeriodEndDate>
+		</example>
+	</element>
+
+	<element name="PeriodTypeCode" type="code">
+		<documentation>
+		Identifies the period of time for the receivable transactions.
+		</documentation>
+		
+		<example sourceName="TestSystem" codeSet="PeriodTypeCodes">
+			Year
+		</example>
+	</element>
+
+	<element name="PlanningCategoryCode" type="code">
+		<documentation>
+		These IDS's can be used to capture Actuals, Budgeted, Projected or Benchmarks 
+		for any metric. A single IDS can be for only one Category/Subcategory combination. 
+		If they report this at the departmental level, then each IDS represents one 
+		Department/Category/Subcategory combination. The customer can generate these 
+		at multiple levels if they so choose. IDS's at the facility level, or IDS's 
+		down to the departmental level, or anything and everything in between. 
+		As long as they are consistent, roll-ups and drill downs in the 
+		marts will work properly. 
+		
+		For instance, FinancialReport IDS's are probably created as quarterlies. So at the beginning 
+		of a fiscal year, the client might generate "Budgeted" FinancialReport IDS's for
+		each of the four upcoming fiscal quarters. They might generate "Projected" 
+		FinancialReport IDS's for out year quarters. The distinction between Budgeted 
+		(near-term) and Projected (longer term) is generally accepted, 
+		but how the customer uses these categories is up to them; they just 
+		enable a means of making comparisons. 
+	
+		If they are so inclined, they might generate "Benchmark" FinancialReport IDS's 
+		if say there is an industry formula for a hospital or department of their size. 
+		Multiple benchmark IDS's might be generated for different percentiles, 
+		if they exist or are calculable. Probably at the beginning of the fiscal year,
+		or when industry benchmarks are issued.
+
+		As they close each financial quarter, they will generate the "Actual" FinancialReport IDS.
+		In BI, they will be able to compare the actual performance to budget, benchmark or whatever. 
+		It is not even necessary that all actuals have corresponding budgeted, projected or benchmarks.
+		
+		For Receivables, these IDS's might be generated monthly or at whatever interval they choose. 
+		The principal of the Planning Category and Sub Category remains the same. 
+		The number of IDS's generated depends on the granularity in reporting they are looking for.
+		</documentation>
+		
+		<example sourceName="TestSystem" codeSet="PlanningCategoryCode">
+			Projected
+		</example>
+	</element>
+
+	<element name="PlanningSubCategoryCode" type="code">
+		<documentation>
+		The Planning Subcategory provides a method to generate these Actuals, Budgeted, Projected or 
+		Benchmarks IDS's for different percentiles, if they exist or are calculable.
+		</documentation>
+		
+		<example sourceName="TestSystem" codeSet="PlanningSubCategoryCodes">
+			50th percentile
+		</example>
+	</element>
+
+	<element name="CurrencyCode" type="code">
+		<documentation>
+		Specifies the denomination for all amounts using the industry standard defined in
+		the ISO 4217 code set.
+		</documentation>
+		
+		<example sourceName="ISO4217" codeSet="CurrencyCode">
+			USD
+		</example>
+	</element>
+
+	<list name="ReceivablesAging">
+		<documentation>
+		ReceivablesAging is a collection of ReceivableAging buckets.  Accounts receivable aging is a 
+		method used to estimate bad debts expense by classifying accounts receivable of a business according 
+		to a period of time they have been outstanding and then estimating the probability of noncollection 
+		for each category.  Classification defined here is based on the A/R reporting financial class for a 
+		bucket of time.
+		</documentation>
+	
+	<idsDocument version="1.0.0" changeVersion="0" domain="Financial" type="xinstance_child"
+				 name="ReceivableAging"  
+		 		 elementOrder="AgingCategoryCode, ReportingFinancialClassCode, TotalReceivables, TotalCollected, TotalWrittenOff" >
+		<include name="CommonElements"
+				 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+				 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/> 		               	
+		<changeLog>
+			<change version="1.0.0">Initial</change>
+		</changeLog>
+	
+		<notes> 
+		</notes>
+				
+		<documentation>
+		Accounts receivable aging is a method used to estimate bad debts expense by classifying accounts receivable 
+		of a business according to a period of time they have been outstanding and then estimating the probability 
+		of noncollection for each category.  Classification defined here is based on the A/R reporting financial 
+		class for a bucket of time.
+		</documentation>
+	
+		<element name="AgingCategoryCode" type="code">
+			<documentation>
+			Categorizes the bucket of time to use in the receivables aging calculations.
+			</documentation>
+			
+			<example sourceName="TestSystem" codeSet="AgingCategoryCodes">
+				30 days	
+			</example>
+		</element>
+	
+		<element name="ReportingFinancialClassCode" type="code">
+			<documentation>
+			This Financial Class should include those values that are specific to A/R reporting as needed to 
+			slice and dice receivables by financial class of the encounter.  This enables the customer to 
+			collapse Financial Class values used on Encounters to a smaller set for reporting categorization.
+			</documentation>
+			
+			<example sourceName="TestSystem" codeSet="ReportingFinancialClassCodes">
+				Commercial
+			</example>
+		</element>
+	
+		<element name="TotalReceivables" type="double">
+			<documentation>
+			Represents the total receivables amount due based on the A/R reporting financial class for a bucket of time.
+			</documentation>
+			
+			<example>
+				<TotalReceivables>
+					500.00
+				</TotalReceivables>
+			</example>
+		</element>
+	
+		<element name="TotalCollected" type="double">
+			<documentation>
+			Represents the total receivables amount collected based on the A/R reporting financial class for a bucket of time.
+			</documentation>
+			
+			<example>
+				<TotalCollected>
+					250.00
+				</TotalCollected>
+			</example>
+		</element>
+	
+		<element name="TotalWrittenOff" type="double">
+			<documentation>
+			Represents the total receivables amount written off based on the A/R reporting financial class for a bucket of time.
+			</documentation>
+			
+			<example>
+				<TotalWrittenOff>
+					100.00
+				</TotalWrittenOff>
+			</example>
+		</element>
+	</idsDocument>
+	
+	</list>
+
+	<list name="ReceivablesAmounts">
+		<documentation>
+		ReceivablesAmounts is a collection of ReceivableAmount instances.  Receivables include all amounts 
+		that are due from customers or debtors.  In healthcare, receivables originate from services 
+		provided to patients.
+		</documentation>
+	
+	<idsDocument version="1.0.0" changeVersion="0" domain="Financial" type="xinstance_child"
+				 name="ReceivableAmount"  
+		 		 elementOrder="Account, AccountNumber, EncounterDepartureDateTime, InvoiceDate, ReceivableAmount, ReportingFinancialClassCode, 
+						InvoicedToCategoryCode">
+		<include name="CommonElements"
+				 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+				 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/> 		               	
+		<changeLog>
+			<change version="1.0.0">Initial</change>
+		</changeLog>
+	
+		<notes> 
+		</notes>
+				
+		<documentation>
+		Receivables include all amounts that are due from customers or debtors.  In healthcare, receivables originate 
+		from services provided to patients.
+		</documentation>
+	
+		<element name="Account" type="link" contains="Account">
+			<documentation>
+			An Account is a financial construct which accumulates charges in order to determine the amount to 
+			be claimed from the payer(s) and/or billed to the patient or guarantor.  In addition to charges, 
+			an account applies payments to reduce its remaining balance, adjustments to make corrections, etc.  
+			If the Account IDS has not been implemented by the client, the AccountNumber attribute can be used.
+			</documentation>
+	
+			<example>
+				<Account>
+					<SourceName>TestSystem</SourceName>
+					<SourceInstanceId>JohnDoeAccount</SourceInstanceId>
+				</Account>
+			</example>
+				
+		</element>
+	
+		<element name="AccountNumber" type="string">
+			<documentation>
+			Identifies the number of the account that receivables are applied to.  The AccountNumber attribute 
+			should be used when the client hasn't implemented the Account IDS.
+			</documentation>
+			
+			<example>
+				<AccountNumber>
+					1245
+				</AccountNumber>
+			</example>
+		</element>
+	
+		<element name="EncounterDepartureDateTime" type="datetime">
+			<documentation>
+			Tracks the date and time the patient leaves the facility for both inpatient and outpatient.  
+			For inpatient, can be different than discharge date.
+			</documentation>
+			
+			<example>
+				<EncounterDepartureDateTime format="yyyy-MM-dd">
+					2015-01-01
+				</EncounterDepartureDateTime>
+			</example>
+		</element>
+	
+		<element name="InvoiceDate" type="datetime">
+			<documentation>
+			Contains the date the charges were invoiced.
+			</documentation>
+			
+			<example>
+				<InvoiceDate format="yyyy-MM-dd">
+					2015-01-01
+				</InvoiceDate>
+			</example>
+		</element>	
+	
+		<element name="ReceivableAmount" type="double">
+			<documentation>
+			Represents the total receivables amount processed.
+			</documentation>
+			
+			<example>
+				<ReceivableAmount>
+						345.00
+				</ReceivableAmount>
+			</example>
+		</element>
+	
+		<element name="ReportingFinancialClassCode" type="code">
+			<documentation>
+			This Financial Class should include those values that are specific to A/R reporting as needed 
+			to slice and dice receivables by financial class of the encounter.  This enables the customer to 
+			collapse Financial Class values used on Encounters to a smaller set for reporting categorization.
+			</documentation>
+			
+			<example sourceName="TestSystem" codeSet="ReportingFinancialClassCodes">
+				Commercial
+			</example>
+		</element>
+	
+		<element name="InvoicedToCategoryCode" type="code">
+			<documentation>
+			The party from whom payment of the receivable is expected.  This is the type of party that has been 
+			billed for this amount, thereby generating the receivable.
+			</documentation>
+			
+			<example sourceName="TestSystem" codeSet="InvoicedToCategoryCodes">
+				Patient
+			</example>
+		</element>
+	</idsDocument>
+	
+	</list>
+</idsDocument>

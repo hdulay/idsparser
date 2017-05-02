@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.0.0" changeVersion="0" domain="Workforce" type="instance"
+			 name="JobRequisition"  
+	 		 elementOrder="MedicalFacility, MedicalOrganization, CostCenter, AccountCode, 
+					AccountName, PeriodStartDate, PeriodEndDate, PeriodTypeCode,
+					PlanningCategoryCode, PlanningSubCategoryCode, CurrencyCode,
+					RequisitionId, RequisitionStatusCode, DateOpened, 
+					DateFilled, DateClosed, DaysOpen, InternalExternalFilledCode">
+	 		               	
+	<changeLog>
+		<change version="1.0.0">Initial</change>
+	</changeLog>
+	
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+
+	<notes>
+	JobRequested has been removed from element order on account of Job not being able to be identified
+	</notes>
+
+	<documentation>
+ 	Job Requisition enables the customer to populate the Actual, Projected, Budget or Benchmark 
+	statistics for a job request by facility, organization or cost center for a reporting period.  
+	It tracks when the job request was opened, filled or cancelled.  It also captures the number of days the 
+	request was open and if it was filled internally or outside of the company.
+	</documentation>
+
+	<element name="MedicalFacility" type="OmniLink" contains="Facility">
+		<documentation>
+		Specifies the physical medical facility where the job request originated.
+		</documentation>
+	</element>
+
+	<element name="MedicalOrganization" type="OmniLink" contains="Organization">
+		<documentation>
+		Identifies the medical organization associated with this job requisition.  
+		This organization consists of a group of people working together to improve 
+		methods of health care delivery.
+		</documentation>
+	</element>
+
+	<element name="CostCenter" type="OmniLink" contains="OrganizationalUnit">
+		<documentation>
+		An Organizational Unit is a specific group or entity for organizing or managing 
+		resources within the enterprise.  Usually, these are made up of people or locations which cooperate 
+		in specified objectives.  These may be Departments, Divisions, Nursing Units, Service Lines, Regions,
+		 Cost Centers, etc.  A G/L Cost Center is a segment of an enterprise for which Accounting is performed 
+		in the General Ledger.  G/L Cost Centers are arranged into a hierarchy which allows roll-ups and 
+		drill-downs on financial information within the enterprise.  Low-level Cost Centers may be 
+		Nursing Units if the hierarchy is based on physical location, or may be Service Specialty 
+		if the hierarchy is based on Service Line.  Use this attribute to link to the Cost Center 
+		associated with this job request.
+		</documentation>
+	</element>
+
+	<element name="AccountCode" type="string">
+		<documentation>
+		Identifies the code assigned to the account associated with this job.
+		</documentation>
+		
+		<example>
+			<AccountCode>
+				4589
+			</AccountCode>
+		</example>
+	</element>
+
+	<element name="AccountName" type="string">
+		<documentation>
+		Identifies the name assigned to the account associated with this job.
+		</documentation>
+		
+		<example>
+			<AccountName>
+				JohnDoeAccountName
+			</AccountName>
+		</example>
+	</element>
+
+	<element name="PeriodStartDate" type="datetime">
+		<documentation>
+		Contains the starting date associated with this job request.
+		</documentation>
+		
+		<example>
+			<PeriodStartDate format="yyyy-MM-dd">
+				2015-03-03
+			</PeriodStartDate>
+		</example>
+	</element>
+	<element name="PeriodEndDate" type="datetime">
+		<documentation>
+		Contains the ending date associated with this job request.
+		</documentation>
+		
+		<example>
+			<PeriodEndDate format="yyyy-MM-dd">
+				2015-04-04
+			</PeriodEndDate>
+		</example>
+	</element>
+
+	<element name="PeriodTypeCode" type="SourceCode">
+		<documentation>
+		Identifies the period of time that the job requisition statistics represent.
+		</documentation>
+		
+		<example sourceName="TestSystem" codeSet="PeriodTypeCodes">
+			Year
+		</example>
+	</element>
+
+	<element name="PlanningCategoryCode" type="SourceCode">
+		<documentation>
+		These IDS's can be used to capture Actuals, Budgeted, Projected or Benchmarks for 
+		any metric for the reporting period. A single IDS can be for only one Planning 			
+		Category/Subcategory combination. If the customer reports this at the facility level, 
+		then each IDS represents one Facility/Category/Subcategory combination. The customer can 
+		generate these at multiple levels if they so choose. IDS's at the facility level, or IDS's 
+		down to the cost center level, or anything and everything in between. 
+
+		The distinction between Budgeted (near-term) and Projected (longer term) is generally accepted, 
+		but how the customer uses these categories is up to them; they just enable a means of making 
+		comparisons. Actuals would capture the real statistics for the reporting period.
+
+		If they are so inclined, they might generate "Benchmark" IDS's if say there is an industry formula 
+		for a hospital or organization of their size. Multiple benchmark IDS's might be generated for 
+		different percentiles, if they exist or are calculable which is probably at the beginning of the 
+		fiscal year, or when industry benchmarks are issued.
+		</documentation>
+		
+		<example sourceName="TestSystem" codeSet="PlanningCategoryCode">
+			Projected
+		</example>
+	</element>
+
+	<element name="PlanningSubCategoryCode" type="SourceCode">
+		<documentation>
+		The Planning Subcategory provides a method to generate these Actuals, Budgeted, Projected or 
+		Benchmarks IDS's for different percentiles, if they exist or are calculable.
+		</documentation>
+		
+		<example sourceName="TestSystem" codeSet="PlanningSubCategoryCodes">
+			50th percentile
+		</example>
+	</element>
+
+	<element name="CurrencyCode" type="SourceCode" codeSource="OMNI" codeSet="4217">
+		<documentation>
+		Specifies the denomination for all amounts using the industry standard defined in
+		the ISO 4217 code set.
+		</documentation>
+	</element>
+
+	<element name="JobRequested" type="OmniLink" contains="Job">
+		<documentation>
+		IMPORTANT:  Identifies the actual Job linked to this instance.  There currently is no IDS to 
+		define a Job individually.  Using the IDS for a Worker allows you to 			
+		get to a job using path Worker/Jobs/Job with its assigned SourceName and SourceInstanceId.    
+		IF WANT a generic Job reference outside of Worker, could use same approach as did with 
+		Survey (inline data type of "Survey" that is only used within another IDS like PatientSatisfaction).  
+		This is the approach used here...
+		</documentation>
+	</element>
+
+	<element name="RequisitionId" type="string">
+		<documentation>
+		Identifies the job requisition itself.
+		</documentation>
+		
+		<example>
+			<RequisitionId>
+				Application
+			</RequisitionId>
+		</example>
+	</element>
+
+	<element name="RequisitionStatusCode" type="SourceCode">
+		<documentation>
+		Tracks whether this job requisition is open, has been filled or was cancelled.
+		</documentation>
+		
+		<example sourceName="TestSystem" codeSet="RequisitionStatusCodes">
+			Open
+		</example>
+	</element>
+
+	<element name="DateOpened" type="datetime">
+		<documentation>
+		Contains the date when this job requisition was opened.
+		</documentation>
+		
+		<example>
+			<DateOpened format="yyyy-MM-dd">
+				2015-11-04
+			</DateOpened>
+		</example>
+	</element>
+
+	<element name="DateFilled" type="datetime">
+		<documentation>
+		Contains the date when this job requisition was filled.
+		</documentation>
+		
+		<example>
+			<DateFilled format="yyyy-MM-dd">
+				2015-12-04
+			</DateFilled>
+		</example>
+	</element>
+
+	<element name="DateClosed" type="datetime">
+		<documentation>
+		Contains the date when this job requisition was closed.
+		</documentation>
+		
+		<example>
+			<DateClosed format="yyyy-MM-dd">
+				2015-01-04
+			</DateClosed>
+		</example>
+	</element>
+
+	<element name="DaysOpen" type="integer">
+		<documentation>
+		Total number of days this job requisition was open during the reporting period.
+		</documentation>
+		
+		<example>
+			<DaysOpen>
+				30
+			</DaysOpen>
+		</example>
+	</element>
+
+	<element name="InternalExternalFilledCode" type="SourceCode">
+		<documentation>
+		Tracks whether this job requisition was filled by an employee currently on staff 
+		or by someone outside of the company.
+		</documentation>
+		
+		<example sourceName="TestSystem" codeSet="InternalExternalFilledCodes">
+			Internal
+		</example>
+	</element>
+</idsDocument>

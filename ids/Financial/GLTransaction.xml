@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.0.0" changeVersion="0" domain="Financial" type="instance"
+			 name="GLTransaction"
+			 elementOrder="MedicalFacility, MedicalOrganization, CostCenter, CostCenterCode, CostCenterName, Account,
+	 		 AccountCode, AccountName, TransactionStartDate, TransactionEndDate, PeriodTypeCode, PlanningCategoryCode,
+	 		 PlanningSubCategoryCode, CurrencyCode, ReferenceData, Description, Amount, Units, OriginatingSystem,
+	 		 OriginatingSystemName, OriginatingComponent, OriginatingComponentName, JournalEntryType, ToCompany, PostDate,
+	 		 EffectiveDate"
+>
+
+	<changeLog>
+		<change version="1.0.0">Initial</change>
+	</changeLog>
+
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+
+	<documentation>
+		Financial reporting offers many ways to capture accounting information for a healthcare
+		entity for a specific period of time.  This includes information on revenues, expense costs,
+		assets, liabilities, equities, gains and losses.  Additionally, it includes planning
+		information such as projected, budget, actual and benchmarking statistics.
+	</documentation>
+
+	<element name="MedicalFacility" type="OmniLink" contains="Facility">
+		<documentation>
+			Specifies the physical medical facility associated with the accounting transactions being reported.
+		</documentation>
+
+
+	</element>
+
+	<element name="MedicalOrganization" type="OmniLink" contains="Organization">
+		<documentation>
+			Specifies the medical organization associated with the accounting transactions being reported.
+		</documentation>
+
+
+
+	</element>
+
+	<element name="CostCenter" type="OmniLink" contains="OrganizationalUnit">
+		<documentation>
+			An Organizational Unit that represents the cost center or accounting unit for which the transaction applies.
+		</documentation>
+
+	</element>
+
+	<element name="CostCenterCode" type="string">
+		<documentation>
+			Identifies the code assigned to a cost center for tracking revenue and expenditures.
+		</documentation>
+	</element>
+
+	<element name="CostCenterName" type="string">
+		<documentation>
+			Identifies the name assigned to a cost center for tracking revenue and expenditures.
+		</documentation>
+	</element>
+
+	<element name="Account" type="OmniLink" contains="OrganizationalUnit">
+		<documentation>
+			An Organizational Unit that represents the account within the General Ledger's Chart of Accounts hierarchy
+			that identifies the type of transaction this represents.
+		</documentation>
+
+	</element>
+
+	<element name="AccountCode" type="string">
+		<documentation>
+			Identifies the code assigned to an account for tracking types of revenue and expenditures.
+		</documentation>
+
+
+	</element>
+
+	<element name="AccountName" type="string">
+		<documentation>
+			Identifies the name assigned to an account for tracking types of revenue and expenditures.
+		</documentation>
+
+
+	</element>
+
+
+	<element name="TransactionStartDate" type="datetime">
+		<documentation>
+			Contains the starting date this record represents is based on. For transactions, it is the transaction date.
+		</documentation>
+
+
+	</element>
+
+	<element name="TransactionEndDate" type="datetime">
+		<documentation>
+			Contains the ending date this record represents. For transactions, this will be the same as the Period Start Date.
+		</documentation>
+
+
+	</element>
+
+	<element name="PeriodTypeCode"  type="SourceCode">
+		<documentation>
+			Identifies the period of time this report is based on. If it is a summary record,
+			it will be a period (year, quarter, month, day, etc.) Otherwise it would indicate a single transaction.
+		</documentation>
+
+		<example sourceName="TestSystem" codeSet="PeriodTypeCodes">
+			Year
+		</example>
+	</element>
+
+	<element name="PlanningCategoryCode"  type="SourceCode">
+		<documentation>
+			The Planning Subcategory provides a way to categorize at a more granular level.
+		</documentation>
+
+
+	</element>
+
+	<element name="PlanningSubCategoryCode" type="SourceCode">
+		<documentation>
+			The Planning Subcategory provides a method to generate these Actuals, Budgeted, Projected or
+			Benchmarks IDS's for different percentiles, if they exist or are calculable.
+		</documentation>
+
+
+	</element>
+
+	<element name="CurrencyCode" type="code">
+		<documentation>
+			Specifies the denomination for all amounts using the industry standard defined in
+			the ISO 4217 code set.
+		</documentation>
+
+
+	</element>
+
+
+	<element name="ReferenceData" type="string">
+		<documentation>
+			Captures any reference information associated with the transaction.
+		</documentation>
+
+
+	</element>
+
+	<element name="Description" type="string">
+		<documentation>
+			Captures any descriptive text associated with the transaction.
+		</documentation>
+	</element>
+
+	<element name="Amount" type="double">
+		<documentation>
+			Represents the amount associated with this transaction.
+		</documentation>
+	</element>
+
+	<element name="Units" type="double">
+		<documentation>
+			The units amount associated with this transaction.
+		</documentation>
+	</element>
+
+	<element name="OriginatingSystem" type="SourceCode">
+		<documentation>
+			Code for originating system or the transaction.
+		</documentation>
+	</element>
+
+	<element name="OriginatingSystemName" type="string">
+		<documentation>
+			Name of originating system or the transaction.
+		</documentation>
+	</element>
+
+	<element name="OriginatingComponent" type="SourceCode">
+		<documentation>
+			Code for source component within originating system of transaction.
+		</documentation>
+	</element>
+
+	<element name="OriginatingComponentName" type="string">
+		<documentation>
+			Name of source component within originating system of transaction.
+		</documentation>
+	</element>
+
+	<element name="JournalEntryType" type="string">
+		<documentation>
+			The journal entry type, such as N(Normal), I(Intercompany), A(A/R Normal), R(A/R Intercpy).
+		</documentation>
+	</element>
+
+	<element name="ToCompany" type="OmniLink" contains="OrganizationalUnit" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+			Link to the TO Company, for intercompany transactions.
+		</documentation>
+
+
+	</element>
+
+	<element name="PostDate" type="OmniDate">
+		<documentation>
+			Posting date of the transaction.
+		</documentation>
+
+	</element>
+
+	<element name="EffectiveDate" type="OmniDate">
+		<documentation>
+			Effective date of the transaction.
+		</documentation>
+
+	</element>
+
+</idsDocument>

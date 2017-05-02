@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.0.0" changeVersion="0" domain="Clinical.Event" type="instance"
+			 name="PatientFallEvent"  
+	 		 elementOrder="EventDateTime, EventEndDateTime, Location, FallReportId,
+					AssistedFallIndicator, RepeatFallIndicator, FallClassificationCode,
+					FallReason, InjuryLevelCode, LikelihoodOfRepeatCode, GeneralLocation, FallDescription,
+					ContributingFactors, PriorFallRiskManagement, PreventionActions"
+			 backingClass="com.ibi.omni.patient.model.clinical.event.ClinicalEvent">
+
+	<changeLog>
+		<change version="1.0.0">Initial</change>
+		<change version="1.2.3_3">Added ParentEvent, Encounter, CarePlanID, CarePlan, EventProviders, and  EventNote</change>
+	</changeLog>
+
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+
+	<include name="EventElements"
+			 prependToElementOrder="ParentEvent, Encounter, CarePlanId, CarePlan, CCDCategoryCode"
+			 appendToElementOrder="EventProviders, EventNotes, ClinicalBaseFields "/>
+
+
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+				
+	<documentation>
+ 	Patient Fall Event is a type of clinical event tracking information regarding the patient falling.  
+	It includes contributing factors and reason patient fell, level of injury sustained, likelihood of patient 
+	falling again, assessment of a patient's prior fall, if any, and steps taken to lower the patient's risk of falling.
+	</documentation>	
+	
+	<element name="EventDateTime" type="datetime">
+		<documentation>
+		Date and time the patient fell.
+		</documentation>
+	</element>
+
+	<element name="EventEndDateTime" type="datetime">
+		<documentation>
+		Date and time marking the end of this clinical event.
+		</documentation>
+	</element>
+
+	<element name="Location" type="link" contains="FacilityLocation">
+		<documentation>
+		Facility location where the patient fell.
+		</documentation>
+	</element>
+	
+	<element name="FallReportId" type="string">
+		<documentation>
+		Identifies the documented report that details the patient's fall.
+		</documentation>
+	</element>
+
+	<element name="AssistedFallIndicator" type="code">
+		<documentation>
+		A fall in which any staff member (whether nursing service employee or not) was with the patient 
+		and attempted to minimize the impact of the fall by easing the patient's descent to the floor or, 
+		in some manner, attempting to break the patient's fall. "Assisting" the patient back to bed or chair 
+		after a fall is not an assisted fall.
+		</documentation>
+	</element>
+
+	<element name="RepeatFallIndicator" type="code">
+		<documentation>
+		More than one fall by the same patient after admission or transfer to a unit.
+		</documentation>
+	</element>
+
+	<element name="FallClassificationCode" type="code">
+		<documentation>
+		Classifies the type of patient fall such as if it was accidental or low risk but fell anyway.
+		</documentation>
+	</element>
+
+	<element name="FallReason" type="string">
+		<documentation>
+		Contains free-form text of the reason the patient fell such as slipped on wet floor, lost footing, or became disoriented and dizzy on way to bathroom.
+		</documentation>
+	</element>
+
+	<element name="InjuryLevelCode" type="code">
+		<documentation>
+		Specifies the level of injury the patient sustained from the fall.  
+		ANA-NDNQI (American Nurses Association, National Database of Nursing Quality Indicators) fall-related injury categories:
+		None:  Patient had no injuries resulting from the fall.
+		Minor:  Resulted in application of a dressing, ice, cleaning of a wound, limb elevation, or topical medications.
+		Moderate:  Resulted in suturing, application of Steri-Strips/skin glue, or splinting.
+		Major:  Resulted in surgery, casting, traction, or required consultation for neurologic or internal injury.
+		Death:  Patient died as a result of injuries sustained from the fall. 
+		</documentation>
+	</element>
+
+	<element name="LikelihoodOfRepeatCode" type="code">
+		<documentation>
+		Contains the assessed fall risk level of the patient's probability of falling a second time.
+		</documentation>
+	</element>
+
+	<element name="GeneralLocation" type="string">
+		<documentation>
+		Contains free-form text of the general location where the patient fell such as patient room, bathroom, common room, hallway, etc.
+		</documentation>
+	</element>
+
+	<element name="FallDescription" type="string">
+		<documentation>
+		Contains free-form text detailing the patient's fall.
+		</documentation>
+	</element>
+	
+	<list name="ContributingFactors">
+		<documentation>
+		ContributingFactors is a collection of ContributingFactor records.  There can be multiple factors 
+		that contributed to the patient's fall.
+		</documentation>
+		
+		<idsDocument version="1.0.0" changeVersion="0" domain="Clinical" type="instance_child"
+			 name="ContributingFactor"  
+	 		 elementOrder="TypeCode,  Description">
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/> 		               	
+		
+			<documentation>
+			Each record captures a factor that contributed to the patient's fall.
+			</documentation>
+	
+			<element name="TypeCode" type="code">
+				<documentation>
+				Contains the type of factor that contributed to the patient fall.
+				</documentation>
+			</element>
+	
+			<element name="Description" type="string">
+				<documentation>
+				Contains free-form text detailing how the selected factor contributed to the patient's fall.
+				</documentation>
+			</element>
+		</idsDocument>
+	</list>
+
+	<group name="PriorFallRiskManagement" 
+		   elementOrder="MostRecentAssessment, AssessmentCompletedIndicator, FallRiskScore, FallRiskMethod, AssessedFallRiskCode" 
+		   dbColumnPrefix="pfrm">
+		   
+		<documentation>
+		PriorFallRiskManagement is a group of elements capturing a patient's most recent fall 
+		risk assessment, score, and probability of the patient falling based on the assessment.
+		</documentation>
+
+		<element name="MostRecentAssessment" type="link" contains="PatientFallRiskAssessmentEvent" dbColumn = "pfrm_mra_patient_fall_risk_assessment_event">
+			<documentation>
+			Specifies the most recent fall risk assessment event reported on this patient.
+			</documentation>
+		</element>
+
+		<element name="AssessmentCompletedIndicator" type="code" dbColumn="pfrm_assesment_complete_ind">
+			<documentation>
+			Specifies whether a Fall Risk Assessment was performed on this patient.
+			</documentation>
+		</element>
+
+		<element name="FallRiskScore" type="double">
+			<documentation>
+			Contains the patient's most recent fall risk assessment score.
+			</documentation>
+		</element>
+
+		<element name="FallRiskMethod" type="string">
+			<documentation>
+			Contains the method used to assess the patient's fall risk probability 
+			(e.g. Morse, Conley, Johns Hopkins, Schmid, Hendrich I, II, Tinetti, Edmonson, Humpty Dumpty, 
+			Tullamore, STRATIFY, Briggs, Downton, Innes, MAHC).
+			</documentation>
+		</element>
+
+		<element name="AssessedFallRiskCode" type="code">
+			<documentation>
+			Contains the most recent assessed fall risk level of the patient's probability of falling.
+			</documentation>
+		</element>		
+	</group>
+
+	<group name="PreventionActions" 
+		   elementOrder="PreventionPlanDocumentedIndicator, PatientAndFamilyEducationDocumentedIndicator, 
+						 HourlyRoundsDocumentedIndicator, CallBellWithinReachIndicator, PatientMovedIndicator,
+			 		     SitterInPlaceIndicator, PatientVisibleRiskIndicationCode, PatientAppropriateFootwearCode,
+						 SpecialEquipmentInUseCode, AlarmsInUseCode, AssistiveMobilityDeviceCode,
+						 PatientTherapyCode" 
+		   dbColumnPrefix="pa">
+		    
+		<documentation>TBD</documentation>
+
+		<element name="PreventionPlanDocumentedIndicator" type="code" dbColumn="pa_prev_plan_doc_ind">
+			<documentation>
+			Indicates whether a plan to lower the patient's risk of falling has been documented.
+			</documentation>
+		</element>
+
+		<element name="PatientAndFamilyEducationDocumentedIndicator" type="code" dbColumn="pa_pat_fam_edu_doc_ind">
+			<documentation>
+			Indicates whether the patient's risk of falling has been discussed and documented with the patient and family.
+			</documentation>
+		</element>
+		
+		<element name="HourlyRoundsDocumentedIndicator" type="code" dbColumn="pa_hourly_rounds_doc_ind">
+			<documentation>
+			Indicates whether hourly rounds are performed and documented at this location.
+			</documentation>
+		</element>
+
+		<element name="CallBellWithinReachIndicator" type="code" dbColumn="pa_call_bell_inreach_ind">
+			<documentation>
+			Indicates whether the patient can reach the call bell if assistance is needed.
+			</documentation>
+		</element>
+
+		<element name="PatientMovedIndicator" type="code" dbColumn="pa_patient_moved_ind">
+			<documentation>
+			Indicates whether the patient was moved to a location that lowers the patient's risk of falling.
+			</documentation>
+		</element>
+
+		<element name="SitterInPlaceIndicator" type="code" dbColumn="pa_sitter_in_place_ind">
+			<documentation>
+			Indicates whether a sitter has been placed with the patient to lessen the risk of fall.
+			</documentation>
+		</element>
+
+		<element name="PatientVisibleRiskIndicationCode" type="code" dbColumn="pa_pat_visible_risk_ind">
+			<documentation>
+			A facility may employ visual aids for healthcare personnel to more readily recognize fall risk patients.  
+			Such visual aids may include a sign outside the patient's room, patient wearing a specific color of socks 
+			or has a specific color of blanket, indicator on patient's wrist band, etc.
+			</documentation>
+		</element>
+	
+		<element name="PatientAppropriateFootwearCode" type="code" dbColumn="pa_pat_appropriate_footware_code">
+			<documentation>
+			If at risk of falling, a patient can be given footwear to lessen the risk.
+			</documentation>
+		</element>
+
+		<element name="SpecialEquipmentInUseCode" type="code">
+			<documentation>
+			If at risk of falling even in a stationary position, special equipment can be provided for the patient 
+			to lessen the risk such as a low bed, side rails or a slip-resistant floor mat.
+			</documentation>
+		</element>
+
+		<element name="AlarmsInUseCode" type="code">
+			<documentation>
+			Indicates whether a type of alarm is being employed to help a patient when at risk of falling.
+			</documentation>
+		</element>
+
+		<element name="AssistiveMobilityDeviceCode" type="code">
+			<documentation>
+			To lessen the risk of fall, assistive equipment can be provided to assist with patient mobility.
+			</documentation>
+		</element>
+
+		<element name="PatientTherapyCode" type="code">
+			<documentation>
+			There are different types of therapy that may help lessen a patient's fall risk such as physical therapy, 
+			exercise and training to maintain better balance.
+			</documentation>
+		</element>
+	</group>
+</idsDocument>

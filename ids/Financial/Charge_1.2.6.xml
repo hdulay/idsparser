@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.2.6" changeVersion="1" domain="Financial" type="instance"
+			 name="Charge" 
+	 		 elementOrder="ChargeNumber, Account, ReplacesCharge, ReplacedByCharge, Provider, ServiceLine, Location, TransactionTypeCode, ChargeableEvent,
+	 		 ChargeCode, DiagnosisCode, DiagnosisRelatedGroupCode, AmbulatoryPaymentClassificationCode, RevenueCode,
+	 		 DrugCode, PharmacyDeaNumber, NcpdpNumber, ItemNumber, ModelNumber, ServiceDateTime,ReplacedDate, ChargeDateTime,
+	 		 ChargeDescription, Amounts, ICD9DecimalDiagnosisCode, ICD9NonDecimalDiagnosisCode, ICD10DiagnosisCode,
+	 		 SNOMEDCTDiagnosisCode, RxNormDrugCode, SNOMEDCTDrugCode, OtherChargeDiagnosisCodes, OtherDrugCodes, CostCenter"
+	 		 implementationClass="com.ibi.omni.patient.model.financial.Charge">
+	 		 	 					
+	<changeLog>
+		<change version="1.2.6_0">Initial Version</change>
+		<change version="1.2.6_1">Added SourceStatusCode to instance and collection items.</change>
+		<change version="2.3.0_0">Added ICD9DecimalDiagnosisCode, ICD9NonDecimalDiagnosisCode, ICD10DiagnosisCode,
+			SNOMEDCTDiagnosisCode, OtherChargeDiagnosisCodes, RxNormDrugCode, SNOMEDCTDrugCode, and OtherDrugCodes</change>
+	</changeLog>
+	
+	<notes>
+	- Added Charge Number
+	- Removed "Charge" from some variable names 
+	- Added Amounts group
+	- Re-ordered some data elements.
+	</notes>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	<customType name="SourceCodeList" class="com.ibi.dib.core.ids.types.IdsCodeListType"/>
+
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	
+	<documentation>	
+	</documentation>
+
+	<element name="ChargeNumber" type="string">
+		<documentation>
+		The business-facing number which identifies the Charge.
+		</documentation>
+		
+		<example>12345678</example>
+	</element>
+	
+	<element name="Account" type="OmniLink" contains="Account" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		Use this element to specify an Account in the system using the Account's SourceName and SourceInstanceId. You cannot load Account
+		information using this element, however if the Account is not found then a "placeholder" will be created that will contain the Account
+		when loaded.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<Account>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>AccountId</SourceInstanceId>
+			</Account>
+			]]>
+		</example>		
+	</element>
+	
+	<element name="ReplacesCharge" type="OmniLink" contains="Charge" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		Use this element to specify the charge being replaced by this charge.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+		<Charge>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>AccountId</SourceInstanceId>
+			</Charge>
+				]]>
+		</example>		
+	</element>
+
+	
+	<element name="ReplacedByCharge" type="OmniLink" contains="Charge" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		Use this element to specify the charge replacing this charge.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<Charge>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>AccountId</SourceInstanceId>
+			</Charge>
+			]]>
+		</example>		
+	</element>
+
+	<element name="Provider" type="OmniLink" contains="Provider" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		Use this element to specify the Provider who provided health care services during this clinical event using the Provider's SourceName and SourceInstanceId. You cannot load Provider
+		information using this element, however if the Provider is not found then a "placeholder" will be created that will contain the 
+		Provider when loaded.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<Provider>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>SourceName:ProviderId</SourceInstanceId>
+			</Provider>
+			]]>
+		</example>		
+	</element>
+
+	<element name="ServiceLine" type="OmniLink" contains="OrganizationalUnit" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		A single organizational unit, maintained in the Organization domain, will be assigned to each service line. A service line provides the healthcare industry the ability to determine the profitability of its diverse services.  These are typically limited to a handful of well defined, mutually exclusive categories or groupings of individual services or interventions.  They are often associated with the DRG.
+		Use this element to specify a ServiceLine in the system using the OrganizationalUnit's SourceName and SourceInstanceId. You cannot load OrganizationalUnit
+		information using this element, however if the OrganizationalUnit is not found then a "placeholder" will be created that will contain the OrganizationalUnit
+		when loaded.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<OrganizationalUnit>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>ServiceLineId</SourceInstanceId>
+			</OrganizationalUnit>
+			]]>
+		</example>		
+	</element>
+
+	<element name="Location" type="OmniLink" contains="FacilityLocation" keys="SourceName, SourceInstanceId" allowCreate="true">
+	    <documentation>
+	    Use this element to specify a FacilityLocation in the system using the FacilityLocation's SourceName and SourceInstanceId. You cannot load FacilityLocation
+	    information using this element, however if the FacilityLocation is not found then a "placeholder" will be created that will contain the FacilityLocation
+	    when loaded.
+	    </documentation>
+	    
+	    <example>
+	      <![CDATA[
+	      <FacilityLocation>
+	        <SourceName>TestSystem</SourceName>
+	        <SourceInstanceId>FacilityLocationId</SourceInstanceId>
+	      </FacilityLocation>
+	      ]]>
+	    </example>    
+	</element>
+
+	<element name="TransactionTypeCode" type="SourceCode" codeTable="0017">
+		<documentation>
+		Set of codes indicating the type of change which occurred to the balance of the account.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0017" sourceCode="CG"/>
+	</element>
+
+	<element name="ChargeableEvent" type="OmniLink" contains="Episode, Encounter, ProcedureEvent" keys="SourceName, SourceInstanceId" allowCreate="true">
+	    <documentation>
+	    Use this element to specify a Episode, Encounter, or ProcedureEvent in the system using the its SourceName and SourceInstanceId. You cannot load their
+	    information using this element, however if the object is not found then a "placeholder" will be created that will contain the SourceName and SourceInstanceId
+	    when loaded.
+	    </documentation>
+	    
+	    <example>
+	      <![CDATA[
+	      <ProcedureEvent>
+	        <SourceName>TestSystem</SourceName>
+	        <SourceInstanceId>ProcedureEventId</SourceInstanceId>
+	      </ProcedureEvent>
+	      ]]>
+	    </example>    
+	</element>
+
+	<element name="ChargeCode" type="SourceCode" >
+		<documentation>
+		Set of codes contained in a Charge Description Master (CDM) indicating the particular Clinical activity (item or service) for which the charge occurred to a Patient's Account.
+		</documentation>
+		
+		<example sourceCodeSet="ChargeCodes" sourceCode="12345">X-Ray</example>
+	</element>
+
+	<element name="DiagnosisCode" type="SourceCode" codeTable="ICD9">
+		<documentation>
+		Depicts the diagnosed condition based on the standardized diagnosis code value set used in the health system (ICD-9, ICD-10).
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="ICD9" sourceCode="052.8"/>
+	</element>
+
+	<element name="DiagnosisRelatedGroupCode" type="SourceCode" codeTable="6010">
+		<documentation>
+		A DRG (Diagnosis Related Group) is a mix of cases in a hospital that reflect the diversity, clinical complexity and the needs for resources in the population of patients in a hospital.  DRGs apply to inpatients and not to outpatients.  These DRGs group related healthcare services to determine payment/reimbursement for services.  They are calculated when the patient is discharged.  They can be of type Surgical or Medical and can be associated with an Organization Unit (Service Line) and MDC.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="6010" sourceCode="001"/>
+	</element>
+
+	<element name="AmbulatoryPaymentClassificationCode" type="SourceCode" codeTable="0466">
+		<documentation>
+		Ambulatory Payment Classifications (APCs) are Medicare's method of paying for facility outpatient services, and are applicable only to hospitals.  They have also been considered for adoption by state programs, such as Medicaid, and other third-party private health insurers.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0466" sourceCode="181"/>
+	</element>
+
+	<element name="RevenueCode" type="SourceCode" codeTable="0456">
+		<documentation>
+		RevenueCodes are the UB92 and UB04 Codes used for Medicare reporting.
+		Same as UB92 "Revenue Code" (Form Locator 42).  Identifies revenue codes that are either:
+			a) linked to a HCPCS/CPT code, or
+			b) not linked to a HCPCS/CPT code (for non-medical services such as telephone, TV or cafeteria charges, etc.).
+		There can be many per visit or claim.  This field is defined by CMS or other regulatory agencies.
+		Can instead be UB04 "Revenue Code".
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0456" sourceCode="986">Professional fees EEG</example>
+	</element>
+
+	<element name="DrugCode" type="SourceCode" codeTable="0549">
+		<documentation>
+		This data element was generically named "DrugCode" since other drug codes may be available.  However, the current intention is for this to contain NDC Codes as required by HIPAA for electronic claims for Pharmacy charges,etc.
+		The Drug Listing Act of 1972 requires registered drug establishments to provide the Food and Drug Administration (FDA) with a current list of all drugs manufactured, prepared, propagated, compounded, or processed by it for commercial distribution.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0549" sourceCode="0002-3004">Prozac</example>
+	</element>
+
+	<element name="PharmacyDeaNumber" type="string">
+		<documentation>
+		A number assigned to a pharmacy by the U.S. Drug Enforcement Administration allowing them to prepare and dispense controlled substances.
+		</documentation>
+		
+		<example>1234567</example>
+	</element>
+
+	<element name="NcpdpNumber" type="string">
+		<documentation>
+		A number assigned to every licensed pharmacy and qualified Non-Pharmacy Dispensing Sites (NPDS) in the United States by the  National Council for Prescription Drug Programs (NCPDP).  Also know as an "NCPDP Provider ID". (Formerly known as an NABP number.)
+		Even though pharmacies now use the National Provider Identifier (NPI) number to bill, MANY payers and third party contracting entities to use the NCPDP Provider ID to identify pharmacies. In addition, the data maintained in the NCPDP Provider ID pharmacy record assists payers and third party contracting entities in "crosswalking" between the NPI and NCPDP Provider ID.
+		</documentation>
+		
+		<example>1234567</example>
+	</element>
+
+
+	<element name="ItemNumber" type="string">
+		<documentation>
+		The identifying number for a charge for an inventory item.
+		</documentation>
+		
+		<example>1234567</example>
+	</element>
+
+	<element name="ModelNumber" type="string">
+		<documentation>
+		The identifying number for the model of a charge for an inventory item.
+		</documentation>
+		
+		<example>1234567</example>
+	</element>
+
+	<element name="ServiceDateTime" type="OmniDate">
+		<documentation>
+		Date and time the service was actually performed.  
+		</documentation>
+		
+		<example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+	</element>
+
+	<element name="ReplacedDate" type="OmniDate">
+		<documentation>
+		Date of the charge replacement.  
+		</documentation>
+		
+		<example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+	</element>
+
+	<element name="ChargeDateTime" type="OmniDate">
+		<documentation>
+		Date and time the charge was recorded on the account.   
+		</documentation>
+		
+		<example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+	</element>
+
+	<element name="ChargeDescription" type="string">
+		<documentation>
+		Textual description of the Charge.
+		</documentation>
+		
+		<example>Charge Description</example>
+	</element>
+
+	<group name="Amounts"
+	 	       elementOrder="CurrencyCode, ChargeQuantity, ChargeAmount, ActualCostAmount, ChargeMasterCostAmount" udlName="amt">
+		<documentation>
+		</documentation>
+
+		<element name="CurrencyCode" type="SourceCode" codeTable="4217">
+			<documentation>
+			The monetary unit in which all Amounts in the Charge are denominated.
+			</documentation>
+			
+			<example sourceName="OMNI" sourceCodeSet="4217" sourceCode="USD"/>
+		</element>
+	
+		<element name="ChargeQuantity" type="double">
+			<documentation>
+			Quantity of the particular service or inventory item.
+			</documentation>
+	
+			<example>1.0</example>
+		</element>
+
+		<element name="ChargeAmount" type="double">
+			<documentation>
+			Dollar amount of the particular service or inventory item.
+			</documentation>
+		</element>
+	
+		<element name="ActualCostAmount" type="double">
+			<documentation>
+			Dollar amount that it cost the hospital or provider to provide the particular service or inventory item.
+			</documentation>
+		</element>
+	
+		<element name="ChargeMasterCostAmount" type="double">
+			<documentation>
+			Dollar amount that the Charge Master (aka Charge Description Master (CDM)) indicates that it normally costs the hospital or provider to provide the particular service or inventory item.
+			</documentation>
+		</element>
+	</group>
+	<element name="ICD9DecimalDiagnosisCode" type="SourceCode" codeSource="ICD9" codeSet="2.16.840.1.113883.6.103-ALT">
+		<documentation>
+			Diagnosis code expressed as an ICD-9 code with decimal point.
+		</documentation>
+
+		<example sourceName="ICD9" sourceCodeSet="2.16.840.1.113883.6.103-ALT" sourceCode="052.8"/>
+	</element>
+
+	<element name="ICD9NonDecimalDiagnosisCode" type="SourceCode" codeSource="ICD9" codeSet="2.16.840.1.113883.6.103" dbColumn="icd9_no_dec_diagnosis_code">
+		<documentation>
+			Diagnosis code expressed as an ICD-9 code without a decimal point..
+		</documentation>
+
+		<example sourceName="ICD9" sourceCodeSet="2.16.840.1.113883.6.103" sourceCode="0528"/>
+	</element>
+
+	<element name="ICD10DiagnosisCode" type="SourceCode" codeSource="SNOMEDCT" codeSet="2.16.840.1.113883.6.90">
+		<documentation>
+			Diagnosis code expressed as an ICD-10 code.
+		</documentation>
+
+		<example sourceName="SNOMEDCT" sourceCodeSet="2.16.840.1.113883.6.90" sourceCode="052.8"/>
+	</element>
+
+	<element name="SNOMEDCTDiagnosisCode" type="SourceCode" codeSource="ICD10" codeSet="2.16.840.1.113883.6.96">
+		<documentation>
+			Diagnosis code expressed as a SNOMED CT code.
+		</documentation>
+
+		<example sourceName="ICD10" sourceCodeSet="2.16.840.1.113883.6.90" sourceCode="052.8"/>
+	</element>
+
+
+
+	<element name="RxNormDrugCode" type="SourceCode" codeSource="RXNORM" codeSet="2.16.840.1.113883.6.88">
+		<documentation>
+			Drug substance expressed as an RxNorm code.
+		</documentation>
+
+		<example sourceName="RXNORM" sourceCodeSet="2.16.840.1.113883.6.88" sourceCode="052.8"/>
+	</element>
+
+	<element name="SNOMEDCTDrugCode" type="SourceCode" codeSource="SNOMEDCT" codeSet="2.16.840.1.113883.6.96">
+		<documentation>
+			Drug substance expressed as a SNOMED code.
+		</documentation>
+
+		<example sourceName="SNOMEDCT" sourceCodeSet="2.16.840.1.113883.6.96" sourceCode="052.8"/>
+	</element>
+
+
+	<element name="OtherChargeDiagnosisCodes" type="SourceCodeList" contains="OtherChargeDiagnosisCode">
+		<documentation>
+			Diagnosis code(s) expressed in a coding system that is proprietary to the implementation environment.
+		</documentation>
+
+		<![CDATA[
+			<OtherChargeDiagnosisCode sourceName="ICD9" sourceCodeSet="2.16.840.1.113883.6.103-AL" sourceCode="NONE" />
+			<OtherChargeDiagnosisCode sourceName="ICD9" sourceCodeSet="2.16.840.1.113883.6.103-AL" sourceCode="ONE" />
+			]]>
+	</element>
+
+	<element name="OtherDrugCodes" type="SourceCodeList" contains="OtherDrugCode">
+		<documentation>
+			Diagnosis code(s) expressed in a coding system that is proprietary to the implementation environment.
+		</documentation>
+
+		<![CDATA[
+			<OtherDrugCode sourceName="ICD9" sourceCodeSet="2.16.840.1.113883.6.103-AL" sourceCode="NONE" />
+			<OtherDrugCode sourceName="ICD9" sourceCodeSet="2.16.840.1.113883.6.103-AL" sourceCode="ONE" />
+			]]>
+	</element>
+
+	<element name="CostCenter" type="OmniLink" contains="OrganizationalUnit">
+		<documentation>
+			An OrganizationalUnit reference to the Cost Center associated with this charge instance.
+		</documentation>
+	</element>
+</idsDocument>

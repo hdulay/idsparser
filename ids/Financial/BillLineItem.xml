@@ -1,0 +1,37 @@
+<idsDocument version="1.2.6"
+			 name="BillLineItem" 
+ 			 domain="Financial"
+		     type="instance_child" 
+		     elementOrder="BillLineNumber, BillLineTypeCode, BillLineAmount">
+
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType" />
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType" />
+
+	<include name="CommonElements"
+		prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+		appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy" />
+
+	<documentation>
+		Represents the billing record for a specific chargeable item on a bill.
+	</documentation>
+
+	<element name="BillLineNumber" type="string">
+		<documentation>
+			Number which represents the sequential order of this BillLineItem on the
+			Bill to which it belongs.
+		</documentation>
+	</element>
+
+	<element name="BillLineTypeCode" type="SourceCode" codeSource="HL7" codeSet="0017">
+		<documentation>
+			Set of codes indicating the type of change which occurred to the balance
+			of the account.
+		</documentation>
+	</element>
+
+	<element name="BillLineAmount" type="double">
+		<documentation>
+			Charge amount for this particular line on the Bill.
+		</documentation>
+	</element>
+</idsDocument>			

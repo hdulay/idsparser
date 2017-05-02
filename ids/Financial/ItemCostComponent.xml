@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<idsDocument version="1.0.0" changeVersion="0" domain="Financial"
+	type="instance" name="ItemCostComponent"
+	elementOrder="MedicalOrganization, MedicalFacility, CostCenter, AccountCode, AccountName, 
+						  PeriodStartDate, PeriodEndDate, ItemTypeCode, ItemReferenceId, ItemDescription, 
+						  CostCategoryCode, CostSubcategoryCode, DirectIndirectCostCode, FixedVariableCostCode, 
+						  OpexCapexCode, EBITDAExclusion, CurrencyType, CostAmount">
+
+	<include name="CommonElements"
+		prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+		appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy" />
+
+	<documentation>"This subject captures an aggregate of the total charges and costs for a particular item over a particular time. Depending on which are populated, this can be for an Organization, a Facility or a Cost Center (OrganizationalUnit)."
+	</documentation>
+
+	<element name="MedicalOrganization" type="link" contains="Organization">
+		<documentation>
+		Specifies the physical medical organization associated with the costing item
+		</documentation>
+	</element>
+
+	<element name="MedicalFacility" type="link" contains="Facility">
+		<documentation>
+		Specifies the medical facility associated with the costing item
+		</documentation>
+	</element>
+
+	<element name="CostCenter" type="link" contains="OrganizationalUnit">
+		<documentation>An Organizational Unit representing a specific cost
+			center. A Cost Center is a segment of an enterprise for which
+			Accounting is performed in the General Ledger.
+		</documentation>
+	</element>
+
+	<element name="AccountCode" type="string">
+		<documentation>Identifies the code assigned to an account for
+			tracking revenue and expenditures.
+		</documentation>
+	</element>
+
+	<element name="AccountName" type="string">
+		<documentation>Identifies the name assigned to an account for
+			tracking revenue and expenditures.
+		</documentation>
+	</element>
+
+	<element name="PeriodStartDate" type="datetime">
+		<documentation>
+		Contains the starting date that this cost component is valid. This is usually the first date of the fiscal year.
+		</documentation>
+	</element>
+	
+	<element name="PeriodEndDate" type="datetime">
+		<documentation>
+		Contains the ending date that this cost component is valid. This is usually the last date of the fiscal year.
+		</documentation>
+	</element>
+
+	<element name="ItemTypeCode" type="code">
+		<documentation>Defines type code of cost item</documentation>
+	</element>
+
+	<element name="ItemReferenceId" type="string">
+		<documentation>Unique identifier of the cost item</documentation>
+	</element>
+
+	<element name="ItemDescription" type="string">
+		<documentation>Description of the cost item</documentation>
+	</element>
+
+	<element name="CostCategoryCode" type="code">
+		<documentation>
+		Cost Category Code represents the category of the cost, such as: Salaries and Benefits, Physicians Fees, Equipment, Drugs, Supplies, Depreciation/Amortization, Interest, Taxes
+		</documentation>
+
+		<example sourceName="TestSystem" codeSet="CostCategoryCode">Physicians Fees</example>
+	</element>
+
+	<element name="CostSubcategoryCode" type="code">
+		<documentation>
+		Cost Subcategory Code represents subcategories, if applicable, to the CostCategoryCode. For instance Physicians Fees could be broken down into Fee For Service, and Capitation. 
+		</documentation>
+		<example sourceName="TestSystem" codeSet="CostSubcategoryCode">Capitation</example>
+	</element>
+
+	<element name="DirectIndirectCostCode" type="code">
+		<documentation>
+		Indicates whether the cost in a direct or indirect cost
+		</documentation>
+		<example sourceName="TestSystem" codeSet="DirectIndirectCostCodes">Direct</example>
+	</element>
+	
+	<element name="FixedVariableCostCode" type="code">
+		<documentation>Indicates whether the cost is a fixed or variable cost
+		</documentation>
+	</element>
+
+	<element name="OpexCapexCode" type="code">
+		<documentation>
+		Indicates whether the cost is a capital cost or operating cost
+		</documentation>
+	</element>
+
+	<element name="EBITDAExclusion" type="code">
+		<documentation>If the cost represents Interest, Tax, Depreciation or
+			Amortization, then (Y)es, otherwise (N)o.
+		</documentation>
+	</element>
+
+	<element name="CurrencyType" type="code" codeTable="4217">
+		<documentation>Specifies the denomination for all amounts using the
+			industry standard defined in the ISO 4217 code set.
+		</documentation>
+	</element>
+
+	<element name="CostAmount" type="number" precision="24" scale="12">
+		<documentation>Amount of the cost component. The value may include
+			more than two decimal places.
+		</documentation>
+		<example>123456789012.123456789012</example>
+	</element>
+</idsDocument>

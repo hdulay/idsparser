@@ -1,0 +1,550 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.0.0" changeVersion="0" domain="Clinical" type="instance"
+             name="AhrqQiToolOutput"
+             elementOrder="AhrqQiToolInputId, EncounterId, EncounterNumber, DischargeId, PatientNumber,
+             PatientDateOfBirth, PatientAgeInYears, PatientAgeInDays, RaceCode, GenderCode, PrimaryPayerCode,
+             PatientStateCountyFipsCode, Hospital, HospitalStateCountyFipsCode, AdmissionDate, AdmissionType,
+             AdmissionSource, DischargeYear, DischargeQuarter, DischargeDispositionCode, LengthOfStay, AprDrgCode,
+             AprDrgSeverityOfIllness, AprDrgRiskOfMortality, XprDrgRiskOfMortality, DrgVersion, DrgCode, MsDrgCode,
+             MajorDiagnosticCategory, DaysOnMechanicalVentilator, BirthWeightGrams, PointOfOrigin, IcdVersion,
+             HasMedicalDrgInd, HasSurgicalDrgInd, HasAdultDrgInd, HasOrProcedureInd, HasPediatricOrProcedureInd,
+             HasPediatricMedicalDrgInd, IsNeoNateInd, IsNewbornInd, IsOutbornInd, MdcOutCode, BirthWeightCategory,
+             OrProcedureCount, CardiacCount, CardiacPdaInd, RachsMultiple, PrematureBirthInd, StructuralAnomalies,
+             AhrqComorbidityFlag, AHRQComorbidityCategory, AHRQClinicalClassification, AhrqIndicator"
+>
+
+
+    <changeLog>
+        <change version="1.0.0">Initial</change>
+    </changeLog>
+
+
+    <include name="CommonElements"
+             prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+             appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+    <customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+    <customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+    <customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+
+    <notes>
+
+    </notes>
+
+    <documentation>
+        The AHRQ Quality Indicators Tool takes in data regarding inpatient and newborn encounters and generates a set of
+        clinical quality metrics. This IDS is designed to capture extracts of clinical information from Omni-Patient
+        clinical subjects and prepare them for generating the CSV file input required by the tool.
+    </documentation>
+
+    <element name="AhrqQiToolInputId" type="OmniLink" contains="AhrqQiToolInput">
+        <documentation>
+            An Omni reference to the AHRQQualityIndicatorToolInput instance that caused this instance to be created.
+        </documentation>
+    </element>
+
+    <element name="EncounterId" type="OmniLink" contains="Encounter">
+        <documentation>
+            An Omni reference to the clinical Encounter associated with this instance.
+        </documentation>
+    </element>
+
+    <element name="EncounterNumber" type="string">
+        <documentation>
+            The identifying number of the Encounter associated with this instance. This becomes the primary key to data
+            in the AHRQ output.
+        </documentation>
+    </element>
+
+    <element name="DischargeId" type="OmniLink" contains="DischargeEvent">
+        <documentation>
+            An Omni reference to the clinical DischargeEvent associated with this instance, if it can be determined
+            from the AHRQ data.
+        </documentation>
+    </element>
+
+    <element name="PatientNumber" type="string">
+        <documentation>
+            The identifying number of the Patient associated with this instance. This is optional.
+        </documentation>
+    </element>
+
+    <element name="PatientDateOfBirth" type="OmniDate">
+        <documentation>
+            Date of birth of the patient.
+        </documentation>
+    </element>
+
+    <element name="PatientAgeInYears" type="double">
+        <documentation>
+            This is the age of the patient in whole years at the time of admission. These should be rounded down.
+            If the result is zero, the age should be expressed in days in the next data element.
+        </documentation>
+    </element>
+
+    <element name="PatientAgeInDays" type="double">
+        <documentation>
+            This is the age of the patient in days at the time of admission. This is only filled in for patients who
+            are less than one year old.
+        </documentation>
+    </element>
+
+    <element name="RaceCode" type="SourceCode">
+        <documentation>
+            Code indicating the Race of the patient. Values are:
+            1=White
+            2=Black
+            3=Hispanic
+            4=Asian or Pacific Island
+            5=Native American
+            6=Other
+        </documentation>
+    </element>
+
+    <element name="GenderCode" type="SourceCode">
+        <documentation>
+            Code indicating the Gender of the patient. Values are:
+            1=Male, 2=Female
+        </documentation>
+    </element>
+
+    <element name="PrimaryPayerCode" type="SourceCode">
+        <documentation>
+            Code indicating the type of the primary payer for this encounter. Values are:
+            1=Medicare
+            2=Medicaid
+            3=Private, incl. HMO
+            4=Self-pay
+            5=No charge
+            6=Other
+        </documentation>
+    </element>
+
+    <element name="PatientStateCountyFipsCode" type="SourceCode">
+        <documentation>
+            This is the 5-character FIPS code for State and County (ssccc) of the patient's residence address.
+        </documentation>
+    </element>
+
+    <element name="Hospital" type="SourceCode" contains="Facility">
+        <documentation>
+            A Omni reference to the Facility representing the hospital at which the encounter took place.
+        </documentation>
+    </element>
+
+    <element name="HospitalStateCountyFipsCode" type="SourceCode">
+        <documentation>
+            This is the 5-character FIPS code for State and County (ssccc) of the hospital.
+            It is only used if the FIPS code for the patient's residence is not available.
+        </documentation>
+    </element>
+
+    <element name="AdmissionDate" type="OmniDate">
+        <documentation>
+            Date of admisison of the patient for this encounter.
+        </documentation>
+    </element>
+
+    <element name="AdmissionType" type="SourceCode">
+        <documentation>
+            Code indicating the admission type for this encounter. Values are:
+            1=Emergency
+            2=Urgent
+            3=Elective
+            4=Newborn
+            5=Delivery (1988-1997), Not used (1998-2002), Trauma Center (2003-)
+            6=Other
+        </documentation>
+    </element>
+
+    <element name="AdmissionSource" type="SourceCode">
+        <documentation>
+            Code indicating the admission source for this encounter. Values are:
+            1=ER
+            2=Another hospital
+            3=Another facility incl LTC
+            4=Court/law enforcement
+            5=Routine/birth/other
+        </documentation>
+    </element>
+
+    <element name="DischargeYear" type="double">
+        <documentation>
+            Calendar year of the date of discharge of the patient for this encounter.
+        </documentation>
+    </element>
+
+    <element name="DischargeQuarter" type="double">
+        <documentation>
+            Calendar quarter of the date of discharge of the patient for this encounter
+        </documentation>
+    </element>
+
+    <element name="DischargeDispositionCode" type="SourceCode">
+        <documentation>
+            Code conforming to Universal Billing (UB) codeset UB 04, and Omni Codeset 0112, describing the disposition
+            code at time of discharge..
+        </documentation>
+    </element>
+
+    <element name="LengthOfStay" type="double">
+        <documentation>
+            The number of days from admission to discharge. If the admission and discharge is the same date, then code
+            as zero.
+        </documentation>
+    </element>
+
+    <element name="AprDrgCode" type="SourceCode">
+        <documentation>
+            Derived APR-DRG code.
+        </documentation>
+    </element>
+
+    <element name="AprDrgSeverityOfIllness" type="SourceCode">
+        <documentation>
+            Derived APR-DRG severity of illness code.
+        </documentation>
+    </element>
+
+    <element name="AprDrgRiskOfMortality" type="SourceCode">
+        <documentation>
+            Derived APR-DRG risk of mortality code.
+        </documentation>
+    </element>
+
+    <element name="XprDrgRiskOfMortality" type="SourceCode">
+        <documentation>
+            Derived XPR-DRG risk of mortality code.
+        </documentation>
+    </element>
+
+    <element name="DrgVersion" type="string">
+        <documentation>
+            Derived DRG version
+        </documentation>
+    </element>
+
+    <element name="DrgCode" type="SourceCode">
+        <documentation>
+            Code representing the input DRG code for the encounter
+        </documentation>
+    </element>
+
+    <element name="MsDrgCode" type="SourceCode">
+        <documentation>
+            Code representing the MS-DRG code for the encounter
+        </documentation>
+    </element>
+
+    <element name="MajorDiagnosticCategory" type="SourceCode">
+        <documentation>
+            Code representing the Major Diagnostic Category (MDC) associated with the DRG code.
+        </documentation>
+    </element>
+
+    <element name="DaysOnMechanicalVentilator" type="double">
+        <documentation>
+            Optional. Number of days the patient spent on a mechanical ventilator.
+        </documentation>
+    </element>
+
+    <element name="BirthWeightGrams" type="double">
+        <documentation>
+            Optional. Birth weight in grams for newborns.
+        </documentation>
+    </element>
+
+    <element name="PointOfOrigin" type="SourceCode">
+        <documentation>
+            Point of Origin
+        </documentation>
+    </element>
+
+    <element name="IcdVersion" type="SourceCode">
+        <documentation>
+            Code representing version of ICD Diagnosis codes reported for this instance.
+        </documentation>
+    </element>
+
+    <element name="HasMedicalDrgInd" type="SourceCode">
+        <documentation>
+            Yes/No code indicating whether the DRG code represents a medical DRG.
+        </documentation>
+    </element>
+
+    <element name="HasSurgicalDrgInd" type="SourceCode">
+        <documentation>
+            Yes/No code indicating whether the DRG code represents a surgical DRG..
+        </documentation>
+    </element>
+
+    <element name="HasAdultDrgInd" type="SourceCode">
+        <documentation>
+            Yes/No code indicating whether the DRG code represents an adult DRG.
+        </documentation>
+    </element>
+
+    <element name="HasOrProcedureInd" type="SourceCode">
+        <documentation>
+            Yes/No code indicating whether there is a surgical/operating room procedure associated with this encounter
+        </documentation>
+    </element>
+
+    <element name="HasPediatricOrProcedureInd" type="SourceCode">
+        <documentation>
+            Yes/No code indicating whether there is a pediatric surgical/operating room procedure associated with this
+            encounter.
+        </documentation>
+    </element>
+
+    <element name="HasPediatricMedicalDrgInd" type="SourceCode">
+        <documentation>
+            Yes/No code indicating whether there is a pediatric medical procedure associated with this encounter.
+        </documentation>
+    </element>
+
+    <element name="IsNeoNateInd" type="SourceCode">
+        <documentation>
+            Yes/No code indicating whether the encounter represents a newborn or care within the first month of birth
+        </documentation>
+    </element>
+
+    <element name="IsNewbornInd" type="SourceCode">
+        <documentation>
+            Yes/No code indicating whether the encounter represents a newborn live birth at the facility
+        </documentation>
+    </element>
+
+    <element name="IsOutbornInd" type="SourceCode">
+        <documentation>
+            Yes/No code indicating whether the encounter represents a newborn live birth at a facility different from
+            this one
+        </documentation>
+    </element>
+
+    <element name="MdcOutCode" type="SourceCode">
+        <documentation>
+            Major Diagnostic Category code derived by the AHRQ Quality Indicator Tool.
+        </documentation>
+    </element>
+
+    <element name="BirthWeightCategory" type="SourceCode">
+        <documentation>
+            Categorization of the birthweight of the baby
+        </documentation>
+    </element>
+
+    <element name="OrProcedureCount" type="double">
+        <documentation>
+            Number of operating room procedures associated with this encounter
+        </documentation>
+    </element>
+
+    <element name="CardiacCount" type="double">
+        <documentation>
+            Yes/No code indicating whether Cardiac Patent Ductus Arteriosus was diagnosed during the encounter
+        </documentation>
+    </element>
+
+    <element name="CardiacPdaInd" type="double">
+        <documentation>
+            Yes/No code indicating whether multiple cardiac surgeries were performed during the encounter
+        </documentation>
+    </element>
+
+    <element name="RachsMultiple" type="double">
+        <documentation>
+            Yes/No code indicating whether the encounter represents a newborn live birth born prematurely at the facility.
+        </documentation>
+    </element>
+
+    <element name="PrematureBirthInd" type="SourceCode">
+        <documentation>
+            Number of non-cardiac structural abnormalities associated with this encounter.
+        </documentation>
+    </element>
+
+    <element name="StructuralAnomalies" type="double">
+        <documentation>
+            Optional. Birth weight in grams for newborns.
+        </documentation>
+    </element>
+
+    <list name="AhrqComorbidityFlag">
+        <documentation>Subcollection of diagnoses associated with this encounter</documentation>
+
+        <idsDocument version="1.0.0" changeVersion="0"
+                     domain="Clinical"
+                     type="instance_child"
+                     name="AhrqComorbidityFlag"
+                     elementOrder="Sequence, ComorbidityFlag">
+
+            <include name="CommonElements"
+                     prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+                     appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+            <documentation>List of comorbitity flags calculated for this encounter</documentation>
+
+            <element name="Sequence" type="double">
+                <documentation>
+                    Integer identifying which comorbidity flag is captured in this record
+                </documentation>
+            </element>
+
+            <element name="ComorbidityFlag" type="double">
+                <documentation>
+                    Value of the comorbidity flag.
+                </documentation>
+            </element>
+
+        </idsDocument>
+    </list>
+
+    <list name="AHRQComorbidityCategory">
+
+        <idsDocument version="1.0.0" changeVersion="0"
+                     domain="Clinical"
+                     type="instance_child"
+                     name="AHRQComorbidityCategory"
+                     elementOrder="ComorbidityCode, ComorbidityInd">
+
+            <documentation>
+                List of comorbitity categories assessed with the quality indicators
+            </documentation>
+
+            <include name="CommonElements"
+                     prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+                     appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+            <element name="ComorbidityCode" type="SourceCode">
+                <documentation>
+                    Code identifying the comorbidity category for this instance.
+                </documentation>
+            </element>
+
+            <element name="ComorbidityInd" type="double">
+                <documentation>
+                    Yes/No code indicating the presence or absence of the comorbidity
+                </documentation>
+            </element>
+        </idsDocument>
+    </list>
+
+    <list name="AHRQClinicalClassification">
+
+        <idsDocument version="1.0.0" changeVersion="0"
+                     domain="Clinical"
+                     type="instance_child"
+                     name="AHRQClinicalClassification"
+                     elementOrder="ClassificationCode, ClassificationInd">
+
+            <include name="CommonElements"
+                     prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+                     appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+            <documentation>
+                List of comorbitity flags calculated for this encounter
+            </documentation>
+
+            <element name="ClassificationCode" type="SourceCode">
+                <documentation>
+                    Code identifying which Clinical Classification the instance represents
+                </documentation>
+            </element>
+
+            <element name="ClassificationInd" type="SourceCode">
+                <documentation>
+                    Yes/No code indicating whether there are diagnoses or procedures present that meet the
+                    classification criteria
+                </documentation>
+            </element>
+        </idsDocument>
+    </list>
+
+
+    <list name="AhrqIndicator">
+
+        <idsDocument version="1.0.0" changeVersion="0"
+                     domain="Clinical"
+                     type="instance_child"
+                     name="AhrqIndicator"
+                     elementOrder="Module, IndicatorNumber, Stratum, CompositeInd, RiskCategoryType, RiskCategory, PalliativeCare,
+                     Denominator, Numerator, DenominatorException, NumeratorException">
+
+            <include name="CommonElements"
+                     prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+                     appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+            <documentation>List of Quality Indicator scores for this encounter</documentation>
+
+            <element name="Module" type="SourceCode">
+                <documentation>
+                    Code representing the Quality Indicator Module of these scores. Values can be IQI, NQI, PDI, PQI, PSI, EXP, etc.
+                </documentation>
+            </element>
+
+            <element name="IndicatorNumber" type="double">
+                <documentation>
+                    Integer indicating the number of the measure within the module.
+                </documentation>
+            </element>
+
+            <element name="Stratum" type="SourceCode">
+                <documentation>
+                    Code representing the stratum within the indicator represented by this score.
+                </documentation>
+            </element>
+
+            <element name="CompositeInd" type="SourceCode">
+                <documentation>
+                    Code indicating whether this score is for an individual measure or a composite of multiple measures
+                </documentation>
+            </element>
+
+            <element name="RiskCategoryType" type="SourceCode">
+                <documentation>
+                    Code indicating the source of the risk factor identified for the measure. This can indicate it is
+                    from a risk category field or from another field
+                </documentation>
+            </element>
+
+            <element name="RiskCategory" type="double">
+                <documentation>
+                    Integer representing the calculated risk category associated with the score.
+                </documentation>
+            </element>
+
+            <element name="PalliativeCare" type="SourceCode">
+                <documentation>
+                    Yes/No code indicating whether palliative care associated with this encounter for the sake of this score
+                </documentation>
+            </element>
+
+            <element name="Denominator" type="SourceCode">
+                <documentation>
+                    Yes/No code indicating that this encounter should be part of the denominator for this score
+                </documentation>
+            </element>
+
+            <element name="Numerator" type="SourceCode">
+                <documentation>
+                    Yes/No code indicating that this encounter should be part of the numerator for this score
+                </documentation>
+            </element>
+
+            <element name="DenominatorException" type="SourceCode">
+                <documentation>
+                    Yes/No code indicating that this encounter would have been part of the denominator for this score
+                    if it did not meet one or more exception criteria
+                </documentation>
+            </element>
+
+            <element name="NumeratorException" type="SourceCode">
+                <documentation>
+                    Yes/No code indicating that this encounter would have been part of the numerator for this score if
+                    it did not meet one or more exception criteria
+                </documentation>
+            </element>
+        </idsDocument>
+    </list>
+</idsDocument>

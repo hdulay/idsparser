@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.0.0" changeVersion="2" domain="Clinical" type="instance"
+			 name="AdditiveCode"  
+	 		 elementOrder="AdditiveCode"
+	 		 implementationClass="com.ibi.omni.patient.model.clinical.AdditiveCode">
+	
+	<changeLog>
+		<change version="1.0.0">Initial Revision</change>
+	</changeLog>
+	
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	
+	<documentation>
+	</documentation>
+
+	<element name="AdditiveCode" type="SourceCode">
+		<documentation></documentation>
+		<example sourceName="TestSystem" codeSet="AdditiveCodes">SpecialCode</example>
+	</element>
+
+</idsDocument>

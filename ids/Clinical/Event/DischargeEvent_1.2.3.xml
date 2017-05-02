@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.2.3" changeVersion="2" domain="Clinical.Event" type="instance"
+			 name="DischargeEvent"
+	 		 elementOrder="EventDateTime, Location, DispositionCode, DischargeToLocation, DischargeToLocationTypeCode, 
+	 		 BabyDetainedIndicator, ElectronicDischargeInstructionsRequested, ElectronicCopyOfHealthInformationRequested"
+	 		 implementationClass="com.ibi.omni.patient.model.clinical.event.DischargeEvent">	 					
+	  	 					
+	<changeLog>
+		<change version="1.2.3_0">Initial Version</change>
+		<change version="1.2.3_1">Change codeTable reference for DischargeToLocationTypeCode</change>
+		<change version="1.2.3_2">Added SourceStatusCode to instance and collection items.</change>
+	</changeLog>
+	
+	<notes>
+	- Changed name of subject to DischargeEvent to differentiate it as a type of clinicalEvent.
+	- For FacilityLocation, tweaked the definition slightly
+	- EventDateTime and FacilityLocation are common fields, but are implemented separately here to distinguish their usage/description in this Event.
+	- DispositionCode pointed at 0112
+	- Added ElectronicDischargeInstructionsRequested and ElectronicCopyOfHealthRecordRequested, per email.
+	
+	</notes>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	
+	<include name="EventElements"
+			 prependToElementOrder="ParentEvent, Encounter, CarePlanId, CarePlan, CCDCategoryCode"
+			 appendToElementOrder="EventProviders, EventNotes"/>
+			 
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	
+	<documentation>	
+	Discharge is a type of clinical event capturing data specific to when the patient is discharged from the facility.  An encounter should only have a discharge record if an admission record exists and the patient has actually been discharged.  If the patient is being discharged to a facility outside of the system, can also capture the name of the facility and record the facility location type.  If the patient had been moved to a facility within the system, a Transfer event would have been generated instead of a Discharge record.
+	</documentation>
+
+	<element name="EventDateTime" type="OmniDate">
+		<documentation>
+		Date and time that the patient is discharged
+		</documentation>
+		
+		<example format="yyyy-MM-dd hh:mm:ss">2000-10-01 11:12:32</example>
+	</element>
+
+	<element name="Location" type="OmniLink" contains="FacilityLocation" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		The facility location the patient was discharged from.
+		
+		Use this element to specify a FacilityLocation in the system using the FacilityLocation's SourceName and SourceInstanceId. You cannot load FacilityLocation
+		information using this element, however if the FacilityLocation is not found then a "placeholder" will be created that will contain the FacilityLocation
+		when loaded.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<FacilityLocation>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>FacilityLocationId</SourceInstanceId>
+			</FacilityLocation>
+			]]>
+		</example>		
+	</element>
+
+	<element name="DispositionCode" type="SourceCode" codeSource="OMNI" codeSet="0112">
+		<documentation>
+		Identifies the reason the patient is discharged from the hospital.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0112" sourceCode="01"/>
+	</element>
+
+	<element name="DischargeToLocation" type="string">
+		<documentation>
+		Name or description of the location a patient is discharged to when outside the system.  If the patient had been moved to a facility within the system, a Transfer event would have been generated instead of a Discharge record.
+		</documentation>
+		
+		<example>Specific Hospice Facility</example>
+	</element>
+	 		 			
+	<element name="DischargeToLocationTypeCode" type="SourceCode" codeSource="OMNI" codeSet="0113">
+		<documentation>
+		Categorizes the type of Discharge Location.
+		</documentation>
+		
+		<example sourceCodeSet="DischargeToLocationTypeCodes" sourceCode="hospice">Hospice</example>
+	</element>	
+	
+	<element name="BabyDetainedIndicator" type="SourceCode" codeSource="OMNI" codeSet="0136">
+		<documentation>
+		If mother gave birth, flag is set to indicate whether the baby is detained and not released when the mother is discharged.  If "Yes" on mother's discharge, baby was not released with her.  If "No" on mother's discharge, baby was released with her.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0136" sourceCode="Y"/>
+	</element>
+	
+	<element name="ElectronicDischargeInstructionsRequested" type="SourceCode" codeSource="OMNI" codeSet="0136">
+		<documentation>
+		Upon discharge, a patient may request an electronic copy of his/her discharge instructions (including prescriptions, care instructions, next follow up for patient).  If value is "Yes", patient was provided an electronic copy of this information.  If "No", the patient was not.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0136" sourceCode="Y"/>
+	</element>
+
+	<element name="ElectronicCopyOfHealthInformationRequested" type="SourceCode" codeSource="OMNI" codeSet="0136">
+		<documentation>
+		Upon discharge, a patient may request an electronic copy of his/her health information (including diagnostic test results, problem list, medication lists, medication allergies).  If value is "Yes", patient was provided an electronic copy of this information.  If "No", the patient was not.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0136" sourceCode="Y"/>
+	</element>
+	
+
+</idsDocument>

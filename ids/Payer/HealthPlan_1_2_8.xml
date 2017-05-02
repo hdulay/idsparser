@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.2.8" changeVersion="1" domain="Payer" type="instance"
+			 name="HealthPlan" udlName="HealthPlan" 
+	 		 elementOrder="Payer, FinancialClassCode, GroupName, GroupNumber, PlanName, PlanTypeCode, ProductTypeCode, CoverageCategoryCode, 
+			 CalendarYearStartMonth, CalendarYearEndMonth, Addresses, ContactMethods, Coverages"
+			 implementationClass="com.ibi.omni.patient.model.payer.HealthPlan">
+	
+	<changeLog>
+		<change version="1.2.8_0">Initial Revision</change>
+		<change version="1.2.8_1">Added SourceStatusCode to instance and collection items.</change>
+	</changeLog>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	
+	<documentation>
+	A Health Plan represents an offering by the Payer.  Each plan captures the financial class, group the plan was designed for such as an employer, plan details including the product type, contact methods and address to send claims.  
+	Additionally, it specifies plan coverages, limits, deductibles, copay amounts and coinsurance details.
+	</documentation>
+
+	<element name="Payer" type="OmniLink" contains="Payer" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		A Payer is an insurance company (BCBS Massachusetts, Delta Dental Massachusetts, etc.) or government agency (Medicare and Medicaid state-administered agencies such as MediCal and MassHealth) 
+		that finances or reimburses the cost of healthcare services received by a patient.  Each payer can have multiple types of health plans that define the coverages, deductibles, limits and copay amounts 
+		as well as act as an administrator for payment on claims for medical services performed on a patient.  A payer is not a Patient or Guarantor.  Only after all health plan coverages have been processed, 
+		will the remaining balance, if any, be billed to the patient or guarantor.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<Payer>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>SourceName:PayerId</SourceInstanceId>
+			</Payer>
+			]]>
+		</example>		
+	</element>	
+
+	<element name="FinancialClassCode" type="SourceCode" codeTable="5000">
+		<documentation>
+		Financial Class identifies how patient medical claims will be billed.  This value identifies the financial class of the health plan for this payer.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="5000" sourceCode="1001"/>
+	</element>
+
+	<element name="GroupName" type="string">
+		<documentation>
+		Identifies the subscriber's employer name assigned to this health plan.
+		</documentation>
+		
+		<example>Information Builders, Inc.</example>
+	</element>	
+
+	<element name="GroupNumber" type="string">
+		<documentation>
+		Identifies the employer number for the group name assigned to this health plan.
+		</documentation>
+		
+		<example>123456789</example>
+	</element>	
+
+	<element name="PlanName" type="string">
+		<documentation>
+		Is the product plan.  For example, some plans offered by payer BCBS Massachusetts include Blue Care Elect Preferred and HMO Blue Essential.  
+		Some plans offered by payer Delta Dental Massachusetts include Delta Dental Premier National, Delta Dental PPO, Delta Dental PPO Plus Premier and DeltaCare.  
+		Some plans offered by payer MassHealth include MassHealth Standard, MassHealth CommonHealth, MassHealth Basic, MassHealth Essential, MassHealth Prenatal, MassHealth Limited and Healthy Start.
+		</documentation>
+		
+		<example>Blue Care Elect Preferred</example>
+	</element>	
+
+	<element name="PlanTypeCode" type="SourceCode" codeTable="7000">
+		<documentation>
+		Identifies if this health plan is a benefit plan or benefit rider.
+		</documentation>
+		
+		
+		<example sourceName="OMNI" sourceCodeSet="7000" sourceCode="plan"/>
+	</element>
+
+	<element name="ProductTypeCode" type="SourceCode" >
+		<documentation>
+Health plans are designed based on the product.
+
+PPO (Preferred Provider Organization) and HMO (Health Maintenance Organization) are both types of Managed Care.  
+
+PPO health plan contracts with a network of preferred providers from which you can choose. 
+You do not need to select a primary care physician (PCP) and you do not need referrals to see other providers in the network.  You may choose a provider outside of the network but will likely pay more for services.  
+
+In a HMO health plan, you must select a PCP who is responsible for managing and coordinating all of your health care needs through providers and facilities inside the HMO network.  
+Indemnity is mostly from the pre-Managed Care time and is where insured and provider settle on the percentage the insured will pay for a particular service. 
+
+Medicare is a federal program that pays for certain health care expenses for people aged 65 or older and for certain disabled persons. Medicare is divided into four parts.  
+Part A (Hospital Insurance) covers most medically necessary hospital stays, skilled nursing facility, home health and hospice care.  
+Part B (Medical Insurance) covers most medically necessary doctors' services, preventive care, durable medical equipment, hospital outpatient services, laboratory tests, x-rays, mental health care, and some home health and ambulance services.  
+Part C provides the option to choose from a package of health care plans.  
+Part D offers prescription drug coverage.
+
+Medicaid is a healthcare assistance program set up to provide health benefits for low income people.  It is a government program, but one in which funding for the plan is shared between the federal and state governments, while being administered by each state individually.
+		</documentation>
+		
+		<example sourceCodeSet="ProductTypeCodes" sourceCode="ppo"/>
+	</element>
+
+	<element name="CoverageCategoryCode" type="SourceCode">
+		<documentation>
+		Contains the primary coverage category offered in this benefit plan.  For example, Family Medical has many different benefit services including ambulance, cardiac rehabilitation, chiropractor services, dialysis services, emergency room services, outpatient office visit, 
+		home health care, hospice services, infertility services, inpatient care in a chronic disease hospital, inpatient care in a rehabilitation hospital, diagnostic lab tests, MRI, CT scan, etc.
+		</documentation>
+		
+		<example sourceCodeSet="CoverageCategoryCodes" sourceCode="pharmacy"/>
+	</element>
+
+	<element name="CalendarYearStartMonth" type="double">
+		<documentation>
+		On a health plan, the calendar year refers to the period of time when certain accumulative amounts start over.  This would include the yearly deductible amount, yearly out-of-pocket maximum and yearly overall benefit maximum.  
+		The calendar year does not always run from January - December.  It could be any contiguous 12-month period such as February - January or March - February.
+		</documentation>
+		
+		<example>1.0</example>
+	</element>
+
+	<element name="CalendarYearEndMonth" type="double">
+		<documentation>
+		On a health plan, the calendar year refers to the period of time when certain accumulative amounts start over.  This would include the yearly deductible amount, yearly out-of-pocket maximum and yearly overall benefit maximum.  
+		The calendar year does not always run from January - December.  It could be any contiguous 12-month period such as February - January or March - February.
+		</documentation>
+		
+		<example>12.0</example>
+	</element>
+
+	<list name="Addresses">
+		<documentation>
+		Use this collection to specify one or more addresses used by this Person.
+		</documentation>
+
+		<idsSpecification name="HealthPlanAddress" udlName="HealthPlanAddress" type="instance_child"
+			 		 	  elementOrder="Type, StartDate, EndDate, PreferenceOrder, AddressLine1, AddressLine2,
+					 		       AddressLine3, AddressLine4, City, StateProvince, PostalCode, Country, 
+					 		       CountyRegion, UsageComment"
+					 		       implementationClass="com.ibi.omni.patient.model.payer.HealthPlanAddress">
+						
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+		  	
+			<documentation>
+			Use this specification to load Health Plan address information into Omni.
+			</documentation>
+			
+			<element name="Type" type="SourceCode" codeTable="0190">
+				<documentation>
+				Use this element to specify the type of address being loaded.
+				</documentation>
+				
+				<example sourceCodeSet="AddressTypeCodes" sourceCode="H">Home Address</example>
+			</element>
+		
+			<element name="StartDate" type="OmniDate">
+				<documentation>
+				Specify the date this address became active.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+			
+			<element name="EndDate" type="OmniDate">
+				<documentation>
+				Specify the date this address becomes inactive.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+		
+			<element name="PreferenceOrder" type="integer">
+				<documentation>
+				This field is for an entity having multiple addresses, indicates which is the 'most preferred' (lowest number) 
+			 	to 'least preferred' (highest number).
+				</documentation>
+				
+				<example>1</example>
+			</element>
+		
+			<element name="AddressLine1" type="string">
+				<documentation>
+				This field specifies the street or mailing address of a person or institution. 
+			 	When referencing an institution, this first component is used to specify the institution 
+			 	name. When used in connection with a person, this component specifies the first line of the address.
+				</documentation>
+				
+				<example>4000 East Ave</example>
+			</element>
+			
+			<element name="AddressLine2" type="string">
+				<documentation>
+				This field specifies the second line of address. In general, it qualifies address. 
+			 	Examples: Suite 555 or Fourth Floor. When referencing an institution, this component 
+			 	specifies the street address.
+				</documentation>
+				
+				<example>Suite 555</example>
+			</element>
+			
+			<element name="AddressLine3" type="string">
+				<documentation>
+				This field specifies the name of the person or organization that should appear as part of the 
+			 	address. This is also known as the "Care of" or "C/O" line.
+				</documentation>
+				
+				<example>ATTN: Jane Smith</example>
+			</element>
+			
+			<element name="AddressLine4" type="string">
+				<documentation>
+				This field specifies more address information.
+				</documentation>
+				
+				<example>Fragile</example>
+			</element>
+			
+			<element name="City" type="string">
+				<documentation>
+				This field specifies the city, district or place where the addressee is located 
+			 	depending upon the national convention for formatting addresses for postal usage.
+				</documentation>
+				
+				<example>Livonia</example>
+			</element>
+			
+			<element name="StateProvince" type="SourceCode"  codeTable="0347">
+				<documentation>
+				This field specifies the state or province where the addressee is located. State or 
+			 	province should be represented by the official postal service codes for that country. 
+				</documentation>
+				
+				<example sourceCodeSet="StateCodes" sourceCode="NY">New York</example>
+			</element>
+		
+			<element name="PostalCode" type="string">
+				<documentation>
+				This component specifies the zip or postal code where the addressee is located.  Zip or 
+			 	postal codes should be represented by the official codes for that country. In the US, the zip 
+			 	code takes the form 99999[-9999], while the Canadian postal code takes the form A9A9A9 and the 
+			 	Australian Postcode takes the form 9999. 
+				</documentation>
+				
+				<example>14488</example>
+			</element>
+		
+			<element name="Country" type="SourceCode" codeTable="0399">
+				<documentation>
+				This component specifies the country where the addressee is located. HL7 
+			 	specifies that the 3-character (alphabetic) form of ISO 3166 be used for the 
+			 	country code.
+				</documentation>
+				
+				<example sourceCodeSet="CountryCodes" sourceCode="USA">United States</example>
+			</element>
+		
+			<element name="CountyRegion" type="SourceCode" codeTable="0289">
+				<documentation>
+				This component specifies the county where the addressee is located when applicable.
+				</documentation>
+				
+				<example sourceCodeSet="CountyRegionCodes" sourceCode="LIV">Livingston</example>
+			</element>
+		
+			<element name="UsageComment" type="string" dbColumn="src_usage_comment">
+				<documentation>
+				Descriptive information about the use of the address.
+			 	Example : "Do not ring bell"
+				</documentation>
+				
+				<example>Do not ring bell</example>
+			</element>	
+		</idsSpecification>
+	</list>	
+
+	<list name="ContactMethods">
+		<documentation>
+		Use this collection to specify the list of email, phone number, fax number, 
+	 	and other contact methods associated with this HealthPlan.		
+		</documentation>
+		
+		<idsSpecification name="HealthPlanContactMethod" udlName="HealthPlanContactMethod" type="instance_child"
+			 		 	  elementOrder="Type, StartDate, EndDate, PreferenceOrder, Value, UsageComment"
+			 		 	  implementationClass="com.ibi.omni.patient.model.payer.HealthPlanContactMethod">
+			
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+		  	
+			<documentation>
+			Use this collection to specify one or more contact methods for the Health plan. 
+			For example you may specify multiple email, phone, or fax numbers. 
+			</documentation>
+				
+			<element name="Type" type="SourceCode" codeTable="0185">
+				<documentation>
+				Use this element to specify what type of contact method is being 
+			 	described. i.e. Email, Phone, etc..
+				</documentation>
+				
+				<example sourceName="OMNI" sourceCodeSet="0185" sourceCode="H">Home Phone Number</example>
+			</element>
+		
+			<element name="StartDate" type="OmniDate">
+				<documentation>
+				Specify the date this contact method became active.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+			
+			<element name="EndDate" type="OmniDate">
+				<documentation>
+				Specify the date this contact method became inactive.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2050-01-01</example>
+			</element>
+		
+			<element name="PreferenceOrder" type="integer">
+				<documentation>
+				For a health plan having contact methods, indicates which is the 'most preferred' (lowest number) 
+			 	to 'least preferred' (highest number).
+				</documentation>
+				
+				<example>1</example>
+			</element>
+			
+			<element name="Value" type="string">
+				<documentation>
+				Identifies the value of the contact method.
+				</documentation>
+
+				<example>(222) 234-6879 x9808</example>
+			</element>
+		
+			<element name="UsageComment" type="string">
+				<documentation>
+				Defines the usage comment. Such as 'After 5pm'
+				</documentation>
+				
+				<example>No calls after 5pm</example>
+			</element>			
+		</idsSpecification>
+	</list>
+
+	<list name="Coverages">
+		<documentation>
+		</documentation>
+		
+		<idsSpecification name="HealthPlanCoverage" udlName="HealthPlanCoverage" type="instance_child"
+			 		 		elementOrder="GroupCode, TypeCode, NetworkTypeCode, SpanCode, 
+							LimitAmount, LimitCurrencyCode, LimitPeriodCode, 
+							DeductibleAmount, DeductibleCurrencyCode, DeductiblePeriodCode, 
+							OutOfPocketMaximumAmount, OutOfPocketMaximumCurrencyCode, OutOfPocketMaximumPeriodCode, 
+							CopayAmount, CopayCurrencyCode, CoinsurancePercent"
+							implementationClass="com.ibi.omni.patient.model.payer.HealthPlanCoverage">
+			 
+				<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+				<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+					 	  	
+			<documentation>
+			Each benefit plan can have different types of health care services offered.  Each of these services can differ from each other in what they cover, how much they cover, what the benefit limitations are, as well as the copay and coinsurance required.  
+			In addition, the coverage can further differ when the member is in-network or out-of-network.
+			
+			Use the coverage group and type to specify coverage details at the most granular level (group "Dental" type "Teeth Cleaning").  
+			To specify coverage details at a higher level such as at the overall plan level, don't set coverage group and type values (annual deductible, out-of-pocket maximum, limits at the plan level, etc.).
+			</documentation>
+
+			<element name="GroupCode" type="SourceCode" codeTable="7010">
+				<documentation>
+				Specifies the primary category group this coverage represents.
+				</documentation>
+
+				<example sourceName="OMNI" sourceCodeSet="7010" sourceCode="medical"/>
+			</element>
+
+			<element name="TypeCode" type="SourceCode">
+				<documentation>
+				Specifies the subcategory with the coverage group this coverage represents.
+				</documentation>
+				
+				<example sourceCodeSet="TypeCodes" sourceCode="mri"/>
+			</element>
+
+			<element name="NetworkTypeCode" type="SourceCode" codeTable="7015">
+				<documentation>
+				Indicates whether the health plan coverage is based on whether service is provided inside or outside of a network or benefit coverage is not network specific.
+				</documentation>
+				
+				<example sourceName="OMNI" sourceCodeSet="7015" sourceCode="in-network"/>
+			</element>
+
+			<element name="SpanCode" type="SourceCode" codeTable="7020">
+				<documentation>
+				Specifies if the coverage defined applies to a member or the family as a whole.
+				</documentation>
+				
+				<example sourceName="OMNI" sourceCodeSet="7020" sourceCode="member"/>
+			</element>
+
+			<element name="LimitAmount" type="double">
+				<documentation>
+				Specifies the maximum amount the policy will pay per plan member or family for the period defined (Visit, Annual, Lifetime) based on this coverage record's combined specifications.
+				</documentation>
+			</element>
+
+			<element name="LimitCurrencyCode" type="SourceCode" codeTable="4217">
+				<documentation>
+				The monetary unit in which Amount is denominated.
+				</documentation>
+				
+				<example sourceName="OMNI" sourceCodeSet="4217" sourceCode="USD"/>
+			</element>
+
+			<element name="LimitPeriodCode" type="SourceCode" codeTable="7025">
+				<documentation>
+				Specifies the period of time the Limit Amount is based on.
+				</documentation>
+				
+				<example sourceName="OMNI" sourceCodeSet="7025" sourceCode="annual"/>
+			</element>
+		
+			<element name="DeductibleAmount" type="double">
+				<documentation>
+				Specifies the dollar amount that a member must pay, depending on this coverage record's combined specifications, per period defined for health care services before a health plan will cover eligible services.  
+				For example, if a member's deductible is $500, the member will pay that amount, out-of-pocket, per plan year before the health plan will cover any eligible services.  The deductible may not apply to all services.
+				</documentation>
+			</element>
+
+			<element name="DeductibleCurrencyCode" type="SourceCode" codeTable="4217">
+				<documentation>
+				The monetary unit in which Amount is denominated.
+				</documentation>
+				
+				<example sourceName="OMNI" sourceCodeSet="4217" sourceCode="USD"/>
+			</element>
+
+			<element name="DeductiblePeriodCode" type="SourceCode" codeTable="7025">
+				<documentation>
+				Specifies the period of time the Deductible Amount is based on.
+				</documentation>
+				
+				<example sourceName="OMNI" sourceCodeSet="7025" sourceCode="annual"/>
+			</element>
+
+			<element name="OutOfPocketMaximumAmount" type="double">
+				<documentation>
+				Out-of-pocket maximum is the most a plan member or family will pay, depending on this coverage record's combined specifications, for the period defined before the health plan begins to pay 100 percent of the allowed amount.  
+				This limit never includes the premium, balance-billed charges or health care the health plan doesn't cover.  
+				Some health plans don't count all of the copayments, deductibles, coinsurance payments, out-of-network payments or other expenses toward this limit.
+				</documentation>
+			</element>
+
+			<element name="OutOfPocketMaximumCurrencyCode" type="SourceCode" codeTable="4217">
+				<documentation>
+				The monetary unit in which Amount is denominated.
+				</documentation>
+				
+				<example sourceName="OMNI" sourceCodeSet="4217" sourceCode="USD"/>
+			</element>
+
+			<element name="OutOfPocketMaximumPeriodCode" type="SourceCode" codeTable="7025">
+				<documentation>
+				Specifies the period of time the Out-Of-Pocket Maximum Amount is based on.
+				</documentation>
+				
+				<example sourceName="OMNI" sourceCodeSet="7025" sourceCode="annual"/>
+			</element>
+							
+			<element name="CopayAmount" type="double">
+				<documentation>
+				Copay refers to a fixed amount that a member pays for a covered health care service, usually when the member receives the service.  The amount can vary by the type of covered health care service.
+				</documentation>
+			</element>
+
+			<element name="CopayCurrencyCode" type="SourceCode" codeTable="4217">
+				<documentation>
+				The monetary unit in which Amount is denominated.
+				</documentation>
+				
+				<example sourceName="OMNI" sourceCodeSet="4217" sourceCode="USD"/>
+			</element>
+
+			<element name="CoinsurancePercent" type="double">
+				<documentation>
+				Coinsurance is the plan member's share of the costs of a covered health care service, calculated as a percent of the allowed amount for the service.  The member will pay the co-insurance plus any deductible not yet met.  
+				For example, if the health plan's allowed amount for a chiropractor visit is $100 and the member has met his deductible, the co-insurance payment of 20 percent would be $20.  The health plan pays the rest of the allowed amount.
+				</documentation>
+			</element>
+							
+		</idsSpecification>
+
+	</list>
+</idsDocument>
+

@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.1.7" 
+			 domain="Workforce" 
+			 type="instance"
+			 name="Worker"
+			 master="WorkerMaster" 
+	 		 elementOrder="MasterId, PreMergeSurvivor, Type, SubType, ActiveFlag, InactiveReason, Company, 
+	 		 			   HRCompany, OriginalHireDate, ServiceDate, YearsOfService, 
+	 		 			   CompanySeniorityDate, ProbationDate, TerminationDate, 
+						   Person, MedicalOrganization, HRDepartment, CostCenter, CostCenterCode, CostCenterName,
+						   Account, AccountCode, AccountName, Jobs">
+  						   	 		               	
+	<changeLog>
+		<change version="1.0.0">Initial</change>
+		<change version="1.0.1">Added Company</change>
+		<change version="1.1.7_0">Standardized Version</change>
+		<change version="1.1.7_1">Extended Attributes Support</change>
+		<change version="1.1.7_2">Set Code Table for StandardHoursFrequencyCode, FrequencyCode, and CurrencyCode</change>
+		<change version="1.1.7_3">Added SourceStatusCode to instance and collection items.</change>
+		<change version="1.1.7_4">Added PreMergeSurvivor element.</change>
+		<change version="1.1.7_5">Added mastering meta-data elements.</change>
+		<change version="1.1.7_6">Added MedicalOrganization, HRDepartment, CostCenter, CostCenterCode, CostCenterName,
+			Account, AccountCode, AccountName  elements.</change>
+	</changeLog>
+
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>>
+	
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+    <include name="MasteringElements" appendToElementOrder="MatchRole,MatchCandidateGroupId,MatchQualityScore,MatchRule"/>
+
+	<documentation>
+	Use this IDS to feed Worker-related information. A Worker is member of the Workforce, such as 
+	an Employee, Contingent Worker, or other Person of Interest. 
+	</documentation>
+
+	<element name="MasterId" type="string" hidden="true" index="true">
+		<documentation>
+		Links this instance to the master. This value is created and updated by the Omni
+		matching service.
+		</documentation>
+	</element>
+
+	<element name="PreMergeSurvivor" type="OmniLink" contains="Worker">
+		<documentation>		
+		There are often scenarios in a given source system where multiple instance records may be created 
+		that represent the same logical entity. At some point the source system may detect this issue and
+		would like to convey that information to the processing server.
+		
+		Use this element to indicate the surviving entity when multiple instances represent the same 
+		entity. This element will be used during the matching and merging process to insure that entity
+		instances are properly grouped. 
+		</documentation>
+	</element>
+		
+	<element name="Type" type="SourceCode">
+		<documentation>
+		Use this element to specify the type of Worker. A worker may be an Employee, ContingentWorker, 
+		or other Person of Interest. 
+		
+		Please note that a single Person may have multiple Worker records if they have been 
+		both a Contingent Worker and an Employee. 
+		</documentation>
+	</element>
+
+	<element name="SubType" type="SourceCode" dbColumn="subtype_code">
+		<documentation>
+		Use this element to further clarify when the Workforce Type.
+		
+		Contingent Worker Examples: Independent Professionals, Temporary Contract Workers, 
+		Independent Contractors, or Consultants
+		
+		Person of Interest Examples: External Instructor, External Trainee, 
+		Global Payroll Employee, Other, Other Payee, Stock - Board Member, Stock - Non-HR Employee
+		</documentation>
+	</element>
+
+	<element name="ActiveFlag" type="SourceCode">
+		<documentation>
+		Use this field to specify the current active state of the Worker.
+		</documentation>
+	</element>
+	
+	<element name="InactiveReason" type="SourceCode">
+		<documentation>
+		Use this element to specify why the Worker is currently inactive. 
+		</documentation>
+	</element>
+	
+	<element name="Company" type="document" contains="Organization" excludeInDoc="true" dbColumn="company_id">
+		<documentation>
+		Use this element to link to the Company for which this Worker has been created.  
+		This may not be the company that employs the worker, although it may be in the 
+		case of an Employee.
+		</documentation>
+	</element>
+
+	<element name="HRCompany" type="SourceCode" dbColumn="hr_company_code">
+		<documentation>
+		The Company defined in the HR system, for which this worker has been created.
+		</documentation>
+	</element>
+
+	<element name="ServiceDate" type="date">
+		<documentation>
+		Specifies the system date on which this worker record was first created in the HR system. 
+		</documentation>
+	</element>
+	
+	<element name="OriginalHireDate" type="date">
+		<documentation>
+		Indicates the Original Hire Date of this Worker at the designated HRCompany.
+		</documentation>
+	</element>
+
+	<element name="YearsOfService" type="double">
+		<documentation>
+		Indicates the number of Years of Service to the Company for which the Worker 
+		record was created.
+		</documentation>
+	</element>
+
+	<element name="CompanySeniorityDate" type="date" dbColumn="seniority_date">
+		<documentation>
+		The date from which one's seniority in the Organization is calculated.
+		</documentation>
+	</element>
+
+	<element name="ProbationDate" type="date">
+		<documentation>
+		Effective date that a worker is on Probation.
+		</documentation>
+	</element>
+
+	<element name="TerminationDate" type="date">
+		<documentation>
+		Date that a worker was terminated from the Company.
+		</documentation>
+	</element>
+
+    <element name="Person" type="document" contains="Person" immediate="false" excludeInDoc="true">
+        <documentation>
+            Use this element to specify Person related information. This can be used for Name, Addresses
+            ContactMethods, and Relations. Note: A Person MUST be fed only in context with another
+            object. Loading Person first then trying to link to it will not work.
+        </documentation>        
+    </element>
+
+	<element name="MedicalOrganization" type="OmniLink" contains="Organization">
+		<documentation>
+			Identifies the medical organization associated with this worker.
+		</documentation>
+
+		<example>
+			<Organization>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>MedicalOrganization</SourceInstanceId>
+			</Organization>
+		</example>
+
+	</element>
+
+	<element name="HRDepartment" type="OmniLink" contains="OrganizationalUnit">
+		<documentation>
+			An Organizational Unit identifying the HR Department associated with these hours.
+		</documentation>
+	</element>
+
+	<element name="CostCenter" type="OmniLink" contains="OrganizationalUnit">
+		<documentation>
+			An Organizational Unit identifying the HR Department associated with this worker
+		</documentation>
+	</element>
+
+	<element name="CostCenter" type="OmniLink" contains="OrganizationalUnit">
+		<documentation>
+			An Organizational Unit that represents the cost center or accounting unit to which the worker is allocated.
+		</documentation>
+
+		<example>
+			<OrganizationalUnit>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>Accounting Department</SourceInstanceId>
+			</OrganizationalUnit>
+		</example>
+	</element>
+
+	<element name="CostCenterCode" type="string">
+		<documentation>
+			Identifies the code assigned to a cost center for tracking revenue and expenditures.
+		</documentation>
+	</element>
+
+	<element name="CostCenterName" type="string">
+		<documentation>
+			Identifies the name assigned to a cost center for tracking revenue and expenditures.
+		</documentation>
+	</element>
+
+	<element name="Account" type="OmniLink" contains="OrganizationalUnit">
+		<documentation>
+			An Organizational Unit that represents the account within the General Ledger's Chart of Accounts
+			hierarchy that identifies where the worker is allocated for account purposes
+		</documentation>
+	</element>
+
+	<element name="AccountCode" type="string">
+		<documentation>
+			Identifies the code assigned to the account associated with this worker.
+		</documentation>
+
+		<example>
+			<AccountCode>
+				20101
+			</AccountCode>
+		</example>
+	</element>
+
+	<element name="AccountName" type="string">
+		<documentation>
+			Identifies the name assigned to the account associated with this worker.
+		</documentation>
+
+		<example>
+			<AccountName>
+				JohnDoeAccountName
+			</AccountName>
+		</example>
+	</element>
+
+ 	<list name="Jobs" contains="Job">
+		<documentation>
+		Use this collection to specify Job information for this Provider.	
+		</documentation>
+	</list>	
+
+	<promotion name="PromoteAddress" 
+			   from="Person/Addresses" 
+			   where="Type" 
+			   key="worker.promote.address.code"
+			   value="P" 
+			   elementOrder="AddressLine1, AddressLine2, AddressLine3, AddressLine4, City,
+			                 StateProvince, PostalCode, Country, CountyRegion, AddressUsageComment">
+	    <promote name="AddressLine1" from="AddressLine1"/>
+	    <promote name="AddressLine2" from="AddressLine2"/>
+	    <promote name="AddressLine3" from="AddressLine3"/>
+	    <promote name="AddressLine4" from="AddressLine4"/>
+	    <promote name="City" from="City"/>
+	    <promote name="StateProvince" from="StateProvince"/>
+	    <promote name="PostalCode" from="PostalCode"/>
+	    <promote name="Country" from="Country"/>
+	    <promote name="CountyRegion" from="CountyRegion"/>
+	    <promote name="AddressUsageComment" from="UsageComment"/>
+    </promotion>
+    
+    <promotion name="PromoteName" 
+    		 from="Person/Names" 
+    		 where="Type" 
+    		 key="worker.promote.name.code"
+    		 value="D"
+    	     elementOrder="FullName, LastName, FirstName, MiddleName, Suffix, Prefix, Degree, Title">
+	    <promote name="FullName" from="FullName"/>
+	    <promote name="LastName" from="LastName"/>
+	    <promote name="FirstName" from="FirstName"/>
+	    <promote name="MiddleName" from="MiddleName"/>
+	    <promote name="Suffix" from="Suffix"/>
+	    <promote name="Prefix" from="Prefix"/>   
+	    <promote name="Degree" from="Degree"/>
+	    <promote name="Title" from="Title"/>
+    </promotion>
+    
+    <promotion name="PromoteSSN" 
+    		   from="Person/Identifiers" 	
+    		   where="Type" 
+    		   key="worker.promote.name.identifier.SSN.code"
+    		   value="SS"
+    	       elementOrder="SSN">
+    	<promote name="SSN" from="Value"/>
+    </promotion>
+    
+    <promotion name="PromoteEmployeeId" 
+    		   from="Person/Identifiers" 
+    		   where="Type" 
+    		   key="worker.promote.name.identifier.EMPLOYEEID.code"
+    		   value="EI"
+    	       elementOrder="EmployeeID">
+    	<promote name="EmployeeID" from="Value" dbColumn="employee_id"/>
+    </promotion>
+    
+</idsDocument>

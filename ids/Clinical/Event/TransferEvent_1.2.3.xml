@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.2.3" changeVersion="2" domain="Clinical.Event" type="instance"
+			 name="TransferEvent"  
+	 		 elementOrder="EventDateTime, FromLocation, 
+	 		 			ToLocation, ExternalToLocation, TypeCode, MethodCode, Reason"
+	 		 implementationClass="com.ibi.omni.patient.model.clinical.event.TransferEvent">
+	  	 					
+	<changeLog>
+		<change version="1.2.3_0">Initial Version</change>
+		<change version="1.2.3_1">Change codeTable reference for MethodCode</change>
+		<change version="1.2.3_2">Added SourceStatusCode to instance and collection items.</change>
+	</changeLog>
+	
+	<notes>
+	- Changed name of subject to TransferEvent to differentiate it as a type of clinicalEvent.
+	- For FacilityLocation, tweaked the definition slightly
+	- EventDateTime and FacilityLocation are common fields, but are implemented separately here to distinguish their usage/description in this Event.
+	- Changed field order, and removed Transfer descriptor in front of the data elements (redundant).
+	- Tweaked TypeCode definition
+	- Tweaked MethodCode definition	
+	</notes>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	
+	<include name="EventElements"
+			 prependToElementOrder="ParentEvent, Encounter, CarePlanId, CarePlan, CCDCategoryCode"
+			 appendToElementOrder="EventProviders, EventNotes"/>
+			 
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	
+	<documentation>	
+
+Transfer is a type of clinical event capturing data specific to when the patient is transferred from one location to another.  
+Transfers can be tracked at any level of facility location available such as beds and rooms within the same location to transferring from one location to another location.
+	</documentation>
+
+	<element name="EventDateTime" type="OmniDate">
+		<documentation>
+		Date and time that the patient is transferred.
+		</documentation>
+		
+		<example format="yyyy-MM-dd hh:mm:ss">2000-10-01 11:12:32</example>
+	</element>
+
+	<element name="FromLocation" type="OmniLink" contains="FacilityLocation" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		The facility location the patient was transferred from.
+		
+		Use this element to specify a FacilityLocation in the system using the FacilityLocation's SourceName and SourceInstanceId. You cannot load FacilityLocation
+		information using this element, however if the FacilityLocation is not found then a "placeholder" will be created that will contain the FacilityLocation
+		when loaded.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<FacilityLocation>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>FacilityLocationId</SourceInstanceId>
+			</FacilityLocation>
+			]]>
+		</example>		
+	</element>
+
+	<element name="ToLocation" type="OmniLink" contains="FacilityLocation" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		The facility location inside the health system that the patient was transferred to.  This should not be populated if the ExternalToLocation is populated.
+		
+		Use this element to specify a FacilityLocation in the system using the FacilityLocation's SourceName and SourceInstanceId. You cannot load FacilityLocation
+		information using this element, however if the FacilityLocation is not found then a "placeholder" will be created that will contain the FacilityLocation
+		when loaded.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<FacilityLocation>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>FacilityLocationId</SourceInstanceId>
+			</FacilityLocation>
+			]]>
+		</example>		
+	</element>
+
+	<element name="ExternalToLocation" type="string">
+		<documentation>
+		A description of the location outside the health system that the patient was transferred to. This should not be populated if the ToLocation is populated.
+		</documentation>
+		
+		<example>Patient requires Intensive Care</example>
+	</element>
+
+	<element name="TypeCode" type="SourceCode">
+		<documentation>
+		Transfer types describe the relationship of the facility location types where the transfer starts and ends.
+		</documentation>
+		
+		<example sourceCodeSet="TypeCodes" sourceCode="surgery_icu">Surgery to ICU</example>
+	</element>	
+
+	<element name="MethodCode" type="SourceCode" codeSource="OMNI" codeSet="0124">
+		<documentation>
+		Describes the means by which the patient was transported from one location to another. 
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0124" sourceCode="WHLC" />
+	</element>	
+	
+	<element name="Reason" type="string">
+		<documentation>
+		Contains a short description of the reason for a patient location change.
+		</documentation>
+		
+		<example>Patient requires Intensive Care</example>
+	</element>
+	 		 			
+</idsDocument>

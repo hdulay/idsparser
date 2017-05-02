@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsInclude name="EventElements" type="include">	
+
+	<element name="ParentEvent" type="OmniLink" 
+			 contains="AdmissionEvent,DeathEvent,DiagnosisEvent,DischargeEvent,MovementEvent,ObservationEvent,ProcedureEvent,TransferEvent,
+			           DiagnosticTestOrderEvent,DietOrderEvent,MedicalSupplyOrderEvent,PharmacyPrescriptionOrderEvent,ProcedureOrderEvent,
+			           RadiologyOrderEvent,ReferralOrderEvent,TransfusionOrderEvent, MammogramEvent, ServiceOrderEvent, PatientFallEvent,
+			           PatientFallRiskAssessmentEvent, PharmacyDispenseEvent, MedicationAdminEvent, VaccinationAdminEvent"
+			 keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+Each clinical event can be associated with a "parent" clinical event which triggered its creation.  Some examples would include:
+(1)  A Diagnostic Test Order event is generated to run a lab test.  Once the lab test is run, an Observation event is generated with the results.  The parent clinical event for the observation would be the original order event that ordered the lab test.
+(2)  A patient is admitted into a hospital and a provider makes two observations during the admitting process.  This scenario would result in an Admission event and two Observation events.  Both observations would have a parent clinical event pointing to the admission event.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<AdmissionEvent>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>EventId</SourceInstanceId>
+			</AdmissionEvent>
+			]]>
+		</example>		
+	</element>
+	
+	<element name="Encounter" type="OmniLink" contains="Encounter" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		Specifies the Encounter associated with this clinical event.
+		
+		Use this element to specify a Encounter in the system using the Encounter's SourceName and SourceInstanceId. You cannot load Encounter
+		information using this element, however if the Encounter is not found then a "placeholder" will be created that will contain the Encounter
+		when loaded.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<Encounter>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>EncounterId</SourceInstanceId>
+			</Encounter>
+			]]>
+		</example>		
+	</element>
+
+	<element name="CarePlanId" type="string">
+		<documentation>
+		deprecated: UNDER CONSTRUCTION: CarePlan has not been completed. Add unique CarePlanId until this element is changed to a link.
+		
+		A Care Plan is designed for a specific patient to address the delivery of care needed for a specific condition or set of conditions over a period of time.  Activities identify planned actions to occur as part of the care plan (e.g. medications to take, lab tests to run, self-evaluation, procedures to undergo, etc.).  Care plans should be captured as the clinical events for these activities occur. 
+		</documentation>	
+	</element>	
+  
+ 	<element name="CarePlan" type="OmniLink" contains="CarePlan" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		A Care Plan is designed for a specific patient to address the delivery of care needed for a specific condition or set of conditions over a period of time.  Activities identify planned actions to occur as part of the care plan (e.g. medications to take, lab tests to run, self-evaluation, procedures to undergo, etc.).  Care plans should be captured as the clinical events for these activities occur.
+		
+		Use this element to specify a CarePlan in the system using the CarePlan's SourceName and SourceInstanceId. You cannot load CarePlan
+		information using this element, however if the CarePlan is not found then a "placeholder" will be created that will contain the CarePlan
+		when loaded.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<CarePlan>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>CarePlanId</SourceInstanceId>
+			</CarePlan>
+			]]>
+		</example>		
+	</element>
+ 
+	<list name="EventProviders" contains="EventProvider">
+		<documentation>
+		EventProviders is a collection of EventProvider records.  Each clinical event record contains all providers that participated in the event as well as the role played by each.  A provider role describes how the physician participated during the event.  For example, the same physician can play the role of a surgeon during a procedure, an admitting physician during an admission, and as the discharge physician on a discharge event.  Other examples would be the provider a patient was referred to and referred from on a referral order, the fulfillment provider who administered a vaccination on an order or multiple surgeons on a procedure event.
+		</documentation>		
+	</list>
+
+	<list name="EventNotes" contains="EventNote">
+		<documentation>
+		A collection of AppointmentNotes.
+		</documentation>
+		
+		
+	</list>
+
+	<group name="ClinicalBaseFields" hidden="true" udlName=""
+		   elementOrder="CopyOfSourceName, CopyOfSourceInstanceId, CopyOfSourceInstanceId, CopyOfSourceStatusCode, 
+		                 CopyOfSourceCreatedBy, CopyOfSourceCreatedDate, CopyOfSourceModifiedDate, CopyOfSourceModifiedBy">
+		   		         
+		<element name="CopyOfSourceName" type="string" dbColumn="source_name" hidden="true"/>
+		<element name="CopyOfSourceInstanceId" type="string" dbColumn="source_instance_id" hidden="true"/>	
+		<element name="CopyOfSourceInstanceIdName" type="string" dbColumn="source_instance_id_name" hidden="true"/>
+		<element name="CopyOfSourceStatusCode" type="code" dbColumn="source_status_code" hidden="true"/>
+		<element name="CopyOfSourceCreatedDate" type="datetime" dbColumn="source_created_date" hidden="true"/>
+		<element name="CopyOfSourceCreatedBy" type="string" dbColumn="source_created_by" hidden="true"/>
+		<element name="CopyOfSourceModifiedDate" type="datetime" dbColumn="source_modified_date" hidden="true"/>
+		<element name="CopyOfSourceModifiedBy" type="string" dbColumn="source_modified_by" hidden="true"/>
+	</group>
+
+	<element name="CCDCategoryCode" type="SourceCode" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.1">
+		<documentation>
+			This data element will be used to indicate the section of the CCD document on which this event will be
+			output. It is expected to be populated with the appropriate LOINC value, indicating the CCD section.
+		</documentation>
+
+	</element>
+
+
+</idsInclude>

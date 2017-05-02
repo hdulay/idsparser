@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.2.1" changeVersion="2" domain="Accessibility" type="instance"
+			 name="ProviderAvailabilitySlot"  
+	 		 elementOrder="Provider, Location, SlotBeginDateTime, SlotLength, NumberOfAppointmentsScheduled, OriginalOpeningsPerSlot,
+	 		               OriginalNumberOfOverbooksAllowed, PrivateSlotIndicator, UnavailableIndicator, UnavailableReasonCode, HeldIndicator,
+	 		               HeldReasonCode, BlockedIndicator, BlockedReasonCode, Appointments">
+	  	 					
+	<changeLog>
+		<change version="1.2.1">Initial Version</change>
+		<change version="1.2.1_2">Added SourceStatusCode to instance and collection items.</change>		
+	</changeLog>
+	
+	<notes>
+	BlockedIndicator and BlockedReasonCode replace ProviderAvailabilityBlock since the actual data does not show any
+	instances of multiple blocks for the same location. I believe this is an Epic'ism that should not be carried into
+	the Omni model.
+	</notes>
+		
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	
+	<documentation>
+	The collection of ProviderAvailabilitySlot's can be used to determine Provider utilization. It involves tracking details on slots of time
+	used for scheduling appointments. Details for each Provider, Location, and Slot must to loaded using this document, including Patient links
+	or unavailable or on hold information.
+	</documentation>
+
+	<element name="Provider" type="link" contains="Provider">
+		<documentation>
+		Use this element to specify a Provider in the system using the Provider's SourceName and SourceInstanceId. You cannot load Provider
+		information using this element, however if the Provider is not found then a "placeholder" will be created that will contain the Provider
+		when loaded.
+		</documentation>
+	</element>
+		
+	<element name="Location" type="link" contains="FacilityLocation" dbColumn="facility_location_id">
+		<documentation>
+		Use this element to specify the location that the Provider will perform services using the FacilityLocation's SourceName and SourceInstanceId.
+		You cannot load FacilityLocation using this element, however if the FacilityLocation is not found a "placeholder" will be created that will
+		contain the FacilityLocation information when its loaded.
+		</documentation>
+	</element>
+	
+	<element name="SlotBeginDateTime" type="datetime" dbColumn="slot_begin_date">
+		<documentation>
+		Use this element to specify the slot date and starting time of the slot.
+		</documentation>
+	</element>
+	
+	<element name="SlotLength" type="integer">
+		<documentation>
+		Use this element to specify the slot duration in minutes.
+		</documentation>
+	</element>
+	
+	<element name="NumberOfAppointmentsScheduled" type="integer" dbColumn="nbr_scheduled_appointments">
+		<documentation>
+		Use this element to specify the total number of appointments that have been scheduled
+		against this slot. 
+		</documentation>
+	</element>
+	
+	<element name="OriginalOpeningsPerSlot" type="integer" dbColumn="orig_openings_per_slot">
+		<documentation>
+		Use this element to specify the number of openings for this slot. This is most likely
+		tied to the ProviderTemplateSchedule.OpeningsPerSlot.
+		</documentation>
+	</element>
+
+	<element name="OriginalNumberOfOverbooksAllowed" type="integer" dbColumn="orig_nbr_overbooks_allowed">
+		<documentation>
+		Use this element to specify the number of overbookings allowed for this slot. 
+		</documentation>
+	</element>
+	
+	<element name="PrivateSlotIndicator" type="code" dbColumn="private_slot_code">
+		<documentation>
+		Use this element to specify that the slot private or not. 
+		</documentation>
+	</element>
+
+	<element name="UnavailableIndicator" type="code">
+		<documentation>
+		Use this element to specify if the slot was unavailable. For some systems a slot may
+		be unavailable due to the entire day being unavailable or a time frame that includes
+		this time slot being unavailable. Use UnavailableReasonCode to code the reason for
+		the slot unavailability. 
+		</documentation>
+	</element>
+	
+	<element name="UnavailableReasonCode" type="code">
+		<documentation>
+		If the slot was unavailable then use this element to specify the coded reason for
+		the unavailability. For example a "V" may indicate the Provider was on vacation.
+		</documentation>
+	</element>
+	
+	<element name="HeldIndicator" type="code">
+		<documentation>
+		Use this element to specify if the slot was held. For some systems a slot may
+		be unavailable due to the entire day being held or a time frame that includes
+		this time slot being held. Use HeldReasonCode to code the reason for
+		the slot unavailability. 
+		</documentation>
+	</element>
+	
+	<element name="HeldReasonCode" type="code">
+		<documentation>
+		If the slot was held then use this element to specify the coded reason for
+		the unavailability. For example a "V" may indicate the Provider was on vacation.
+		</documentation>
+	</element>
+
+	<element name="BlockedIndicator" type="code">
+		<documentation>
+		Use this element to specify if the slot was blocked. Use BlockedReasonCode to 
+		code the reason for the slot being blocked. 
+		</documentation>
+	</element>
+	
+	<element name="BlockedReasonCode" type="code">
+		<documentation>
+		If the slot was blocked then use this element to specify the coded reason for
+		the unavailability. For example a "Urgent" may indicate the slot is blocked for
+		and Urgent Follow Up appointment.
+		</documentation>
+	</element>
+
+	<list name="Appointments">
+		<documentation>
+		Use this collection to specify the list of Appointments that have been associated with this available slot. 
+		Appointments will not sent with this document, this collection will contain links to the appointments.	
+		</documentation>
+		
+		<idsDocument name="ProviderAvailabilityAppointment" type="instance_child" tableName="provider_availability_appt"
+			 		 		elementOrder="Appointment">
+			 		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+					 	  	
+			<documentation>
+			Use this element to link a ProviderAppointment's to ProviderAvailabilitySlot.
+			</documentation>
+						
+			<element name="Appointment" type="link" contains="Appointment">
+				<documentation>
+				Use this element to specify the appointment that the Provider performed services. 
+				</documentation>
+			</element>						
+		</idsDocument>
+	</list>
+
+</idsDocument>

@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.0.0" changeVersion="0"
+       name="VaccinationAdminEvent"
+       domain="Clinical.Event"
+       type="instance"
+       elementOrder="EventDateTime, Location, VaccinationID, VaccineCode, CVXCode, RxNormCode, SNOMEDCTCode,
+                     NDCCode, CPTCode, OtherVaccineCodes,
+                     GivenIndicator, ReportedIndicator, PrimaryIndication, SecondaryIndication, RouteOfAdministrationCode, BodySiteCode, DoseQuantity, VISBarcode,
+                     VISDocument, VISEditionDate, BarcodeIdentifier, LotNumber, ExpirationDate, MVXCode, ManufacturerCode,
+                     ManufacturerName, VaccineRefusalReasonCode, CompletionStatusCode, PrimaryImmunizationReasonCode, SecondaryImmunizationReasonCode,
+					 PrimaryNotGivenReasonCode, SecondaryNotGivenReasonCode, VaccineReactions, VaccineProtocols"
+       backingClass="com.ibi.omni.patient.model.clinical.event.ClinicalEvent">
+
+  <changeLog>
+    <change version="">Initial Version</change>
+  </changeLog>
+
+  <customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+  <customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+  <customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+  <customType name="codeList" class="com.ibi.dib.core.ids.types.IdsMultipleCodeType"/>
+
+  <documentation>
+    This captures information related to the administration of vaccinations by a provider to a patient. 
+    This IDS applies to adminstration events in any clinical setting. Depending on the availability of data, 
+    the administration event can be associated to the original order as a parent event, if available. 
+    Much of this structure was driven by FHIR models defined at https://www.hl7.org/fhir/immunization.html 
+    as well as the HL7-v2 RXA and VXU Segments.
+  </documentation>
+
+  <include name="EventElements"
+           prependToElementOrder="ParentEvent, Encounter, CarePlanId, CarePlan, CCDCategoryCode"
+           appendToElementOrder="EventProviders, EventNotes, ClinicalBaseFields" />
+
+  <include name="CommonElements"
+           prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+           appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy" /> 
+
+
+  <element name="EventDateTime" type="OmniDate">
+	<documentation>Date and time that the administration of the vaccination occurred, 
+	  or was supposed to occur but did not.
+    </documentation>
+  </element>
+
+  <element name="Location" type="OmniLink" contains="FacilityLocation"  keys="SourceName, SourceInstanceId" allowCreate="true">
+	<documentation>Facility location where the administration took place.</documentation>
+  </element>
+
+  <element name="VaccinationID" type="string">
+    <documentation>
+      Business identifier of the vaccination administration event. This could come from an external reporting source.
+    </documentation>
+  </element>
+
+  <element name="VaccineCode" type="SourceCode" codeSource="OMNI">
+    <documentation>
+      Identifies the vaccine that was administered.
+    </documentation>
+  </element>
+
+  <element name="CVXCode" type="SourceCode" codeSource="CVX" codeSet="2.16.840.1.113883.12.292">
+    <documentation>
+      Contains CVX code for the vaccination as defined by the Centers for Disease Control (CDC).
+    </documentation>
+  </element>
+
+  <element name="RxNormCode" type="SourceCode" codeSource="RXNORM" codeSet="2.16.840.1.113883.6.88">
+    <documentation>
+      Vaccine expressed as an RxNorm code
+    </documentation>
+  </element>
+
+  <element name="SNOMEDCTCode" type="SourceCode" codeSource="SNOMEDCT" codeSet="2.16.840.1.113883.6.96">
+    <documentation>
+      Vaccine expressed as a SNOMED code
+    </documentation>
+  </element>
+
+  <element name="NDCCode"  type="SourceCode" codeSource="OMNI">
+    <documentation>
+      Vaccine expressed as an NDC code
+    </documentation>
+  </element>
+
+  <element name="CPTCode" type="SourceCode" codeSource="CPT" codeSet="2.16.840.1.113883.6.12">
+    <documentation>
+      CPT code representing the administration of the vaccine.
+    </documentation>
+  </element>
+
+  <element name="OtherVaccineCodes" type="codeList" contains="OtherVaccineCode">
+    <documentation>
+      Vaccine expressed in a custom or proprietary code set
+    </documentation>
+    <example>
+      <OtherVaccineCode sourceName="HL7-V3" sourceCodeSet="2.16.840.1.113883.6.103-ALT" sourceCode="NONE" />
+      <OtherVaccineCode sourceName="HL7-V3" sourceCodeSet="2.16.840.1.113883.6.103-ALT" sourceCode="ONE" />
+    </example>
+  </element>
+
+  <element name="GivenIndicator" type="SourceCode" codeSource="OMNI" codeSet="0136">
+    <documentation>
+      Indicates whether the vaccine was actually given/administered to the patient.
+    </documentation>
+  </element>
+
+  <element name="ReportedIndicator" type="SourceCode" codeSource="OMNI" codeSet="0136">
+    <documentation>
+      An indicator whether this instance represents a reported administration instead of an actual administration. 
+	  True (Y) if this administration was reported rather than directly administered.
+    </documentation>
+  </element>
+
+  <element name="PrimaryIndication" type="OmniLink" contains="DiagnosisEvent" keys="SourceName, SourceInstanceId" allowCreate="true">
+    <documentation>
+      Reference to DiagnosisEvent containing primary diagnosis for which the vaccine was indicated.
+    </documentation>
+  </element>
+
+  <element name="SecondaryIndication" type="OmniLink" contains="DiagnosisEvent" keys="SourceName, SourceInstanceId" allowCreate="true">
+    <documentation>
+      Reference to DiagnosisEvent containing secondary diagnosis for which the vaccine was indicated.
+    </documentation>
+  </element>
+
+  <element name="RouteOfAdministrationCode" type="SourceCode" codeSource="OMNI">
+    <documentation>
+      This can conform to HL7 v2 codeset 0162 or to HL7 v3/FHIR specification of SNOMED routes of administration codes.
+    </documentation>
+  </element>
+
+  <element name="BodySiteCode" type="SourceCode" codeSource="OMNI">
+    <documentation>
+      This can conform to HL7 v2 codeset 0163 or to HL7 v3/FHIR specification of SNOMED body site codes.
+    </documentation>
+  </element>
+
+  <element name="DoseQuantity" type="number" precision="15" scale="3">
+    <documentation>
+      The quantity of vaccine product that was administered.
+    </documentation>
+    <example>123456789012.123</example>
+  </element>
+
+  <element name="VISBarcode" type="string">
+    <documentation>
+      Contains the fully encoded string embedded in the Vaccine Information Statement (VIS) 2D barcode on the vaccine packaging.
+    </documentation>
+  </element>
+
+  <element name="VISDocument" type="string">
+    <documentation>
+      Contains the Vaccine Information Statement (VIS) GTDI Document Type string from the 2D barcode on the vaccine packaging.
+    </documentation>
+  </element>
+
+  <element name="VISEditionDate" type="OmniDate">
+    <documentation>
+      Contains the Vaccine Information Statement (VIS) Edition Date value from the 2D barcode on the vaccine packaging.
+    </documentation>
+  </element>
+
+  <element name="BarcodeIdentifier" type="string">
+    <documentation>
+      Contains the pharmacy system assigned barcode for the administered vaccine.
+	  This can alternatively capture a serial number printed on the packaging by the manufacturer.
+    </documentation>
+    <example>123456789012.123</example>
+  </element>
+
+  <element name="LotNumber" type="string">
+    <documentation>
+      Contains the lot number of the vaccine administered.
+    </documentation>
+  </element>
+
+  <element name="ExpirationDate" type="OmniDate">
+    <documentation>
+      Contains the expiration date of the vaccine administered.
+    </documentation>
+  </element>
+
+  <element name="MVXCode" type="SourceCode" codeSource="MVX" codeset="2.16.840.1.113883.12.227">
+    <documentation>
+      Contains MVX code for the vaccination manufacturer as defined by the Centers for Disease Control (CDC).
+    </documentation>
+  </element>
+
+  <element name="ManufacturerCode" type="SourceCode" codeSource="OMNI" codeset="0227">
+    <documentation>
+      Contains code of the manufacturer of the vaccine administered.
+    </documentation>
+  </element>
+
+  <element name="ManufacturerName" type="string">
+    <documentation>
+      Contains name of the manufacturer of the vaccine administered.
+    </documentation>
+  </element>
+
+  <element name="VaccineRefusalReasonCode" type="SourceCode" codeSource="OMNI" codeset="0000">
+    <documentation>
+      If the patient refused the vaccine, this value will contain the coded reason for the refusal.
+    </documentation>
+  </element>
+
+  <element name="CompletionStatusCode" type="SourceCode" codeSource="OMNI" codeset="0322">
+    <documentation>
+      Contains the status of administering the vaccine.
+    </documentation>
+    <example>123456789012.123</example>
+  </element>
+
+  <element name="PrimaryImmunizationReasonCode" type="SourceCode" codeSource="OMNI" codeset="2.16.840.1.113883.4.642.2.163">
+    <documentation>
+      Primary reason why immunization occurred.
+    </documentation>
+  </element>
+
+  <element name="SecondaryImmunizationReasonCode" type="SourceCode" codeSource="OMNI" codeset="2.16.840.1.113883.4.642.2.163">
+    <documentation>
+      Secondary reason why immunization occurred.
+    </documentation>
+  </element>
+
+  <element name="PrimaryNotGivenReasonCode" type="SourceCode" codeSource="OMNI" codeset="2.16.840.1.113883.4.642.2.164">
+    <documentation>
+      Primary reason why immunization was not given.
+    </documentation>
+  </element>
+
+  <element name="SecondaryNotGivenReasonCode" type="SourceCode" codeSource="OMNI" codeset="2.16.840.1.113883.4.642.2.164">
+    <documentation>
+      Secondary reason why immunization was not given.
+    </documentation>
+  </element>
+
+	<list name="VaccineReactions">
+		<idsDocument version="1.0.0" changeVersion="0"
+					 type="instance_child" 
+                     domain="Clinical"
+					 name="VaccineReaction"
+					 elementOrder="ReactionDate, Observation, ReportedIndicator" >
+
+        <include name="CommonElements"
+                prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+                appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy" /> 
+
+
+			<documentation>
+				Details of the reaction(s) that follow immunization, if any.
+			</documentation>
+
+			<element name="ReactionDate" type="OmniDate">
+				<documentation>
+				Date that the reaction started.
+				</documentation>
+			</element>
+	
+			<element name="Observation" type="string">
+				<documentation>
+				Contains the description about the protocol under which the vaccine was administered.
+				</documentation>
+			</element>
+	
+			<element name="ReportedIndicator" type="SourceCode" codeSource="OMNI" codeset="0136">
+				<documentation>
+				An indicator whether this instance represents a reported reaction instead of a reaction 
+				observed by the provider. True (Y) if this reaction was reported rather than directly observed.
+				</documentation>
+			</element>
+		</idsDocument>
+	</list>
+
+	<list name="VaccineProtocols">
+		<idsDocument version="1.0.0" changeVersion="0"
+					 type="instance_child" 
+                     domain="Clinical"
+					 name="VaccineProtocol"
+					 elementOrder="DoseSequence, ProtocolDescription, ProtocolAuthority, VaccineSeries, RecommendedDoses, PrimaryTargetDiseaseCode,
+                           SecondaryTargetDiseaseCode, TertiaryTargetDiseaseCode, DoseStatus, DoseStatusReason" >
+
+        <include name="CommonElements"
+                prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+                appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy" /> 
+
+
+			<documentation>
+				Contains information about the protocol(s) under which the vaccine was administered.
+			</documentation>
+
+			<element name="DoseSequence" type="integer">
+				<documentation>
+				Dose number within series.
+				</documentation>
+			</element>
+	
+			<element name="ProtocolDescription" type="string">
+				<documentation>
+				Contains the description about the protocol under which the vaccine was administered.
+				</documentation>
+			</element>
+	
+			<element name="ProtocolAuthority" type="string">
+				<documentation>
+				Indicates the authority who published the protocol. E.g. ACIP.
+				</documentation>
+			</element>
+	
+			<element name="VaccineSeries" type="string">
+				<documentation>
+				Name of vaccine series. One possible path to achieve presumed immunity against a disease - within the context of an authority.
+				</documentation>
+			</element>
+
+			<element name="RecommendedDoses" type="integer">
+				<documentation>
+				The recommended number of doses to achieve immunity.
+				</documentation>
+			</element>
+
+			<element name="PrimaryTargetDiseaseCode" type="SourceCode" codeSource="SNOMEDCT" codeSet="2.16.840.1.113883.6.96">
+				<documentation>
+				Primary disease immunized against. The value set to instantiate this attribute should be drawn from 
+				a terminologically robust code system that consists of or contains concepts to support the medication process, 
+				in particular the process and reasons for dispensing. This value set is provided as a suggestive example and 
+				includes tSNOMED CT concepts from the 64572001 (Disease) hierarchy.
+				</documentation>
+			</element>
+
+			<element name="SecondaryTargetDiseaseCode" type="SourceCode" codeSource="SNOMEDCT" codeSet="2.16.840.1.113883.6.96">
+				<documentation>
+				Secondary disease immunized against. The value set to instantiate this attribute should be drawn from 
+				a terminologically robust code system that consists of or contains concepts to support the medication process, 
+				in particular the process and reasons for dispensing. This value set is provided as a suggestive example and 
+				includes tSNOMED CT concepts from the 64572001 (Disease) hierarchy.
+				</documentation>
+			</element>
+
+			<element name="TertiaryTargetDiseaseCode" type="SourceCode" codeSource="SNOMEDCT" codeSet="2.16.840.1.113883.6.96">
+				<documentation>
+				Tertiary disease immunized against. The value set to instantiate this attribute should be drawn from 
+				a terminologically robust code system that consists of or contains concepts to support the medication process, 
+				in particular the process and reasons for dispensing. This value set is provided as a suggestive example and 
+				includes tSNOMED CT concepts from the 64572001 (Disease) hierarchy.
+				</documentation>
+			</element>
+
+			<element name="DoseStatus" type="SourceCode" codeSource="OMNI" codeSet="2.16.840.1.113883.4.642.2.166">
+				<documentation>
+				Indicates if dose counts towards immunity.
+				</documentation>
+			</element>
+
+			<element name="DoseStatusReason" type="SourceCode" codeSource="OMNI" codeSet="2.16.840.1.113883.4.642.1.167">
+				<documentation>
+				Why dose does (not) count. The value set to instantiate this attribute should be drawn from a terminologically 
+				robust code system that consists of or contains concepts to support the medication process, 
+				in particular the process and reasons for dispensing. This value set is provided as a suggestive example.
+				</documentation>
+			</element>
+		</idsDocument>
+	</list>
+</idsDocument>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<idsDocument version="1.0.0" changeVersion="0" domain="Facility" type="xinstance" name="FacilityDisasterPlanning" elementOrder="MedicalFacility, MedicalFacilityLocation, MedicalOrganization, Department, PeriodStartDate, PeriodEndDate, PeriodTypeCode, PlanningCategoryCode, PlanningSubCategoryCode, DisasterPlanning">
+  <include name="CommonElements" prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName" appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+  <notes></notes>
+  <documentation>Healthcare facilities have emergency preparedness plans to invoke in case of a disaster.  While these plans can differ based on the type of disaster, there is a common set of metrics captured here.  Facility Disaster Planning enables the customer to populate the Actual, Projected, Budget or Benchmark disaster planning metrics for a facility, location, organization or department or any combination within that hierarchy for the reporting period.  </documentation>
+  <element name="MedicalFacility" type="link" contains="Facility">
+    <documentation>Specifies the physical medical facility where the patient received treatment.</documentation>
+    <example>
+      <Facility>
+        <SourceName>TestSystem</SourceName>
+        <SourceInstanceId>Hospital</SourceInstanceId>
+      </Facility>
+    </example>
+  </element>
+  <element name="MedicalFacilityLocation" type="link" contains="FacilityLocation">
+    <documentation>If data pertains to a particular location within the facility such as a specific building, it is defined here.</documentation>
+    <example>
+      <FacilityLocation>
+        <SourceName>TestSystem</SourceName>
+        <SourceInstanceId>Building A</SourceInstanceId>
+      </FacilityLocation>
+    </example>
+  </element>
+  <element name="MedicalOrganization" type="link" contains="Organization">
+    <documentation>Identifies the medical organization. This organization consists of a group of people working together to improve methods of health care delivery.</documentation>
+    <example>
+      <Organization>
+        <SourceName>TestSystem</SourceName>
+        <SourceInstanceId>Organization XYZ</SourceInstanceId>
+      </Organization>
+    </example>
+  </element>
+  <element name="Department" type="link" contains="OrganizationalUnit">
+    <documentation>If data pertains to a particular department within the organization such as the Emergency Room, it is defined here.</documentation>
+    <example>
+      <OrganizationalUnit>
+        <SourceName>TestSystem</SourceName>
+        <SourceInstanceId>Emergency Room</SourceInstanceId>
+      </OrganizationalUnit>
+    </example>
+  </element>
+  <element name="PeriodStartDate" type="datetime">
+    <documentation>Contains the starting date when the facility statistics were collected.</documentation>
+    <example>
+      <PeriodStartDate format="yyy-MM-dd">2015-01-01</PeriodStartDate>
+    </example>
+  </element>
+  <element name="PeriodEndDate" type="datetime">
+    <documentation>Contains the ending date when the facility statistics were collected.</documentation>
+    <example>
+      <PeriodEndDate format="yyy-MM-dd">2015-01-01</PeriodEndDate>
+    </example>
+  </element>
+  <element name="PeriodTypeCode" type="code">
+    <documentation>Identifies the period of time that the facility statistics represent.</documentation>
+   	<example sourceName="TestSystem" codeSet="PeriodTypeCodes">Year</example>
+  </element>
+  <element name="PlanningCategoryCode" type="code">
+    <documentation>These IDS's can be used to capture Actuals, Budgeted, Projected or Benchmarks for any metric for the reporting period. A single IDS can be for only one Planning Category/Subcategory combination. If the customer reports this at the departmental level, then each IDS represents one Department/Category/Subcategory combination. The customer can generate these at multiple levels if they so choose. IDS's at the facility level, or IDS's down to the departmental level, or anything and everything in between. The distinction between Budgeted (near-term) and Projected (longer term) is generally accepted, but how the customer uses these categories is up to them; they just enable a means of making comparisons. Actuals would capture the real statistics for the reporting period. If they are so inclined, they might generate "Benchmark" IDS's if say there is an industry formula for a hospital or department of their size. Multiple benchmark IDS's might be generated for different percentiles, if they exist or are calculable which is probably at the beginning of the fiscal year, or when industry benchmarks are issued.</documentation>
+    <example sourceName="TestSystem" codeSet="PlanningCategoryCodes">Projected</example>
+  </element>
+  <element name="PlanningSubCategoryCode" type="code">
+    <documentation>The Planning Subcategory provides a method to generate these Actuals, Budgeted, Projected or Benchmarks IDS's for different percentiles, if they exist or are calculable.</documentation>
+    <example sourceName="TestSystem" codeSet="PlanningSubCategoryCodes">50th percentile</example>
+  </element>
+  <group name="DisasterPlanning" elementOrder="HoursOfSupplyOnHand, EmergencyPlannedHours, DisasterDrillsTotal, DisasterDrillsOnSchedule">
+	  <documentaion>Construction is a group of attributes related to risk assessment of new construction projects.</documentaion>	  
+	<element name="HoursOfSupplyOnHand" type="double">
+    	<documentation>Contains the number of hours the supply onhand will last at the facility for the reporting period.</documentation>
+    	<example>
+      		<HoursOfSupplyOnHand>30</HoursOfSupplyOnHand>
+    	</example>
+  	 </element>	
+	 <element name="EmergencyPlannedHours" type="double">
+   		 <documentation>Contains the number of hours the disaster is expected to last at the facility for the reporting period.</documentation>
+   		 <example>
+     		 <EmergencyPlannedHours>12</EmergencyPlannedHours>
+   		 </example>
+ 	 </element>	 
+
+	  <element name="DisasterDrillsTotal" type="integer">
+	    <documentation>Contains the total number of disaster drills performed at the facility for the reporting period.</documentation>
+	    <example>
+	      <DisasterDrillsTotal>5</DisasterDrillsTotal>
+	    </example>
+	  </element>
+	  <element name="DisasterDrillsOnSchedule" type="integer">
+	    <documentation>Contains the number of disaster drills scheduled at the facility for the reporting period.</documentation>
+	    <example>
+	      <DisasterDrillsOnSchedule>7</DisasterDrillsOnSchedule>
+	    </example>
+	  </element>
+	</group>
+ 
+</idsDocument>

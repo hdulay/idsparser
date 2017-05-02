@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.2.6" changeVersion="1" domain="Clinical.Event" type="instance"
+       name="DeathEvent"  
+       elementOrder="EventDateTime, Location, DeadOnArrivalIndicator, MannerOfDeathCode, TobaccoUseContributeToDeathCode, 
+                     PregnancyStatusCode, Injury, Autopsy, Certification, UnderlyingCauses"
+       implementationClass="com.ibi.omni.patient.model.clinical.event.DeathEvent">           
+                
+  <changeLog>
+    <change version="1.2.6_0">Initial Version</change>
+    <change version="1.2.6_1">Added SourceStatusCode to instance and collection items.</change>
+  </changeLog>
+  
+  <notes>
+  </notes>
+  
+  <documentation>
+    Death Event is a type of clinical event capturing data specific to a patient's death and possible autopsy.  The clinical event contains the facility location where death occurred as well as the date and time of the patient's death.  If the person who performed the autopsy or certified the death is defined as a provider in the system, that provider can be included as part of the clinical event assigning the appropriate provider role.  If not, can optionally capture the name and title of each provider.
+  </documentation>
+  
+  <customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+  <customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+  <customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+  
+  <include name="EventElements"
+    prependToElementOrder="ParentEvent, Encounter, CarePlanId, CarePlan, CCDCategoryCode"
+    appendToElementOrder="EventProviders, EventNotes"/>
+  
+  <include name="CommonElements"
+    prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+    appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+  
+  <element name="EventDateTime" type="OmniDate">
+    <documentation>
+      Date and time of patient's death.
+    </documentation>
+    
+    <example format="yyyy-MM-dd hh:mm:ss">2000-10-01 11:12:32</example>
+  </element>
+
+  <element name="Location" type="OmniLink" contains="FacilityLocation" keys="SourceName, SourceInstanceId" allowCreate="true">
+    <documentation>
+      Facility location where the patient died.
+    </documentation>
+    
+    <example>
+      <![CDATA[
+      <FacilityLocation>
+        <SourceName>TestSystem</SourceName>
+        <SourceInstanceId>FacilityLocationId</SourceInstanceId>
+      </FacilityLocation>
+      ]]>
+    </example>    
+  </element>
+  
+  <element name="DeadOnArrivalIndicator" type="SourceCode" codeSource="OMNI" codeSet="0136">
+    <documentation>
+      Indicates whether the patient arrived at the event's facility location DOA (dead on arrival).  If "Yes", patient was DOA.  If "No", patient was not DOA.
+    </documentation>
+    
+    <example sourceName="OMNI" sourceCodeSet="0136" sourceCode="Y"/>
+  </element>
+  
+  <element name="MannerOfDeathCode" type="SourceCode">
+    <documentation>
+      Identifies the manner in which the patient died.
+    </documentation>
+    
+    <example sourceCodeSet="MannerOfDeathCodes" sourceCode="N">Natural</example>
+  </element>
+  
+  <element name="TobaccoUseContributeToDeathCode" type="SourceCode">
+    <documentation>
+      Identifies whether tobacco contributed to the death of the patient.
+    </documentation>
+    
+    <example sourceCodeSet="TobaccoUseContributeToDeathCodes" sourceCode="P">Probably</example>
+  </element>
+
+  <element name="PregnancyStatusCode" type="SourceCode">
+    <documentation>
+      If patient is female, identifies pregnancy at time of death.
+    </documentation>
+    
+    <example sourceCodeSet="PregnancyStatusCodes" sourceCode="N">Not Pregnant at Time of Death</example>
+  </element>
+  
+  <group name="Injury" 
+         elementOrder="Indicator, DateTime, AtWorkIndicator, TransportationCode, PlaceInjuryOccured, HowInjuryOccured" udlName="injury">
+         
+    <documentation>
+      Injury is a group of attributes that contain details when the death is related to an injury such as how, when and where it occurred and whether it is work related.
+    </documentation>
+    
+    <element name="Indicator" type="SourceCode" codeSource="OMNI" codeSet="0136">
+      <documentation>
+        Indicates whether the patient's death was related to an injury.  If "Yes", death was related to an injury.  If "No", death was not related to an injury.
+      </documentation>
+    
+      <example sourceName="OMNI" sourceCodeSet="0136" sourceCode="Y"/>
+    </element>
+    
+    <element name="DateTime" type="OmniDate">
+      <documentation>
+        Represents the date and time the injury occurred.
+      </documentation>
+    
+      <example format="yyyy-MM-dd hh:mm:ss">2000-10-01 11:12:32</example>
+    </element>
+    
+    <element name="AtWorkIndicator" type="SourceCode" codeSource="OMNI" codeSet="0136">
+      <documentation>
+        Indicates whether the patient's injury was work related.  If "Yes", injury was work related.  If "No", injury was not work related.
+      </documentation>
+    
+      <example sourceName="OMNI" sourceCodeSet="0136" sourceCode="Y"/>
+    </element>
+    
+    <element name="TransportationCode" type="SourceCode">
+      <documentation>
+        If injury resulted from transportation, identifies how the patient was involved.
+      </documentation>
+    
+      <example sourceCodeSet="InjuryTransportationCodes" sourceCode="D">Driver/Operator</example>
+    </element>
+    
+    <element name="PlaceInjuryOccured" type="string" maxLength="1000">
+      <documentation>
+        Description of place the injury occurred.
+      </documentation>
+    
+      <example>At Work</example>
+    </element>
+    
+    <element name="HowInjuryOccured" type="string" maxLength="1000">
+      <documentation>
+        Description of how the injury occurred.
+      </documentation>
+    
+      <example>Running BandSaw</example>
+    </element>
+  </group>
+  
+  <group name="Autopsy"
+         elementOrder="Indicator, StartDateTime, EndDateTime, PerformedByName,
+                       PerformedByTitle, CoronerIndicator" udlName="Autopsy">
+    <documentation>
+      Autopsy is a group of attributes that track whether an autopsy was performed on the deceased and if so, by who and when.
+    </documentation>
+    
+    <element name="Indicator" type="SourceCode" codeSource="OMNI" codeSet="0136">
+      <documentation>
+        Indicates whether an autopsy was performed or not.  If "Yes", autopsy was perfomed.  If "No", autopsy was not performed.
+      </documentation>
+    
+      <example sourceName="OMNI" sourceCodeSet="0136" sourceCode="Y"/>
+    </element>
+    
+    <element name="StartDateTime" type="OmniDate">
+      <documentation>
+        This represents the date and time the autopsy began.
+      </documentation>
+    
+      <example format="yyyy-MM-dd hh:mm:ss">2000-10-01 11:12:32</example>
+    </element>
+    
+    <element name="EndDateTime" type="OmniDate">
+      <documentation>
+        This represents the date and time the autopsy was completed.
+      </documentation>
+    
+      <example format="yyyy-MM-dd hh:mm:ss">2000-10-01 11:12:32</example>
+    </element>
+    
+    <element name="PerformedByName" type="string">
+      <documentation>
+        If person who performed the autopsy is not listed as a provider in the system, this attribute will contain the name of the person who performed the autopsy.  
+        NOTE:  If in the system, the provider who performed the autopsy can be assigned a Provider Role indicating such (e.g.  Performed Autopsy) and be assigned to providers associated with this event.
+      </documentation>
+    
+      <example>Who</example>
+    </element>
+    
+    <element name="PerformedByTitle" type="string">
+      <documentation>
+        If person who performed the autopsy is not listed as a provider in the system, this attribute will contain the title of the person who performed the autopsy.
+      </documentation>
+    
+      <example>Doctor</example>
+    </element>
+    
+    <element name="CoronerIndicator" type="SourceCode" codeSource="OMNI" codeSet="0136">
+      <documentation>
+        Indicates whether the death was assigned to the coroner/medical examiner for investigative purposed.  If "Yes", death has been assigned to coroner.  If "No", death has not been assigned to coroner.
+      </documentation>
+    
+      <example sourceName="OMNI" sourceCodeSet="0136" sourceCode="Y"/>
+    </element>
+  </group> 
+  
+  <group name="Certification"
+         elementOrder="DeathCertifiedIndicator, DeathCertificateSignedDateTime,
+                       DeathCertifiedByName, DeathCertifiedByTitle" udlName="Certification">
+  
+    <documentation>
+      Certification is a group of attributes that specify if the death was certified, by who and when the death certificate was signed.
+    </documentation>
+    
+    <element name="DeathCertifiedIndicator" type="SourceCode" codeSource="OMNI" codeSet="0136">
+      <documentation>
+        Indicates whether the death was officially certified or not.  If "Yes", death has been certified.  If "No", death has not been certified.
+      </documentation>
+    
+      <example sourceName="OMNI" sourceCodeSet="0136" sourceCode="Y"/>
+    </element>
+    
+    <element name="DeathCertificateSignedDateTime" type="OmniDate">
+      <documentation>
+        This represents the date and time the death certificate was signed.
+      </documentation>
+    
+      <example format="yyyy-MM-dd hh:mm:ss">2000-10-01 11:12:32</example>
+    </element>
+    
+    <element name="DeathCertifiedByName" type="string">
+      <documentation>
+        If person who signed the death certificate is not listed as a provider in the system, this attribute will contain the name of the person who signed the death certificate.  
+        NOTE:  If in the system, the provider who signed the death certificate can be assigned a Provider Role indicating such (e.g.  Signed Death Certificate) and be assigned to providers associated with this event.
+      </documentation>
+    
+      <example>Who</example>
+    </element>
+    
+    <element name="DeathCertifiedByTitle" type="string">
+      <documentation>
+        If person who signed the death certificate is not listed as a provider in the system, this attribute will contain the title of the person who signed the death certificate.
+      </documentation>
+        
+      <example>Doctor</example>
+    </element>
+  </group>
+  
+  <list name="UnderlyingCauses">
+    <documentation>
+      UnderlyingCauses is a collection of UnderlyingCause records.  Contains diagnosed conditions that contributed to the primary cause of death listed sequentially in order of causal significance.  Each record will additionally list the approximate interval onset to death.
+    </documentation>
+    
+    <idsSpecification name="UnderlyingCause" udlName="UnderlyingCause" type="instance_child"
+              elementOrder="Sequence, DiagnosisCode, IntervalOnsetToDeathCode"
+              implementationClass="com.ibi.omni.patient.model.clinical.event.UnderlyingCause">
+    
+      <documentation>
+        Contains an underlying cause that contributed to the primary cause of death as well as the approximate interval onset to death.
+      </documentation>
+      
+      <customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+      <customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+    
+      <include name="CommonElements"
+           prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+           appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+           
+      <element name="Sequence" type="double">
+        <documentation>
+          Tracks the sequence of conditions based on most significant impact related to primary cause of death.
+        </documentation>
+      
+        <example>1.0</example>
+      </element>
+      
+      <element name="DiagnosisCode" type="SourceCode" codeSource="OMNI" codeSet="ICD9">
+        <documentation>
+          Diagnosed condition that contributed to the primary cause of death (ICD-9, ICD-10).
+        </documentation>
+
+        <example sourceName="OMNI" sourceCodeSet="ICD9" sourceCode="052.8"/>
+      </element>
+      
+      <element name="IntervalOnsetToDeathCode" type="SourceCode">
+        <documentation>
+          Identifies the approximate interval the diagnosed condition occurred prior to death.
+        </documentation>
+    
+      <example sourceCodeSet="IntervalOnsetToDeathCodes" sourceCode="H">Hour</example>
+    </element>
+      
+    </idsSpecification>
+  </list>
+</idsDocument>

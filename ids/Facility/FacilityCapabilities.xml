@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.0.0" changeVersion="0" domain="Facility" type="xinstance"
+			 name="FacilityCapabilities"  
+	 		 elementOrder="MedicalFacility, MedicalFacilityLocation, MedicalOrganization, Department, PeriodStartDate, PeriodEndDate, 
+					PeriodTypeCode, PlanningCategoryCode, PlanningSubCategoryCode, Capabilities"
+			 >
+	 		               	
+	<changeLog>
+		<change version="1.0.0">Initial</change>
+	</changeLog>
+	
+
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+	<notes> 
+	 
+	</notes>
+			
+	<documentation>
+	Facility Capabilities captures various metrics for a specified facility such as the type of facility 
+	(federally run, acute care, critical care access, etc.), whether it is part of an Accountable Care Organization, 
+	how Electronic Health Records are used and what security measures have been implemented to protect patient data, 
+	type of data that is submitted to different registries, whether use the Physician Quality Reporting System, 
+	Clinical Decision Support, Clinical Quality Measures, etc.  Facility Capabilities enables the customer to 
+	populate the Actual, Projected, Budget or Benchmark assessment metrics for a facility, location, organization 
+	or department or any combination within that hierarchy for the reporting period.
+	</documentation>
+
+	<element name="MedicalFacility" type="link" contains="Facility">
+		<documentation>
+		Specifies the physical medical facility where the patient received treatment.
+		</documentation>
+		
+		<example>
+			<Facility>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>Hospital</SourceInstanceId>
+			</Facility>
+		</example>
+	</element>
+
+	<element name="MedicalFacilityLocation" type="link" contains="FacilityLocation">
+		<documentation>
+		If data pertains to a particular location within the facility such as a specific building, it is defined here.
+		</documentation>
+		
+		<example>
+			<FacilityLocation>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>Building A</SourceInstanceId>
+			</FacilityLocation>
+		</example>
+	</element>
+
+	<element name="MedicalOrganization" type="link" contains="Organization">
+		<documentation>
+		Identifies the medical organization. This organization consists of a group of people working together to improve methods of health care delivery.
+		</documentation>
+
+		<example>
+			<Organization>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>Medical Center</SourceInstanceId>
+			</Organization>
+		</example>
+			
+	</element>
+
+	<element name="Department" type="link" contains="OrganizationalUnit">
+		<documentation>
+		If data pertains to a particular department within the organization such as the Emergency Room, it is defined here.
+		</documentation>
+		
+		<example>
+			<OrganizationalUnit>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>Emergency Room</SourceInstanceId>
+			</OrganizationalUnit>
+		</example>
+	</element>
+	
+	<element name="PeriodStartDate" type="datetime">
+		<documentation>
+		Contains the starting date when the facility statistics were collected.
+		</documentation>
+		
+		<example>
+			<PeriodStartDate format="yyyy-MM-dd">
+				2015-01-01
+			</PeriodStartDate>
+		</example>
+	</element>
+
+	<element name="PeriodEndDate" type="datetime">
+		<documentation>
+		Contains the ending date when the facility statistics were collected.
+		</documentation>
+		
+		<example>
+			<PeriodEndDate format="yyyy-MM-dd">
+				2015-02-02
+			</PeriodEndDate>
+		</example>
+	</element>
+
+	<element name="PeriodTypeCode" type="code">
+		<documentation>
+		Identifies the period of time that the facility statistics represent.
+		</documentation>
+		
+		<example sourceName="TestSystem" codeSet="PeriodTypeCodes">
+			Year
+		</example>
+	</element>
+
+	<element name="PlanningCategoryCode" type="code">
+		<documentation>
+		These IDS's can be used to capture Actuals, Budgeted, Projected or Benchmarks for any metric 
+		for the reporting period. A single IDS can be for only one Planning Category/Subcategory combination. 
+		If the customer reports this at the departmental level, then each IDS represents one 
+		Department/Category/Subcategory combination. The customer can generate these at multiple levels if they so choose. 
+		IDS's at the facility level, or IDS's down to the departmental level, or anything and everything in between. 
+
+		The distinction between Budgeted (near-term) and Projected (longer term) is generally accepted, 
+		but how the customer uses these categories is up to them; they just enable a means of making comparisons.  
+		Actuals would capture the real statistics for the reporting period.
+
+		If they are so inclined, they might generate "Benchmark" IDS's if say there is an industry formula for 
+		a hospital or department of their size. Multiple benchmark IDS's might be generated for different percentiles, 
+		if they exist or are calculable which is probably at the beginning of the fiscal year, or when industry benchmarks are issued.
+		</documentation>
+		
+		<example sourceName="TestSystem" codeSet="PlanningCategoryCode">
+			Projected
+		</example>
+	</element>
+
+	<element name="PlanningSubCategoryCode" type="code">
+		<documentation>
+		The Planning Subcategory provides a method to generate these Actuals, Budgeted, Projected or Benchmarks IDS's 
+		for different percentiles, if they exist or are calculable.
+		</documentation>
+		
+		<example sourceName="TestSystem" codeSet="PlanningSubCategoryCodes">
+			50th percentile
+		</example>
+	</element>
+
+	<group name="Capabilities" elementOrder="ACOMembership, FederalFacility, AcuteCareHospital, CriticalCareAccessFacility, PrimaryCarePhysician,
+						MedicareEHRQualificationDate, PQRSEHRSystemUsed, FQHCFacility, RHCFacility, ClinicalDecisionSupportRuleImplemented,
+						ClinicalQualityMeasuresReported, ClinicalInformationExchangeCapability, ProtectClinicalHealthInformation,
+						DrugFormularyChecksImplemented, GeneratingReportsForQualityImprovement,	CapableToSubmitImmunizationDataToRegistries,
+						CapableToSubmitElectronicLabResultData, CapableToSubmitElectronicSyndromicSurveillanceData, 							ProvidesPatientsElectronicAccessToHealthData, ProvidesPatientSpecificEducationalResources,
+						ReportedToPatientClinicalDataRegistry, ImplementedClinDecSuppToImprovePerfHighPriorityHealthConditions,
+						SuccessfullyTestedCMSDesignatedTestEHR, ExchangedSummCareWithDifferentEHRTechnology,
+						RecipTransSummCareSentElecToNwHINExchange, RulesEstablishedForTransWithHealthInfoNetworkFollowed,
+						SecurityRiskAnalysisCEHRTAuth, SecurityRiskAnalysisCEHRTAudit, SecurityRiskAnalysisCEHRTStoredData,
+						SecurityRiskAnalysisCEHRTEndUserDeviceEncrypt, CapableToSubmitCancerCaseDataToPublicCancerRegistry,
+						CapableToSubmitSpecificCaseDataToSpecializedRegistry, IncorporatedNecessaryCQMReportingIntoEHRSystem">
+		<documentation>
+		
+		</documentation>
+
+		<element name="ACOMembership" type="code">
+			<documentation>
+			Indicates if participating in ACO membership.  According to the Centers for Medicare and 
+			Medicaid Services (CMS), an ACO is "an organization of healthcare providers that agrees to be 
+			accountable for the quality, cost, and overall care of Medicare beneficiaries who are enrolled 
+			in the traditional fee-for-service program who are assigned to it." In other words, an Accountable 
+			Care Organization (ACO) is a multi-dimensional healthcare organization characterized by a payment 
+			and care delivery model that seeks to tie provider reimbursements to quality metrics and reductions 
+			in the total cost of care for an assigned population of patients.
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>
+
+		<element name="FederalFacility" type="code">
+			<documentation>
+			Indicates whether this is a federal facility.
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>
+
+		<element name="AcuteCareHospital" type="code">
+			<documentation>
+			Indicates whether this is an acute care hospital.
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>
+
+		<element name="CriticalCareAccessFacility" type="code">
+			<documentation>
+			Indicates whether this is a critical care access facility.	
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>
+
+		<element name="PrimaryCarePhysician" type="code">
+			<documentation>
+			Is primary care physician.
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>
+		
+		<element name="MedicareEHRQualificationDate" type="datetime">
+			<documentation>
+			Effective date of medicare EHR (Electronic Health Record) qualification.
+			</documentation>
+		
+			<example>
+				<MedicareEHRQualificationDate format="yyyy-MM-dd">
+					2015-01-01
+				</MedicareEHRQualificationDate>
+			</example>
+		</element>
+
+		<element name="PQRSEHRSystemUsed" type="code">
+			<documentation>
+			Indicates whether the facility uses a PQRS (Physician Quality Reporting System) EHR system.
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>
+
+		<element name="FQHCFacility" type="code">
+			<documentation>
+			Indicates whether this is a Federally Qualified Healthcare Center.
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>
+
+		<element name="RHCFacility" type="code">
+			<documentation>
+			Indicates whether this is a Rural Health Clinic.
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>
+
+		<element name="ClinicalDecisionSupportRuleImplemented" type="code">
+			<documentation>
+			Indicates whether the institution implemented clinical decision support rule and its ability to track it.
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>
+
+		<element name="ClinicalQualityMeasuresReported" type="code">
+			<documentation>
+			Indicates whether  the institution has the ability to report clinical quality measures (CQM) to 
+			Centers for Medicare and Medicate Services (CMS) or the States.
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>
+
+		<element name="ClinicalInformationExchangeCapability" type="code">
+			<documentation>
+			Indicates if the institution has the capability for clinical information exchange.
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>
+
+		<element name="ProtectClinicalHealthInformation" type="code">
+			<documentation>
+			Indicates if the institution has taken the necessary steps to protect clinical health information.
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>
+
+		<element name="DrugFormularyChecksImplemented" type="code">
+			<documentation>
+			Indicates if the institution has implemented drug formulary checks.
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>
+
+		<element name="GeneratingReportsForQualityImprovement" type="code">
+			<documentation>
+			Indicates if the institution is generating reports for quality improvements.
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>
+
+		<element name="CapableToSubmitImmunizationDataToRegistries" type="code">
+			<documentation>
+			Indicates if the institution has the capability to submit electronic data to immunization registries 
+			or Immunization Information Systems and actual submission in accordance with applicable law and practice.
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>
+
+		<element name="CapableToSubmitElectronicLabResultData" type="code">
+			<documentation>
+			Indicates if the institution has the capability to send lab results electronically.
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>
+
+		<element name="CapableToSubmitElectronicSyndromicSurveillanceData" type="code">
+			<documentation>
+			Indicates if the institution has the capability to submit electronic syndromic surveillance data to 
+			public health agencies and actual submission in accordance with applicable law and practice.
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>
+
+		<element name="ProvidesPatientsElectronicAccessToHealthData" type="code">
+			<documentation>
+			Indicates if the institution is able to provide patient access to health information electronically.
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>
+
+		<element name="ProvidesPatientSpecificEducationalResources" type="code">
+			<documentation>
+			Indicates if the institution provides educational resources specific to patient needs and diagnosis.
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>
+
+		<element name="ReportedToPatientClinicalDataRegistry" type="code">
+			<documentation>
+			States whether a complete and appropriate patient data was reported to a qualified clinical database registry or not.
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>
+
+		<element name="ImplementedClinDecSuppToImprovePerfHighPriorityHealthConditions" type="code">
+			<documentation>
+			Indicates if the institution implemented the requirement for the clinical decision support 
+			rules to improve performance on high-priority health conditions.
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>
+
+		<element name="SuccessfullyTestedCMSDesignatedTestEHR" type="code">
+			<documentation>
+			Indicates if institution has conducted one or more successful tests with the CMS designated test EHR.
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>
+
+		<element name="ExchangedSummCareWithDifferentEHRTechnology" type="code">
+			<documentation>
+			Indicates if institution has conducted one or more successful electronic exchanges of a 
+			summary of care document with a recipient who has EHR technology that was designed by a 
+			different EHR technology developer than the sender's EHR technology.
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>
+
+		<element name="RecipTransSummCareSentElecToNwHINExchange" type="code">
+			<documentation>
+			Indicates if the recipient of transitions summary of care of patient was sent electronically to a 
+			member of the NwHIN (Nationwide Health Information Network) Exchange.
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>
+
+		<element name="RulesEstablishedForTransWithHealthInfoNetworkFollowed" type="code">
+			<documentation>
+			Indicates if the rules established for receiving and sending transitions summary of care of patients 
+			by the ONC for the nationwide health information network were followed.
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>
+
+		<element name="SecurityRiskAnalysisCEHRTAuth" type="code">
+			<documentation>
+			Indicates if the EP's (Eligible Professional), EH's (Eligible Hospital), or CAH's (Critical Access Hospital) 
+			have conducted or reviewed a security risk analysis in accordance with the requirements of data stored in 
+			CEHRT (Certified EHR Technology).  Pertains to authentication, access control and authorization.
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>
+
+		<element name="SecurityRiskAnalysisCEHRTAudit" type="code">
+			<documentation>
+			Indicates if the EP's, EH's, or CAH's conducted or reviewed a security risk analysis in accordance 
+			with the requirements of data the stored in CEHRT. Pertains to Auditable events and tamper-resistance 
+			(record actions, record the audit log status, record the encryption status, default setting, 
+			when disabling the audit log is permitted and audit log protection).
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>
+
+		<element name="SecurityRiskAnalysisCEHRTStoredData" type="code">
+			<documentation>
+			Indicates if the EP's, EH's, or CAH's conducted or reviewed a security risk analysis in accordance with the 
+			requirements of data the stored in CEHRT. Pertains to stored data (audit reports, amendments, automatic log-off and emergency access).
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>
+
+		<element name="SecurityRiskAnalysisCEHRTEndUserDeviceEncrypt" type="code">
+			<documentation>
+			Indicates if the EP's, EH's, or CAH's conducted or reviewed a security risk analysis in accordance 
+			with the requirements of data the stored in CEHRT. Pertains to end-user device encryption.
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>
+
+		<element name="CapableToSubmitCancerCaseDataToPublicCancerRegistry" type="code">
+			<documentation>
+			Indicates if EP must have the capability to submit cancer case information from CEHRT to a 
+			public health central cancer registry. 
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>
+
+		<element name="CapableToSubmitSpecificCaseDataToSpecializedRegistry" type="code">
+			<documentation>
+			Indicates if EP must have the capability to submit specific case information from CEHRT to specialized registry.
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>
+
+		<element name="IncorporatedNecessaryCQMReportingIntoEHRSystem" type="code">
+			<documentation>
+			Indicates if EP's or EH's have incorporated the necessary CQM (Clinical Quality Measure) reporting 
+			rules in their respective EHR systems.
+			</documentation>
+		
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y =Yes
+			</example>
+		</element>				
+	</group>	
+</idsDocument>

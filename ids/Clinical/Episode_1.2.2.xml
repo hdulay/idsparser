@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.2.2" changeVersion="1" domain="Clinical" type="instance"
+			 name="Episode" 
+	 		 elementOrder="EpisodeNumber, EpisodeTreatmentGroupCode, StartDate, EndDate, StatusCode"
+	 		 implementationClass="com.ibi.omni.patient.model.clinical.Episode">	 					
+	  	 					
+	<changeLog>
+		<change version="1.2.2_0">Initial Version</change>
+		<change version="1.2.2_1">Added SourceStatusCode to instance and collection items.</change>
+	</changeLog>
+	
+	<notes>
+	</notes>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	
+	<documentation>
+	An Episode of Care is a set of health care services provided to a patient to diagnose and manage treatment for a specific illness, delivered over a designated period of time, on one or more encounters.  Episodes are particularly relevant to Bundled Payments, Accountable Care Organizations (ACOs), Alternative Quality Contracts (AQCs), and the Medicare Shared Savings Program (MSSP), since recognizing and defining the scope of a particular Episode has significant financial impact.
+	</documentation>
+
+	<element name="EpisodeNumber" type="string">
+		<documentation>
+		Specifies the customer-assigned number given to the Episode that makes it unique.  This value will be unique for each Patient, Episode Treatment Group (ETG) Number and Episode Start Date.  
+		</documentation>			
+		
+		<example>12345678</example>
+	</element>
+
+	<element name="EpisodeTreatmentGroupCode" type="SourceCode">
+		<documentation>
+		Episode Treatment Group (ETG) is an episode grouper for medical and pharmacy claims. It provides a condition classification methodology that combines related services into medically relevant and distinct units describing complete and severity adjusted episodes of care and associated costs. 
+		</documentation>
+		
+		<example sourceCodeSet="ETGCodes" sourceCode="etgCode1"/>
+	</element>
+	
+	<element name="StartDate" type="OmniDate">
+		<documentation>
+		The date the episode of care for the patient is scheduled to start.
+		</documentation>
+		
+		<example format="yyyy-MM-dd">2013-01-01</example>
+	</element>
+
+	<element name="EndDate" type="OmniDate">
+		<documentation>
+		The date the episode of care for the patient should be completed.
+		</documentation>
+		
+		<example format="yyyy-MM-dd">2013-01-01</example>
+	</element>
+
+	<element name="StatusCode" type="SourceCode" codeSource="OMNI" codeSet="0216">
+		<documentation>
+		The current status of the Episode.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0216" sourceCode="DI"/>
+	</element>
+	
+</idsDocument>

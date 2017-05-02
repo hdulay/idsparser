@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.1.7" changeVersion="5" domain="Organization" type="instance"
+			 name="Organization" udlName="Organization"  
+			 circularExclude="Relations"
+	 		 elementOrder="MasterId, PreMergeSurvivor, OrganizationType, Names, Addresses, Identifiers, ContactMethods, Relations"
+	 		 implementationClass="com.ibi.omni.patient.model.organization.Organization">
+	 		  	  	
+	<changeLog>
+		<change version="1.0.0">Initial Revision</change>
+		<change version="1.1.7_0">Supported Version</change>
+        <change version="1.1.7_1">Added Comment element to OrganizationIdentifer</change>
+        <change version="1.1.7_1">Extended Attributes Support</change>
+        <change version="1.1.7_2">Updated codeTable reference on ContactMethod.Type</change>
+        <change version="1.1.7_3">Added SourceStatusCode to instance and collection items.</change>
+        <change version="1.1.7_4">Added PreMergeSurvivor element.</change>
+		<change version="1.1.7_5">Added mastering meta-data elements.</change>
+	</changeLog>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+
+	<include name="MasteringElements" appendToElementOrder="MatchRole,MatchCandidateGroupId,MatchQualityScore,MatchRule"/>
+
+	<documentation>
+	Use this specification to load Organization or Business information into OmniPatient.
+	</documentation>
+
+	<element name="MasterId" type="string" hidden="true">
+		<documentation>
+		Links this instance to the master. This value is created and updated by the Omni
+		matching service.
+		</documentation>
+		
+		<example>TestOrganizationMasterId</example>
+	</element>
+
+	<element name="PreMergeSurvivor" type="OmniLink" contains="Organization" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>		
+		There are often scenarios in a given source system where multiple instance records may be created 
+		that represent the same logical entity. At some point the source system may detect this issue and
+		would like to convey that information to the processing server.
+		
+		Use this element to indicate the surviving entity when multiple instances represent the same 
+		entity. This element will be used during the matching and merging process to insure that entity
+		instances are properly grouped. 
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<Organization>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>TestSystem:OrganizationSurvivor</SourceInstanceId>
+			</Organization>
+			]]>
+		</example>		
+	</element>
+
+	<element name="Facility" type="OmniLink" contains="Facility" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		Use this element to link the location to a specific Facility.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<Facility>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>OwningFacilityId</SourceInstanceId>
+			</Facility>
+			]]>
+		</example>
+	</element>
+		
+	<element name="SourceInstanceId" key="true" required="true" type="string">
+		<documentation>
+		This element should contain an integration manufactured value that uniquely identifies the
+		collection element and can be used to map back to the source system. Whatever value is
+		manufactured must not change over time as it will be used to make updates when data
+		changes in the source system.
+		</documentation>
+		
+		<example>TestOrganization</example>
+	</element>	
+	
+	<element name="OrganizationType" type="SourceCode" codeTable="0531">
+		<documentation>
+		Use this element to specify the type of Organization.
+		</documentation>
+		
+		<example sourceCodeSet="OrganizationTypeCodes" sourceCode="Insurance">Insurance Company</example>
+	</element>
+	
+	<list name="Names">
+		<documentation>
+		Use this collection to specify one or more names used by this Organization.
+		</documentation>
+
+		<idsSpecification name="OrganizationName" udlName="OrganizationName" type="instance_child"
+			 		 elementOrder="Type, StartDate, EndDate, FullName"
+			 		 implementationClass="com.ibi.omni.patient.model.organization.OrganizationName">
+						
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+		  	
+			<documentation>
+			Use this collection element to specify one or more possible names used or
+		 	associated with a person. This may include things like maiden name, legal
+		 	name, nicknames, etc...
+			</documentation>
+				
+			<element name="Type" type="SourceCode" codeTable="0204">
+				<documentation>
+				Use this element to specify the type of name.
+				</documentation>
+				
+				<example sourceCodeSet="OrgNameTypeCodes" sourceCode="D">Display Name</example>
+			</element>
+		
+			<element name="StartDate" type="OmniDate">
+				<documentation>
+				Use this element to specify the date that the name became active for this Organization.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">1965-02-21</example>
+			</element>
+			
+			<element name="EndDate" type="OmniDate">
+				<documentation>
+				Use this element to specify the date that the name will become inactive for this
+				Organization.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2050-01-01</example>
+			</element>
+		
+			<element name="FullName" type="string">
+				<documentation>
+				Use this element to specify the full name of the Organization.
+				</documentation>
+				
+				<example>Medical Supply Company, Inc.</example>
+			</element>
+		</idsSpecification>
+	</list>	
+
+	<list name="Addresses">
+		<documentation>
+		Use this collection to specify one or more addresses used by this Organization.
+		</documentation>
+		
+		<idsSpecification name="OrganizationAddress" udlName="OrganizationAddress" 
+			 		 	  elementOrder="Type, StartDate, EndDate, AddressLine1, AddressLine2,
+					 		       AddressLine3, AddressLine4, City, StateProvince, PostalCode, Country, 
+					 		       CountyRegion, UsageComment, Latitude, Longitude"
+					 	implementationClass="com.ibi.omni.patient.model.organization.OrganizationAddress">
+			
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+		  	
+			<documentation>
+			Use this IDS to load Organization address information into OmniPatient.
+			</documentation>
+			
+			<element name="Type" type="SourceCode" codeTable="0190">
+				<documentation>
+				Use this element to specify the type of address being loaded.
+				</documentation>
+				
+				<example sourceCodeSet="AddressTypeCodes" sourceCode="B">Business Address</example>
+			</element>
+		
+			<element name="StartDate" type="OmniDate">
+				<documentation>
+				Specify the date this address became active.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+			
+			<element name="EndDate" type="OmniDate">
+				<documentation>
+				Specify the date this address becomes inactive.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+		
+			<element name="AddressLine1" type="string">
+				<documentation>
+				This field specifies the street or mailing address of the Organization. 
+				</documentation>
+				
+				<example>4000 East Ave</example>
+			</element>
+			
+			<element name="AddressLine2" type="string">
+				<documentation>
+				This field specifies the second line of address. In general, it qualifies address. 
+			 	Examples: Suite 555 or Fourth Floor.
+				</documentation>
+				
+				<example>Suite 555</example>
+			</element>
+			
+			<element name="AddressLine3" type="string">
+				<documentation>
+				This field specifies the name of the person or organization that should appear as part of the 
+			 	address. This is also known as the "Care of" or "C/O" line.
+				</documentation>
+				
+				<example>ATTN: Jane Smith</example>
+			</element>
+			
+			<element name="AddressLine4" type="string">
+				<documentation>
+				This field specifies more address information.
+				</documentation>
+				
+				<example>Fragile</example>
+			</element>
+			
+			<element name="City" type="string">
+				<documentation>
+				This field specifies the city, district or place where the addressee is located 
+			 	depending upon the national convention for formatting addresses for postal usage.
+				</documentation>
+				
+				<example>Livonia</example>
+			</element>
+			
+			<element name="StateProvince" type="SourceCode"  codeTable="">
+				<documentation>
+				This field specifies the state or province where the addressee is located. State or 
+			 	province should be represented by the official postal service codes for that country. 
+				</documentation>
+				
+				<example sourceCodeSet="StateCodes" sourceCode="NY">New York</example>
+			</element>
+		
+			<element name="PostalCode" type="string">
+				<documentation>
+				This component specifies the zip or postal code where the addressee is located.  Zip or 
+			 	postal codes should be represented by the official codes for that country. In the US, the zip 
+			 	code takes the form 99999[-9999], while the Canadian postal code takes the form A9A9A9 and the 
+			 	Australian Postcode takes the form 9999. 
+				</documentation>
+				
+				<example>14488</example>
+			</element>
+		
+			<element name="Country" type="SourceCode" codeTable="0399">
+				<documentation>
+				This component specifies the country where the addressee is located. HL7 
+			 	specifies that the 3-character (alphabetic) form of ISO 3166 be used for the 
+			 	country code.
+				</documentation>
+				
+				<example sourceCodeSet="CountryCodes" sourceCode="USA">United States</example>
+			</element>
+		
+			<element name="CountyRegion" type="SourceCode" codeTable="">
+				<documentation>
+				This component specifies the county where the addressee is located when applicable.
+				</documentation>
+				
+				<example sourceCodeSet="CountyRegionCodes" sourceCode="LIV">Livingston</example>
+			</element>
+		
+			<element name="UsageComment" type="string">
+				<documentation>
+				Descriptive information about the use of the address.
+			 	Example : "Do not ring bell"
+				</documentation>
+				
+				<example>Do not ring bell</example>
+			</element>
+
+			<element name="Latitude" type="double" precision="9" scale="6">
+				<documentation>
+					Contains the Latitude.
+				</documentation>
+				<example>1.1</example>
+			</element>
+
+			<element name="Longitude" type="double" precision="9" scale="6">
+				<documentation>
+					Contains the Longitude.
+				</documentation>
+				<example>2.2</example>
+			</element>
+
+		</idsSpecification>		
+	</list>	
+
+	<list name="Identifiers">
+		<documentation>
+		Use this collection to specify the list of identifiers for this Organization. 
+	 	You may specify any number of identifiers as this is simply a name/value pair structure.
+		</documentation>
+		
+		<idsSpecification name="OrganizationIdentifier" udlName="OrganizationIdentifier" 
+			 		 elementOrder="Type, StartDate, EndDate, Value, IssuingAuthority,Comment"
+			 		 implementationClass="com.ibi.omni.patient.model.organization.OrganizationIdentifier">
+						
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+		  	
+			<documentation>
+			Use this IDS to specify identifiers for an Organization.
+			</documentation>
+			
+			<element name="Type" type="SourceCode" codeTable="0203">
+				<documentation>
+				Use this element to specify the type of identifier. For example
+			 	BA - Bank Account Number, etc...
+				</documentation>
+				
+				<example sourceCodeSet="OrganizationIdentifierCodes" sourceCode="CC">Cost Center Number</example>
+			</element>
+		
+			<element name="StartDate" type="OmniDate">
+				<documentation>
+				Use this element to specify the date the identifier became active.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+			
+			<element name="EndDate" type="OmniDate">
+				<documentation>
+				Use this element to specify the date the identifier becomes inactive.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+		
+			<element name="Value" type="string">
+				<documentation>
+				Use this element to specify the value of the identifier.
+				</documentation>
+				
+				<example>12345678</example>
+			</element>
+		
+			<element name="IssuingAuthority" type="document" contains="Organization" excludeInDoc="true">
+				<documentation>
+				Use this element to specify the Organization that was responsible for 
+				issuing this identification.
+				</documentation>
+				
+				<example>
+					<![CDATA[
+					<Organization>
+						<SourceName>TestSystem</SourceName>
+						<SourceInstanceId>OrganizationA</SourceInstanceId>
+					</Organization>
+					]]>
+				</example>
+			</element>
+
+            <element name="Comment" type="string">
+                <documentation>
+                    Use this element to store comments about the identifier.
+                </documentation>
+
+                <example>Comment about identifier.</example>
+            </element>
+		</idsSpecification>		
+	</list>	
+
+	<list name="ContactMethods">
+		<documentation>
+		Use this collection to specify the list of email, phone number, fax number, 
+	 	and other contact methods associated with this Organization.		
+		</documentation>
+		
+		<idsSpecification name="OrganizationContactMethod" udlName="OrganizationContactMethod" 
+			 		 elementOrder="Type, StartDate, EndDate, Value, UsageComment"
+			 		 implementationClass="com.ibi.omni.patient.model.organization.OrganizationContactMethod">
+			
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+		  	
+			<documentation>
+			Use this collection to specify one or more contact methods for a patient. 
+			For example you may specify multiple email, phone, or fax numbers. 
+			This document can only be used within a Patient.Identifiers element.
+			</documentation>
+				
+			<element name="Type" type="SourceCode" codeTable="0185">
+				<documentation>
+				Use this element to specify what type of contact method is being 
+			 	described. i.e. Email, Phone, etc..
+				</documentation>
+				
+				<example sourceName="OMNI" sourceCodeSet="0185" sourceCode="F" />
+			</element>
+		
+			<element name="StartDate" type="OmniDate">
+				<documentation>
+				Specify the date this contact method became active.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+			
+			<element name="EndDate" type="OmniDate">
+				<documentation>
+				Specify the date this contact method became inactive.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2050-01-01</example>
+			</element>
+			
+			<element name="Value" type="string">
+				<documentation>
+				Identifies the value of the contact method.
+				</documentation>
+				
+				<example>(222) 234-6879 x9808</example>
+			</element>
+		
+			<element name="UsageComment" type="string">
+				<documentation>
+				Defines the usage comment. Such as 'After 5pm'
+				</documentation>
+				
+				<example>No calls after 5pm</example>
+			</element>	
+		</idsSpecification>
+	</list>	
+
+	<list name="Relations">
+		<documentation>
+		Use this collection to specify personal and business relations for this Organization. 
+		</documentation>
+		
+		<idsSpecification name="OrganizationRelation" udlName="OrganizationRelation" 
+			 		 elementOrder="Type, StartDate, EndDate, Relation, RelatedTo"
+			 		 implementationClass="com.ibi.omni.patient.model.organization.OrganizationRelation">
+			
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+				  	
+			<documentation>
+			Use this collection element to specify Organization relationships.
+			</documentation>
+		
+			<element name="Type" type="SourceCode" codeTable="0063">
+				<documentation>
+				This field contains the relationship that the associated party has to
+			 	the person.
+				</documentation>
+				
+				<example sourceCodeSet="OrganizationRelationCodes" sourceCode="Owner">Company Owner</example>
+			</element>
+		
+			<element name="StartDate" type="OmniDate">
+				<documentation>
+				Use this element to specify the date the relation became active.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+			
+			<element name="EndDate" type="OmniDate">
+				<documentation>
+				Use this element to specify the date the relation becomes inactive.
+				</documentation>
+				
+				<example format="yyyy-MM-dd">2000-01-01</example>
+			</element>
+		
+			<element name="Relation" type="document" contains="Person,Organization" circularTypes="Person,Organization" excludeInDoc="true" excludeFromRamp="true">
+				<documentation>
+				Use this element to specify the link to a related Person or Organization.
+				</documentation>
+		
+				<!-- Auto generation of IDS will cause circular reference. -->		
+				<example>
+					<![CDATA[
+					<Person>
+						<SourceName>UnitTest</SourceName>
+						<SourceInstanceId>BusinessOwner</SourceInstanceId>
+					</Person>
+					]]>
+				</example>
+			</element>
+			
+			<element name="RelatedTo" type="OmniLink" contains="Person,Organization" keys="SourceName, SourceInstanceId" allowCreate="true">
+
+			    <documentation>
+				Use this element to specify the link to a related Person or Organization.
+				</documentation>
+		
+				<example>
+					<![CDATA[
+					<Person>
+						<SourceName>UnitTest</SourceName>
+						<SourceInstanceId>BusinessOwner</SourceInstanceId>
+					</Person>
+					]]>
+				</example>
+			</element>
+				
+		</idsSpecification>
+	</list>		
+</idsDocument>

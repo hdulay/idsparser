@@ -1,0 +1,1547 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument
+		idsVersion="2.0"
+		version="1.3.7"
+		changeVersion="0"
+		type="instance"
+		domain="Claim"
+		name="PayerClaim"
+		elementOrder="ClaimId, DataBatchSource, PersistentTransactionId, AdjustmentTransactionId, ExternalTransactionId,
+	 OtherClaimId, Member, PayerClient, PayToProvider, ReferringProvider, ProviderNetworkArrangementCode, ProviderOutOfStateIndicator,
+	 Payer, AdjustedCode, TypeCode, InputMethodCode, ExplanationCode, ExplanationText, BillingFrequencyCode, BillingClassCode,
+	 BillingFacilityQualifier, StartServiceFromDate, LatestServiceThruDate, ReceivedDate, PaidDate, PayeeTypeCode,
+	 ClientSegment, ProductPlanClassCategoryCode, ClientCoverageClassId, ClassPlanId, ClientPlanEffectiveDate,
+	 ProviderNetworkCode, CapitationCode, AllCapitatedServicesCode, AccidentCode, AccidentDate, COBRAIndicator,
+	 COBTypeCode, COBEOBSubmitIndicator, AssociationMemberCode, AssociationMemberNumber, PCPIndicator, CurrencyCode,
+	 NetAllowedAmount, NetChargeAmount, NetCOBPaidAmount, NetCoinsuranceAmount, NetCopayAmount, NetDeductibleAmount,
+	 NetHRAPaidAmount, NetPaidAmount, TotalAllowedAmount, TotalChargeAmount, TotalCOBPaidAmount, TotalCoinsuranceAmount,
+	 TotalCoPayAmount, TotalDeductibleAmount, TotalHRAPaidAmount, TotalPaidAmount, AdmissionTypeCode, AdmissionSourceCode,
+	 AdmissionDate, DischargeDate, DischargeStatusCode, MSDRGCode, CMSDRGCode, APRDRGCode, DRGQualifierCode, PaidDRGCode,
+	 PaperEOBCode, CoveredDays, NonCoveredDays, ClaimDiagnoses, ClaimProcedures, ClaimLineItems">
+
+	<include name="CommonElements"
+			 prependToElementOrder="SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="OmniStatus, OmniStatusReason, SourceStatusCode, SourceCreatedDate, SourceCreatedBy,
+			 SourceModifiedDate, SourceModifiedBy"/>
+
+	<changeLog>
+		<change version="1.3.2.0">Initial Version</change>
+	</changeLog>
+
+	<customType name="codeList" class="com.ibi.dib.core.ids.types.IdsMultipleCodeType"/>
+
+	<documentation>
+		This represents the header level for a claim for coverage of medical service in the context of hospital services,
+		medical office visits and professional services,  prescriptions, dental and vision care.
+	</documentation>
+
+	<element name="DataBatchSource" type="link" contains="Organization">
+		<documentation>
+			Source organization/system/feed for this claim record
+		</documentation>
+	</element>
+
+	<element name="ClaimId" type="string">
+		<documentation>
+			Unique ID for the claim transaction.
+		</documentation>
+	</element>
+
+	<element name="PersistentTransactionId" type="string">
+		<documentation>
+			The transaction identifier used to identify the claim header. This will be the same for the original claim and
+			all associated adjustments
+		</documentation>
+	</element>
+
+	<element name="AdjustmentTransactionId" type="string">
+		<documentation>
+			The adjusted claim transaction identifier when a claim change is made. This will always be unique.
+		</documentation>
+	</element>
+
+	<element name="ExternalTransactionId" type="string">
+		<documentation>
+			Transaction identifier as represented in the external source
+		</documentation>
+	</element>
+
+	<element name="OtherClaimId" type="string">
+		<documentation>
+			Alternative claim identifier for use in additional integration scenarios.
+		</documentation>
+	</element>
+
+	<element name="Member" type="link" contains="Member">
+		<documentation>
+			Use this element to link this claim to the Member that received health care
+			services.
+		</documentation>
+	</element>
+
+	<element name="PayToProvider" type="link" contains="Provider">
+		<documentation>
+			Use this element to link this claim to the Health Care Provider to whom payment should be made.
+		</documentation>
+	</element>
+
+	<element name="ReferringProvider" type="link" contains="Provider">
+		<documentation>
+			Use this element to link this claim to the Referring Health Care Provider.
+		</documentation>
+	</element>
+
+	<element name="ProviderNetworkArrangementCode" type="code" dbColumn="prov_network_arr_code">
+		<documentation>
+			Identifies the product / plan agreement for this provider under which this claim was adjudicated. This column
+			can be used to identify in which products a provider is or has been a participating provider.
+		</documentation>
+	</element>
+
+	<element name="ProviderOutOfStateIndicator" type="code" dbColumn="prov_out_of_state_indicator_code">
+		<documentation>
+			Code indicating if provider is out of state with respect to the health plan product.
+		</documentation>
+	</element>
+
+	<element name="AdjustedCode" type="code">
+		<documentation>
+			Indicator as to whether this record represents the original claim or an adjustment to the original claim
+		</documentation>
+	</element>
+
+	<element name="TypeCode" type="code">
+		<documentation>
+			Use this element to specify the type of type of claim. This could be a provider professional services claim,
+			a hospital/institutional claim, a pharmacy claim, dental claim, vision claim, etc..
+		</documentation>
+	</element>
+
+	<element name="InputMethodCode" type="code">
+		<documentation>
+			A code to indicate if the claim entry was on-line or electronic in the originating system
+		</documentation>
+	</element>
+
+	<element name="ExplanationCode" type="code">
+		<documentation>
+			Code associated with text that would typically appear in an Explanation of Benefits (EOB) for this claim
+		</documentation>
+	</element>
+
+	<element name="ExplanationText" type="string">
+		<documentation>
+			Text that would typically appear in an Explanation of Benefits (EOB) for this claim
+		</documentation>
+	</element>
+
+	<element name="BillingFrequencyCode" type="code">
+		<documentation>
+			This specifiesg the frequency of the claim. It corresponds to the third position of the Uniform Billing Claim
+			Form: Claim Frequency Type Code
+		</documentation>
+	</element>
+
+	<element name="BillingClassCode" type="code">
+		<documentation>
+			Code representing the Billing Class Code. Taken from the Uniform Billing Bill Type.
+		</documentation>
+	</element>
+
+	<element name="BillingFacilityQualifier" type="code">
+		<documentation>
+			Code representing the Facility Code Qualifier.  Taken from the Uniform Billing Bill Type.
+		</documentation>
+	</element>
+
+	<element name="StartServiceFromDate" type="datetime">
+		<documentation>
+			Earliest date of service for this claim
+		</documentation>
+	</element>
+
+	<element name="LatestServiceThruDate" type="datetime">
+		<documentation>
+			Latest date of service for this claim
+		</documentation>
+	</element>
+
+	<element name="ReceivedDate" type="datetime">
+		<documentation>
+			Date the clain was received
+		</documentation>
+	</element>
+
+	<element name="PaidDate" type="datetime">
+		<documentation>
+			Date the claim was paid
+		</documentation>
+	</element>
+
+	<element name="PayeeTypeCode" type="code">
+		<documentation>
+			Code to describe who the payee is. This could be the Provider, Member, Subscriber, etc.
+		</documentation>
+	</element>
+
+	<element name="ClientSegment" type="link" contains="OrganizationalUnit">
+		<documentation>
+			Use this element to link this claim to a sub-group of the Client
+		</documentation>
+	</element>
+
+	<element name="ProductPlanClassCategoryCode" type="code" dbColumn="prod_plan_class_cat_code">
+		<documentation>
+			Code representing the plan class of the product
+		</documentation>
+	</element>
+
+	<element name="ClientCoverageClassId" type="string">
+		<documentation>
+			Client specific ID for the plan
+		</documentation>
+	</element>
+
+	<element name="ClassPlanId" type="string">
+		<documentation>
+			Unique identifier for the plan class
+		</documentation>
+	</element>
+
+	<element name="ClientPlanEffectiveDate" type="datetime">
+		<documentation>
+			The beginning date supplied by the source that designates when a given set of data was valid for usage.
+		</documentation>
+	</element>
+
+	<element name="ProviderNetworkCode" type="code">
+		<documentation>
+			Code describing whether the Provider is in or out of network
+		</documentation>
+	</element>
+
+	<element name="CapitationCode" type="code">
+		<documentation>
+			Indicates if this claim is for a capitation fee, which is a flat fee per patient seen, as opposed to based on
+			service rendered.
+		</documentation>
+	</element>
+
+	<element name="AllCapitatedServicesCode" type="code">
+		<documentation>
+			Indicates if this claim is for a capitation fee, which is a flat fee per patient seen, as opposed to based on
+			service rendered.
+		</documentation>
+	</element>
+
+	<element name="AccidentCode" type="code">
+		<documentation>
+			Code used to identify the claim as an accident or emergency illness.
+		</documentation>
+	</element>
+
+	<element name="AccidentDate" type="datetime">
+		<documentation>
+			The date of the accident or onset of emergency illness as identified
+		</documentation>
+	</element>
+
+	<element name="COBRAIndicator" type="code">
+		<documentation>
+			Code to indicate whether the claim is covered by COBRA eligibility
+		</documentation>
+	</element>
+
+	<element name="COBTypeCode" type="code">
+		<documentation>
+			Code describing the type of coordination of benefits in effect, if any
+		</documentation>
+	</element>
+
+	<element name="COBEOBSubmitIndicator" type="code">
+		<documentation>
+			Indicates if an Explanation of Benefits statement from another carrier was submitted with the claim.
+		</documentation>
+	</element>
+
+	<element name="AssociationMemberCode" type="code">
+		<documentation>
+			Code indicating that claim is for a member of a larger association to which the Payer belongs, such as BlueCard
+			members of the BC/BS association.
+		</documentation>
+	</element>
+
+	<element name="AssociationMemberNumber" type="string">
+		<documentation>
+			If claim is for a member of a larger payer association, this is the member number
+		</documentation>
+	</element>
+
+	<element name="PCPIndicator" type="code">
+		<documentation>
+			Indicates that the claim is for services rendered by the member's the primary care provider
+		</documentation>
+	</element>
+
+	<element name="CurrencyCode" type="code" codeTable="4217">
+		<documentation>
+			The monetary unit in which all Amounts in the Claim are denominated.
+		</documentation>
+	</element>
+
+	<element name="NetAllowedAmount" type="double">
+		<documentation>
+			Net allowed amount for this claim
+		</documentation>
+	</element>
+
+	<element name="NetChargeAmount" type="double">
+		<documentation>
+			Net charge amount for this claim
+		</documentation>
+	</element>
+
+	<element name="NetCOBPaidAmount" type="double">
+		<documentation>
+			Net COB paid amount from another carrier for this claim
+		</documentation>
+	</element>
+
+	<element name="NetCoinsuranceAmount" type="double">
+		<documentation>
+			Net coinsurance amount for this claim
+		</documentation>
+	</element>
+
+	<element name="NetCopayAmount" type="double">
+		<documentation>
+			Net copay amount for this claim
+		</documentation>
+	</element>
+
+	<element name="NetDeductibleAmount" type="double">
+		<documentation>
+			Net deductible amount for this claim
+		</documentation>
+	</element>
+
+	<element name="NetHRAPaidAmount" type="double">
+		<documentation>
+			Net HRA paid amount for this claim
+		</documentation>
+	</element>
+
+	<element name="NetPaidAmount" type="double">
+		<documentation>
+			Net paid amount for this claim
+		</documentation>
+	</element>
+
+	<element name="TotalAllowedAmount" type="double">
+		<documentation>
+			Total allowed amount for this claim
+		</documentation>
+	</element>
+
+	<element name="TotalChargeAmount" type="double">
+		<documentation>
+			Total charge amount for this claim
+		</documentation>
+	</element>
+
+	<element name="TotalCOBPaidAmount" type="double">
+		<documentation>
+			Total cob paid amount for this claim
+		</documentation>
+	</element>
+
+	<element name="TotalCoinsuranceAmount" type="double">
+		<documentation>
+			Total coinsurance amount for this claim
+		</documentation>
+	</element>
+
+	<element name="TotalCoPayAmount" type="double">
+		<documentation>
+			Total copay amount for this claim
+		</documentation>
+	</element>
+
+	<element name="TotalDeductibleAmount" type="double">
+		<documentation>
+			Total deductible amount for this claim
+		</documentation>
+	</element>
+
+	<element name="TotalHRAPaidAmount" type="double">
+		<documentation>
+			Total hra paid amount for this claim
+		</documentation>
+	</element>
+
+	<element name="TotalPaidAmount" type="double">
+		<documentation>
+			Total paid amount for this claim
+		</documentation>
+	</element>
+
+	<element name="AdmissionTypeCode" type="code">
+		<documentation>
+			Code representing the admission type. This would apply only to hospital/institutional claims
+		</documentation>
+	</element>
+
+	<element name="AdmissionSourceCode" type="code">
+		<documentation>
+			Code representing the admission source. This would apply only to hospital/institutional claims
+		</documentation>
+	</element>
+
+	<element name="AdmissionDate" type="datetime">
+		<documentation>
+			Date of admission. This would apply only to hospital/ institutional claims
+		</documentation>
+	</element>
+
+	<element name="DischargeDate" type="datetime">
+		<documentation>
+			Date of discharge. This would apply only to hospital/ institutional claims
+		</documentation>
+	</element>
+
+	<element name="PayerClient" type="link" contains="PayerClient">
+		<documentation>
+			Use this element to link this claim to the client, which represents the payer customer under which the member belongs
+		</documentation>
+	</element>
+
+	<element name="Payer" type="link" contains="Payer">
+		<documentation>
+			Use this element to link to the Payer
+		</documentation>
+	</element>
+
+	<element name="DischargeStatusCode" type="code">
+		<documentation>
+			Code representing the discharge status. This would apply only to hospital/institutional claims
+		</documentation>
+	</element>
+
+	<element name="MSDRGCode" type="code">
+		<documentation>
+			Code representing the MS-DRG. This would apply only to hospital/institutional claims
+		</documentation>
+	</element>
+
+	<element name="CMSDRGCode" type="code">
+		<documentation>
+			Code representing the CMS-DRG. This would apply only to hospital/institutional claims
+		</documentation>
+	</element>
+
+	<element name="APRDRGCode" type="code">
+		<documentation>
+			Code representing the APR-DRG. This would apply only to hospital/institutional claims
+		</documentation>
+	</element>
+
+	<element name="DRGQualifierCode" type="code">
+		<documentation>
+			Code representing the DRG qualifier. This would apply only to hospital/institutional claims
+		</documentation>
+	</element>
+
+	<element name="PaidDRGCode" type="code">
+		<documentation>
+			Code representing the DRG code for which payment was made. This would apply only to hospital/institutional claims
+		</documentation>
+	</element>
+
+	<element name="PaperEOBCode" type="code">
+		<documentation>
+			Code representing the discharge status. This would apply only to hospital/institutional claims
+		</documentation>
+	</element>
+
+	<element name="CoveredDays" type="integer">
+		<documentation>
+			Number of days of a hospital stay covered for this claim. This would apply only to hospital/institutional claims.
+		</documentation>
+	</element>
+
+	<element name="NonCoveredDays" type="integer">
+		<documentation>
+			Number of days of a hospital stay that are not covered for this claim. This would apply only to
+			hospital/institutional claims.
+		</documentation>
+	</element>
+
+	<list name="ClaimDiagnoses">
+		<documentation>
+			Use this collection to specify the list diagnoses associated with the Claim.
+		</documentation>
+
+		<idsDocument idsVersion="2.0"
+					 type="instance_child" domain="Claim"
+					 name="PayerClaimDiagnosis"
+					 elementOrder="DiagnosisEvent, SequenceNbr, ICD9DecimalDiagnosisCode, ICD9NonDecimalDiagnosisCode,
+			 		 ICD10DiagnosisCode, SNOMEDCTDiagnosisCode, OtherDiagnosisCodes, QualifierCodes, TypeCode,
+			 		 PresentOnAdmissionCode">
+
+			<include name="CommonElements"
+					 prependToElementOrder="SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="OmniStatus, OmniStatusReason, SourceStatusCode, SourceCreatedDate,
+					 SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+			<documentation>
+				Data about the diagnosis associated with the Claim
+			</documentation>
+
+			<element name="SourceName" key="true" type="string" required="true">
+				<documentation>
+					This element must identify the source system that was responsible for generating this
+					data. This value is determined by the integration team and used in combination with
+					SourceInstanceId will allow this record to be traced back to its originating source.
+				</documentation>
+			</element>
+
+			<element name="SourceInstanceId" key="true" type="string" required="true" >
+				<documentation>
+					This element must contain an integration manufactured value that uniquely identifies the
+					collection element and can be used to map back to the source system. Whatever value is
+					manufactured must not change over time as it will be used to make updates when data
+					changes in the source system.
+				</documentation>
+			</element>
+
+			<element name="DiagnosisEvent" type="link" contains="DiagnosisEvent">
+				<documentation>
+					Link to associated DiagnosisEvent in the clinical domain
+				</documentation>
+			</element>
+
+			<element name="SequenceNbr" type="integer">
+				<documentation>
+					Number representing the order of this diagnosis in the list of procedures for this claim.
+				</documentation>
+			</element>
+
+			<element name="DiagnosisCode" type="code" codeSource="ICD9">
+				<documentation>
+					Depicts the diagnosed condition based on the standardized diagnosis code value set used in the health
+					system (ICD-9, ICD-10).
+				</documentation>
+			</element>
+
+			<element name="ICD9DecimalDiagnosisCode" type="code" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.103-ALT">
+				<documentation>
+					Diagnosis code expressed as an ICD-9 code with decimal point.
+				</documentation>
+			</element>
+
+			<element name="ICD9NonDecimalDiagnosisCode" type="code" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.103"
+					 dbColumn="icd9_no_dec_diagnosis_code">
+				<documentation>
+					Diagnosis code expressed as an ICD-9 code without a decimal point..
+				</documentation>
+			</element>
+
+			<element name="ICD10DiagnosisCode" type="code" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.90">
+				<documentation>
+					Diagnosis code expressed as an ICD-10 code.
+				</documentation>
+			</element>
+
+			<element name="SNOMEDCTDiagnosisCode" type="code" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.96">
+				<documentation>
+					Diagnosis code expressed as a SNOMED CT code.
+				</documentation>
+			</element>
+
+			<element name="OtherDiagnosisCodes" type="codeList" contains="OtherDiagnosisCode">
+				<documentation>
+					Diagnosis code(s) expressed in a coding system that is proprietary to the implementation environment.
+				</documentation>
+
+				<example>
+					<OtherDiagnosisCode sourceName="HL7-V3" sourceCodeSet="2.16.840.1.113883.6.103-ALT" sourceCode="NONE" />
+					<OtherDiagnosisCode sourceName="HL7-V3" sourceCodeSet="2.16.840.1.113883.6.103-ALT" sourceCode="ONE" />
+				</example>
+			</element>
+
+			<element name="QualifierCodes" type="codeList" contains="DiagnosisQualifierCode">
+				<documentation>
+					Diagnosis qualifier codes
+				</documentation>
+
+				<example>
+					<DiagnosisQualifierCode sourceName="HL7-V3" sourceCodeSet="2.16.840.1.113883.6.103" sourceCode="QUAL_ONE" />
+					<DiagnosisQualifierCode sourceName="HL7-V3" sourceCodeSet="2.16.840.1.113883.6.103" sourceCode="QUAL_TWO" />
+				</example>
+			</element>
+
+			<element name="TypeCode" type="code">
+				<documentation>
+					Indicates primary, secondary or other categorizations of the diagnosis code
+				</documentation>
+			</element>
+
+			<element name="PresentOnAdmissionCode" type="code">
+				<documentation>
+					Indicates (Y/N) whether the diagnosis was present on admission for an inpatient claim
+				</documentation>
+			</element>
+
+		</idsDocument>
+	</list>
+
+	<list name="ClaimProcedures">
+		<documentation>
+			Use this collection to specify the list of Procedures associated with the Claim
+		</documentation>
+
+		<idsDocument idsVersion="2.0"
+					 type="instance_child" domain="Claim"
+					 name="PayerClaimProcedure"
+					 elementOrder="ProcedureEvent, SequenceNbr, CPT4ProcedureCode, CDTProcedureCode, HCPCSProcedureCode,
+			 		 ICD9DecimalProcedureCode, ICD9NonDecimalProcedureCode, ICD10PCSProcedureCode, SNOMEDCTProcedureCode,
+			 		 OtherProcedureCodes, ProcedureDate, ProcedureModifierCodes">
+
+			<include name="CommonElements"
+					 prependToElementOrder="SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="OmniStatus, OmniStatusReason, SourceStatusCode, SourceCreatedDate,
+					 SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+			<documentation>
+				Data about the procedure associated with the claim
+			</documentation>
+
+			<element name="SourceName" key="true" type="string" required="true">
+				<documentation>
+					This element must identify the source system that was responsible for generating this
+					data. This value is determined by the integration team and used in combination with
+					SourceInstanceId will allow this record to be traced back to its originating source.
+				</documentation>
+			</element>
+
+			<element name="SourceInstanceId" key="true" type="string" required="true" >
+				<documentation>
+					This element must contain an integration manufactured value that uniquely identifies the
+					collection element and can be used to map back to the source system. Whatever value is
+					manufactured must not change over time as it will be used to make updates when data
+					changes in the source system.
+				</documentation>
+			</element>
+
+			<element name="ProcedureEvent" type="link" contains="ProcedureEvent">
+				<documentation>
+					Link to a ProcedureEvent record. This would be populated in lieu of the subsequent fields if clinical
+					events are being implemented in the environment.
+				</documentation>
+			</element>
+
+			<element name="SequenceNbr" type="integer">
+				<documentation>
+					Number representing the order of this procedure in the list of procedures for this claim.
+				</documentation>
+			</element>
+
+			<element name="CPT4ProcedureCode" type="code" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.12">
+				<documentation>
+					Procedure code expressed as a CPT-4 code.
+				</documentation>
+			</element>
+			<element name="CDTProcedureCode" type="code" >
+				<documentation>
+					Procedure code expressed as a CDT code.
+				</documentation>
+			</element>
+
+			<element name="HCPCSProcedureCode" type="code" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.14">
+				<documentation>
+					Procedure code expressed as a HCPCS code.
+				</documentation>
+			</element>
+
+			<element name="ICD9DecimalProcedureCode" type="code" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.104-ALT">
+				<documentation>
+					Procedure code expressed as an ICD-9 code with decimal point.
+				</documentation>
+			</element>
+
+			<element name="ICD9NonDecimalProcedureCode" type="code" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.104"
+					 dbColumn="icd9_no_dec_procedure_code">
+				<documentation>
+					Procedure code expressed as an ICD-9 code without a decimal point.
+				</documentation>
+			</element>
+
+			<element name="ICD10PCSProcedureCode" type="code" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.4">
+				<documentation>
+					Procedure code expressed as an ICD-10-PCS code.
+				</documentation>
+			</element>
+
+			<element name="SNOMEDCTProcedureCode" type="code" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.96">
+				<documentation>
+					Procedure code expressed as a SNOMED code.
+				</documentation>
+			</element>
+
+			<element name="OtherProcedureCodes" type="codeList" contains="OtherProcedureCode">
+				<documentation>
+					Procedure code expressed in a custom or proprietary code set.
+				</documentation>
+
+				<example>
+					<OtherProcedureCode sourceName="HL7-V3" sourceCodeSet="2.16.840.1.113883.6.12" sourceCode="Proc1" />
+					<OtherProcedureCode sourceName="HL7-V3" sourceCodeSet="2.16.840.1.113883.6.12" sourceCode="Proc2" />
+				</example>
+			</element>
+
+			<element name="ProcedureModifierCodes" type="codeList" contains="ProcedureModifierCode">
+				<documentation>
+					List of procedure modifier codes
+				</documentation>
+
+				<example>
+					<ProcedureModifierCode sourceName="HL7-V3" sourceCodeSet="2.16.840.1.113883.6.12" sourceCode="ProcMod1" />
+					<ProcedureModifierCode sourceName="HL7-V3" sourceCodeSet="2.16.840.1.113883.6.12" sourceCode="ProcMod2" />
+				</example>
+			</element>
+
+			<element name="ProcedureDate" type="datetime">
+				<documentation>
+					Date of service of the procedure
+				</documentation>
+			</element>
+		</idsDocument>
+	</list>
+
+	<list name="ClaimLineItems">
+		<documentation>
+			Use this collection to specify the list of clinical events and diagnoses performed by each Provider.
+		</documentation>
+
+		<idsDocument idsVersion="2.0"
+					 type="instance_child" domain="Claim"
+					 name="PayerClaimLineItem"
+					 elementOrder="ClaimLineItemId, OtherClaimLineItemId, Member, PayerClient, PlaceOfService,
+					 PlaceOfServiceCode, TypeCode, ServiceLine, ServiceLineCode, AlternateServiceLineCode, Procedure,
+					 CPT4ProcedureCode, CDTProcedureCode, HCPCSProcedureCode, ICD9DecimalProcedureCode, ICD9NonDecimalProcedureCode,
+					 ICD10PCSProcedureCode, SNOMEDCTProcedureCode, OtherProcedureCodes, ProcedureModifierCodes,
+					 ServicingProvider, Financial, LineOfBusinessCode, UnitOfMeasureCode, COBTypeCode, BilledQuantity,
+					 AllowedQuantity, CapitatedServiceIndicator, AllocatedAmountIndicator, ServiceFromDate,
+					 ServiceThruDate, PaidDate, PaidAmount, PaidAllocatedAmount, AllowedAmount, AllowedAllocatedAmount,
+					 DeniedAmount, ChargeAmount, InterestAmount, COBPaidAmount, COBPaidAllocatedAmount, CopayAmount,
+					 CoinsuranceAmount, DeductibleAmount, RiskWithheldAmount, HRAPaidAmount, NetworkAccessFee,
+					 NetworkAdminFee, TotalDisallowedAmount, TotalDisallowedAllocatedAmount, TotalPatientLiabilityAmount,
+					 TotalDiscountAmount, TotalClaimExpenseAmount, TotalClaimExpenseAllocatedAmount, TotalMemberBenefitAmount,
+					 TotalMemberBenefitAllocatedAmount, NoncoveredAmount, NetworkSavingsAmount, NetworkSavingsAllocatedAmount,
+					 PrimaryDisallowedCode, PrimaryDisallowedDescription, PrimaryDeniedCode, PrimaryDeniedDescription,
+					 AllowedDays, AllowedAnesthesiaMinutes, DrugCode, DrugRxNormCode, DrugNDCCode, DrugSNOMEDCTCode,
+					 DrugOtherCode, DrugDescription, EmergencyIndicator, ClaimLineItemDiagnoses, ClaimLineItemRx" >
+
+			<include name="CommonElements"
+					 prependToElementOrder="SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="OmniStatus, OmniStatusReason, SourceStatusCode, SourceCreatedDate,
+					 SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+			<documentation>
+				This represents the line item level for a claim for coverage of specific procedures associated with
+				medical service in the context of hospital services, medical office visits and professional services,
+				prescriptions, dental and vision care.
+			</documentation>
+
+			<element name="SourceName" key="true" type="string" required="true">
+				<documentation>
+					This element must identify the source system that was responsible for generating this
+					data. This value is determined by the integration team and used in combination with
+					SourceInstanceId will allow this record to be traced back to its originating source.
+				</documentation>
+			</element>
+
+			<element name="SourceInstanceId" key="true" type="string" required="true" >
+				<documentation>
+					This element must contain an integration manufactured value that uniquely identifies the
+					collection element and can be used to map back to the source system. Whatever value is
+					manufactured must not change over time as it will be used to make updates when data
+					changes in the source system.
+				</documentation>
+			</element>
+
+			<element name="ClaimLineItemId" type="string">
+				<documentation>
+					Unique ID for this claim line item
+				</documentation>
+			</element>
+
+			<element name="OtherClaimLineItemId" type="string">
+				<documentation>
+					Alternative claim line item identifier for use in additional integration scenarios.
+				</documentation>
+			</element>
+
+			<element name="Member" type="link" contains="Member">
+				<documentation>
+					Use this element to link this claim to the Member that received health care
+					services.
+				</documentation>
+			</element>
+
+			<element name="PayerClient" type="link" contains="PayerClient">
+				<documentation>
+					Use this element to link this claim to the client, which represents the payer customer under which
+					the member belongs
+				</documentation>
+			</element>
+
+			<element name="PlaceOfService" type="link" contains="Facility">
+				<documentation>
+					Link to an record representing an actual Facility where the service took place, if available.
+				</documentation>
+			</element>
+
+			<element name="PlaceOfServiceCode" type="code">
+				<documentation>
+					Code indicating the place of service type for this claim line item.
+				</documentation>
+			</element>
+
+			<element name="TypeCode" type="code">
+				<documentation>
+					Code describing the type of claim.
+				</documentation>
+			</element>
+
+			<element name="ServiceLine" type="link" contains="OrganizationalUnit">
+				<documentation>
+					A link to an OrganizationalUnit representing the Service Line as part of an organizational/cost center grouping.
+				</documentation>
+			</element>
+
+			<element name="ServiceLineCode" type="code">
+				<documentation>
+					A code representing the type of service, from a classification list of service categories
+				</documentation>
+			</element>
+
+			<element name="AlternateServiceLineCode" type="code">
+				<documentation>
+					A code representing the type of service, from an alternative or additional classification list of service categories
+				</documentation>
+			</element>
+
+			<element name="Procedure" type="link" contains="ProcedureEvent">
+				<documentation>Link to a ProcedureEvent record. This would be populated in lieu of the subsequent fields if clinical events are being implemented in the environment.</documentation>
+			</element>
+
+			<element name="CPT4ProcedureCode" type="code" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.12">
+				<documentation>
+					Procedure code expressed as a CPT-4 code.
+				</documentation>
+			</element>
+			<element name="CDTProcedureCode" type="code" >
+				<documentation>
+					Procedure code expressed as a CDT code.
+				</documentation>
+			</element>
+
+			<element name="HCPCSProcedureCode" type="code" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.14">
+				<documentation>
+					Procedure code expressed as a HCPCS code.
+				</documentation>
+			</element>
+
+			<element name="ICD9DecimalProcedureCode" type="code" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.104-ALT">
+				<documentation>
+					Procedure code expressed as an ICD-9 code with decimal point.
+				</documentation>
+			</element>
+
+			<element name="ICD10PCSProcedureCode" type="code" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.4">
+				<documentation>
+					Procedure code expressed as an ICD-10-PCS code.
+				</documentation>
+			</element>
+
+			<element name="ICD9NonDecimalProcedureCode" type="code" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.104"
+					 dbColumn="icd9_no_dec_procedure_code">
+				<documentation>
+					Procedure code expressed as an ICD-9 code without a decimal point.
+				</documentation>
+			</element>
+
+			<element name="ICD10ProcedureCode" type="code" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.4">
+				<documentation>
+					Procedure code expressed as an ICD-10-PCS code.
+				</documentation>
+			</element>
+
+			<element name="SNOMEDCTProcedureCode" type="code" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.96">
+				<documentation>
+					Procedure code expressed as a SNOMED code.
+				</documentation>
+			</element>
+
+			<element name="OtherProcedureCodes" type="codeList" contains="OtherProcedureCode">
+				<documentation>
+					Procedure code expressed in a custom or proprietary code set.
+				</documentation>
+
+				<example>
+					<OtherProcedureCode sourceName="HL7-V3" sourceCodeSet="2.16.840.1.113883.6.12" sourceCode="Proc1" />
+					<OtherProcedureCode sourceName="HL7-V3" sourceCodeSet="2.16.840.1.113883.6.12" sourceCode="Proc2" />
+				</example>
+			</element>
+
+			<element name="ProcedureModifierCodes" type="codeList" contains="ProcedureModifierCode">
+				<documentation>
+					Procedure Modifier Codes
+				</documentation>
+
+				<example>
+					<ProcedureModifierCode sourceName="HL7-V3" sourceCodeSet="2.16.840.1.113883.6.12" sourceCode="ProcMod1" />
+					<ProcedureModifierCode sourceName="HL7-V3" sourceCodeSet="2.16.840.1.113883.6.12" sourceCode="ProcMod2" />
+				</example>
+			</element>
+
+			<element name="ServicingProvider" type="link" contains="Provider" keys="SourceName, SourceInstanceId">
+				<documentation>
+					Link to the Provider record representing the provider who performed the service.
+				</documentation>
+			</element>
+
+			<group name="Financial"
+				   elementOrder="NetworkArrangementCode, RateCode, ProductTypeCode,
+								 BillingComponentItemCode, ArrangementTypeCode, RevenueCode"
+				   dbColumnPrefix="fin" >
+
+				<documentation>Financial codes associated with the claim line item</documentation>
+
+				<element name="NetworkArrangementCode" type="code">
+					<documentation>
+						Code representing the line of business financial network arrangement
+					</documentation>
+				</element>
+
+				<element name="RateCode" type="code">
+					<documentation>
+						Code representing the financial rate applied to the claim line item.
+					</documentation>
+				</element>
+
+				<element name="ProductTypeCode" type="code">
+					<documentation>
+						Code representing the type of product for the claim line item.
+					</documentation>
+				</element>
+
+				<element name="BillingComponentItemCode" type="code">
+					<documentation>
+						Code representing the item billing component code.
+					</documentation>
+				</element>
+
+				<element name="ArrangementTypeCode" type="code">
+					<documentation>
+						Code representing the financial arrangement code.
+					</documentation>
+				</element>
+
+				<element name="RevenueCode" type="code">
+					<documentation>
+						Code representing a revenue center, line of business or other business unit.
+					</documentation>
+				</element>
+			</group>
+
+			<element name="LineOfBusinessCode" type="code">
+				<documentation>
+					Code representing the line of business. This could represent PPPO, HMO, etc.
+				</documentation>
+			</element>
+
+			<element name="UnitOfMeasureCode" type="code" codeTable="6020">
+				<documentation>Represents the unit of measure to be used with the result value.</documentation>
+			</element>
+
+			<element name="COBTypeCode" type="code">
+				<documentation>
+					Code describing the type of coordination of benefits in effect, if any.
+				</documentation>
+			</element>
+
+			<element name="BilledQuantity" type="double">
+				<documentation>
+					A quantity representing the number of billed units of service for the associated procedure code.
+					This could represent minutes, vists, sutures, etc.
+				</documentation>
+			</element>
+
+			<element name="AllowedQuantity" type="double">
+				<documentation>
+					A quantity representing the number of allowable units for the line item. For pharmacy claims,
+					this can capture the dispensed or filled quantity.
+				</documentation>
+			</element>
+
+			<element name="CapitatedServiceIndicator" type="code">
+				<documentation>
+					Indicated whether this line item represents a capitation claim.
+				</documentation>
+			</element>
+
+			<element name="AllocatedAmountIndicator" type="code">
+				<documentation>
+					Indicates if this line item represents an allocated amount from a higher level or 'bundled' service
+				</documentation>
+			</element>
+
+			<element name="ServiceFromDate" type="datetime">
+				<documentation>
+					The calendar date that a specific claim service was performed or administered. For prescription
+					claims, this is the date the prescription was filled.
+				</documentation>
+			</element>
+
+			<element name="ServiceThruDate" type="datetime">
+				<documentation>
+					Use this element to define the ending service date and time for this
+					procedure.
+				</documentation>
+			</element>
+
+			<element name="PaidDate" type="datetime">
+				<documentation>
+					Use this element to define the ending service date and time for this
+					procedure.
+				</documentation>
+			</element>
+
+			<element name="PaidAmount" type="double">
+				<documentation>
+					The amount paid for this claim line item.
+				</documentation>
+			</element>
+
+			<element name="PaidAllocatedAmount" type="double">
+				<documentation>
+					The allocated amount paid for this claim line item.
+				</documentation>
+			</element>
+
+			<element name="AllowedAmount" type="double">
+				<documentation>
+					The total allowable amount for this line item.
+				</documentation>
+			</element>
+
+			<element name="AllowedAllocatedAmount" type="double">
+				<documentation>
+					The total allowable allocated amount for this line item.
+				</documentation>
+			</element>
+
+			<element name="DeniedAmount" type="double">
+				<documentation>
+					The amount denied for this claim line item.
+				</documentation>
+			</element>
+
+			<element name="ChargeAmount" type="double">
+				<documentation>
+					The line item charge amount for the service(s).
+				</documentation>
+			</element>
+
+			<element name="InterestAmount" type="double">
+				<documentation>
+					The amount of money associated with the payment of interest for the claim due to not being
+					processed within the time limit established.
+				</documentation>
+			</element>
+
+			<element name="COBPaidAmount" type="double">
+				<documentation>
+					The other carrier paid amount applied towards the line-item.
+				</documentation>
+			</element>
+
+			<element name="COBPaidAllocatedAmount" type="double">
+				<documentation>
+					The other carrier paid allocated amount applied towards the line-item.
+				</documentation>
+			</element>
+
+			<element name="CopayAmount" type="double">
+				<documentation>
+					The line item copayment amount.
+				</documentation>
+			</element>
+
+			<element name="CoinsuranceAmount" type="double">
+				<documentation>
+					The line item coinsurance amount.
+				</documentation>
+			</element>
+
+			<element name="DeductibleAmount" type="double">
+				<documentation>
+					The line item deductible amount.
+				</documentation>
+			</element>
+
+			<element name="RiskWithheldAmount" type="double">
+				<documentation>
+					The line item risk withheld amount.
+				</documentation>
+			</element>
+
+			<element name="HRAPaidAmount" type="double">
+				<documentation>
+					Represents the paid amount for the HRA line item
+				</documentation>
+			</element>
+
+			<element name="NetworkAccessFee" type="double">
+				<documentation>
+					Network access fee charged for exchange of data between associated networks of payers.
+				</documentation>
+			</element>
+
+			<element name="NetworkAdminFee" type="double">
+				<documentation>
+					Network administrative fee charged for exchange of data between associated networks of payers.
+				</documentation>
+			</element>
+
+			<element name="TotalDisallowedAmount" type="double">
+				<documentation>
+					The total of all disallowed amounts for the line item.
+				</documentation>
+			</element>
+
+			<element name="TotalPatientLiabilityAmount" type="double">
+				<documentation>
+					Represents the Total Patient Liability amount including deductibles, copay, coinsurance and disallow
+					reimbursable for HRA processing coming from the extension
+				</documentation>
+			</element>
+
+			<element name="TotalDisallowedAllocatedAmount" type="double">
+				<documentation>
+					The total of all disallowed allocated amounts for the line item.
+				</documentation>
+			</element>
+
+			<element name="TotalPatientLiabilityAmount" type="double">
+				<documentation>
+					Represents the Total Patient Liability amount including deductibles, copay, coinsurance and disallow
+					reimbursable for HRA processing coming from the extension
+				</documentation>
+			</element>
+
+			<element name="TotalDiscountAmount" type="double">
+				<documentation>
+					The total of all discounts taken on the line item.
+				</documentation>
+			</element>
+
+			<element name="TotalClaimExpenseAmount" type="double">
+				<documentation>
+					The total claims expense for a line item on a claim as calculated from direct expenses, fees,
+					discounts, etc.
+				</documentation>
+			</element>
+
+			<element name="TotalClaimExpenseAllocatedAmount" type="double">
+				<documentation>
+					The total claims allocated expense for a line item on a claim as calculated from direct expenses,
+					fees, discounts, etc.
+				</documentation>
+			</element>
+
+			<element name="TotalMemberBenefitAmount" type="double">
+				<documentation>
+					Total member benefits paid. May only be different from paid amount when this is a capitation claim.
+				</documentation>
+			</element>
+
+			<element name="TotalMemberBenefitAllocatedAmount" type="double">
+				<documentation>
+					Total allocated member benefits paid. May only be different from paid amount when this is a
+					capitation claim.
+				</documentation>
+			</element>
+
+			<element name="NoncoveredAmount" type="double">
+				<documentation>
+					The amount of the denied line item charge that is the patients responsibility for payment because
+					of non-compliance with coverage instructions or lack of coverage for those services.
+				</documentation>
+			</element>
+
+			<element name="NetworkSavingsAmount" type="double">
+				<documentation>
+					The line item network savings amount.
+				</documentation>
+			</element>
+
+			<element name="NetworkSavingsAllocatedAmount" type="double">
+				<documentation>
+					The line item network savings allocated amount.
+				</documentation>
+			</element>
+
+			<element name="PrimaryDisallowedCode" type="code">
+				<documentation>
+					Code representing the primary reason for disallowing the claim.
+				</documentation>
+
+				<example sourceName="TestSystem" codeSet="PrimaryDisallowedCodes">PrimaryDisallowedCode1</example>
+			</element>
+
+			<element name="PrimaryDisallowedDescription" type="string">
+				<documentation>
+					Text describing the primary reason for disallowing the claim.
+				</documentation>
+
+				<example>Disallowed Description</example>
+			</element>
+
+			<element name="PrimaryDeniedCode" type="code">
+				<documentation>
+					Code representing the primary reason for denying payment of the claim.
+				</documentation>
+
+				<example sourceName="TestSystem" codeSet="PrimaryDeniedCodes">PrimaryDeniedCode1</example>
+			</element>
+
+			<element name="PrimaryDeniedDescription" type="string">
+				<documentation>
+					Text describing the primary reason for denying payment of the claim.
+				</documentation>
+
+				<example>Denied Description</example>
+			</element>
+
+			<element name="AllowedDays" type="double">
+				<documentation>
+					Allowed inpatient days for the claim line item. This would apply only to hospital/institutional
+					claims.
+				</documentation>
+			</element>
+
+			<element name="AllowedAnesthesiaMinutes" type="double">
+				<documentation>
+					Allowed anesthesia minutes for the claim line item. This would apply only to hospital/institutional
+					claims.
+				</documentation>
+			</element>
+
+			<element name="DrugCode" type="code" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.69">
+				<documentation>
+					Internal identifier representing a drug associated with a prescription claim.
+				</documentation>
+			</element>
+
+			<element name="DrugRxNormCode" type="code" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.88">
+				<documentation>
+					RxNorm code representing a drug associated with a prescription claim.
+				</documentation>
+			</element>
+
+			<element name="DrugNDCCode" type="code" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.69">
+				<documentation>
+					NDC code representing a drug associated with a prescription claim.
+				</documentation>
+			</element>
+
+			<element name="DrugSNOMEDCTCode" type="code" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.96">
+				<documentation>
+					SNOMED-CT code representing a drug associated with a prescription claim.
+				</documentation>
+			</element>
+
+			<element name="DrugOtherCode" type="code" >
+				<documentation>
+					Code representing a drug associated with a prescription claim from a proprietary drug code system.
+				</documentation>
+			</element>
+
+			<element name="DrugDescription" type="string">
+				<documentation>
+					Description/name of the prescribed drug.
+				</documentation>
+			</element>
+
+			<element name="EmergencyIndicator" type="code">
+				<documentation>
+					Code indicating if this claim line item is associated with treatment in an emergency department.
+				</documentation>
+			</element>
+
+			<list name="ClaimLineItemDiagnoses">
+
+				<documentation>
+					Use this collection to specify the diagnoses associated with the Claim Line Item.
+				</documentation>
+
+				<idsDocument idsVersion="2.0"
+							 type="instance_child" domain="Claim"
+							 name="PayerClaimLineItemDiagnosis"
+							 elementOrder="DiagnosisEvent, SequenceNbr, ICD9DecimalDiagnosisCode,
+							 ICD9NonDecimalDiagnosisCode, ICD10DiagnosisCode, SNOMEDCTDiagnosisCode,
+							 OtherDiagnosisCode, QualifierCode"	>
+
+					<include name="CommonElements"
+							 prependToElementOrder="SourceName, SourceInstanceId, SourceInstanceIdName"
+							 appendToElementOrder="OmniStatus, OmniStatusReason, SourceStatusCode, SourceCreatedDate,
+							 SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+					<documentation>
+						Diagnosis associated with the claim line item
+					</documentation>
+
+					<element name="SourceName" key="true" type="string" required="true">
+						<documentation>
+							This element must identify the source system that was responsible for generating this
+							data. This value is determined by the integration team and used in combination with
+							SourceInstanceId will allow this record to be traced back to its originating source.
+						</documentation>
+					</element>
+
+					<element name="SourceInstanceId" key="true" type="string" required="true" >
+						<documentation>
+							This element must contain an integration manufactured value that uniquely identifies the
+							collection element and can be used to map back to the source system. Whatever value is
+							manufactured must not change over time as it will be used to make updates when data
+							changes in the source system.
+						</documentation>
+					</element>
+
+					<element name="DiagnosisEvent" type="link" contains="DiagnosisEvent">
+						<documentation>
+							Link to a DiagnosisEvent record. This would be populated in lieu of the subsequent
+							fields if clinical events are being implemented in the environment.
+						</documentation>
+					</element>
+
+					<element name="SequenceNbr" type="integer">
+						<documentation>
+							Sequence number which indicates order of importance and (primary/secondary) as well as
+							uniquely identifying it within the collection.
+						</documentation>
+					</element>
+
+					<element name="ICD9DecimalDiagnosisCode" type="code" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.103-ALT">
+						<documentation>
+							Diagnosis code expressed as an ICD-9 code with decimal point.
+						</documentation>
+					</element>
+
+					<element name="ICD9NonDecimalDiagnosisCode" type="code" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.103"
+							 dbColumn="icd9_no_dec_diagnosis_code">
+						<documentation>
+							Diagnosis code expressed as an ICD-9 code without a decimal point..
+						</documentation>
+					</element>
+
+					<element name="ICD10DiagnosisCode" type="code" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.90">
+						<documentation>
+							Diagnosis code expressed as an ICD-10 code.
+						</documentation>
+					</element>
+
+					<element name="SNOMEDCTDiagnosisCode" type="code" codeSource="HL7-V3" codeSet="2.16.840.1.113883.6.96">
+						<documentation>
+							Diagnosis code expressed as a SNOMED CT code.
+						</documentation>
+					</element>
+
+					<element name="OtherDiagnosisCode" type="code" >
+						<documentation>
+							Diagnosis code expressed in a coding system that is proprietary to the implementation environment.
+						</documentation>
+					</element>
+
+					<element name="QualifierCode" type="code">
+						<documentation>
+							Code representing a qualifier of the diagnosis code
+						</documentation>
+					</element>
+				</idsDocument>
+			</list>
+
+			<group name="ClaimLineItemRx"
+				   elementOrder="PrescribingProvider, PrescribingPractice, DispenseAsWrittenCode, PharmacyDispenseFee,
+								 FormularyStatusCode, FormularyTierCode, MatchLevelCode, MaxAllowableCost, MultiSourceCode, CompoundSpecifiedIndicator, MailOrderIndicator,
+								 PharmacyRxId, PrescriptionWrittenDate, FilledSupplyDays, SubmittedSupplyDays, FilledToSubmittedRatio, ProcessingFee, CopayBasisCode, CopayDifferenceAmount,
+								 SubmittedSupplyCost, PaidAmount, OriginalCostAmount, PerformanceGenericFee, PrescriberNetworkId, SalesTaxAmount, WholesaleUnitPrice"
+				   dbColumnPrefix="rx">
+
+				<documentation>Represents an Observation result represented as a ratio.</documentation>
+
+				<element name="PrescribingProvider" type="link" contains="Provider">
+					<documentation>
+						Link to the Provider record representing the provider who wrote the prescription.
+					</documentation>
+				</element>
+
+				<element name="PrescribingPractice" type="link" contains="Organization">
+					<documentation>
+						Link to the Organization record representing the practice which wrote the prescription.
+					</documentation>
+				</element>
+
+				<element name="DispenseAsWrittenCode" type="code">
+					<documentation>
+						Code representing how the drug was actually dispensed in relation to how the prescription was written.
+					</documentation>
+				</element>
+
+				<element name="PharmacyDispenseFee" type="double">
+					<documentation>
+						Fee paid to the pharmacy for dispensing the drug.
+					</documentation>
+				</element>
+
+				<element name="FormularyStatusCode" type="code">
+					<documentation>
+						Indicates the Formulary status of the Drug.
+					</documentation>
+				</element>
+
+				<element name="FormularyTierCode" type="code">
+					<documentation>
+						A code that uniquely identifies a formulary tier.
+					</documentation>
+				</element>
+
+				<element name="MatchLevelCode" type="code">
+					<documentation>
+						Code representing the match level of the drug code during transaction processing.
+					</documentation>
+				</element>
+
+				<element name="MaxAllowableCost" type="double">
+					<documentation>
+						Contains the portion of the dollar amount charged by the pharmacy that is allowed (eligible) for reimbursement
+					</documentation>
+				</element>
+
+				<element name="MultiSourceCode" type="code">
+					<documentation>
+						A code indicating whether the drug dispensed is a single or multi-source drug.
+					</documentation>
+				</element>
+
+				<element name="CompoundSpecifiedIndicator" type="code">
+					<documentation>
+						Code indicating whether or not the prescription is a compound.
+					</documentation>
+				</element>
+
+				<element name="MailOrderIndicator" type="code">
+					<documentation>
+						A code indicating if the claim is for a mail-order transaction.
+					</documentation>
+				</element>
+
+				<element name="PharmacyRxId" type="string">
+					<documentation>
+						The number of the prescription as assigned by the pharmacy at the time of fill.
+					</documentation>
+				</element>
+
+				<element name="PrescriptionWrittenDate" type="datetime">
+					<documentation>
+						Date the prescription was written.
+					</documentation>
+				</element>
+
+				<element name="FilledSupplyDays" type="double">
+					<documentation>
+						Pharmacy filled days supply. This is the supply actually filled.
+					</documentation>
+				</element>
+
+				<element name="SubmittedSupplyDays" type="double">
+					<documentation>
+						Pharmacy submitted days supply. This is the supply requested on the original submitted prescription
+					</documentation>
+				</element>
+
+				<element name="FilledToSubmittedRatio" type="double">
+					<documentation>
+						Ratio of the filled to submitted days supply.
+					</documentation>
+				</element>
+
+				<element name="ProcessingFee" type="double">
+					<documentation>
+						The fee charged for processing each prescription claim.
+					</documentation>
+				</element>
+
+				<element name="CopayBasisCode" type="code">
+					<documentation>
+						Code identifying how the reimbursement amount was calculated for copay.
+					</documentation>
+					<example sourceName="TestSystem" codeSet="CopayBasisCodes">CopayBasisCode1</example>
+				</element>
+
+				<element name="CopayDifferenceAmount" type="double">
+					<documentation>
+						Amount to be collected from the patient that is included in Patient Pay Amount that is due to the patient's selection of drug product
+					</documentation>
+				</element>
+
+				<element name="SubmittedSupplyCost" type="double">
+					<documentation>
+						The submitted ingredient cost based on quantity dispensed times unit cost.
+					</documentation>
+				</element>
+
+				<element name="PaidAmount" type="double">
+					<documentation>
+						The portion that is paid of the amount billed by the pharmacy for the cost of the drug dispensed.
+					</documentation>
+				</element>
+
+				<element name="OriginalCostAmount" type="double">
+					<documentation>
+						Original ingredient cost of the drug dispensed by the pharmacy.
+					</documentation>
+				</element>
+
+				<element name="PerformanceGenericFee" type="double">
+					<documentation>
+						Fee for Performance generic suggestion generation
+					</documentation>
+				</element>
+
+				<element name="PrescriberNetworkId" type="string">
+					<documentation>
+						Prescriber Network Identification string
+					</documentation>
+
+					<example>Prescriber Network ID</example>
+				</element>
+
+				<element name="SalesTaxAmount" type="double">
+					<documentation>
+						The amount of sales tax applicable for this claim.
+					</documentation>
+				</element>
+
+				<element name="WholesaleUnitPrice" type="double">
+					<documentation>
+						Average Wholesale Price per unit for the drug as defined by processor.
+					</documentation>
+				</element>
+			</group>
+		</idsDocument>
+	</list>
+</idsDocument>

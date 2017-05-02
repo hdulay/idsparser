@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.2.3" changeVersion="2" domain="Clinical.Event" type="instance"
+			 name="DiagnosisEvent"  
+	 		 elementOrder="EventDateTime, Location, 
+	 		 			 DiagnosisCode, ICD9DecimalDiagnosisCode, ICD9NonDecimalDiagnosisCode, ICD10DiagnosisCode,
+	 		 			 SNOMEDCTDiagnosisCode, OtherDiagnosisCodes, TypeCode, PrimaryDiagnosisIndicator, PresentOnAdmissionCode,
+	 		 			 ConditionCategoryCode, ConditionStatusCode, ConditionSeverityCode, 
+	 		 			 OnsetDate, AssertionDate, AbatementDate, BodySites, Description, Sequence, SubmittedToBillingIndicator"
+	 		 implementationClass="com.ibi.omni.patient.model.clinical.event.DiagnosisEvent">
+	  	 					
+	<changeLog>
+		<change version="1.2.3_0">Initial Version</change>
+		<change version="1.2.3_1">Added PresentOnAdmissionCode</change>
+		<change version="1.2.3_2">Added SourceStatusCode to instance and collection items.</change>
+		<change version="1.2.3_3">Added ICD9DecimalDiagnosisCode, ICD9NonDecimalDiagnosisCode, ICD10DiagnosisCode,
+			SNOMEDCTDiagnosisCode and OtherDiagnosisCodes.</change>
+	</changeLog>
+	
+	<notes>
+	- Changed name of subject to DiagnosisEvent to differentiate it as a type of clinicalEvent.
+	- For FacilityLocation, tweaked the definition slightly
+	- EventDateTime and FacilityLocation are common fields, but are implemented separately here to distinguish their usage/description in this Event.
+	- Did not implement Sequence, as sequence is determined by Event Date/Time.
+	- Did not implement RelatedItems pending further conversations on the mechanism of capturing it (Procedure and Diagnosis Codes vs. Procedure and Diagnosis Events).
+	- Did not implement AlternateDiagnoses pending further conversations on the mechanism of capturing it (primarily for ICD-9->ICD-10 conversion...collection vs. data elements in the Diagnosis event).
+	- Tweaked EventDateTime definition
+	- Implemented table 0630 for ConditionCategoryCode
+	- Implemented table 0635 for ConditionStatusCode
+	- Implemented table 0640 for ConditionSeverityCode	
+	- Changed BodySite to DiagnosisBodySite to separate it from other BodySite objects.
+	- Question: How is an individual BodySite expected to be uniquely identified?
+	
+	
+	</notes>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	<customType name="SourceCodeList" class="com.ibi.dib.core.ids.types.IdsCodeListType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	
+	<include name="EventElements"
+			 prependToElementOrder="ParentEvent, Encounter, CarePlanId, CarePlan, CCDCategoryCode"
+			 appendToElementOrder="EventProviders, EventNotes"/>
+			 
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	
+	<documentation>	
+	Each Diagnosis event captures diagnosis codes of any type possible with related data.  It also flags whether the record is considered the primary diagnosis.  The diagnosis EventDateTime captures the order in which the diagnosis event should be associated with the encounter.  As an event can be associated with a parent event, the Admission event can be used as the parent for the diagnosis event to track whether it was present at the time of admission.
+	</documentation>
+
+	<element name="EventDateTime" type="OmniDate">
+		<documentation>
+		Date and time that the diagnosis was made.
+		</documentation>
+		
+		<example format="yyyy-MM-dd hh:mm:ss">2000-10-01 11:12:32</example>
+	</element>
+
+	<element name="Location" type="OmniLink" contains="FacilityLocation" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		The facility location where the patient is when the diagnosis is made.
+		
+		Use this element to specify a FacilityLocation in the system using the FacilityLocation's SourceName and SourceInstanceId. You cannot load FacilityLocation
+		information using this element, however if the FacilityLocation is not found then a "placeholder" will be created that will contain the FacilityLocation
+		when loaded.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<FacilityLocation>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>FacilityLocationId</SourceInstanceId>
+			</FacilityLocation>
+			]]>
+		</example>		
+	</element>
+
+	<element name="DiagnosisCode" type="SourceCode" codeSource="OMNI" codeSet="ICD9">
+		<documentation>
+		Depicts the diagnosed condition based on the standardized diagnosis code value set used in the health system (ICD-9, ICD-10).
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="ICD9" sourceCode="052.8"/>
+	</element>
+
+	<element name="ICD9DecimalDiagnosisCode" type="SourceCode" codeSource="ICD9" codeSet="2.16.840.1.113883.6.103-ALT">
+		<documentation>
+			Diagnosis code expressed as an ICD-9 code with decimal point.
+		</documentation>
+
+		<example sourceName="ICD9" sourceCodeSet="2.16.840.1.113883.6.103-ALT" sourceCode="052.8"/>
+	</element>
+
+	<element name="ICD9NonDecimalDiagnosisCode" type="SourceCode" codeSource="ICD9" codeSet="2.16.840.1.113883.6.103" dbColumn="icd9_no_dec_diagnosis_code">
+		<documentation>
+			Diagnosis code expressed as an ICD-9 code without a decimal point..
+		</documentation>
+
+		<example sourceName="ICD9" sourceCodeSet="2.16.840.1.113883.6.103" sourceCode="0528"/>
+	</element>
+
+	<element name="ICD10DiagnosisCode" type="SourceCode" codeSource="SNOMEDCT" codeSet="2.16.840.1.113883.6.90">
+		<documentation>
+			Diagnosis code expressed as an ICD-10 code.
+		</documentation>
+
+		<example sourceName="SNOMEDCT" sourceCodeSet="2.16.840.1.113883.6.90" sourceCode="052.8"/>
+	</element>
+
+	<element name="SNOMEDCTDiagnosisCode" type="SourceCode" codeSource="ICD10" codeSet="2.16.840.1.113883.6.96">
+		<documentation>
+			Diagnosis code expressed as a SNOMED CT code.
+		</documentation>
+
+		<example sourceName="ICD10" sourceCodeSet="2.16.840.1.113883.6.90" sourceCode="052.8"/>
+	</element>
+
+	<element name="OtherDiagnosisCodes" type="SourceCodeList" contains="OtherDiagnosisCode">
+		<documentation>
+			Diagnosis code(s) expressed in a coding system that is proprietary to the implementation environment.
+		</documentation>
+
+		<![CDATA[
+			<OtherDiagnosisCode sourceName="ICD9" sourceCodeSet="2.16.840.1.113883.6.103-AL" sourceCode="NONE" />
+			<OtherDiagnosisCode sourceName="ICD9" sourceCodeSet="2.16.840.1.113883.6.103-AL" sourceCode="ONE" />
+			]]>
+	</element>
+
+
+	<element name="Description" type="string">
+		<documentation>
+			If the source diagnosis is not encoded in a standard code set, this provides a place for a free-text
+			description of the problem.
+		</documentation>
+	</element>
+
+	<element name="Sequence" type="integer">
+		<documentation>
+			Sequence number of the diagnosis. This can be with respect to the encounter, or with respect to
+			the ype, primary indicator, etc. depending on the source data. This means that all diagnoses on the
+			encounter can be in a single sequence, or have sequences within the type and/or primary designation.
+		</documentation>
+	</element>
+
+	<element name="SubmittedToBillingIndicator" type="SourceCode" codeSource="OMNI" codeSet="0136">
+		<documentation>
+			Identifies the category of diagnosis.  Admitting diagnosis is the presenting problem.
+		</documentation>
+
+	</element>
+
+
+	<element name="TypeCode" type="SourceCode" codeSource="OMNI" codeSet="0052">
+		<documentation>
+		Identifies the category of diagnosis.  Admitting diagnosis is the presenting problem.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0052" sourceCode="A"/>
+	</element>	
+
+	<element name="PrimaryDiagnosisIndicator" type="SourceCode" codeSource="OMNI" codeSet="0136">
+		<documentation>
+		Indicates whether this is the primary diagnosis.  If "Yes", it is the primary diagnosis.  If "No", it is a secondary diagnosis.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0136" sourceCode="Y"/>
+	</element>
+
+	<element name="PresentOnAdmissionCode" type="SourceCode" codeSource="OMNI" codeSet="0895">
+		<documentation>
+		Specifies whether the diagnosis was present at the time of admission regardless of whether it was part of the reason the patient was admitted.  For instance, patient has flu and broken leg.  He is admitted due to broken leg, but still has diagnosis of the flu. 
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0895" sourceCode="Y"/>
+	</element>	
+
+	<element name="ConditionCategoryCode" type="SourceCode" codeSource="OMNI" codeSet="6030">
+		<documentation>
+		Condition category codes range from patient complaint as issue to address, symptom of condition, observation regarding condition or patient is diagnosed with condition.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="6030" sourceCode="complaint"/>
+	</element>	
+	
+	<element name="ConditionStatusCode" type="SourceCode" codeSource="OMNI" codeSet="6035">
+		<documentation>
+		Identifies the clinical status of the condition or diagnosis from provisional, then working while being researched and finally confirmed.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="6035" sourceCode="provisional"/>
+	</element>	
+
+	<element name="ConditionSeverityCode" type="SourceCode" codeSource="OMNI" codeSet="6040">
+		<documentation>
+		A subjective assessment of the severity of the condition as evaluated by the clinician.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="6040" sourceCode="399166001"/>
+	</element>	
+
+ 	<element name="OnsetDate" type="OmniDate">
+		<documentation>
+		Estimated or actual date the condition was first detected in the opinion of the provider.
+		</documentation>
+		
+		<example format="yyyy-MM-dd">2000-10-02</example>
+	</element>
+ 
+ 	<element name="AssertionDate" type="OmniDate">
+		<documentation>
+		Estimated or actual date the condition was first detected by the patient.
+		</documentation>
+		
+		<example format="yyyy-MM-dd">2000-10-01</example>
+	</element>
+
+ 	<element name="AbatementDate" type="OmniDate">
+		<documentation>
+		Estimated or actual date that the diagnosis was resolved or went into remission.
+		</documentation>
+		
+		<example format="yyyy-MM-dd">2001-10-01</example>
+	</element>
+	
+	<list name="BodySites" contains="ClinicalBodySite">
+		<documentation>
+		BodySites is a collection of DiagnosisBodySite records.
+		</documentation>	
+	</list>
+    <!-- 
+ 	<list name="BodySites">
+		<documentation>
+		BodySites is a collection of DiagnosisBodySite records.
+		</documentation>
+		
+		<idsSpecification name="ClinicalBodySite" udlName="ClinicalBodySite" type="instance_child"
+			 		 		elementOrder="BodySiteCode, BodySiteDetails"
+			 		 		implementationClass="com.ibi.omni.patient.model.clinical.event.ClinicalBodySite">
+			 
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+					 	  	
+			<documentation>
+			The anatomical location where this condition manifests itself.  The details indicates a more precise location.  (e.g.  If body site is "Region of thorax", details could be "Lung")
+			</documentation>
+		
+			<element name="BodySiteCode" type="SourceCode" codeSource="OMNI" codeSet="0163">
+				<documentation>
+				Identifies the anatomical location where the condition manifested.
+				</documentation>
+				
+				<example sourceName="OMNI" sourceCodeSet="0163" sourceCode="LA"/>
+			</element>
+		
+			<element name="BodySiteDetails" type="string">
+				<documentation>
+				Provides more detailed anatomical location information than is provided by the body site itself.
+				</documentation>
+				
+				<example>Lung</example>
+			</element>			
+		</idsSpecification>			
+	</list>	 
+	-->		 			
+</idsDocument>

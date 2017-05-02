@@ -1,0 +1,49 @@
+<idsDocument name="EventNote" udlName="EventNote" type="instance" access="shared" domain="Clinical.Event"
+			 		 		elementOrder="NoteTypeCode, NoteCode, Note, NoteDateTime"
+			 		 		implementationClass="com.ibi.omni.patient.model.clinical.event.EventNote">
+			 
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+			 	  	
+	<documentation>
+	Event Note captures general notes on a patient with reference to a specific clinical event. 
+	The scenario may exist where a single note is delivered in a sequential set of text outputs. 
+	These should be concatenated together, inserting line breaks, to form a complete note for submission.
+	</documentation>
+
+	<element name="NoteTypeCode" type="SourceCode">
+		<documentation>
+		Use this field to generally categorize the type of note that is being added to the clinical event.
+		</documentation>
+		
+		<example sourceCodeSet="NoteTypeCodes" sourceCode="noteType">Note Type</example>
+	</element>
+	
+	<element name="NoteCode" type="SourceCode">
+		<documentation>
+		Use this field to generally categorize the type of note that is being added to the clinical event.
+		</documentation>
+		
+		<example sourceCodeSet="NoteTypeCodes" sourceCode="noteType">Note Type</example>
+	</element>
+	
+	<element name="Note" type="string" maxLength="1000">
+		<documentation>
+		Specifies free-form text note regarding the clinical event.
+		</documentation>
+		
+		<example>Change Reason Note</example>
+	</element>
+	
+	<element name="NoteDateTime" type="OmniDate">
+		<documentation>
+		Use this element to specify the date and time of the note entry.
+		</documentation>
+		
+		<example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+	</element>
+</idsDocument>

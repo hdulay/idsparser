@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.0.0" changeVersion="0" domain="Clinical" type="instance"
+			 name="SurgeryCase"  
+	 		 elementOrder="MedicalFacility, MedicalOrganization, Department, ServiceLine, ServiceLineId, ServiceLineName, 
+					Patient, Encounter, CaseId, CaseDescription, CaseStatusCode, CaseLevelCode, ASAClassCode, SurgicalSpecialtyCode, PurposeCode,
+					OperatingRoomShiftCode, PreOpDiagnosis, PreOpDiagnosisText, PostOpDiagnosis, PostOpDiagnosisText,
+					ScheduledAnesthesiaTypeCode, ActualAnesthesiaTypeCode, WoundClassCode, Scheduled, Actual, CancelDateTime,
+					CancelReasonCode, CancelText, DelayReasonCode, DelayText">
+	 		               	
+	<changeLog>
+		<change version="1.0.0">Initial</change>
+	</changeLog>
+
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+			
+	<documentation>
+	When a patient needs surgery, a surgery case can be defined that tracks where the surgeries will be performed, 
+	associated encounter, surgical specialty required, class of patient, condition of patient before and after all 
+	procedures, all participating providers and tracking point-in-time activities during each phase (ORPrep, PreOp, 
+	Operative, PostOp, ORCleanUp).  Additionally, scheduled and actual statistics will be captured for anesthesia, 
+	locations to perform surgery, surgery and cleanup durations, and who will participate in the surgical case. 
+	</documentation>
+
+	<element name="MedicalFacility" type="link" contains="Facility">
+		<documentation>
+		Specifies the physical medical facility where the patient received treatment.
+		</documentation>
+	</element>
+
+	<element name="MedicalOrganization" type="link" contains="Organization">
+		<documentation>
+		Identifies the medical organization. This organization consists of a group of people working together 
+		to improve methods of health care delivery.
+		</documentation>
+	</element>
+
+	<element name="Department" type="link" contains="OrganizationalUnit">
+		<documentation>
+		Specifies the department (Emergency Room, Neonatal Unit, ICU, Radiology, Oncology, etc.) within the organization.
+		</documentation>
+	</element>
+	
+	<element name="ServiceLine" type="link" contains="OrganizationalUnit">
+		<documentation>
+		A service line provides the healthcare industry the ability to determine the profitability of its diverse services.  
+		These are typically limited to a handful of well defined, mutually exclusive categories or groupings of individual 
+		services or interventions.  They are often associated with the DRG (diagnosis related group).  A service line can 
+		be tied to multiple physical locations (Oncology is provided at Facility1 and Facility2, Orthopedics is provided 
+		at Facility2 and Facility3). 
+		</documentation>
+	</element>
+
+	<element name="ServiceLineId" type="string">
+		<documentation>
+		Identifies a number assigned to represent a specific service line.  The ServiceLineId attribute should be used 
+		when the client hasn't implemented the OrganizationalUnit defined as type Service Line in the Organization IDS.
+		</documentation>
+	</element>
+
+	<element name="ServiceLineName" type="string">
+		<documentation>
+		Identifies a name assigned to represent a specific service line.  The ServiceLineName attribute should be used 
+		when the client hasn't implemented the OrganizationalUnit defined as type Service Line in the Organization IDS.
+		</documentation>
+	</element>	
+
+	<element name="Patient" type="link" contains="Patient">
+		<documentation>
+		Patient represents data about the individual who received health care services during the encounter.
+		</documentation>
+	</element>
+
+	<element name="Encounter" type="link" contains="Encounter">
+		<documentation>
+		An Encounter is a specific instance of a patient coming in contact with one or more health care providers 
+		for the purpose of receiving health care services.
+		</documentation>
+	</element>
+
+	<element name="CaseId" type="string">
+		<documentation>
+		Contains the identifier for this surgery case.
+		</documentation>
+	</element>
+
+	<element name="CaseDescription" type="string">
+		<documentation>
+		Contains the description for this surgery case.
+		</documentation>
+	</element>
+
+	<element name="CaseStatusCode" type="code">
+		<documentation>
+		A surgery case may contain more than one surgical procedure.  This attribute identifies the status 
+		assigned to the overall case.
+		</documentation>
+	</element>
+
+	<element name="CaseLevelCode" type="code">
+		<documentation>
+		The grouping of cases into levels can be used to reflect acuity of procedures performed with staff involvement 
+		and resources required. For example, a small hospital with minor surgical procedures can be case levels 1 to 3 while a 
+		large hospital with a full spectrum of surgical procedures can be case levels 1 to 6. 
+		</documentation>
+	</element>
+
+	<element name="ASAClassCode" type="code">
+		<documentation>
+		The American Society of Anesthesiologists' (ASA) physical status classification serves as guide to better 
+		communication among anesthesiologists about clinical conditions of patients prior to surgery.  The higher 
+		the ASA class, the higher the risk.  For emergency surgery, "E" is appended to the ASA class (e.g., 1E represents 
+		emergency surgery on a healthy patient). 
+		</documentation>
+	</element>
+	
+	<element name="SurgicalSpecialtyCode" type="code">
+		<documentation>
+		Use this element to specify the specialization required of the primary provider overseeing this surgery case.
+
+		ASC X12N Health Care Provider Taxonomy, Level 3 - Area of Specialization (see Code Sets TAB)
+		</documentation>
+	</element>
+
+	<element name="PurposeCode" type="code">
+		<documentation>
+		The reason the surgery is being performed. Exploratory surgery is performed to aid or confirm a diagnosis. Therapeutic surgery treats a previously diagnosed condition. Preventative surgery is performed to prevent a future condition from occurring.
+		</documentation>
+	</element>
+
+	<element name="OperatingRoomShiftCode" type="code">
+		<documentation>
+		Identifies the shift when the surgery was performed.  Shifts for a 24-hour period can be split in three 8-hour 
+		shifts such as First, Second and Third Shifts.  Optionally, there can be any number of shifts such as Early Morning, 
+		Mid Morning, Late Morning, Noon, Early Afternoon, Mid Afternoon, Late Afternoon, Early Evening, Mid Evening, 
+		Late Evening and Midnight.
+		</documentation>
+	</element>
+
+	<element name="PreOpDiagnosis" type="link" contains="DiagnosisEvent">
+		<documentation>
+		This Diagnosis Event captures details on the patient's diagnosed condition prior to any surgery.
+		</documentation>
+	</element>
+
+	<element name="PreOpDiagnosisText" type="string">
+		<documentation>
+		Contains additional text on the patient's diagnosed condition prior to any surgery.
+		</documentation>
+	</element>
+
+	<element name="PostOpDiagnosis" type="link" contains="DiagnosisEvent">
+		<documentation>
+		This Diagnosis Event captures details on the patient's diagnosed condition after all surgical procedures have been performed.
+		</documentation>
+	</element>
+
+	<element name="PostOpDiagnosisText" type="string">
+		<documentation>
+		Contains additional text on the patient's diagnosed condition after all surgical procedures have been performed.
+		</documentation>
+	</element>
+
+	<element name="ScheduledAnesthesiaTypeCode" type="code">
+		<documentation>
+		There are different types of anesthesia and the determination of which to use depends on the type of surgery 
+		and medical condition of the patient. This scheduled type of anesthesia is the preferred method.
+		</documentation>
+	</element>
+
+	<element name="ActualAnesthesiaTypeCode" type="code">
+		<documentation>
+		This contains the actual type of anesthesia used during surgery.  If there were multiple surgical procedues, 
+		use the anesthesia administered during the primary surgical procedure. 
+		</documentation>
+	</element>
+
+	<element name="WoundClassCode" type="code">
+		<documentation>
+		Contains the classification of surgical wounds.  If there were multiple surgical procedues, use the value that 
+		best describes the condition of the wound after the patient's last procedure.
+		</documentation>
+	</element>
+
+	<group name="Scheduled" elementOrder="StartDateTime, EndDateTime, Duration, ProcedureStartDateTime, ProcedureEndDateTime,
+	ProcedureDuration, SetupStartDateTime, SetupEndDateTime, SetupDuration, CleanupStartDateTime, CleanupEndDateTime,
+	CleanupDuration, TurnoverDuration, SurgicalArea, OperatingRoom, ScheduledIndicator, PriorityCode, SlotTypeCode, Quantity">
+		<documentation>
+		Scheduled is a group of attributes tracking when, where and durations expected as pertains to this patient's surgery case.
+		</documentation>
+
+		<element name="StartDateTime" type="datetime">
+			<documentation>
+				Contains the date and time when the surgical case was scheduled to start.
+			</documentation>
+		</element>
+	
+		<element name="EndDateTime" type="datetime">
+			<documentation>
+				Contains the date and time when the surgical case was scheduled to end.
+			</documentation>
+		</element>
+
+		<element name="Duration" type="double">
+			<documentation>
+				Contains the scheduled case duration, which is generally the time between the scheduled start and end of the case.
+			</documentation>
+		</element>
+
+		<element name="ProcedureStartDateTime" type="datetime">
+			<documentation>
+				Contains the scheduled date and time of the start of the first surgical procedure in the case.
+			</documentation>
+		</element>
+
+		<element name="ProcedureEndDateTime" type="datetime">
+			<documentation>
+				Contains the scheduled date and time of the end of the last surgical procedure in the case.
+			</documentation>
+		</element>
+
+		<element name="ProcedureDuration" type="double">
+			<documentation>
+				Contains the total scheduled duration of the surgical procedures in the case.
+			</documentation>
+		</element>
+
+		<element name="SetupStartDateTime" type="datetime">
+			<documentation>
+				Contains the scheduled date and time of the start of the preparation of the operating room for the surgical case.
+			</documentation>
+		</element>
+
+		<element name="SetupEndDateTime" type="datetime">
+			<documentation>
+				Contains the scheduled date and time of the end of the preparation of the operating room for the surgical case.
+			</documentation>
+		</element>
+
+		<element name="SetupDuration" type="double">
+			<documentation>
+				Contains the scheduled time, in minutes, to prepare the operating room before the entire surgery.
+			</documentation>
+		</element>
+
+		<element name="CleanupStartDateTime" type="datetime">
+			<documentation>
+				Contains the scheduled date and time of the start of work to clean and sanitize the operating room after surgery.
+			</documentation>
+		</element>
+
+		<element name="CleanupEndDateTime" type="datetime">
+			<documentation>
+				Contains the scheduled date and time of the end of work to clean and sanitize the operating room after surgery.
+			</documentation>
+		</element>
+
+		<element name="CleanupDuration" type="double">
+			<documentation>
+			Contains the scheduled time, in minutes, to clean and sanitize the operating room after the entire surgery.
+			</documentation>
+		</element>
+
+		<element name="TurnoverDuration" type="double">
+			<documentation>
+				Also called Turnaround time, it generally refers to the scheduled time between one patient leaving the
+				operating room and the next patient entering. Usually this is meant to exclude any scheduled gaps
+				between cases. Different hospitals may define this interval differently.
+			</documentation>
+		</element>
+
+		<element name="SurgicalArea" type="link" contains="FacilityLocation">
+			<documentation>
+			Identifies the scheduled location within the facility that represents the Surgical Area.
+			</documentation>
+		</element>
+
+		<element name="OperatingRoom" type="link" contains="FacilityLocation">
+			<documentation>
+			Identifies the scheduled location within the facility that represents the Operating Room where the surgery 
+			is to be performed.
+			</documentation>
+		</element>
+
+		<element name="ScheduledIndicator" type="code">
+			<documentation>
+			Indicates whether surgery for this patient has been scheduled.
+			</documentation>
+		</element>
+
+		<element name="PriorityCode" type="code">
+			<documentation>
+			Contains the urgency with which to schedule this patient's surgery.
+			</documentation>
+		</element>
+
+		<element name="SlotTypeCode" type="code">
+			<documentation>
+			Surgeries can be scheduled to occur in a specific slot of time.
+			</documentation>
+		</element>
+
+		<element name="Quantity" type="double">
+			<documentation>
+			Scheduled quantity associated with this case, if any.
+			</documentation>
+		</element>
+	</group>
+
+	<group name="Actual" elementOrder="StartDateTime, EndDateTime, Duration, ProcedureStartDateTime, ProcedureEndDateTime,
+	ProcedureDuration, SetupStartDateTime, SetupEndDateTime, SetupDuration, CleanupStartDateTime, CleanupEndDateTime,
+	CleanupDuration, TurnoverDuration, SurgicalArea, OperatingRoom, SlotTypeCode, Quantity">
+		<documentation>
+		Actual is a group of attributes tracking what actually did take place and where during this patient's surgery case.
+		</documentation>
+
+		<element name="StartDateTime" type="datetime">
+			<documentation>
+				Contains the date and time when the surgical case actually started.
+			</documentation>
+		</element>
+	
+		<element name="EndDateTime" type="datetime">
+			<documentation>
+				Contains the date and time when the surgical case actually ended.
+			</documentation>
+		</element>
+
+		<element name="Duration" type="double">
+			<documentation>
+				Contains the actual case duration, which is generally the time between the actual start and end of the case.
+			</documentation>
+		</element>
+
+		<element name="ProcedureStartDateTime" type="datetime">
+			<documentation>
+				Contains the actual date and time of the start of the first surgical procedure in the case.
+			</documentation>
+		</element>
+
+		<element name="ProcedureEndDateTime" type="datetime">
+			<documentation>
+				Contains the actual date and time of the end of the last surgical procedure in the case.
+			</documentation>
+		</element>
+
+		<element name="ProcedureDuration" type="double">
+			<documentation>
+				Contains the total actual duration of the surgical procedures in the case.
+			</documentation>
+		</element>
+
+		<element name="SetupStartDateTime" type="datetime">
+			<documentation>
+				Contains the actual date and time of the start of the preparation of the operating room for the surgical case.
+			</documentation>
+		</element>
+
+		<element name="SetupEndDateTime" type="datetime">
+			<documentation>
+				Contains the actual date and time of the end of the preparation of the operating room for the surgical case.
+			</documentation>
+		</element>
+
+		<element name="SetupDuration" type="double">
+			<documentation>
+				Contains the actual time, in minutes, to prepare the operating room before the entire surgery.
+			</documentation>
+		</element>
+
+		<element name="CleanupStartDateTime" type="datetime">
+			<documentation>
+				Contains the actual date and time of the start of work to clean and sanitize the operating room after surgery.
+			</documentation>
+		</element>
+
+		<element name="CleanupEndDateTime" type="datetime">
+			<documentation>
+				Contains the actual date and time of the end of work to clean and sanitize the operating room after surgery.
+			</documentation>
+		</element>
+
+		<element name="CleanupDuration" type="double">
+			<documentation>
+			Contains the actual time, in minutes, to clean and sanitize the operating room after the entire surgery.
+			</documentation>
+		</element>
+
+		<element name="TurnoverDuration" type="double">
+			<documentation>
+				Also called Turnaround time, it generally refers to the actual time between one patient leaving the
+				operating room and the next patient entering. Usually this is meant to exclude any scheduled gaps
+				between cases. Different hospitals may define this interval differently.
+			</documentation>
+		</element>
+
+		<element name="SurgicalArea" type="link" contains="FacilityLocation">
+			<documentation>
+			Identifies the actual location within the facility that represents the Surgical Area.
+			</documentation>
+		</element>
+
+		<element name="OperatingRoom" type="link" contains="FacilityLocation">
+			<documentation>
+			Identifies the actual location within the facility that represents the Operating Room where the surgery was performed.
+			</documentation>
+		</element>
+
+		<element name="SlotTypeCode" type="code">
+			<documentation>
+			Contains the actual slot of time when the surgery was performed.
+			</documentation>
+		</element>		
+
+		<element name="Quantity" type="double">
+			<documentation>
+			Actual quantity associated with this case, if any.
+			</documentation>
+		</element>
+	</group>
+
+	<element name="CancelDateTime" type="datetime">
+		<documentation>
+		Contains the date and time when the surgery case was cancelled.
+		</documentation>
+	</element>
+
+	<element name="CancelReasonCode" type="code">
+		<documentation>
+		Specifies the reason the patient's surgery case was cancelled.
+		</documentation>
+	</element>
+
+	<element name="CancelText" type="string">
+		<documentation>
+		Contains additional text on why the patient's surgery case was cancelled.
+		</documentation>
+	</element>
+
+	<element name="DelayReasonCode" type="SourceCode">
+		<documentation>
+			Specifies the reason the patient's surgery case was delayed.
+		</documentation>
+
+	</element>
+
+	<element name="DelayText" type="string">
+		<documentation>
+			Contains additional text on why the patient's surgery case was delayed.
+		</documentation>
+	</element>
+
+</idsDocument>

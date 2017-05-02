@@ -1,0 +1,855 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.1.7" changeVersion="3" domain="BenefitPlan" type="instance"
+       name="BenefitPlan" 
+       elementOrder="Payer, PlanName, PlanType, ProductType, BucketOptions, InOutNetworkDetermination, PremiumBillingGL,
+                 ClaimsAccountsPayableGL, CapitationAccountsPayableGL, CapitationReceiptAndReconciliationGL, CoverageType,
+                 BillType, DeductibleToMoop, AllEncountersToMoop, CarryoverClass, PremiumPaymentsSavingsPercentage, PhoneNumber,
+               FaxNumber, PlanAddress, AlternateClaimAddress, PlanShortName, RecordStatus, GenerateExplanationOfBenefits,
+               MedicareSecondaryPayerType, OverridePayer, CarrierId, AllowPcpEditing, DefaultCopay, AlternatePlanIdForRevenue,
+               IsPlanGeneric, NameOptions, ClaimMail, CodeOnPaperClaims, CodeOnElectronicClaims, PayerOrgId,
+               MedigapNumber, MedigapPlan, CrossoverApplication, VoidedDemandReprint, PaperClaims, FinancialClass,
+               AlternateClaimPhoneNumber, ExcludeProfessionalBillingFilingOrder, ClaimDefaultPlanId, ClaimResubmissionZeroBalance,
+               SubmittedOnDemandClaimZero, PaidDemandClaim, ClaimGroupingPointerId, ResubmitZeroDollarClaims, SubmitZeroDollarInsuranceClaims,
+               DemandZeroComponentGroupId, PaperClaimsReconciliation, ElectronicClaimsReconciliation, PrintedTaxonomy,
+               InpatientPartBClaims, SupplementalPaymentPayerId, SupplementalPaymentPlanId, MaximumServiceLinesCmsClaim,
+               AdjustmentsGroupSecondaryClaims, BenefitAdjustment, DefaultChargeTableId, ChargeTableMedicationChargeId,
+               AdjudicatesChargeVia, CoveredPercentage, AdjudicatesPayerAndPatient, CopyImeLines, UseInSharedCoverages,
+               AdmissionBilling, CreatingSecondCoverageId, PreventSecondCoveragePlan,
+               LifetimeInformation, AnesthesiaInformation, FinancialClassInformation, ExtraInformation, Subscribers"
+               implementationClass="com.ibi.omni.patient.model.benefit_plan.BenefitPlan">
+
+  <changeLog>
+    <change version="1.0.1">Changed BucketOptions from String to SourceCode</change>
+    <change version="1.1.7_0">Supported Version</change>
+    <change version="1.1.7_1">Added Extended Attribute Support</change>
+    <change version="1.1.7_2">DEPRECATED - Please use HealthPlan</change>
+    <change version="1.2.7_3">Added SourceStatusCode to instance and collection items.</change>
+  </changeLog>
+
+  <include name="CommonElements"
+       prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+       appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>  
+  
+  <customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+  <customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+  <customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+    
+  <documentation>
+  Use this structure to feed Benefit Plan information.
+  </documentation>
+  
+
+  <element name="Payer" type="document" contains="Payer" excludeInDoc="true">
+    <documentation>The unique ID of the payer associated with this benefit plan.</documentation>
+    
+    <example>
+      <![CDATA[
+      <Payer>
+        <SourceName>TestSystem</SourceName>
+        <SourceInstanceId>Payer1234</SourceInstanceId>
+      </Payer>
+      ]]>
+    </example>
+  </element>
+  
+  <element name="PlanName" type="string">
+    <documentation>The name of the benefit plan record.</documentation>
+  </element>
+
+  <element name="PlanType" type="SourceCode">
+    <documentation>Indicates whether this EPP record is a benefit plan or a benefit plan rider.</documentation>
+  </element>
+
+  <element name="ProductType" type="SourceCode">
+    <documentation>The benefit plan's product type (i.e. HMO, PPO, Medicare, etc.)</documentation>
+  </element>
+
+  <element name="BucketOptions" type="SourceCode">
+    <documentation>The override of the manage care system profile setting for benefit bucket options.</documentation>
+    <question>Changed from int to SourceCode</question>
+  </element>
+
+  <element name="InOutNetworkDetermination" type="SourceCode">
+    <documentation>The override of the manage care system profile setting for in or out of network determination.</documentation>
+  </element>
+
+  <element name="PremiumBillingGL" type="SourceCode">
+    <documentation>The G/L segment value for this benefit plan for premium billing G/L transactions.</documentation>
+  </element>
+
+  <element name="ClaimsAccountsPayableGL" type="SourceCode">
+    <documentation>The G/L segment value for this benefit plan for AP claims G/L transactions.</documentation>
+  </element>
+
+  <element name="CapitationAccountsPayableGL" type="SourceCode">
+    <documentation>The G/L segment value for this benefit plan for capitation AP G/L transactions.</documentation>
+  </element>
+
+  <element name="CapitationReceiptAndReconciliationGL" type="SourceCode">
+    <documentation>The G/L segment value for this benefit plan for capitation receipt and reconciliation G/L transactions.</documentation>
+  </element>
+
+  <element name="CoverageType" type="SourceCode">
+    <documentation>Indicates whether coverage records created under this benefit plan are managed care coverages or indemnity coverages.</documentation>
+  </element>
+
+  <element name="BillType" type="SourceCode">
+    <documentation>Deprecated.  Please use EPP-85 instead.</documentation>
+  </element>
+
+  <element name="DeductibleToMoop" type="SourceCode">
+    <documentation>Indicates whether or not the amount of the deductible payment should be counted toward the MOOP (Maximum Out of Pocket) limit.</documentation>
+  </element>
+
+  <element name="AllEncountersToMoop" type="SourceCode">
+    <documentation>Indicates whether contributions to the All Encounters deductible bucket will be applied to all specified MOOP buckets, regardless of the network status of the encounter.</documentation>
+  </element>
+
+  <element name="CarryoverClass" type="SourceCode">
+    <documentation>The system uses this carryover class and another class defined in the source or target plan/package to determine what carryover mapping table to be used in the carryover.</documentation>
+  </element>
+
+  <element name="PremiumPaymentsSavingsPercentage" type="double">
+    <documentation>This is the percentage amount multiplied against premium payments in determining the amount by which benefit buckets should accumulate.</documentation>
+  </element>
+
+  <element name="PhoneNumber" type="string">
+    <documentation>The phone number of the benefit plan.</documentation>
+  </element>
+
+  <element name="FaxNumber" type="string">
+    <documentation>The fax number of the benefit plan.</documentation>
+  </element>
+
+  <group name="PlanAddress" elementOrder="AddressLine1, AddressLine2, AddressLine3, AddressLine4, City, StateProvince, PostalCode, Country, CountyRegion, District">
+      <documentation>Collection used for communicating the Benefit Plan Address.</documentation>
+
+    <element name="AddressLine1" type="string">
+      <documentation>
+      This field specifies the street or mailing address of a person or institution. 
+      When referencing an institution, this first component is used to specify the institution 
+      name. When used in connection with a person, this component specifies the first line of the address.
+      </documentation>
+    </element>
+  
+    <element name="AddressLine2" type="string">
+      <documentation>
+      This field specifies the second line of address. In general, it qualifies address. 
+      Examples: Suite 555 or Fourth Floor. When referencing an institution, this component 
+      specifies the street address.
+      </documentation>
+    </element>
+  
+    <element name="AddressLine3" type="string">
+      <documentation>
+      This field specifies the name of the person or organization that should appear as part of the 
+      address. This is also known as the "Care of" or "C/O" line.
+      </documentation>
+    </element>
+  
+    <element name="AddressLine4" type="string">
+      <documentation>
+      This field specifies more address information.
+      </documentation>
+    </element>
+  
+    <element name="City" type="string">
+      <documentation>
+      This field specifies the city, district or place where the addressee is located 
+      depending upon the national convention for formatting addresses for postal usage.
+      </documentation>
+    </element>
+  
+    <element name="StateProvince" type="SourceCode" codeTable="???">
+      <documentation>
+      This field specifies the state or province where the addressee is located. State or 
+      province should be represented by the official postal service codes for that country. 
+      </documentation>
+    </element>
+
+    <element name="PostalCode" type="string">
+      <documentation>
+      This component specifies the zip or postal code where the addressee is located.  Zip or 
+      postal codes should be represented by the official codes for that country. In the US, the zip 
+      code takes the form 99999[-9999], while the Canadian postal code takes the form A9A9A9 and the 
+      Australian Postcode takes the form 9999. 
+      </documentation>
+    </element>
+
+    <element name="Country" type="SourceCode" codeTable="0399">
+      <documentation>
+      This component specifies the country where the addressee is located. HL7 
+      specifies that the 3-character (alphabetic) form of ISO 3166 be used for the 
+      country code.
+      </documentation>
+    </element>
+
+    <element name="CountyRegion" type="SourceCode" codeTable="???">
+      <documentation>
+      This component specifies the county where the addressee is located when applicable.
+      </documentation>
+    </element>
+
+    <element name="District" type="SourceCode">
+      <documentation>The district of the benefit plan address.</documentation>
+    </element>
+  </group>
+
+  <group name="AlternateClaimAddress" elementOrder="City, StateProvince, PostalCode">
+    <documentation>
+      Collection used for communicating the Alternate Claim Address.
+    </documentation>
+    <element name="City" type="string">
+      <documentation>The city of the alternate claim address.</documentation>
+    </element>
+
+    <element name="StateProvince" type="SourceCode">
+      <documentation>The state of the alternate claim address.</documentation>
+    </element>
+
+    <element name="PostalCode" type="string">
+      <documentation>The state of the alternate claim address.</documentation>
+    </element>
+  </group>
+
+  <element name="PlanShortName" type="string">
+    <documentation>The phone number of the benefit plan.</documentation>
+  </element>
+
+  <element name="RecordStatus" type="SourceCode">
+    <documentation>The record status of the benefit payer/plan record (e.g. active, inactive, etc.).</documentation>
+  </element>
+
+  <element name="GenerateExplanationOfBenefits" type="SourceCode">
+    <documentation>
+    Indicates if  you want to generate an EOB for AP claims of those members using this benefit plan when there is any patient payment on the claim. 
+    Y indicates that you want to generate an EOB. 
+    A null value indicates that you don't want to generate EOB. 
+    An N will not be populated for this column.
+    </documentation>
+  </element>
+
+  <element name="MedicareSecondaryPayerType" type="SourceCode">
+    <documentation>Classifies this plan such that Medicare Secondary payer logic can decide whether it should be before or after Medicare in the filing order for an encounter.</documentation>
+  </element>
+
+
+  <element name="OverridePayer" type="string">
+    <documentation>Override payer for MSPQ</documentation>
+  </element>
+
+  <element name="CarrierId" type="string">
+    <documentation>The unique ID of the carrier</documentation>
+  </element>
+
+  <element name="AllowPcpEditing" type="SourceCode">
+    <documentation>
+    In table CLARITY_EPP, the column ALLOW_PCP_EDITIN_YN (EPP/18200) has been deprecated. 
+    This column has been replaced by column ALLOW_PCP_EDITING_C (EPP/18200) in the table CLARITY_EPP_2. 
+    To look up the deprecated column's value(the category title) after the Clarity Compass upgrade, 
+    join column CLARITY_EPP_2.ALLOW_PCP_EDITING_C to table ZC_ALLOW_PCP_EDIT column TITLE to get the TITLE value.
+    </documentation>
+  </element>
+
+  <element name="DefaultCopay" type="double">
+    <documentation>Indicates the default copay.</documentation>
+  </element>
+
+  <element name="AlternatePlanIdForRevenue" type="SourceCode">
+    <documentation>Alternate Plan Identifier for Revenue Code</documentation>
+  </element>
+
+  <element name="IsPlanGeneric" type="SourceCode">
+    <documentation>Indicates whether this benefit plan is generic.</documentation>
+  </element>
+
+  <element name="NameOptions" type="SourceCode">
+    <documentation>
+    If the "Claim Mail Code" (BenefitClaimMail) is set to 3-Send Claim to payer Plan, this field indicates whether the plan should be used on claims. 
+    If this field is set to 2-No, the payer name will be used on claims.
+    </documentation>
+  </element>
+
+  <element name="ClaimMail" type="SourceCode">
+    <documentation>Default mail code for coverages with this benefit plan.</documentation>
+  </element>
+
+  <element name="CodeOnPaperClaims" type="string">
+    <documentation>Text for plan code to be printed on paper claims.</documentation>
+  </element>
+
+  <element name="CodeOnElectronicClaims" type="string">
+    <documentation>Text for plan code to be printed on electronic claims.</documentation>
+  </element>
+
+  <element name="PayerOrgId" type="string">
+    <documentation>
+    Plan's payer organization ID.  
+    Used to populate L2010BB/NM1-09 (Professional), L2010BC/NM1-09 (Institutional), or L2330B/NM1-09 (ANSI 837) fields.
+    </documentation>
+  </element>
+
+  <element name="MedigapNumber" type="string">
+    <documentation>
+    Plan's Medigap Number.  
+    Used to populate L2010BB/NM1-09 and L2330B/NM1-09 fields on ANSI 837 format.
+    </documentation>
+  </element>
+
+  <element name="MedigapPlan" type="SourceCode">
+    <documentation>Indicates if plan is a Medigap plan.</documentation>
+  </element>
+
+  <element name="CrossoverApplication" type="SourceCode">
+    <documentation>Indicates the billing application for which the Medigap setting should represent a crossover relationship.</documentation>
+  </element>
+
+  <element name="VoidedDemandReprint" type="SourceCode">
+    <documentation>Indicates whether voided transactions will appear on demand reprint claims.</documentation>
+  </element>
+
+  <element name="PaperClaims" type="SourceCode">
+    <documentation>Indicates whether only paper claims should be created for this plan.</documentation>
+  </element>
+
+  <element name="FinancialClass" type="SourceCode">
+    <documentation>The appropriate financial class for this plan.</documentation>
+  </element>
+
+  <element name="AlternateClaimPhoneNumber" type="string">
+    <documentation>Stores alternate claim phone number</documentation>
+  </element>
+
+  <element name="ExcludeProfessionalBillingFilingOrder" type="SourceCode">
+    <documentation>Indicates whether this plan should be excluded in PB filing order.</documentation>
+  </element>
+
+  <element name="ClaimDefaultPlanId" type="string">
+    <documentation>Default claim definition record to use for claims to this plan.</documentation>
+  </element>
+
+  <element name="ClaimResubmissionZeroBalance" type="SourceCode">
+    <documentation>Indicates whether this plan accepts claim resubmission with zero insurance balance.</documentation>
+  </element>
+
+  <element name="SubmittedOnDemandClaimZero" type="SourceCode">
+    <documentation>
+    Indicates whether charges associated with this benefit plan should be submitted on a demand claim 
+    when the insurance balance is zero due to payments or credit adjustments.
+    </documentation>
+  </element>
+
+  <element name="PaidDemandClaim" type="SourceCode">
+    <documentation>
+    Indicates whether charges associated with this benefit plan should be submitted on a demand claim 
+    when the insurance balance is zero due to payments or credit adjustments.
+    </documentation>
+  </element>
+
+  <element name="ClaimGroupingPointerId" type="string">
+    <documentation>Claim grouping pointer for this benefit plan.</documentation>
+  </element>
+
+  <element name="ResubmitZeroDollarClaims" type="string">
+    <documentation>Component Group ID to allow resubmission of claims with zero dollar balance.</documentation>
+  </element>
+
+  <element name="SubmitZeroDollarInsuranceClaims" type="string">
+    <documentation>The Component group ID for submit zero dollar insurance claims.</documentation>
+  </element>
+
+  <element name="DemandZeroComponentGroupId" type="string">
+    <documentation>Component Group ID for submit zero dollar insurance demand claims.</documentation>
+  </element>
+
+  <element name="PaperClaimsReconciliation" type="SourceCode">
+    <documentation>Indicates whether paper claim activity for this benefit plan is recorded in the Claims Reconciliation Database (CRD).</documentation>
+  </element>
+
+  <element name="ElectronicClaimsReconciliation" type="SourceCode">
+    <documentation>Indicates whether electronic claim activity for this benefit plan is recorded in the Claims Reconciliation Database (CRD).</documentation>
+  </element>
+
+  <element name="PrintedTaxonomy" type="SourceCode">
+    <documentation>Indicates whether the taxonomy code is printed on ANSI institutional claims at the L2000A level and FL 81 on UB04 paper claims.</documentation>
+  </element>
+
+  <element name="InpatientPartBClaims" type="SourceCode">
+    <documentation>Indicates whether inpatient claims should be Part B claims for this plan. </documentation>
+  </element>
+
+  <element name="SupplementalPaymentPayerId" type="string">
+    <documentation>Payer ID for Medicare for supplemental payment (IME) claims</documentation>
+  </element>
+
+  <element name="SupplementalPaymentPlanId" type="string">
+    <documentation>Plan ID for Medicare for supplemental payment (IME) claims</documentation>
+  </element>
+
+  <element name="MaximumServiceLinesCmsClaim" type="double">
+    <documentation>Stores the maximum number of service lines on a claim for this benefit plan on a CMS claim.</documentation>
+    <question>Should data type be decimal or integer? Would think this is whole number.</question>
+  </element>
+
+  <element name="AdjustmentsGroupSecondaryClaims" type="string">
+    <documentation>Grouper for transactions that are capitation adjustments that should be treated as payments in electronic secondary claims logic.</documentation>
+  </element>
+
+  <element name="BenefitAdjustment" type="SourceCode">
+    <documentation>Remittance code to be associated with capitation adjustments that should be treated as payments in electronic secondary claims logic.</documentation>
+  </element>
+
+  <element name="DefaultChargeTableId" type="string">
+    <documentation>Plan level default charge table ID to use during prescription medication charge calculations.</documentation>
+  </element>
+
+  <element name="ChargeTableMedicationChargeId" type="string">
+    <documentation>Plan level charge table selection extension to use during prescription medication charge calculations</documentation>
+  </element>
+
+  <element name="AdjudicatesChargeVia" type="SourceCode">
+    <documentation>This item specifies how this plan adjudicates prescriptions.</documentation>
+  </element>
+
+  <element name="CoveredPercentage" type="double">
+    <documentation>
+    Indicates the percentage of the price that the payer is responsible for if Specified Percentage is selected in the Adjudicate Charge Via item.  
+    The remaining balance will be charged to the patient.
+    </documentation>
+  </element>
+
+  <element name="AdjudicatesPayerAndPatient" type="double">
+    <documentation>The extension that determines how much the payer will pay and how much the patient will pay for the order.</documentation>
+  </element>
+
+  <element name="CopyImeLines" type="SourceCode">
+    <documentation>Indicates whether claim lines from the source claim are copied into the IME claim.</documentation>
+  </element>
+
+  <element name="UseInSharedCoverages" type="SourceCode">
+    <documentation>
+    Indicates whether this plan will be used for shared coverages. 
+    When this item is set to yes, billing types (I EPP 85) must be set to 3 (can only have one line and must be 
+    </documentation>
+  </element>
+
+  <element name="AdmissionBilling" type="SourceCode">
+    <documentation>Indicates whether admission daily billing is turned on for this plan.</documentation>
+  </element>
+
+  <element name="CreatingSecondCoverageId" type="string">
+    <documentation>
+    This item specifies a second interface items table, to be used when creating a coverage from an incoming message (rather than updating an existing coverage).
+    </documentation>
+  </element>
+
+  <element name="PreventSecondCoveragePlan" type="SourceCode">
+    <documentation>
+    Level at which the plan will warn or stop the user from creating a coverage with the same payer/plan combination as another coverage on the applicable guarantor or hospital account. 
+    If nothing is set, the plan's payer's setting will be used. 
+    If nothing is set there, then the guarantor's Service Area's setting will be used. 
+    The default is 0-No Prevention.
+    </documentation>
+  </element>
+  
+  <!-- One-to-One relationships -->
+  <element name="LifetimeInformation" type="document">
+    <documentation>
+    Benefit Plan Lifetime information.
+    </documentation>
+
+    <idsSpecification name="BenefitPlanLifetime" udlName="BenefitPlanLifetime" type="instance_child"
+             elementOrder="MaximumLimitInPlan, MaximumLimitOutOfPlan, MaximumLimitForTotalAccumulation,
+                  MaximumDollarAmountInPlan, MaximumDollarAmountOutOfPlan, MaximumDollarAmountTotalAccumulation,
+                  MaximumPercentageOfTotalInPlan, MaximumPercentageOfTotalForOutOfPlan, MaximumPercentageOfTotalForAccumulation "
+                  implementationClass="com.ibi.omni.patient.model.benefit_plan.BenefitPlanLifetime">
+    
+      <customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+      <customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+    
+      <include name="CommonElements"
+           prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+           appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>  
+              
+      <documentation>
+      Use this structure to feed Benefit Plan Lifetime information.
+      </documentation>
+      
+    
+      <element name="MaximumLimitInPlan" type="double">
+        <documentation>The lifetime maximum buckets limit for in-plan buckets.</documentation>
+      </element>
+    
+      <element name="MaximumLimitOutOfPlan" type="double">
+        <documentation>The lifetime maximum buckets limit for out-of-plan buckets.</documentation>
+      </element>
+    
+      <element name="MaximumLimitForTotalAccumulation" type="double">
+        <documentation>The lifetime maximum buckets limit for total accumulation.</documentation>
+      </element>
+    
+      <element name="MaximumDollarAmountInPlan" type="double">
+        <documentation>The lifetime maximum buckets dollar amount threshold for in-plan buckets.</documentation>
+      </element>
+    
+      <element name="MaximumDollarAmountOutOfPlan" type="double">
+        <documentation>The lifetime maximum buckets dollar amount threshold for out-of-plan buckets.</documentation>
+      </element>
+    
+      <element name="MaximumDollarAmountTotalAccumulation" type="double">
+        <documentation>The lifetime maximum buckets dollar amount threshold for total accumulation of buckets.</documentation>
+      </element>
+    
+      <element name="MaximumPercentageOfTotalInPlan" type="double">
+        <documentation>The lifetime maximum buckets percentage of total threshold for in-plan buckets.</documentation>
+      </element>
+    
+      <element name="MaximumPercentageOfTotalForOutOfPlan" type="double">
+        <documentation>The lifetime maximum buckets percentage of total threshold for out-of-plan buckets.</documentation>
+      </element>
+    
+      <element name="MaximumPercentageOfTotalForAccumulation" type="double">
+        <documentation>The lifetime maximum buckets percentage of total threshold for total accumulation of buckets.</documentation>
+      </element>  
+    </idsSpecification>
+  </element>
+  
+  <element name="AnesthesiaInformation" type="document">
+    <documentation>
+    Benefit Plan Provider Anesthesia information.
+    </documentation>
+    
+    <idsSpecification name="BenefitPlanProviderAnesthesia" udlName="BenefitPlanProviderAnesthesia" type="instance_child"
+             elementOrder="ApcGrouperDisplayPpId, SaveApcGrouperPlusResponses, ShowAsaCode, 
+                  AnesthesiaUnitsTimedProcedures, AnesthesiaPhysicalStatusModifiers"
+                  implementationClass="com.ibi.omni.patient.model.benefit_plan.BenefitPlanProviderAnesthesia">
+    
+      <customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+      <customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+    
+      <include name="CommonElements"
+           prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+           appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>  
+        
+      <documentation>
+      Use this structure to feed Benefit Plan Provider Anesthesia information.
+      </documentation>
+      
+      <element name="ApcGrouperDisplayPpId" type="string">
+        <documentation>This item holds the extension that displays an alternate view of the APC Grouper messages for a claim. </documentation>
+      </element>
+    
+      <element name="SaveApcGrouperPlusResponses" type="SourceCode">
+        <documentation>Indicates whether users can save the full details of the APC Grouper Plus responses in the CLP when data is loaded.</documentation>
+      </element>
+    
+      <element name="AnesthesiaPricingId" type="string">
+        <documentation>Anesthesia Pricing ID for this plan.</documentation>
+      </element>
+      
+      <element name="ShowAsaCode" type="SourceCode">
+        <documentation>Indicates whether to show ASA code on anesthesia claims.</documentation>
+      </element>
+    
+      <element name="AnesthesiaUnitsTimedProcedures" type="SourceCode">
+        <documentation>Indicates whether anesthesia timed procedures should be printed on claims in terms of units for this benefit plan.</documentation>
+      </element>
+    
+      <element name="AnesthesiaPhysicalStatusModifiers" type="SourceCode">
+        <documentation>Indicates whether to show physical status modifiers ("P" modifiers) on professional anesthesia claims.</documentation>
+      </element>
+    </idsSpecification>
+  </element>
+  
+  <element name="FinancialClassInformation" type="document">
+    <documentation>
+    Benefit Plan Financial Class information.
+    </documentation>
+
+    <idsSpecification name="BenefitPlanFinancialClass" udlName="BenefitPlanFinancialClass" type="instance_child"
+             elementOrder="ClassCode, ClassName, ClassTitle, ClassAbbreviated"
+             implementationClass="com.ibi.omni.patient.model.benefit_plan.BenefitPlanFinancialClass">
+                  
+      <customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+      <customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+    
+      <include name="CommonElements"
+           prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+           appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>  
+        
+      <documentation>
+      Use this structure to feed Benefit Plan Financial Class information.
+      </documentation>
+      
+      <element name="ClassCode" type="string">
+        <documentation>The ID of the category corresponding to the financial class.</documentation>
+      </element>
+    
+      <element name="ClassName" type="string">
+        <documentation>The name of the financial class: Medicare, Commercial, Self-Pay, etc.</documentation>
+      </element>
+    
+      <element name="ClassTitle" type="string">
+        <documentation>The title of the financial class: Medicare, Commercial, Self-Pay, etc.</documentation>
+      </element>
+    
+      <element name="ClassAbbreviated" type="string">
+        <documentation>An abbreviated version of the financial class's name.</documentation>
+      </element>
+    </idsSpecification>
+  </element>
+  
+  <element name="ExtraInformation" type="document">
+    <documentation>
+    Benefit Plan Extra information.
+    </documentation>
+    
+    <idsSpecification name="BenefitPlanExtraInformation" udlName="BenefitPlanExtraInformation" type="instance_child"
+             elementOrder="UserAcceleratedSelfPay, DefaultDiagnosticRelatedGroupTypeId, BillingDrgTypeReferenceDateNumber, MixtureDispensingFee, 
+                  BankInformationNumber, NonPrimaryBankInformationNumber, ProcessorControlNumber, NonPrimaryProcessorControlNumber, PayerSheetPpId,
+                  SupportsPartialPrescriptionFillsCode, AlternateIdentifierForProcedureCode, ProductTypeCategory, InclusionOfBadDebt, CapitationReconciliationRateTolerance,
+                  ManagedCareCoverageClass, TierBenefitPlan, AuthorizationContactPhoneNumber, ClaimMaxFileDays, PmtTypology, CheckingCrossoverRemit, CaseInsuranceWriteOff,
+                  CaseDebitAdjustment, AllowPrimaryCareProvidersAdding, CompareMembershipIdSubscriber5010, AllowPrimaryCareProvidersEditing, SurchargeGroup, PlanAppealWindow, 
+                  AllowPrescriptionMedicationDefaults, SecondaryPlanClaimWindow, UniformDataType, OvertimeInformation"
+                  implementationClass="com.ibi.omni.patient.model.benefit_plan.BenefitPlanExtraInformation">
+    
+      <customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+      <customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+    
+      <include name="CommonElements"
+           prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+           appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>  
+        
+      <documentation>
+      Use this structure to feed Benefit Plan Extra Information.
+      </documentation>
+      
+      <element name="UserAcceleratedSelfPay" type="SourceCode">
+        <documentation>Indicates whether accelerated self-pay is enabled for this plan.</documentation>
+      </element>
+    
+      <element name="DefaultDiagnosticRelatedGroupTypeId" type="string">
+        <documentation>The default DRG Type (MPI ID) used for billing by the benefit plan.</documentation>
+      </element>
+    
+      <element name="BillingDrgTypeReferenceDateNumber" type="integer">
+        <documentation>The category number representing the reference date used to determine the Billing DRG Type for the benefit plan.</documentation>
+      </element>
+    
+      <element name="MixtureDispensingFee" type="double">
+        <documentation>The default mixture dispensing fee when calculating the plan price for prescription.</documentation>
+      </element>
+    
+      <element name="BankInformationNumber" type="string">
+        <documentation>The Bank Information Number (BIN) used during prescription adjudication.  If blank at the plan level, the payer level BIN is used.</documentation>
+      </element>
+    
+      <element name="NonPrimaryBankInformationNumber" type="string">
+        <documentation>
+        The Bank Information Number (BIN) used during prescription adjudication for non-primary coverages. 
+        Leave this field blank if the same BIN is used regardless of whether the coverage is primary or secondary.  
+        If no non-primary BIN is specified, the BIN will be used for non-primary coverages. If blank at the plan level, the payer level BINs are used.
+        </documentation>
+      </element>
+    
+      <element name="ProcessorControlNumber" type="string">
+        <documentation>The Processor Control Number (PCN) used during prescription adjudication.  If blank at the plan level the payer level PCN is used.</documentation>
+      </element>
+    
+      <element name="NonPrimaryProcessorControlNumber" type="string">
+        <documentation>
+        The Processor Control Number (PCN) used during prescription adjudication for non-primary coverages. 
+        Leave this field blank if the same PCN is used regardless of whether the coverage is primary or secondary.  
+        If no non-primary PCN is specified, the PCN will be used for non-primary coverages. If blank at the plan level, the payer level PCNs are used.
+        </documentation>
+      </element>
+    
+      <element name="PayerSheetPpId" type="double">
+        <documentation>
+        Extension to select what payer sheet to use during prescription adjudication. 
+        If the extension does not return a value, the transaction table will be used to find the payer sheet.  
+        The plan level payer sheet extension is always checked first, then the plan level table, then the payer level payer sheet extension, and then the payer level table.
+        </documentation>
+      </element>
+     
+      <element name="SupportsPartialPrescriptionFillsCode" type="SourceCode">
+        <documentation>
+        Indicates whether the plan supports partial prescription fills.   
+        If blank at the plan level, the payer level setting is used.
+        </documentation>
+      </element>
+    
+      <element name="AlternateIdentifierForProcedureCode" type="string">
+        <documentation>Alternate identifier for Procedure code in the Procedure master file</documentation>
+      </element>
+    
+      <element name="ProductTypeCategory" type="SourceCode">
+        <documentation>The product type category number for the benefit plan.</documentation>
+      </element>
+    
+      <element name="InclusionOfBadDebt" type="SourceCode">
+        <documentation>Flag to allow the inclusion of bad debt charges on claims.  Will only affect PB claims processing.</documentation>
+      </element>
+    
+      <element name="CapitationReconciliationRateTolerance" type="double">
+        <documentation>Rate tolerance to be used when an incoming capitation reconciliation is done against a coverage with this plan.</documentation>
+      </element>
+    
+      <element name="ManagedCareCoverageClass" type="string">
+        <documentation>Managed care coverage class of the plan.</documentation>
+      </element>
+    
+      <element name="TierBenefitPlan" type="SourceCode">
+        <documentation>Plan-level flag as tiered benefits plan.</documentation>
+      </element>
+    
+      <element name="AuthorizationContactPhoneNumber" type="string">
+        <documentation>The phone number for the authorization contact at this plan.</documentation>
+      </element>
+    
+      <element name="ClaimMaxFileDays" type="integer">
+        <documentation>Plan specific limit on the number of days from the date of service by which claims must be filed.</documentation>
+      </element>
+    
+      <element name="PmtTypology" type="SourceCode">
+        <documentation>This item is being created to store typology codes.</documentation>
+      </element>
+    
+      <element name="CheckingCrossoverRemit" type="SourceCode">
+        <documentation>Flag to allow checking the plan level crossover exceptions, even if the information in the remit file is respected and it says a crossover claim has been sent.</documentation>
+      </element>
+    
+      <element name="CaseInsuranceWriteOff" type="SourceCode">
+        <documentation>The insurance write-off procedure used to write off case charges to zero balance in case rate insurance payment posting.</documentation>
+      </element>
+    
+      <element name="CaseDebitAdjustment" type="SourceCode">
+        <documentation>The insurance debit adjustment procedure used to offset the overpaid portion of an insurance payment.</documentation>
+      </element>
+    
+      <element name="AllowPrimaryCareProvidersAdding" type="SourceCode">
+        <documentation>A category value that indicates if users are able to edit Primary Care Providers within the Care Teams activity from outside of Tapestry.</documentation>
+      </element>
+    
+      <element name="CompareMembershipIdSubscriber5010" type="SourceCode">
+        <documentation>
+        ANSI 5010 claims now have new requirements for the way loop L2000BHL should be populated when the patient is a dependent.  
+        If the patient has an identical subscriber ID and member ID, the system sends both the subscriber and the member loops. 
+        If the patient has a subscriber ID and a member ID, but those IDs are not the same, the system sends the subscriber loop only. 
+        If the patient has a subscriber ID only or a member ID only, the system sends the same ID in the subscriber ID and member ID loops.  
+        To override this logic at the benefit plan level, item Compare Subscriber ID to Member ID for ANSI 837 V5010 L2000B? should be set to 1. 
+        This column holds the value of COMPARE SUB ID TO MEM ID FOR ANSI 837 5010 L2000B?
+        </documentation>
+      </element>
+    
+      <element name="AllowPrimaryCareProvidersEditing" type="SourceCode">
+        <documentation>A category value that indicates if users are able to edit Primary Care Providers within the Care Teams activity from outside of Tapestry.</documentation>
+      </element>
+    
+      <element name="SurchargeGroup" type="SourceCode">
+        <documentation>This item stores the grouper that this plan falls into for the NY State Surcharge report.</documentation>
+      </element>
+    
+      <element name="PlanAppealWindow" type="integer">
+        <documentation>The number of days a plan allows for appeal of denials or underpayments.</documentation>
+      </element>
+    
+      <element name="AllowPrescriptionMedicationDefaults" type="SourceCode">
+        <documentation>
+        Select yes if this plan allows prescription defaults. No is the default if left blank.  
+        Prescription or medication order, the organizing of a supply of a medication and the administration of the medication to a patient. 
+        It differs from the Medication domain, which defines the overall description of a medicine.
+        </documentation>
+      </element>
+     
+      <element name="SecondaryPlanClaimWindow" type="integer">
+        <documentation>The number of days a plan allows for initial filing of secondary claim</documentation>
+      </element>
+    
+      <element name="UniformDataType" type="SourceCode">
+        <documentation>Marks the benefit plan with one of the Uniform Data System benefit plan category values.</documentation>
+      </element>
+    
+      <list name="OvertimeInformation">
+         <documentation>
+         Use this collection to specify Benefit Plan Overtime Information.
+         </documentation>
+         
+        <idsSpecification name="BenefitPlanOvertimeInformation" udlName="BenefitPlanOvertimeInformation" type="instance_child"
+                 elementOrder="ContactUpdateDate, ContactUpdateType, ContactUpdateComment, BenefitPlanPackageName, 
+                      IsBenefitPackageReal, TieredBenefitsContact, BenefitPackageId, DiagnosisCodeSet, IcdPreferredProcedureCodeSet"
+                      implementationClass="com.ibi.omni.patient.model.benefit_plan.BenefitPlanOvertimeInformation">
+        
+          <customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+          <customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+        
+          <include name="CommonElements"
+               prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+               appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>  
+            
+          <documentation>
+          Use this structure to feed Benefit Plan Overtime information.
+          </documentation>
+          
+          <element name="ContactUpdateDate" type="OmniDate">
+            <documentation>The contact date of the benefit plan in standard date format.</documentation>
+          </element>
+        
+          <element name="ContactUpdateType" type="SourceCode">
+            <documentation>Indicates the type of the contact for this benefit plan - initial entry or update.</documentation>
+          </element>
+        
+          <element name="ContactUpdateComment" type="string">
+            <documentation>The comment for this contact.</documentation>
+          </element>
+        
+          <element name="BenefitPlanPackageName" type="string">
+            <documentation>
+            The name of the benefit package for this benefit plan. 
+            The name of the benefit package is in the column BEN_PACKAGE_NAME.
+            </documentation>
+          </element>
+        
+          <element name="IsBenefitPackageReal" type="SourceCode">
+            <documentation>Indicates if the Benefit Package and its corresponding Limit and Payment Parameters are ready to be used.</documentation>
+          </element>
+        
+          <element name="TieredBenefitsContact" type="SourceCode">
+            <documentation>Contact-level flag for a tiered benefits plan.</documentation>
+          </element>
+        
+          <element name="BenefitPackageId" type="string">
+            <documentation>
+            The ID of the benefit package for this benefit plan. 
+            The ID of the benefit package is in the column BEN_PACKAGE_ID.
+            </documentation>
+          </element>
+        
+          <element name="DiagnosisCodeSet" type="SourceCode">
+            <documentation>The preferred diagnosis code category number set for the plan.</documentation>
+          </element>
+        
+          <element name="IcdPreferredProcedureCodeSet" type="SourceCode">
+            <documentation>The preferred ICD procedure code category number set for the plan.</documentation>
+          </element>
+        </idsSpecification>
+      </list>    
+    </idsSpecification>
+  </element>
+
+  <!-- One-to-Many relationships -->
+  <list name="Subscribers" contains="SubscriberForCoverage">
+     <documentation>
+     Use this collection to specify Subscriber For Coverage information.
+     </documentation>
+     
+    <example>
+      <![CDATA[
+      <SubscriberForCoverage>
+        <SourceName>TestSystem</SourceName>
+        <SourceInstanceId>SubscriberForCoverage</SourceInstanceId>
+      </SubscriberForCoverage>
+      ]]>
+    </example>     
+  </list>    
+</idsDocument>

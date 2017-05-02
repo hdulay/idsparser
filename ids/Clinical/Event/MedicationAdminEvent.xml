@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="2.0.0" changeVersion="0"
+       name="MedicationAdminEvent"
+       domain="Clinical.Event"
+       type="instance"
+       elementOrder="EventDateTime, Location, AdministrationID, SubstanceCode, RxNormCode, SNOMEDCTCode, NDCCode,
+                     OtherDispensedCodes, GivenIndicator, GivenReasonCode, NotGivenReasonCode,
+                     Device, EndDateTime, ScheduledDateTime, ScheduledEndDateTime, OnTimeCode, RouteOfAdministrationCode, BodySiteCode, MethodCode, 
+                     DosageInstructions, Quantity, QuantityUnitOfMeasureCode,
+                     DoseRange, DoseQuantity, DosageFormCode, DoseRate, DoseRateUnitOfMeasureCode, DoseRateText, AmountPerTimeCode,
+                     Strength, StrengthUnitOfMeasureCode, StrengthVolume, StrengthVolumeUnitOfMeasureCode, BarcodeIdentifier, LotNumber, ExpirationDate, ManufacturerCode,
+                     ManufacturerName, SubstanceRefusalReasonCode, CompletionStatusCode"
+       backingClass="com.ibi.omni.patient.model.clinical.event.ClinicalEvent">
+
+  <changeLog>
+    <change version="1.0.0">Initial Version</change>
+    <change version="2.0.0">added ScheduledDateTime, ScheduledEndDateTime, OnTimeCode</change>
+  </changeLog>
+
+  <customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+  <customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+  <customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+  <customType name="codeList" class="com.ibi.dib.core.ids.types.IdsMultipleCodeType"/>
+
+  <documentation>
+    This captures information related to the administration of medications by a provider to a patient. 
+    This IDS applies to adminstration events in any clinical setting. Depending on the availability of data, 
+    the administration event can be associated to the original order as a parent event, where available. 
+    More than one administration event can be tied to a single order or dispensing event.
+    Much of this structure was driven by FHIR models defined at http://hl7.org/fhir/medicationadministration.html 
+    as well as the HL7-v2 Pharmacy/Treatment Administration (RXA) Segment.
+  </documentation>
+
+  <include name="EventElements"
+           prependToElementOrder="ParentEvent, Encounter, CarePlanId, CarePlan, CCDCategoryCode"
+           appendToElementOrder="EventProviders, EventNotes, ClinicalBaseFields" />
+
+  <include name="CommonElements"
+           prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+           appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy" /> 
+
+
+  <element name="EventDateTime" type="OmniDate">
+	<documentation>Date and time that the administration of the medication to the patient was begun, 
+      or in the case of a not-given, when it was not done.
+    </documentation>
+  </element>
+
+  <element name="Location" type="OmniLink" contains="FacilityLocation"  keys="SourceName, SourceInstanceId" allowCreate="true">
+	<documentation>Facility location where the administration took place.</documentation>
+  </element>
+
+  <element name="AdministrationID" type="string">
+    <documentation>
+      Generally this element is a counter that starts with 1 for the first administration event associated with an order,
+      and increments by one for each additional administration event for the order. This counter could be appended to order,
+      give or other identifiers.
+    </documentation>
+  </element>
+
+  <element name="SubstanceCode" type="SourceCode" codeSource="OMNI">
+    <documentation>
+      Identifies the medical substance/treatment that was administered.
+    </documentation>
+  </element>
+
+  <element name="RxNormCode" type="SourceCode" codeSource="RXNORM" codeSet="2.16.840.1.113883.6.88">
+    <documentation>
+      Drug substance expressed as an RxNorm code.
+    </documentation>
+  </element>
+
+  <element name="SNOMEDCTCode" type="SourceCode" codeSource="SNOMEDCT" codeSet="2.16.840.1.113883.6.96">
+    <documentation>
+      Drug substance expressed as a SNOMED code.
+    </documentation>
+  </element>
+
+  <element name="NDCCode" type="SourceCode" codeSource="OMNI">
+    <documentation>
+      Drug substance expressed as an NDC code.
+    </documentation>
+  </element>
+
+  <element name="OtherDispensedCodes" type="codeList" contains="OtherDispensedCode">
+    <documentation>
+      Drug substance expressed in a custom or proprietary code set.
+    </documentation>
+
+    <example>
+      <OtherDispensedCode sourceName="HL7-V3" sourceCodeSet="2.16.840.1.113883.6.103-ALT" sourceCode="NONE" />
+      <OtherDispensedCode sourceName="HL7-V3" sourceCodeSet="2.16.840.1.113883.6.103-ALT" sourceCode="ONE" />
+    </example>
+  </element>
+
+  <element name="GivenIndicator" type="SourceCode" codeSource="OMNI" codeset="0136">
+    <documentation>
+      Indicates whether the medication was actually given/administered to the patient.
+    </documentation>
+  </element>
+
+  <element name="GivenReasonCode" type="SourceCode" codeSource="OMNI" codeSet="2.16.840.1.113883.4.642.2.188">
+    <documentation>
+      A code indicating why the medication was given.
+    </documentation>
+  </element>
+
+  <element name="NotGivenReasonCode" type="SourceCode" codeSource="OMNI" codeSet="2.16.840.1.113883.4.642.2.187">
+    <documentation>
+      A code indicating why the administration was not performed.
+    </documentation>
+  </element>
+
+  <element name="Device" type="OmniLink" contains="FacilityLocation" keys="SourceName, SourceInstanceId" allowCreate="true">
+    <documentation>
+      The reference to the device used in administering the medication to the patient. For example, a particular infusion pump.
+    </documentation>
+  </element>
+
+  <element name="EndDateTime" type="OmniDate">
+    <documentation>
+      Date and time that the administration of the medication to the patient was scheduled to begin.
+    </documentation>
+  </element>
+
+  <element name="ScheduledDateTime" type="OmniDate">
+    <documentation>
+      Date and time that the administration of the medication to the patient was ended. This only needs to be populated
+      if the administration of the medication was done over a period of time, for example via an IV drip.
+    </documentation>
+  </element>
+
+  <element name="ScheduledEndDateTime" type="OmniDate">
+    <documentation>
+      Date and time that the administration of the medication to the patient was scheduled to end. 
+      This only needs to be populated if the administration of the medication was done over a period of time, 
+      for example via an IV drip.
+    </documentation>
+  </element>
+
+  <element name="OnTimeCode" type="SourceCode" codeSource="OMNI" codeSet="0136">
+    <documentation>
+      Indicator as to whether the administration was considered "on time", evaluating scheduled vs actual administration date time.
+    </documentation>
+  </element>
+
+  <element name="RouteOfAdministrationCode" type="SourceCode" codeSource="OMNI">
+    <documentation>
+      This can conform to HL7 v2 codeset 0162 or to HL7 v3/FHIR specification of SNOMED routes of administration codes.
+    </documentation>
+  </element>
+
+  <element name="BodySiteCode" type="SourceCode" codeSource="OMNI">
+    <documentation>
+      This can conform to HL7 v2 codeset 0163 or to HL7 v3/FHIR specification of SNOMED body site codes.
+    </documentation>
+  </element>
+
+  <element name="MethodCode" type="SourceCode" codeSource="OMNI" codeset="0165">
+    <documentation>
+      A coded value indicating the method by which the medication is intended to be or was introduced into or on the body.
+      This can conform to HL7 v2 codeset 0165 or to a future HL7 v3/FHIR specification.
+    </documentation>
+  </element>
+
+  <element name="DosageInstructions" type="string">
+    <documentation>
+      Contains free-form instructions from the ordering provider to the patient or to the provider administering the drug or treatment.
+    </documentation>
+  </element>
+
+  <element name="Quantity" type="number" precision="15" scale="3">
+    <documentation>
+      The amount of the medication given at one administration event. Use this value when the administration is
+      essentially an instantaneous event such as a swallowing a tablet or giving an injection.
+    </documentation>
+    <example>123456789012.123</example>
+  </element>
+
+  <element name="QuantityUnitOfMeasureCode" type="SourceCode" codeSource="OMNI" codeset="6020">
+    <documentation>
+      Contains the unit of measure for the administered quantity.
+    </documentation>
+  </element>
+
+  <element name="DoseRange" type="string">
+    <documentation>
+      The amount of therapeutic or other substance given at one dose.
+    </documentation>
+  </element>
+
+  <element name="DoseQuantity" type="number" precision="15" scale="3">
+    <documentation>
+      Quantity of units of the medication to match the dose. If the dose is 1000mg
+      and the strength of each unit is 250mg, then the DoseQuantity is 4.
+    </documentation>
+    <example>123456789012.123</example>
+  </element>
+
+  <element name="DosageFormCode" type="SourceCode" codeSource="OMNI" codeset="0000">
+    <documentation>
+      The dosage form indicates the manner in which the medical substance is administered.
+      Set this value when the substance administered code does not specify the dosage form.
+    </documentation>
+  </element>
+
+  <element name="DoseRate" type="number" precision="15" scale="3">
+    <documentation>
+      Identifies the speed with which the medication was introduced into the patient.
+      Typically the rate for an infusion e.g. 100 ml per 1 hour or 100 ml/hr.
+      May also be expressed as a rate per unit of time e.g. 500 ml per 2 hours.
+      Currently we do not specify a default of '1' in the denominator,
+      but this is being discussed. Other examples: 200 mcg/min or 200 mcg/1 minute; 1 liter/8 hours.
+    </documentation>
+    <example>123456789012.123</example>
+  </element>
+
+  <element name="DoseRateUnitOfMeasureCode" type="SourceCode" codeSource="OMNI" codeset="6020">
+    <documentation>
+      Code representing the unit of measure of the DoseRate.
+    </documentation>
+  </element>
+
+  <element name="DoseRateText" type="string">
+    <documentation>
+      This is used to capture text based expressions of the DoseRate.
+    </documentation>
+  </element>
+
+  <element name="AmountPerTimeCode" type="SourceCode" codeSource="OMNI" codeset="0000">
+    <documentation>
+      Contains the rate at which the medical substance/treatment was administered required
+      only when a substance is administered continuously at a prescribed rate such as for certain IV solutions.
+    </documentation>
+  </element>
+
+  <element name="DosageFormCode" type="SourceCode" codeSource="OMNI" codeset="0000">
+    <documentation>
+      The dosage form indicates the manner in which the medical substance is administered.
+      Set this value when the substance administered code does not specify the dosage form.
+    </documentation>
+  </element>
+
+  <element name="Strength" type="number" precision="15" scale="3">
+    <documentation>
+      When medical substance administered does not specify the strength, this will contain the numeric part of the strength.
+    </documentation>
+    <example>123456789012.123</example>
+  </element>
+
+  <element name="StrengthUnitOfMeasureCode" type="SourceCode" codeSource="OMNI" codeset="6020">
+    <documentation>
+      Defines the administered unit of the strength.  The units may express a quantity per unit of time.
+      For example, micrograms per hour (ug/h).
+    </documentation>
+  </element>
+
+  <element name="StrengthVolume" type="number" precision="15" scale="3">
+    <documentation>
+      Contains the administered volume measurement in which the drug strength concentration is contained. For example,
+      Acetaminophen 120mg/5ml Elixir means that 120mg of the drug is in a solution with a volume of 5ml.
+    </documentation>
+    <example>123456789012.123</example>
+  </element>
+
+  <element name="StrengthVolumeUnitOfMeasureCode" type="SourceCode" codeSource="OMNI" codeset="6020">
+    <documentation>
+      Contains the administered volumetric unit for the drug strength.
+    </documentation>
+  </element>
+
+  <element name="BarcodeIdentifier" type="string">
+    <documentation>
+      Contains the pharmacy system assigned barcode for the administered medical substance.
+      This can alternatively capture a serial number printed on the packaging by the manufacturer.
+    </documentation>
+  </element>
+
+  <element name="LotNumber" type="string">
+    <documentation>
+      Contains the lot number of the medical substance administered.
+    </documentation>
+  </element>
+
+  <element name="ExpirationDate" type="OmniDate">
+    <documentation>
+      Contains the expiration date of the medical substance administered.
+    </documentation>
+    <example format="yyyy-MM-dd">1965-02-21</example>
+  </element>
+
+  <element name="ManufacturerCode" type="SourceCode" codeSource="OMNI" codeset="0227">
+    <documentation>
+      Contains code of the manufacturer of the medical substance administered.
+    </documentation>
+  </element>
+
+  <element name="ManufacturerName" type="string">
+    <documentation>
+      Contains name of the manufacturer of the medical substance administered.
+    </documentation>
+  </element>
+
+  <element name="SubstanceRefusalReasonCode" type="SourceCode" codeSource="OMNI" codeset="0000">
+    <documentation>
+      If the patient refused the medical substance/treatment,
+      this value will contain the coded reason for the refusal.
+    </documentation>
+  </element>
+
+  <element name="CompletionStatusCode" type="SourceCode" codeSource="OMNI" codeset="0322">
+    <documentation>
+      Contains the status of administering the medical substance/treatment.
+    </documentation>
+  </element>
+
+</idsDocument>

@@ -1,0 +1,1227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.0.0" changeVersion="0" domain="Facility" type="xinstance"
+			 name="FacilityOperations"  
+	 		 elementOrder="MedicalFacility, MedicalFacilityLocation, MedicalOrganization, Department, AccountCode, PeriodStartDate, PeriodEndDate, 
+					PeriodTypeCode, PlanningCategoryCode, PlanningSubCategoryCode, CurrencyCode, Capacity, Utilities, Cleaning,
+					Maintenance, Services, Transportation, Medevac, "
+			 >
+	 		               	
+	<changeLog>
+		<change version="1.0.0">Initial</change>
+	</changeLog>
+	
+
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+	<notes> 
+	 
+	</notes>
+			
+	<documentation>
+	Facility Operations enables the customer to populate the Actual, Projected, Budget or Benchmark individual or 
+	aggregated facility operational and maintenance totals by facility, location, organization or department 
+	or any combination within that hierarchy for the reporting period.  General areas of collected statistics 
+	include Capacity (daily bed occupancy, ER capacity, OR capacity, occupied area), Utilities (water consumed, 
+	total energy costs, downtime hours due to utility failure), Cleaning (average time to clean room), Maintenance 
+	(building maintenance costs, number work orders past due, total work orders received), Services 
+	(landscaping costs, mail distribution time), Transportation (number of drivers, repair costs, fuel costs, miles driven),
+	Medevac (helicopter arrivals and departures), Parking (number cars parked, parking capacity, parking revenue) and Ambulances 
+	(type of vehicle, VIN, fuel purchased costs, is it cleaned, serviced, operational, transport response time, total miles driven).
+	</documentation>
+
+	<element name="MedicalFacility" type="link" contains="Facility">
+		<documentation>
+		Specifies the physical medical facility associated with the facility operations being reported.
+		</documentation>
+		
+		<example>
+			<Facility>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>Hospital</SourceInstanceId>
+			</Facility>
+		</example>
+	</element>
+
+	<element name="MedicalFacilityLocation" type="link" contains="FacilityLocation">
+		<documentation>
+		If facility operations are being captured at a physical location within the facility such as a specific building, it is defined here.
+		</documentation>
+		
+		<example>
+			<FacilityLocation>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>Building A</SourceInstanceId>
+			</FacilityLocation>
+		</example>
+	</element>
+
+	<element name="MedicalOrganization" type="link" contains="Organization">
+		<documentation>
+		Specifies the medical organization associated with the facility operations being reported.
+		</documentation>
+
+		<example>
+			<Organization>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>Medical Center</SourceInstanceId>
+			</Organization>
+		</example>
+			
+	</element>
+
+	<element name="Department" type="link" contains="OrganizationalUnit">
+		<documentation>
+		If facility operations are being captured at a department within the organization such as the Emergency Room, it is defined here.
+		</documentation>
+		
+		<example>
+			<OrganizationalUnit>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>Emergency Room</SourceInstanceId>
+			</OrganizationalUnit>
+		</example>
+	</element>
+
+	<element name="AccountCode" type="string">
+		<documentation>
+		Identifies the code assigned to an account that represents the facility or department referenced.
+		</documentation>
+		
+		<example>
+			<AccountCode>
+				20101
+			</AccountCode>
+		</example>
+	</element>
+	
+	<element name="PeriodStartDate" type="datetime">
+		<documentation>
+		Contains the starting date when the facility operation statistics were collected.
+		</documentation>
+		
+		<example>
+			<PeriodStartDate format="yyyy-MM-dd">
+				2015-01-01
+			</PeriodStartDate>
+		</example>
+	</element>
+
+	<element name="PeriodEndDate" type="datetime">
+		<documentation>
+		Contains the ending date when the facility operation statistics were collected.
+		</documentation>
+		
+		<example>
+			<PeriodEndDate format="yyyy-MM-dd">
+				2015-02-02
+			</PeriodEndDate>
+		</example>
+	</element>
+
+	<element name="PeriodTypeCode" type="code">
+		<documentation>
+		Identifies the period of time that the facility operation statistics represent.
+		</documentation>
+		
+		<example sourceName="TestSystem" codeSet="PeriodTypeCodes">
+			Year
+		</example>
+	</element>
+
+	<element name="PlanningCategoryCode" type="code">
+		<documentation>
+		These IDS's can be used to capture Actuals, Budgeted, Projected or Benchmarks for any metric 
+		for the reporting period. A single IDS can be for only one Planning Category/Subcategory combination. 
+		If the customer reports this at the departmental level, then each IDS represents one 
+		Department/Category/Subcategory combination. The customer can generate these at multiple levels if they so choose. 
+		IDS's at the facility level, or IDS's down to the departmental level, or anything and everything in between. 
+
+		The distinction between Budgeted (near-term) and Projected (longer term) is generally accepted, 
+		but how the customer uses these categories is up to them; they just enable a means of making comparisons.  
+		Actuals would capture the real statistics for the reporting period.
+
+		If they are so inclined, they might generate "Benchmark" IDS's if say there is an industry formula for 
+		a hospital or department of their size. Multiple benchmark IDS's might be generated for different percentiles, 
+		if they exist or are calculable which is probably at the beginning of the fiscal year, or when industry benchmarks are issued.
+		</documentation>
+		
+		<example sourceName="TestSystem" codeSet="PlanningCategoryCode">
+			Projected
+		</example>
+	</element>
+
+	<element name="PlanningSubCategoryCode" type="code">
+		<documentation>
+		The Planning Subcategory provides a method to generate these Actuals, Budgeted, Projected or Benchmarks IDS's 
+		for different percentiles, if they exist or are calculable.
+		</documentation>
+		
+		<example sourceName="TestSystem" codeSet="PlanningSubCategoryCodes">
+			50th percentile
+		</example>
+	</element>
+		
+	<element name="CurrencyCode" type="code">
+		<documentation>
+		Specifies the denomination for all amounts using the industry standard defined in the ISO 4217 code set.
+		</documentation>
+		
+		<example sourceName="ISO4217" codeSet="4217">
+			USD
+		</example>
+	</element>
+
+	<group name="Capacity" elementOrder="TotalFloorSpace, TotalFloorSpaceUnitOfMeasureCode, OccupiedArea, EmergencyRoomCapacity, OperatingRoomCapacity, LabCapacity,
+						PharmacyCapacity, RadiologyCapacity, TotalFacilityCapacity, OccupiedBeds">
+		<documentation>
+		Capacity is a group of attributes to track a facility's measurable resources such as the square footage 
+		of the facility, percentage of occupied space at the facility, number of occupied beds, number of patients 
+		who can be treated in the emergency room, number of lab orders processed, number of medication orders serviced 
+		and number of radiology orders serviced for the reporting period.
+		</documentation>
+
+		<element name="TotalFloorSpace" type="double">
+			<documentation>
+			It is the measure of the area for the selected facility or location such as a building.
+			Example---- square feet ---- square meter
+			</documentation>
+			
+			<example>
+				<TotalFloorSpace>
+					30000
+				</TotalFloorSpace>
+			</example>
+		</element>
+
+		<element name="TotalFloorSpaceUnitOfMeasureCode" type="code">
+			<documentation>
+			Represents the total floor space unit of measure for the selected facility or location such as a building.
+			</documentation>
+		
+			<example sourceName="ISO, ISO+, ANSI+" codeSet="6020">
+			square meters
+			</example>
+		</element>
+
+		<element name="OccupiedArea" type="double">
+			<documentation>
+			Specifies how much of the area at the facility is occupied for the reporting period expressed as a percent.  
+			The following example demonstrates how this value is used:  Measure "Building and Maintenance Cost / Occupied 
+			Area (%)" is the cost of maintaining buildings and facility built up area by total occupied area for the facility 
+			over a period of time.  If cost is $200 and 50% of the facility is occupied, the cost to maintain the building would 
+			be $400 if the facility was operating at 100% occupancy.
+			</documentation>
+		
+			<example>
+				<OccupiedArea>
+					30
+				</OccupiedArea>
+			</example>
+		</element>
+
+		<element name="EmergencyRoomCapacity" type="integer">
+			<documentation>
+			Specifies the number of patients who can be treated in the emergency room of the facility for the reporting period.
+			</documentation>
+		
+			<example>
+				<EmergencyRoomCapacity>
+					23
+				</EmergencyRoomCapacity>
+			</example>
+		</element>
+
+		<element name="OperatingRoomCapacity" type="integer">
+			<documentation>
+			Specifies the number of patients who can undergo operations in the operating room of the facility for the reporting period.
+			</documentation>
+		
+			<example>
+				<OperatingRoomCapacity>
+					20
+				</OperatingRoomCapacity>
+			</example>
+		</element>
+
+		<element name="LabCapacity" type="integer">
+			<documentation>
+			Specifies the number of lab orders that can be processed in the lab for the reporting period.
+			</documentation>
+		
+			<example>
+				<LabCapacity>
+					4
+				</LabCapacity>
+			</example>
+		</element>
+
+		<element name="PharmacyCapacity" type="integer">
+			<documentation>
+			Specifies the number of medication orders that can be serviced by the pharmacy for the reporting period.
+			</documentation>
+		
+			<example>
+				<PharmacyCapacity>
+					10
+				</PharmacyCapacity>
+			</example>
+		</element>
+
+		<element name="RadiologyCapacity" type="integer">
+			<documentation>
+			Specifies the number of radiology orders that can be serviced in the radiology department for the reporting period.
+			</documentation>
+		
+			<example>
+				<RadiologyCapacity>
+					34
+				</RadiologyCapacity>
+			</example>
+		</element>
+
+		<element name="TotalFacilityCapacity" type="integer">
+			<documentation>
+			Specifies the number of patients who can be treated at the facility for the reporting period.
+			</documentation>
+		
+			<example>
+				<TotalFacilityCapacity>
+					23
+				</TotalFacilityCapacity>
+			</example>
+		</element>
+
+		<element name="OccupiedBeds" type="integer">
+			<documentation>
+			Specifies the number of occupied beds at the facility for the reporting period.
+			</documentation>
+		
+			<example>
+				<OccupiedBeds>
+					12
+				</OccupiedBeds>
+			</example>
+		</element>
+	</group>
+
+	<group name="Utilities" elementOrder="WaterConsumption, ElectricityConsumed, BTUsConsumed, TotalEnergyCosts, HVACFiltersReplaced, TotalHVACFilters, WaterLevelScore,
+						UtilityFailures, UtilityFailureDowntimeHours">
+		<documentation>
+		Utilities is a group of attributes to track a facility's resource and energy consumption for the reporting period.  In addition, 
+		it captures statistics on maintenance such as air filters and water quality, as well as utility failures and resulting downtime.  
+		</documentation>
+
+		<element name="WaterConsumption" type="double">
+			<documentation>
+			The total amount of water in gallons consumed at the facility for the reporting period.
+			</documentation>
+			
+			<example>
+				<WaterConsumption>
+					50
+				</WaterConsumption>
+			</example>
+		</element>
+		
+		<element name="ElectricityConsumed" type="double">
+			<documentation>
+			The total amount of electrical energy in KWH consumed at the facility for the reporting period.
+			</documentation>
+			
+			<example>
+				<ElectricityConsumed>
+					2
+				</ElectricityConsumed>
+			</example>
+		</element>
+
+		<element name="BTUsConsumed" type="double">
+			<documentation>
+			The total amount of electrical energy in BTUs consumed at the facility for the reporting period.
+			</documentation>
+			
+			<example>
+				<BTUsConsumed>
+					12
+				</BTUsConsumed>
+			</example>
+		</element>
+
+		<element name="TotalEnergyCosts" type="double">
+			<documentation>
+			The total cost of energy at the facility for the reporting period.
+			</documentation>
+			
+			<example>
+				<TotalEnergyCosts>
+					23455
+				</TotalEnergyCosts>
+			</example>
+		</element>
+
+		<element name="HVACFiltersReplaced" type="integer">
+			<documentation>
+			The number of HVAC filters that were replaced at the facility for the reporting period.
+			</documentation>
+		
+			<example>
+				<HVACFiltersReplaced>
+					23
+				</HVACFiltersReplaced>
+			</example>
+		</element>
+
+		<element name="TotalHVACFilters" type="integer">
+			<documentation>
+			The total number of HVAC filters at the facility for the reporting period.
+			</documentation>
+		
+			<example>
+				<TotalHVACFilters>
+					23
+				</TotalHVACFilters>
+			</example>
+		</element>
+
+		<element name="WaterLevelScore" type="integer">
+			<documentation>
+			The level of water quality at the facility for the reporting period.
+			</documentation>
+		
+			<example>
+				<WaterLevelScore>
+					23
+				</WaterLevelScore>
+			</example>
+		</element>
+
+		<element name="UtilityFailures" type="integer">
+			<documentation>
+			The total number of utility failures such as a power outage at the facility for the reporting period.
+			</documentation>
+		
+			<example>
+				<UtilityFailures>
+					23
+				</UtilityFailures>
+			</example>
+		</element>
+
+		<element name="UtilityFailureDowntimeHours" type="double">
+			<documentation>
+			The number of hours representing the duration of the utility failure at the facility for the reporting period.
+			</documentation>
+			
+			<example>
+				<UtilityFailureDowntimeHours>
+					12
+				</UtilityFailureDowntimeHours>
+			</example>
+		</element>
+	</group>
+
+	<group name="Cleaning" elementOrder="SoiledLaundryInBags, CleanLaundryInBags, RoomCleaningTime">
+		<documentation>  
+		Cleaning is a group of attributes to track laundry processed and time to clean rooms at a facility for the reporting period.
+		</documentation>
+
+		<element name="SoiledLaundryInBags" type="integer">
+			<documentation>
+			The number of soiled laundry bags sent out to be cleaned from the facility for the reporting period.
+			</documentation>
+		
+			<example>
+				<SoiledLaundryInBags>
+					23
+				</SoiledLaundryInBags>
+			</example>
+		</element>
+
+		<element name="CleanLaundryInBags" type="integer">
+			<documentation>
+			The number of cleaned laundry bags received at the facility for the reporting period.
+			</documentation>
+		
+			<example>
+				<CleanLaundryInBags>
+					23
+				</CleanLaundryInBags>
+			</example>
+		</element>
+
+		<element name="RoomCleaningTime" type="double">
+			<documentation>
+			The time, in minutes, taken to clean an inpatient room from the time of notification at the facility for the reporting period.
+			</documentation>
+			
+			<example>
+				<RoomCleaningTime>
+					12
+				</RoomCleaningTime>
+			</example>
+		</element>
+	</group>
+
+	<group name="Maintenance" elementOrder="BuildingMaintenanceCost, PreventiveMaintenanceHours, FacilityInspectionsCompleted, TotalFacilityInspectionsRequired,
+						WorkOrdersPastDue, TotalWorkOrdersReceived, TotalWorkOrdersCompleted, CorrectiveMaintenanceWorkOrdersReceived,
+						CorrectiveMaintenanceWorkOrdersCompleted, PreventiveMaintenanceWorkOrdersReceived, PreventiveMaintenanceWorkOrdersCompleted,
+						OnDemandWorkHours, SystemFailureRate">
+		<documentation>  
+		Maintenance is a group of attributes to track the preventative and routine facility maintenance costs, inspections, work orders, 
+		hours performed and system failure rates for the reporting period.
+		</documentation>
+
+		<element name="BuildingMaintenanceCost" type="double">
+			<documentation>
+			The cost of maintaining buildings that are part of the facility for the reporting period.
+			</documentation>
+			
+			<example>
+				<BuildingMaintenanceCost>
+					12
+				</BuildingMaintenanceCost>
+			</example>
+		</element>
+
+		<element name="PreventiveMaintenanceHours" type="double">
+			<documentation>
+			The total number of hours spent on preventive maintenance work at the facility for the reporting period.
+			</documentation>
+			
+			<example>
+				<PreventiveMaintenanceHours>
+					12
+				</PreventiveMaintenanceHours>
+			</example>
+		</element>
+
+		<element name="FacilityInspectionsCompleted" type="integer">
+			<documentation>
+			The number of facility inspections completed at the facility for the reporting period.
+			</documentation>
+		
+			<example>
+				<FacilityInspectionsCompleted>
+					23
+				</FacilityInspectionsCompleted>
+			</example>
+		</element>
+
+		<element name="TotalFacilityInspectionsRequired" type="integer">
+			<documentation>
+			The total number of facility inspections required at the facility for the reporting period.
+			</documentation>
+		
+			<example>
+				<TotalFacilityInspectionsRequired>
+					45
+				</TotalFacilityInspectionsRequired>
+			</example>
+		</element>
+	
+		<element name="WorkOrdersPastDue" type="integer">
+			<documentation>
+			The number of work orders past due at the facility during a given period of time.
+			</documentation>
+		
+			<example>
+				<WorkOrdersPastDue>
+					23
+				</WorkOrdersPastDue>
+			</example>
+		</element>
+
+		<element name="TotalWorkOrdersReceived" type="integer">
+			<documentation>
+			The total number of all maintenance work orders received at the facility for the reporting period.
+			</documentation>
+		
+			<example>
+				<TotalWorkOrdersReceived>
+					45
+				</TotalWorkOrdersReceived>
+			</example>
+		</element>
+
+		<element name="TotalWorkOrdersCompleted" type="double">
+			<documentation>
+			The total number of all maintenance work orders completed at the facility for the reporting period.
+			</documentation>
+			
+			<example>
+				<TotalWorkOrdersCompleted>
+					12
+				</TotalWorkOrdersCompleted>
+			</example>
+		</element>
+
+		<element name="CorrectiveMaintenanceWorkOrdersReceived" type="double">
+			<documentation>
+			The total number of corrective maintenance work orders received at the facility for the reporting period.
+			</documentation>
+			
+			<example>
+				<CorrectiveMaintenanceWorkOrdersReceived>
+					12
+				</CorrectiveMaintenanceWorkOrdersReceived>
+			</example>
+		</element>
+
+		<element name="CorrectiveMaintenanceWorkOrdersCompleted" type="double">
+			<documentation>
+			The total number of corrective maintenance work orders completed at the facility for the reporting period.
+			</documentation>
+			
+			<example>
+				<CorrectiveMaintenanceWorkOrdersCompleted>
+					12
+				</CorrectiveMaintenanceWorkOrdersCompleted>
+			</example>
+		</element>
+
+		<element name="PreventiveMaintenanceWorkOrdersReceived" type="double">
+			<documentation>
+			The total number of preventative maintenance work orders received at the facility for the reporting period.
+			</documentation>
+			
+			<example>
+				<PreventiveMaintenanceWorkOrdersReceived>
+					12
+				</PreventiveMaintenanceWorkOrdersReceived>
+			</example>
+		</element>
+
+		<element name="PreventiveMaintenanceWorkOrdersCompleted" type="double">
+			<documentation>
+			The total number of preventative maintenance work orders completed at the facility for the reporting period.
+			</documentation>
+			
+			<example>
+				<PreventiveMaintenanceWorkOrdersCompleted>
+					12
+				</PreventiveMaintenanceWorkOrdersCompleted>
+			</example>
+		</element>
+
+		<element name="OnDemandWorkHours" type="double">
+			<documentation>
+			The total number of hours categorized as "On Demand" work at the facility for the reporting period.
+			</documentation>
+			
+			<example>
+				<OnDemandWorkHours>
+					12
+				</OnDemandWorkHours>
+			</example>
+		</element>
+
+		<element name="SystemFailureRate" type="double">
+			<documentation>
+			The rate at which the system fails at the facility for the reporting period.
+			</documentation>
+			
+			<example>
+				<SystemFailureRate>
+					12
+				</SystemFailureRate>
+			</example>
+		</element>		
+	</group>
+	
+	<group name="Services" elementOrder="GroundsAndGardenCosts, MailDistributionTime, ParenteralNutritionPreps">
+		<documentation>  
+		Services is a group of attributes to track some general facility operation services such as landscaping and grounds costs, 
+		time to distribute mail and feed solutions prepared for patients receiving parenteral nutrition for the reporting period.
+		</documentation>
+
+		<element name="GroundsAndGardenCosts" type="double">
+			<documentation>
+			The total cost of maintaining grounds and garden at the facility during a period of time.
+			</documentation>
+		
+			<example>
+				<GroundsAndGardenCosts>
+					23
+				</GroundsAndGardenCosts>
+			</example>
+		</element>
+
+		<element name="MailDistributionTime" type="double">
+			<documentation>
+			The time taken to distribute incoming mail from the time of receipt at the facility for the reporting period.
+			</documentation>
+		
+			<example>
+				<MailDistributionTime>
+					23
+				</MailDistributionTime>
+			</example>
+		</element>
+
+		<element name="ParenteralNutritionPreps" type="integer">
+			<documentation>
+			Parenteral feeding is the intravenous administration of nutrients.  It may be supplemental in addition to nutrients 
+			received orally or through a tube or it can be a patient's entire source of nutrition, also known as total parenteral nutrition.  
+			This attribute captures the number of feed solutions prepared at the facility for the reporting period..
+			</documentation>
+			
+			<example>
+				<ParenteralNutritionPreps>
+					12
+				</ParenteralNutritionPreps>
+			</example>
+		</element>
+	</group>
+
+	<group name="Transportation" elementOrder="DriverLicensesChecked, NumberOfDrivers, MaintenanceAndRepairCosts, CostForAtFaultAccidents, AtFaultAccidents, PercentAtFaultAccidents,
+							FuelCosts, FuelByVolume, FuelByVolumeUnitOfMeasureCode, MilesDriven">
+		<documentation>  
+		Transportation is a group of attributes to track vehicle-related statistics at a facility for the reporting period.  
+		This would include vehicle maintenance and repair costs, accident-related statistics, number of drivers, driver verification, 
+		miles driven, fuel usage and costs.
+		</documentation>
+
+		<element name="DriverLicensesChecked" type="integer">
+			<documentation>
+			The number of driver license that have been checked at the facility for the reporting period.
+			</documentation>
+			
+			<example>
+				<DriverLicensesChecked>
+					12
+				</DriverLicensesChecked>
+			</example>
+		</element>
+
+		<element name="NumberOfDrivers" type="integer">
+			<documentation>
+			The number of drivers who operate the facility's fleet.
+			</documentation>
+			
+			<example>
+				<NumberOfDrivers>
+					12
+				</NumberOfDrivers>
+			</example>
+		</element>
+
+		<element name="MaintenanceAndRepairCosts" type="double">
+			<documentation>
+			The total cost involved in maintaining and repairing the fleet at the facility for the reporting period.
+			</documentation>
+		
+			<example>
+				<MaintenanceAndRepairCosts>
+					23
+				</MaintenanceAndRepairCosts>
+			</example>
+		</element>
+
+		<element name="CostForAtFaultAccidents" type="double">
+			<documentation>
+			The gross cost involved in at-fault accidents for the facility's fleet for the reporting period.
+			</documentation>
+		
+			<example>
+				<CostForAtFaultAccidents>
+					45
+				</CostForAtFaultAccidents>
+			</example>
+		</element>
+	
+		<element name="AtFaultAccidents" type="integer">
+			<documentation>
+			The total number of at-fault accidents in the fleet at the facility for the reporting period.
+			</documentation>
+		
+			<example>
+				<AtFaultAccidents>
+					23
+				</AtFaultAccidents>
+			</example>
+		</element>
+
+		<element name="PercentAtFaultAccidents" type="double">
+			<documentation>
+			The rate of at-fault accidents that occur in the fleet per 100,000 miles at the facility for the reporting period.
+			</documentation>
+		
+			<example>
+				<PercentAtFaultAccidents>
+					45
+				</PercentAtFaultAccidents>
+			</example>
+		</element>
+
+		<element name="FuelCosts" type="double">
+			<documentation>
+			The total cost of fuel purchased in dollars for the fleet at the facility for the reporting period.
+			</documentation>
+			
+			<example>
+				<FuelCosts>
+					12
+				</FuelCosts>
+			</example>
+		</element>
+
+		<element name="FuelByVolume" type="double">
+			<documentation>
+			Total amount of fuel purchased for the fleet at the facility for the reporting period.
+			</documentation>
+			
+			<example>
+				<FuelByVolume>
+					12
+				</FuelByVolume>
+			</example>
+		</element>
+
+		<element name="FuelByVolumeUnitOfMeasureCode" type="code">
+			<documentation>
+			Represents the unit of measure to be used with the fuel volume.
+			</documentation>
+		
+			<example sourceName="ISO, ISO+, ANSI+" codeSet="6020">
+			gallon
+			</example>
+		</element>
+
+
+		<element name="MilesDriven" type="double">
+			<documentation>
+			The total number miles driven by drivers of the facility's fleet at the facility for the reporting period.
+			</documentation>
+			
+			<example>
+				<MilesDriven>
+					12
+				</MilesDriven>
+			</example>
+		</element>
+	</group>
+
+	<group name="Medevac" elementOrder="HelicopterArrivalsDepartures, HelicopteredPatientArrivals, HelicopteredPatientDepartures">
+		<documentation>  
+		Medevac is the transport of someone to a hospital in a helicopter or airplane for the reporting period.  This group of attributes 
+		tracks the number of patient arrivals and departures to a hospital in a helicopter.
+		</documentation>
+
+		<element name="HelicopterArrivalsDepartures" type="integer">
+			<documentation>
+			The number of helicopter round-trips at the facility for the reporting period.
+			</documentation>
+		
+			<example>
+				<HelicopterArrivalsDepartures>
+					23
+				</HelicopterArrivalsDepartures>
+			</example>
+		</element>
+
+		<element name="HelicopteredPatientArrivals" type="integer">
+			<documentation>
+			The number of helicopter arrivals while transporting a patient to the facility for the reporting period.
+			</documentation>
+		
+			<example>
+				<HelicopteredPatientArrivals>
+					23
+				</HelicopteredPatientArrivals>
+			</example>
+		</element>
+
+		<element name="HelicopteredPatientDepartures" type="integer">
+			<documentation>
+			The number of helicopter departures while transporting a patient away from the facility for the reporting period.
+			</documentation>
+			
+			<example>
+				<HelicopteredPatientDepartures>
+					12
+				</HelicopteredPatientDepartures>
+			</example>
+		</element>
+	</group>
+
+	<group name="Parking" elementOrder="CarsParked, Capacity, PatientParkingDeclined, TotalRevenue, TotalParkingDeclined, StaffParkingDeclined, AverageExitWaitTime,
+						ValetCarsParked, ValetParkingCapacity, AverageRetrievalTime">
+		<documentation>  
+		Parking is a group of attributes to track parking lot usage for a specific facility or location within the facility for the reporting period.  
+		This would include the parking lot capacity, number of parked cars, parking revenue, declined parking and valet-related parking statistics.
+		</documentation>
+
+		<element name="CarsParked" type="integer">
+			<documentation>
+			The total number of cars parked at the facility for the reporting period.
+			</documentation>
+			
+			<example>
+				<CarsParked>
+					12
+				</CarsParked>
+			</example>
+		</element>
+
+		<element name="Capacity" type="integer">
+			<documentation>
+			Specifies the average number of parking spaces available at the facility for the reporting period.
+			</documentation>
+			
+			<example>
+				<Capacity>
+					12
+				</Capacity>
+			</example>
+		</element>
+
+		<element name="PatientParkingDeclined" type="integer">
+			<documentation>
+			The total number of patient cars that were denied parking due to unavailability of parking space at the facility for the reporting period.
+			</documentation>
+		
+			<example>
+				<PatientParkingDeclined>
+					23
+				</PatientParkingDeclined>
+			</example>
+		</element>
+
+		<element name="TotalRevenue" type="double">
+			<documentation>
+			The revenue received from parking facilities at the facility for the reporting period.
+			</documentation>
+		
+			<example>
+				<TotalRevenue>
+					45
+				</TotalRevenue>
+			</example>
+		</element>
+	
+		<element name="TotalParkingDeclined" type="integer">
+			<documentation>
+			The total number of cars turned away from parking due to unavailability of parking spaces at the facility for the reporting period.
+			</documentation>
+		
+			<example>
+				<TotalParkingDeclined>
+					23
+				</TotalParkingDeclined>
+			</example>
+		</element>
+
+		<element name="StaffParkingDeclined" type="integer">
+			<documentation>
+			The total number of staff cars turned away from parking due to unavailability of parking spaces at the facility for the reporting period.
+			</documentation>
+		
+			<example>
+				<StaffParkingDeclined>
+					45
+				</StaffParkingDeclined>
+			</example>
+		</element>
+
+		<element name="AverageExitWaitTime" type="double">
+			<documentation>
+			The average wait time, in minutes, for cars at the exit gate of the facility for the reporting period.
+			</documentation>
+			
+			<example>
+				<AverageExitWaitTime>
+					12
+				</AverageExitWaitTime>
+			</example>
+		</element>
+
+		<element name="ValetCarsParked" type="integer">
+			<documentation>
+			The total number of cars parked by a valet at the facility for the reporting period.
+			</documentation>
+			
+			<example>
+				<ValetCarsParked>
+					12
+				</ValetCarsParked>
+			</example>
+		</element>
+
+		<element name="ValetParkingCapacity" type="integer">
+			<documentation>
+			Specifies the average number of valet parking spaces available at the facility for the reporting period.
+			</documentation>
+			
+			<example>
+				<ValetParkingCapacity>
+					12
+				</ValetParkingCapacity>
+			</example>
+		</element>
+	
+		<element name="AverageRetrievalTime" type="double">
+			<documentation>
+			The average time, in minutes, taken for a valet to retrieve cars from valet parking at the facility for the reporting period.
+			</documentation>
+			
+			<example>
+				<AverageRetrievalTime>
+					12
+				</AverageRetrievalTime>
+			</example>
+		</element>
+	</group>
+
+	<list name="Ambulances">
+		<documentation>
+		Ambulances is a collection of Ambulance instances.  An ambulance is used for the transport of a wounded or sick person to a place for treatment, 
+		typically a hospital.  Paramedics may provide medical treatment while in route to the hospital.  This group of attributes tracks the ambulance 
+		identification, type of vehicle, fuel purchased costs, miles driven, driver accidents and moving violations, maintenance and repair costs, 
+		whether vehicle needs service, is operational, clean and available for the reporting period.
+		</documentation>
+		
+			<idsDocument version="1.0.0" changeVersion="0" domain="Facility" type="xinstance_child"
+				 name="Ambulance"  
+		 		 elementOrder="VehicleId, SerialNumber, VIN, VehicleTypeCode, FuelPurchasedByVolume, FuelPurchasedByVolumeUnitOfMeasureCode, FuelPurchasedCosts,
+						TotalMaintenanceRepairCosts, GrossCostForAtFaultAccidents, CleanedIndicator, FuelLevel, ServicedIndicator, AtFaultAccidentsReported, 
+						TotalDistanceDriven, TotalDistanceDrivenUnitOfMeasureCode, OperationalIndicator, AvailableIndicator">
+		<include name="CommonElements" prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName" appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+		 		               	
+		<changeLog>
+			<change version="1.0.0">Initial</change>
+		</changeLog>
+	
+		<notes> 
+		</notes>
+				
+		<documentation>
+		An ambulance is used for the transport of a wounded or sick person to a place for treatment, typically a hospital.  Paramedics may provide medical 
+		treatment while in route to the hospital.  This group of attributes tracks the ambulance identification, type of vehicle, fuel purchased costs, 
+		miles driven, driver accidents and moving violations, maintenance and repair costs, whether vehicle needs service, is operational, clean and 
+		available for the reporting period.
+		</documentation>
+	
+		<element name="VehicleId" type="string">
+			<documentation>
+			Represents a unique identifier separate from its VIN or serial number.
+			</documentation>
+			
+			<example>
+				<VehicleId>
+					M3G45
+				</VehicleId>
+			</example>
+		</element>
+			
+		<element name="SerialNumber" type="string">
+			<documentation>
+			Represents the serial number of the vehicle, generally assigned by the manufacturer.
+			</documentation>
+			
+			<example>
+				<SerialNumber>
+					123564
+				</SerialNumber>
+			</example>
+		</element>
+		
+		<element name="VIN" type="string">
+			<documentation>
+			Represents the vehicle identification number used in the automotive industry to uniquely identity all vehicles.
+			</documentation>
+				
+			<example>
+				<VIN>
+					35463
+				</VIN>
+			</example>
+		</element>
+	
+		<element name="VehicleTypeCode" type="code">
+			<documentation>
+			Represents a classification for the ambulance such as emergency ambulance, patient transport ambulance, response unit, 
+			bariatric ambulance, etc.  An emergency ambulance is used for patients with acute illness or injury.   A patient transport 
+			ambulance is primarily used for non-urgent care to transport patients to and from places of medical treatment such as a dialysis center. 
+			A response unit ambulance is used to reach an acutely ill patient quickly to provide treatment to the patient at the scene, but it lacks 
+			capacity to transport the patient from the scene.  A bariatric ambulance is a special type of transport designed for extremely obese patients.
+			</documentation>
+			
+			<example sourceName="TestSystem" codeSet="VehicleTypeCode">
+			Emergency Ambulance
+			</example>
+		</element>
+	
+		<element name="FuelPurchasedByVolume" type="double">
+			<documentation>
+			Total volume of fuel purchased for the reporting period.
+			</documentation>
+				
+			<example>
+				<FuelPurchasedByVolume>
+					35463
+				</FuelPurchasedByVolume>
+			</example>
+		</element>
+	
+		<element name="FuelPurchasedByVolumeUnitOfMeasureCode" type="code">
+			<documentation>
+			Represents the unit of measure to be used with the volume of fuel purchased.
+			</documentation>
+			
+			<example sourceName="ISO, ISO+, ANSI+" codeSet="6020">
+			gallon
+			</example>
+		</element>
+	
+		<element name="FuelPurchasedCosts" type="double">
+			<documentation>
+			Total cost of fuel purchased for the reporting period.
+			</documentation>
+				
+			<example>
+				<FuelPurchasedCosts>
+					363.00
+				</FuelPurchasedCosts>
+			</example>
+		</element>
+	
+		<element name="TotalMaintenanceRepairCosts" type="double">
+			<documentation>
+			Total amount spent on maintenance and repair of ambulance for the reporting period.
+			</documentation>
+				
+			<example>
+				<TotalMaintenanceRepairCosts>
+					363.00
+				</TotalMaintenanceRepairCosts>
+			</example>
+		</element>
+	
+		<element name="GrossCostForAtFaultAccidents" type="double">
+			<documentation>
+			Total cost of at-fault accidents reported involving this ambulance for the reporting period.
+			</documentation>
+				
+			<example>
+				<GrossCostForAtFaultAccidents>
+					363.00
+				</GrossCostForAtFaultAccidents>
+			</example>
+		</element>
+	
+		<element name="MovingViolationsReported" type="integer">
+			<documentation>
+			Number of moving violations reported involving this ambulance for the reporting period.
+			</documentation>
+				
+			<example>
+				<MovingViolationsReported>
+					36
+				</MovingViolationsReported>
+			</example>
+		</element>
+	
+		<element name="CleanedIndicator" type="code">
+			<documentation>
+			Indicates whether the ambulance has been cleaned.  If "Yes", ambulance has been cleaned.  If "No", ambulance has not been cleaned.
+			</documentation>
+			
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y = Yes
+			</example>
+		</element>
+	
+		<element name="FuelLevel" type="double">
+			<documentation>
+			Represents the fuel level in the ambulance.
+			</documentation>
+				
+			<example>
+				<FuelLevel>
+					3.00
+				</FuelLevel>
+			</example>
+		</element>
+	
+		<element name="ServicedIndicator" type="code">
+			<documentation>
+			Indicates whether the ambulance has been serviced.  If "Yes", ambulance has been serviced.  If "No", ambulance has not been serviced.
+			</documentation>
+			
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y = Yes
+			</example>
+		</element>
+	
+		<element name="AtFaultAccidentsReported" type="integer">
+			<documentation>
+			The number of at-fault accidents reported involving this ambulance for the reporting period.
+			</documentation>
+				
+			<example>
+				<AtFaultAccidentsReported>
+					36
+				</AtFaultAccidentsReported>
+			</example>
+		</element>
+	
+		<element name="TotalDistanceDriven" type="double">
+			<documentation>
+			The total distance driven in this ambulance for the reporting period.
+			</documentation>
+				
+			<example>
+				<TotalDistanceDriven>
+					363.00
+				</TotalDistanceDriven>
+			</example>
+		</element>
+	
+		<element name="TotalDistanceDrivenUnitOfMeasureCode" type="code">
+			<documentation>
+			Represents the unit of measure to be used with the total distance driven.
+			</documentation>
+			
+			<example sourceName="ISO, ISO+, ANSI+" codeSet="6020">
+			mile
+			</example>
+		</element>
+	
+		<element name="OperationalIndicator" type="code">
+			<documentation>
+			Indicates whether the ambulance is operational.  If "Yes", ambulance is operational.  If "No", ambulance is not operational.
+			</documentation>
+			
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y = Yes
+			</example>
+		</element>
+	
+		<element name="AvailableIndicator" type="code">
+			<documentation>
+			Indicates whether the ambulance is available for use.  If "Yes", ambulance is available.  If "No", ambulance is not available.
+			</documentation>
+			
+			<example sourceName="HL7 v2 Tables" codeSet="0136">
+			Y = Yes
+			</example>
+		</element>
+	
+		<element name="TransportResponseTime" type="double">
+			<documentation>
+			The number of minutes from the transport request for the ambulance to arrive at its destination.
+			</documentation>
+				
+			<example>
+				<TransportResponseTime>
+					45.78
+				</TransportResponseTime>
+			</example>
+		</element>	
+	</idsDocument>
+	</list>		
+
+		
+</idsDocument>

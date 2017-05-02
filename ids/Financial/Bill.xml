@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.2.6"  
+			 domain="Financial" 
+			 type="instance"
+			 name="Bill"  
+	 		 elementOrder="BillNumber, Account, TypeCode, CategoryCode, PayToLocation, StatusCode, 
+	 		 			   BillToPatient, BillToGuarantor, BillToParty, 
+	 		 		       BillDateTime, AmountDue, CurrencyCode, BillLineItems">
+ 	  	 					
+	<changeLog>
+		<change version="1.2.6_0">Initial Version</change>
+		<change version="1.2.6_1">Added SourceStatusCode to instance and collection items.</change>
+	</changeLog>
+		
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	<customType name="OmniLinkId" class="com.ibi.dib.core.ids.types.IdsLinkIdType"/>
+	
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	
+	<documentation>	
+	A Bill is a request for payment presented or sent to the Patient or Guarantor.  The Bill normally represents the portion of the Account balance which is not paid by the Payers becomes a "self-pay" amount.
+	</documentation>
+
+	<element name="BillNumber" type="string">
+		<documentation>
+		The customer-facing number which identifies the Bill.
+		</documentation>
+	</element>
+
+	<element name="Account" type="OmniLink" contains="Account">
+		<documentation>
+		Use this element to specify an Account in the system using the Account's SourceName and SourceInstanceId. You cannot load Account
+		information using this element, however if the Account is not found then a "placeholder" will be created that will contain the Account
+		when loaded.
+		</documentation>
+	</element>
+
+	<element name="TypeCode" type="SourceCode" codeSource="HL7" codeSet="0455">
+		<documentation>
+		TypeCode is a set of codes used to distinguish between the overall purpose of the bill. 
+		</documentation>
+	</element>
+
+	<element name="CategoryCode" type="SourceCode" codeSource="HL7" codeSet="0293">
+		<documentation>
+		User-defined categorization of Bills for reporting purposes.
+		</documentation>
+	</element>
+
+	<element name="PayToLocation" type="OmniLink" contains="FacilityLocation" dbColumn="pay_to_location_id">
+		<documentation>
+		The FacilityLocation to which payment for the bill should be directed.
+		
+		Use this element to specify a FacilityLocation in the system using the FacilityLocation's SourceName and SourceInstanceId. You cannot load FacilityLocation
+		information using this element, however if the FacilityLocation is not found then a "placeholder" will be created that will contain the FacilityLocation
+		when loaded.
+		</documentation>
+	</element>
+
+	<element name="StatusCode" type="SourceCode" codeSource="HL7" codeSet="0022">
+		<documentation>
+		StatusCode indicates the point in the revenue cycle process to which the particular Bill has progressed
+		</documentation>
+	</element>
+
+	<element name="BillToPatient" type="OmniLink" contains="Patient" dbColumn="bill_to_patient_id">
+		<documentation>
+		The person to which the bill is sent.
+		
+		Use this element to specify a BillToParty (Patient or Guarantor) in the system using the Remitter's SourceName and SourceInstanceId. You cannot load Payer, Patient, or 
+		Guarantor information using this element, however if the specific entity is not found then a "placeholder" will be created that will contain the entity
+		when loaded.
+		</documentation>
+	</element>
+	
+	<element name="BillToGuarantor" type="OmniLink" contains="Guarantor">
+		<documentation>
+		The person to which the bill is sent.
+		
+		Use this element to specify a BillToParty (Patient or Guarantor) in the system using the Remitter's SourceName and SourceInstanceId. You cannot load Payer, Patient, or 
+		Guarantor information using this element, however if the specific entity is not found then a "placeholder" will be created that will contain the entity
+		when loaded.
+		</documentation>
+	</element>
+
+	<element name="BillToParty" type="OmniLinkId" contains="Patient, Guarantor">
+		<documentation>
+			BillToParty points to deprecated Guarantor and Patient.
+		</documentation>
+	</element>
+
+	<element name="BillDateTime" type="OmniDate">
+		<documentation>
+		Date and time the bill was created for the account.   
+		</documentation>
+	</element>
+
+	<element name="AmountDue" type="double">
+		<documentation>
+		The total monetary amount of the bill.  Should reconcile to the total of the BillLineAmounts in the associated BillLineItems.
+		</documentation>
+	</element>
+
+	<element name="CurrencyCode" type="SourceCode" codeSource="HL7" codeSet="4217">
+		<documentation>
+		The monetary unit in which Amount is denominated.
+		</documentation>
+	</element>
+
+	<list name="BillLineItems" contains="BillLineItem">
+		<documentation>
+		BillLineItems is a collection of BillLineItem records.
+		</documentation>
+	</list>
+	
+</idsDocument>

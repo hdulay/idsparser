@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.2.6" changeVersion="1" domain="Financial" type="instance"
+			 name="Account"  
+	 		 elementOrder="AccountNumber, AccountTypeCode, Patient, FinancialClassCode, FinancialStatusCode, AccountBalanceAmount, AccountBalanceCurrencyCode, AccountBalanceDateTime, HealthPlanCoverages, Guarantors"
+	 		 implementationClass="com.ibi.omni.patient.model.financial.Account">	 					
+	  	 					
+	<changeLog>
+		<change version="1.2.6_0">Initial Version</change>
+		<change version="1.2.8_0">Deprecated HealthPlanCoverageId and added PatientHealthClaim</change>
+		<change version="1.2.8_1">Added SourceStatusCode to instance and collection items.</change>
+	</changeLog>
+	
+	<notes>
+	Re-ordered data elements
+	</notes>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	
+	<documentation>	
+	</documentation>
+
+	<element name="AccountNumber" type="string">
+		<documentation>
+		The customer-facing number which identifies the patient's Account.
+		</documentation>
+		
+		<example>12345678</example>
+	</element>
+	
+	<element name="AccountTypeCode" type="SourceCode">
+		<documentation>
+		Definition TBD
+		</documentation>
+		
+		<example sourceCodeSet="AccountTypeCodes" sourceCode="typeCode1">Type Code 1</example>
+	</element>	
+
+	<element name="Patient" type="OmniLink" contains="Patient" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		Use this element to specify a Patient in the system using the Patient's SourceName and SourceInstanceId. You cannot load Patient
+		information using this element, however if the Patient is not found then a "placeholder" will be created that will contain the Patient
+		when loaded.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<Patient>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>PatientId</SourceInstanceId>
+			</Patient>
+			]]>
+		</example>		
+	</element>
+	
+	<element name="FinancialClassCode" type="SourceCode" codeTable="5000">
+		<documentation>
+		FinancialClass is the set of codes for categorization of the primary Payer on the Account. It is based on the Account's current primary Payer, which is based on the HealthPlanCoverages for the Account.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="5000" sourceCode="1003"/>
+	</element>
+	
+	<element name="FinancialStatusCode" type="SourceCode">
+		<documentation>
+		FinancialStatus is the set of codes which indicates the point in the revenue cycle process to which the particular Account has progressed.
+		</documentation>
+		
+		<example sourceCodeSet="FinancialStatusCodes" sourceCode="open">Open</example>
+	</element>	
+
+	<element name="AccountBalanceAmount" type="double">
+		<documentation>
+		The monetary amount remaining in order to consider the account paid off.
+		</documentation>
+	</element>
+
+	<element name="AccountBalanceCurrencyCode" type="SourceCode" codeTable="4217">
+		<documentation>
+		The monetary unit in which Amount is denominated.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="4217" sourceCode="USD"/>
+	</element>
+	
+	<element name="AccountBalanceDateTime" type="OmniDate">
+		<documentation>
+		Definition TBD
+		</documentation>
+		
+		<example format="yyyy-MM-dd hh:mm">2013-01-01 08:00</example>
+	</element>
+	
+
+	<list name="HealthPlanCoverages">
+		<documentation>
+		HealthPlanCoverages is a collection of EncounterHealthPlanCoverage records.  Each encounter can have multiple health plan coverages.  Claims will be submitted to health plan coverages for payment based on the sequence defined for each.  Each health plan coverage can also capture whether it represents the primary or secondary insurance.
+		</documentation>
+		
+		<idsSpecification name="AccountHealthPlanCoverage" udlName="AccountHealthPlanCoverage" type="instance_child"
+			 		 		elementOrder="InsuranceCoverageTypeCode, Sequence, HealthPlanCoverageId, PatientHealthPlan"
+			 		 		implementationClass="com.ibi.omni.patient.model.financial.AccountHealthPlanCoverage">
+
+			 
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+					 	  	
+			<documentation>
+			Account Health Plan Coverage lists the HealthPlanCoverage records, as well as the order in which they are applied, for the Encounter.
+			</documentation>
+		
+			<element name="InsuranceCoverageTypeCode" type="SourceCode">
+				<documentation>
+				Indicates whether the health plan coverage is considered the primary or secondary insurance on this encounter.
+				</documentation>
+				
+				<example sourceCodeSet="InsuranceCoverageTypeCodes" sourceCode="primary">Primary Insurance</example>
+			</element>
+
+			<element name="Sequence" type="double">
+				<documentation>
+				Specifies the order in which charges are applied to health care plans.
+				</documentation>
+				
+				<example>1.0</example>
+			</element>
+			
+			<element name="HealthPlanCoverageId" type="string">
+				<documentation>
+				deprecated: UNDER CONSTRUCTION: HealthPlanCoverage has not been completed. Add unique HealthPlanCoverageId until this element is changed to a link.
+				
+				Use this element to specify the HealthPlanCoverage. 
+				</documentation>	
+			</element>	
+
+      <element name="PatientHealthPlan" type="OmniLink" contains="PatientHealthPlan" keys="SourceName, SourceInstanceId" allowCreate="true">
+        <documentation>
+        Patient Health Plan record associated with the health plan coverage.  This is maintained in the Payer domain.
+        
+        Use this element to specify a PatientHealthPlan in the system using the PatientHealthPlan's SourceName and SourceInstanceId. You cannot load PatientHealthPlan
+        information using this element, however if the PatientHealthPlan is not found then a "placeholder" will be created that will contain the PatientHealthPlan
+        when loaded.
+        </documentation>
+        
+        <example>
+          <![CDATA[
+          <PatientHealthPlan>
+            <SourceName>TestSystem</SourceName>
+            <SourceInstanceId>PatientHealthPlanId</SourceInstanceId>
+          </PatientHealthPlan>
+          ]]>
+        </example>    
+      </element>
+		</idsSpecification>
+	</list>
+	<list name="Guarantors">
+		<documentation>
+		Guarantors is a collection of AccountGuarantor records.
+		</documentation>
+		
+		<idsSpecification name="AccountGuarantor" udlName="AccountGuarantor" type="instance_child"
+			 		 		elementOrder="Sequence, Guarantor, GuarantorAccount"
+			 		 		implementationClass="com.ibi.omni.patient.model.financial.AccountGuarantor">
+
+			 
+			<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>		
+			
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+					 	  	
+			<documentation>
+			Specifies the guarantor account and sequence in which the guarantor(s) are responsible for the remaining bill.
+			</documentation>
+		
+			<element name="Sequence" type="double">
+				<documentation>
+				Specifies the priority order in which this guarantor is responsible for the bill.
+				</documentation>
+				
+				<example>1.0</example>
+			</element>
+
+			<element name="Guarantor" type="OmniLink" contains="Guarantor">
+				<documentation>
+				The person to which the bill is sent.
+				
+				Use this element to specify a Guarantor in the system using the Guarantor Account's SourceName and SourceInstanceId. You cannot load Guarantor 
+				information using this element, however if the specific entity is not found then a "placeholder" will be created that will contain the Guarantor
+				when loaded.
+				</documentation>
+			</element>
+			
+			<element name="GuarantorAccount" type="OmniLink" contains="GuarantorAccount">
+				<documentation>
+				*Deprecated: Please use Guarantor element.
+				</documentation>
+			</element>			
+		</idsSpecification>	
+	</list>
+</idsDocument>

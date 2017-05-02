@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.2.4" changeVersion="2" domain="Clinical" type="instance"
+			 name="Specimen"  
+	 		 elementOrder="SpecimenNumber, TypeCode, TypeModifierCode, CollectionMethodCode, SourceBodySiteCode, SourceBodySiteModifierCode, CollectionBodySiteCode, RoleCode, 
+	 		 		CollectionAmount, CollectionAmountUnitOfMeasureCode, GroupedSpecimenCount, Description, HandlingCode, RiskCode, CollectionDateTime, ReceivedDateTime, ExpirationDateTime,
+	 		 		AvailabilityIndicator, RejectReasonCode, QualityCode, AppropriatenessCode, ConditionCode, CurrentQuantity, CurrentQuantityUnitOfMeasureCode, NumberSpecimenContainers,
+	 		 		ContainerTypeCode, ContainerConditionCode, ParentSpecimen, ChildRoleCode, AdditiveCodes"
+	 		 		implementationClass="com.ibi.omni.patient.model.clinical.Specimen">
+	
+	<changeLog>
+		<change version="1.2.4">Initial Revision</change>
+		<change version="1.2.4_1">Changed AdditiveCodes from Group to SourceCodeList, which allows multiple AdditiveCode objects to be passed.</change>
+		<change version="1.2.4_2">Added SourceStatusCode to instance and collection items.</change>
+	</changeLog>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="SourceCodeList" class="com.ibi.omni.patient.ids.SourceCodeListType"/>
+	
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	
+	<documentation>
+	</documentation>
+
+	<element name="SpecimenNumber" type="string">
+		<documentation>
+		Specifies the specimen number.
+		</documentation>
+		
+		<example>123456789</example>
+	</element>	
+
+	<element name="TypeCode" type="SourceCode" codeSource="OMNI" codeSet="0487">
+		<documentation>
+		Describes the precise nature of the entity that will be the source material for the observation.
+		</documentation>
+		
+		
+		<example sourceName="OMNI" sourceCodeSet="0487" sourceCode="BX"/>
+	</element>
+
+	<element name="TypeModifierCode" type="SourceCode" codeSource="OMNI" codeSet="0541">
+		<documentation>
+		Contains modifying or qualifying description about the specimen type to further specify the specimen type.  This is useful when the code set used for specimen type does not provide the precision required to fully describe the specimen.  For example, if the specimen was precisely described as "capillary venous blood" but the code set used only provided "venous blood", this attribute could be used to add the modifier "capillary".
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0541" sourceCode="Y"/>
+	</element>
+
+	<element name="CollectionMethodCode" type="SourceCode" codeSource="OMNI" codeSet="0488">
+		<documentation>
+		Contains the procedure or process by which the specimen was collected.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0488" sourceCode="BIO"/>
+	</element>
+
+	<element name="SourceBodySiteCode" type="SourceCode" codeSource="OMNI" codeSet="0163">
+		<documentation>
+		Specifies the source from which the specimen was obtained. For example, in the case where a liver biopsy is obtained via a percutaneous needle, the source would be "liver".
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0163" sourceCode="RUFA"/>
+	</element>
+
+	<element name="SourceBodySiteModifierCode" type="SourceCode" codeSource="OMNI" codeSet="0495">
+		<documentation>
+		Contains the modifying or qualifying description about the specimen source site to further specify the source body site.  For example, if the specimen source body site was precisely described as "left radial vein" but the code set employed only provided "radial vein", this value could be used to add the modifier "left".
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0495" sourceCode="ANT"/>
+	</element>
+
+	<element name="CollectionBodySiteCode" type="SourceCode" codeSource="OMNI" codeSet="0543">
+		<documentation>
+		This is different than the source body site in cases where the source site must be approached via a particular site. For example, in the case where a liver biopsy is obtained via a percutaneous needle, the collection site would be the point of entry of the needle.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0543" sourceCode="Y"/>
+	</element>
+
+	<element name="RoleCode" type="SourceCode" codeSource="OMNI" codeSet="0369">
+		<documentation>
+		Identifies the role of the sample.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0369" sourceCode="O"/>
+	</element>
+
+	<element name="CollectionAmount" type="double">
+		<documentation>
+		Specifies the volume or mass of the collected specimen.
+		</documentation>
+		
+		<example>1.0</example>
+	</element>
+
+	<element name="CollectionAmountUnitOfMeasureCode" type="SourceCode" codeSource="OMNI" codeSet="6020">
+		<documentation>
+		Represents the unit of measure to be used with the specimen collection amount value.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="6020" sourceCode="Cin"/>
+	</element>
+
+	<element name="GroupedSpecimenCount" type="double">
+		<documentation>
+		Contains the number of individual specimens of a particular type represented by this instance of a specimen. The use of this field is restricted to specimens upon which all specimen related attributes are identical. This field would only be valued if the specimen role attribute was "Group".
+		</documentation>
+		
+		<example>1.0</example>
+	</element>
+
+	<element name="Description" type="string">
+		<documentation>
+		Contains additional information specifically about the specimen.
+		</documentation>
+		
+		<example></example>
+	</element>	
+	
+	<element name="HandlingCode" type="SourceCode" codeSource="OMNI" codeSet="0376">
+		<documentation>
+		Describes how the specimen and/or container need to be handled from the time of collection through the initiation of testing.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0376" sourceCode="REF"/>
+	</element>
+
+	<element name="RiskCode" type="SourceCode" codeSource="OMNI" codeSet="0489">
+		<documentation>
+		Contains any known or suspected specimen hazards, exceptionally infectious agent or blood from a hepatitis patient.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0489" sourceCode="BHZ"/>
+	</element>
+
+	<element name="CollectionDateTime" type="OmniDate">
+		<documentation>
+		Contains the date and time when the specimen was acquired from the source.
+		</documentation>
+		
+		<example format="yyyy-MM-dd">2000-01-01</example>
+	</element>
+	
+	<element name="ReceivedDateTime" type="OmniDate">
+		<documentation>
+		Contains the date and time when the specimen was received at the diagnostic service.
+		</documentation>
+		
+		<example format="yyyy-MM-dd">2000-01-01</example>
+	</element>
+	
+	<element name="ExpirationDateTime" type="OmniDate">
+		<documentation>
+		Contains the date and time when the specimen can no longer be used for the purpose implied by the order.
+		</documentation>
+		
+		<example format="yyyy-MM-dd">2000-01-01</example>
+	</element>	
+
+	<element name="AvailabilityIndicator" type="SourceCode" codeSource="OMNI" codeSet="0136">
+		<documentation>
+		Indicates whether the specimen, as it exists, is currently available to use in an analysis.  If "Yes", it is available for analysis.  If "No", is is not available for analysis.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0136" sourceCode="Y"/>
+	</element>
+
+	<element name="RejectReasonCode" type="SourceCode" codeSource="OMNI" codeSet="0490">
+		<documentation>
+		Identifies a reason when the specimen is rejected.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0490" sourceCode="EX"/>
+	</element>
+
+	<element name="QualityCode" type="SourceCode" codeSource="OMNI" codeSet="0491">
+		<documentation>
+		Contains the degree or grade of excellence of the specimen at receipt.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0491" sourceCode="G"/>
+	</element>
+
+	<element name="AppropriatenessCode" type="SourceCode" codeSource="OMNI" codeSet="0492">
+		<documentation>
+		Contains the suitability of the specimen for the particular planned use as determined by the filler.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0492" sourceCode="I"/>
+	</element>
+
+	<element name="ConditionCode" type="SourceCode" codeSource="OMNI" codeSet="0493">
+		<documentation>
+		Contains the mode or state of being that describes the nature of the specimen.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0493" sourceCode="COOL"/>
+	</element>
+
+	<element name="CurrentQuantity" type="double">
+		<documentation>
+		Contains the amount of specimen that currently exists or is available for use in further testing.
+		</documentation>
+		
+		<example>1.0</example>
+	</element>
+
+	<element name="CurrentQuantityUnitOfMeasureCode" type="SourceCode" codeSource="OMNI" codeSet="6020">
+		<documentation>
+		Represents the unit of measure to be used with the specimen current quantity value.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="6020" sourceCode="Cin"/>
+	</element>
+
+	<element name="NumberSpecimenContainers" type="double">
+		<documentation>
+		Identifies the number of containers for a given sample.
+		</documentation>
+		
+		<example>1.0</example>
+	</element>
+
+	<element name="ContainerTypeCode" type="SourceCode">
+		<documentation>
+		Contains the type of container in which a specimen is transported.
+		</documentation>
+		
+		<example sourceCodeSet="ContainerTypeCodes" sourceCode="AirTight"/>
+	</element>
+		
+	<element name="ContainerConditionCode" type="SourceCode" codeSource="OMNI" codeSet="0544">
+		<documentation>
+		In chain of custody cases where specimens are moved from lab to lab, the status of the container that the specimen is shipped in must be recorded at each receipt. If the container is compromised in any way , capture the reason here.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0544" sourceCode="sealBroken"/>
+	</element>
+
+	<element name="ParentSpecimen" type="OmniLink" contains="Specimen" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		Use this element to specify the specimen from which this specimen is derived.  You cannot load Specimen information using this element, 
+		however if the Specimen is not found then a "placeholder" will be created that will contain the Specimen when loaded.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<Specimen>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>SourceName:SpecimenId</SourceInstanceId>
+			</Specimen>
+			]]>
+		</example>		
+	</element>	
+
+	<element name="ChildRoleCode" type="SourceCode" codeSource="OMNI" codeSet="0494">
+		<documentation>
+		Contains the mode or state of being that describes the nature of the specimen.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0494" sourceCode="A"/>
+	</element>
+
+	<element name="AdditiveCodes" type="SourceCodeList" contains="AdditiveCode" codeSource="OMNI" codeSet="0371">
+		<documentation>
+		Identifies any additives introduced to the specimen before or at the time of collection. These additives may be introduced in order to preserve, maintain or enhance the particular nature or component of the specimen.
+		</documentation>
+			
+ 		<example>
+			<![CDATA[
+			<AdditiveCode sourceName="OMNI" sourceCodeSet="0371" sourceCode="NONE" />
+			<AdditiveCode sourceName="OMNI" sourceCodeSet="0371" sourceCode="ONE" />
+			]]>
+		</example>		
+	</element>
+</idsDocument>

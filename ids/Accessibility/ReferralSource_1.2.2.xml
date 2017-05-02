@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.2.2" changeVersion="2" domain="Accessibility" type="instance"
+			 name="ReferralSource" 
+	 		 elementOrder="ReferralNumber, Patient, ReferFromProvider, ReferToProvider, ReferFromLocation, 
+	 		 		       ReferToLocation, ReferralStartDateTime, ExternalReferralDateTime, ReferralStatusCode, 
+	 		 		       ReferralTypeCode, ReferralClassCode, ReferralPriorityCode, PrimaryReferralReasonCode, 
+	 		 		       NonPreferredProviderReasonCode, ReferToSpecialtyCode">
+	  	 					
+	<changeLog>
+		<change version="1.2.2">Initial Version</change>
+		<change version="1.2.2_1">Added NonPreferredProviderReasonCode</change>
+		<change version="1.2.2_2">Added SourceStatusCode to instance and collection items.</change>
+	</changeLog>
+		
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	
+	<documentation>
+	Use this document to load Patients that are waiting to be scheduled for appointments. This document can track where the
+	Patient was referred from, type of visit needed, priority and status of the appointment.
+	</documentation>
+
+	<element name="ReferralNumber" type="string">
+		<documentation>
+		
+		</documentation>
+	</element>
+	
+	<element name="Patient" type="link" contains="Patient">
+		<documentation>
+		Use this element to specify the Patient on the appointment using the Patient's SourceName and SourceInstanceId. You cannot load Patient
+		information using this element, however if the Patient is not found then a "placeholder" will be created that will contain the 
+		Patient when loaded.
+		</documentation>
+	</element>
+	
+	<element name="ReferFromProvider" type="link" contains="Provider" dbColumn="from_provider_id">
+		<documentation>
+		Use this element to specify the Referring Provider using the Provider's SourceName and SourceInstanceId. You cannot load Provider
+		information using this element, however if the Provider is not found then a "placeholder" will be created that will contain the 
+		Provider when loaded.
+		</documentation>
+	</element>
+
+	<element name="ReferToProvider" type="link" contains="Provider" dbColumn="to_provider_id">
+		<documentation>
+		Use this element to specify the Provider the Patient was referred to using the Provider's SourceName and SourceInstanceId. You cannot load Provider
+		information using this element, however if the Provider is not found then a "placeholder" will be created that will contain the 
+		Provider when loaded.
+		</documentation>
+	</element>
+
+	<element name="ReferFromLocation" type="link" contains="FacilityLocation" dbColumn="from_facility_location_id">
+		<documentation>
+		Use this element to specify the physical facility location (maintained in the Facility domain) from where the referral took place.  You cannot load FacilityLocation
+		information using this element, however if the FacilityLocation is not found then a "placeholder" will be created that will contain the FacilityLocation when loaded.
+		</documentation>
+	</element>	
+
+ 	<element name="ReferToLocation" type="link" contains="FacilityLocation" dbColumn="to_facility_location_id">
+		<documentation>
+		Use this element to specify the physical facility location (maintained in the Facility domain) to where the Patient is being referred.  You cannot load FacilityLocation
+		information using this element, however if the FacilityLocation is not found then a "placeholder" will be created that will contain the FacilityLocation when loaded.
+		</documentation>
+	</element>	
+
+	<element name="ReferralStartDateTime" type="datetime" dbColumn="referral_date">
+		<documentation>
+		Contains the starting date when the whole referral process begins.
+		</documentation>
+	</element>
+
+	<element name="ExternalReferralDateTime" type="datetime" dbColumn="external_referral_date">
+		<documentation>
+		Contains the referring date populated when the referral record is sourced from an external health care system.
+		</documentation>
+	</element>
+
+  	<element name="ReferralStatusCode" type="code">
+		<documentation>
+		Specifies the status of the referral.
+		</documentation>
+	</element>
+
+  	<element name="ReferralTypeCode" type="code">
+		<documentation>
+		Specifies the type of referral.
+		</documentation>
+	</element>
+
+  	<element name="ReferralClassCode" type="code">
+		<documentation>
+		Specifies if the referral is internal or external to the health care system.  
+		Internal means within the health care system.  
+		Incoming means it is a referral outside the health care system coming into the internal health care system.  
+		Outgoing means internal health care system is referring outside of its health care system.
+		</documentation>
+	</element>
+ 
+  	<element name="ReferralPriorityCode" type="code">
+		<documentation>
+		Specifies the priority assignment of the referral.
+		</documentation>
+	</element>
+
+  	<element name="PrimaryReferralReasonCode" type="code" dbColumn="primary_reason_code">
+		<documentation>
+		Specifies the primary reason for the referral.
+		</documentation>
+	</element>
+
+  	<element name="NonPreferredProviderReasonCode" type="code" dbColumn="nonpref_provider_reason_code">
+		<documentation>
+		Specifies reason why a non preferred provider was chosen.
+		</documentation>
+	</element>
+
+  	<element name="ReferToSpecialtyCode" type="code">
+		<documentation>
+		Specifies the specialty where patient is being referred to.
+		</documentation>
+	</element>
+</idsDocument>

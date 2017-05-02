@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.2.4" changeVersion="1" domain="Clinical.Event" type="instance"
+			 name="ObservationEvent"  
+	 		 elementOrder="EventDateTime, EventEndDateTime, Location, 
+					BatchNumber, ObservationNumber, Sequence, Subsequence, ResultTypeCode, TextResult, RatioResult, QuantityResult, SampleResult, 
+					ObservationCode, LOINCObservationCode, CPT4CategoryIICode, SNOMEDCTObservationCode, OtherObservationCodes, MoodCode, ObservationValueCode,
+					StatusCode, ReliabilityCode, MethodCode, InterpretationCode, BodySiteCode, Comment, Device, VitalSignIndicator,
+					Specimen, ReferenceRanges"
+			implementationClass="com.ibi.omni.patient.model.clinical.event.ObservationEvent">
+	  	 					
+	<changeLog>
+		<change version="1.2.4_0">Initial Version</change>
+		<change version="1.2.4_1">Added SourceStatusCode to instance and collection items.</change>
+		<change version="1.2.4_2">Added LOINCObservationCode, CPT4CategoryIICode, SNOMEDCTObservationCode,
+			OtherObservationCodes, MoodCode, and ObservationValueCode</change>
+		<change>Added CCDCategoryCode item.</change>
+	</changeLog>
+	
+	<notes>
+	- Changed name of subject to ObservationEvent to differentiate it as a type of clinicalEvent.
+	- For FacilityLocation, tweaked the definition slightly
+	- EventDateTime and FacilityLocation are common fields, but are implemented separately here to distinguish their usage/description in this Event.
+	- Changed field order slightly
+	- Handled the different flavors of Observation as groups.
+	</notes>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	<customType name="SourceCodeList" class="com.ibi.dib.core.ids.types.IdsCodeListType"/>
+
+	<include name="EventElements"
+			 prependToElementOrder="ParentEvent, Encounter, CarePlanId, CarePlan, CCDCategoryCode"
+			 appendToElementOrder="EventProviders, EventNotes"/>
+			 
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	
+	<documentation>	
+	An observation will contain an ObservationDetail object which contains detailed information on the observation result as well as the batch number assigned to it to allow for analysis and reporting at both the individual observation result level and batch level.  The observation sequence allows ordering of observation results within a batch of observations.  The subsequence can be used to order results that have the same observation number.
+	</documentation>
+
+	<element name="EventDateTime" type="OmniDate">
+		<documentation>
+		Date and time that the observation was made.
+		</documentation>
+		
+		<example format="yyyy-MM-dd hh:mm:ss">2000-10-01 11:12:32</example>
+	</element>
+
+	<element name="EventEndDateTime" type="OmniDate">
+		<documentation>
+		If the observation is a set of measurements over a period of time (e.g. readings from a device), this represents the ending date and time.
+		</documentation>
+		
+		<example format="yyyy-MM-dd hh:mm:ss">2000-10-01 11:12:32</example>
+	</element>
+
+	<element name="Location" type="OmniLink" contains="FacilityLocation" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		The facility location where the observation was made.
+		
+		Use this element to specify a FacilityLocation in the system using the FacilityLocation's SourceName and SourceInstanceId. You cannot load FacilityLocation
+		information using this element, however if the FacilityLocation is not found then a "placeholder" will be created that will contain the FacilityLocation
+		when loaded.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<FacilityLocation>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>FacilityLocationId</SourceInstanceId>
+			</FacilityLocation>
+			]]>
+		</example>		
+	</element>
+
+	<element name="BatchNumber" type="string">
+		<documentation>
+		Identifies this observation as belonging to a batch of observations which can be of any result type (e.g. Quantity, Ratio, String, Sample).  This provides a way to group individual observations together for analysis and reporting.
+		</documentation>
+		
+		<example>123456789</example>
+	</element>			
+
+	<element name="ObservationNumber" type="string">
+		<documentation>
+		Specifies the observation number for this observation result.
+		</documentation>
+		
+		<example>987654321</example>
+	</element>			
+
+	<element name="Sequence" type="double">
+		<documentation>
+		Represents the sequence of the observation result within a batch of observation results.
+		</documentation>
+		
+		<example>1.0</example>
+	</element>
+
+	<element name="Subsequence" type="double">
+		<documentation>
+		Represents the sequence of the observation result within a set of observation results that have the same observation number.
+		</documentation>
+		
+		<example>1.0</example>
+	</element>
+
+	<element name="ResultTypeCode" type="SourceCode" codeSource="OMNI" codeSet="6050">
+		<documentation>
+		Describes the type of result on the observation.  Each documented observation should fill in one of the following: TextResult, RatioResult, QuantityResult, or SampleResult, based on the appropriate ResultTypeCode selected.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="6050" sourceCode="ratio"></example>
+	</element>	
+
+	<element name="TextResult" type="string" maxLength="1000">
+		<documentation>
+		Represents an Observation result represented as text.
+		</documentation>
+		
+		<example>Left Eye</example>
+	</element>			
+
+	<group name="RatioResult" 
+	       elementOrder="Numerator, Denominator" udlName="ratio">
+		<documentation>
+		Represents an Observation result represented as a ratio.
+		</documentation>
+
+		<element name="Numerator" type="double">
+			<documentation>
+			The numerator is the top number of a titer such as "1" in "1:128".
+			</documentation>
+			
+			<example>1.0</example>
+		</element>
+		
+		<element name="Denominator" type="double">
+			<documentation>
+			The denominator is the bottom number of a titer such as "1" in "1:128".
+			</documentation>
+			
+			<example>1.0</example>
+		</element>
+	</group>
+
+	<group name="QuantityResult" 
+	       elementOrder="Value, ValueUnitOfMeasureCode, ValueComparatorCode" udlName="quantity">
+		<documentation>
+		Represents an Observation result represented as a measured amount. 
+		</documentation>
+
+		<element name="Value" type="double">
+			<documentation>
+			The numeric result value. 
+			</documentation>
+			
+			<example>2.5</example>
+		</element>
+
+		<element name="ValueUnitOfMeasureCode" type="SourceCode" codeSource="OMNI" codeSet="6020">
+			<documentation>
+			Represents the unit of measure to be used with the result value.
+			</documentation>
+			
+			<example sourceName="OMNI" sourceCodeSet="6020" sourceCode="Cin"/>
+		</element>
+
+		<element name="ValueComparatorCode" type="SourceCode" codeSource="OMNI" codeSet="6045">
+			<documentation>
+			How the value should be understood and represented.  When no comparator exists, "equal" is implicit.
+			</documentation>
+			
+			<example sourceName="OMNI" sourceCodeSet="6045" sourceCode="le">Less than or equal to</example>
+		</element>	
+	</group>
+
+	<group name="SampleResult" 
+	       elementOrder="OriginValue, OriginUnitOfMeasureCode, ResultPeriod, ResultFactor, ResultLowerLimit, ResultUpperLimit, ResultDimensions, ResultData" udlName="sample">
+		<documentation>
+		Represents an Observation result represented as a measured amount. 
+		</documentation>
+
+		<element name="OriginValue" type="double">
+			<documentation>
+			The base quantity that a measured value of zero represents.
+			</documentation>
+			
+			<example>2.5</example>
+		</element>
+
+		<element name="OriginUnitOfMeasureCode" type="SourceCode" codeSource="OMNI" codeSet="6020">
+			<documentation>
+			Represents the unit of measure to be used with the result origin value.
+			</documentation>
+			
+			<example sourceName="OMNI" sourceCodeSet="6020" sourceCode="Cin"/>
+		</element>
+		
+		<element name="ResultPeriod" type="double">
+			<documentation>
+			The length of time between sampling times, measured in milliseconds.
+			</documentation>
+			
+			<example>2.0</example>
+		</element>
+
+		<element name="ResultFactor" type="double">
+			<documentation>
+			A correction factor that is applied to the sampled data points before they are added to the origin.
+			</documentation>
+			
+			<example>1.5</example>
+		</element>
+
+		<element name="ResultLowerLimit" type="double">
+			<documentation>
+			The lower limit of detection of the measured points. This is needed if any of the data points have the value "L" (lower than detection limit).
+			</documentation>
+			
+			<example>2.5</example>
+		</element>
+
+		<element name="ResultUpperLimit" type="double">
+			<documentation>
+			The upper limit of detection of the measured points. This is needed if any of the data points have the value "U" (higher than detection limit).
+			</documentation>
+			
+			<example>5.0</example>
+		</element>
+
+		<element name="ResultDimensions" type="double">
+			<documentation>
+			Number of sample points at each time point.
+			</documentation>
+			
+			<example>2.0</example>
+		</element>
+		
+		<element name="ResultData" type="string">
+			<documentation>
+			Decimal values with spaces, or "E" | "U" |"L".
+
+			The digits are a set of decimal values separated by a single space. In addition to decimal values, the special values "E" (error), "L" (below detection limit) and "U" (above detection limit) can also be used. If there is more than one dimension, the different dimensions are interlaced - all the data points for a particular time are represented together.
+			</documentation>
+			
+			<example>123.0E</example>
+		</element>		
+	</group>
+
+	<element name="ObservationCode" type="SourceCode">
+		<documentation>
+		Identifies the laboratory or clinical observation to perform to capture information about a patient (vitals, labs, diagnostic images, etc.)
+		</documentation>
+		
+		<example sourceCodeSet="ObservationCodes" sourceCode="BMI">Body Mass Index</example>
+	</element>
+
+	<element name="LOINCObservationCode" type="SourceCode" codeSource="LOINC" codeSet="2.16.840.1.113883.6.1">
+		<documentation>
+			Observation code expressed as a LOINC code.
+		</documentation>
+
+		<example sourceName="LOINC" sourceCodeSet="2.16.840.1.113883.6.1" sourceCode="0528"/>>
+	</element>
+
+	<element name="CPT4CategoryIICode" type="SourceCode" codeSource="CPT-4" codeSet="2.16.840.1.113883.6.12">
+		<documentation>
+			Observation code expressed as a CPT-4 Category II code.
+		</documentation>
+
+		<example sourceName="CPT-4" sourceCodeSet="2.16.840.1.113883.6.12" sourceCode="0528"/>
+	</element>
+
+	<element name="SNOMEDCTObservationCode" type="SourceCode" codeSource="SNOMED">
+		<documentation>
+			Observation code expressed as a SNOMED code.
+		</documentation>
+		<example sourceName="SNOMED" sourceCodeSet="2.16.840.1.113883.6.90" sourceCode="052.8"/>
+	</element>
+
+	<element name="OtherObservationCodes" type="SourceCodeList" contains="OtherObservationCode">
+		<documentation>
+			Observation code expressed in a custom or proprietary code set.
+		</documentation>
+
+		<![CDATA[
+			<OtherObservationCode sourceName="ICD9" sourceCodeSet="2.16.840.1.113883.6.12" sourceCode="NONE" />
+			<OtherObservationCode sourceName="ICD9" sourceCodeSet="2.16.840.1.113883.6.12" sourceCode="ONE" />
+			]]>
+	</element>
+
+	<element name="MoodCode" type="SourceCode" >
+		<documentation>
+			Indicates whether the observation has been observed, is a goal, is inteded or is expected in the future
+		</documentation>
+		<example sourceName="TestSystem" codeSet="MoodCode">SpecialCode</example>
+	</element>
+
+	<element name="ObservationValueCode" type="SourceCode">
+		<documentation>
+			Code representing or categorizing the value of the observation.
+		</documentation>
+		<example sourceName="TestSystem" codeSet="ObservationValueCode">SpecialCode</example>
+	</element>
+
+
+	<element name="StatusCode" type="SourceCode" codeSource="OMNI" codeSet="0085">
+		<documentation>
+		Indicates the current process of the observation from the time it is registered until the final results are received.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0085" sourceCode="P"/>
+	</element>	
+
+	<element name="ReliabilityCode" type="SourceCode">
+		<documentation>
+		Codes that provide an estimate of the degree to which quality issues have impacted on the value of an observation.
+		</documentation>
+		
+		<example sourceCodeSet="ReliabilityCodes" sourceCode="questionable">Questionable</example>
+	</element>	
+	
+	<element name="MethodCode" type="SourceCode">
+		<documentation>
+		Codes that provides additional detail about the means or technique used to ascertain the observation.
+		</documentation>
+		
+		<example sourceCodeSet="MethodCodes" sourceCode="average">Average</example>
+	</element>	
+	
+	<element name="InterpretationCode" type="SourceCode">
+		<documentation>
+		Codes identifying interpretations of observations.
+		</documentation>
+		
+		<example sourceCodeSet="InterpretationCodes" sourceCode="POS">Positive</example>
+	</element>	
+
+	<element name="BodySiteCode" type="SourceCode" codeSource="OMNI" codeSet="0163">
+		<documentation>
+		Identifies the anatomical location on which the observation was made.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0163" sourceCode="LA"/>
+	</element>
+
+	<element name="Comment" type="string" maxLength="1000">
+		<documentation>
+		Comment for the observation.
+		</documentation>
+		
+		<example>Comment 1</example>
+	</element>			
+
+	<element name="Device" type="string">
+		<documentation>
+		UNDER CONSTRUCTION: Device has not been completed. Add unique Device identifier until this element is changed to a link.
+		
+		The device identifies physical equipment used to perform the observation.  All devices are maintained in the Facility domain tracking the type of device, manufacturer, model, software version, UDI (unique device identifier required by FDA), location, owner, contact, etc).
+		</documentation>	
+	</element>	
+
+	<element name="VitalSignIndicator" type="SourceCode" codeSource="OMNI" codeSet="0136">
+		<documentation>
+		Indicates whether the observation is categorized as a "vital sign".  If "Yes", observation is a vital sign.  If "No", observation is not a vita sign.
+		</documentation>
+		
+		<example sourceName="OMNI" sourceCodeSet="0136" sourceCode="Y"/>
+	</element>
+ 
+ 	<element name="Specimen" type="OmniLink" contains="Specimen" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		Use this element to specify the specimen used in this observation.  An observation may or may not be associated with a specimen. You cannot load Specimen information using this element, 
+		however if the Specimen is not found then a "placeholder" will be created that will contain the Specimen when loaded.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<Specimen>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>SourceName:SpecimenId</SourceInstanceId>
+			</Specimen>
+			]]>
+		</example>		
+	</element>	
+
+ 	<list name="ReferenceRanges">
+		<documentation>
+		ReferenceRanges is a collection of ReferenceRange records which are used to interpret the results by comparison to a normal or recommended range.
+		</documentation>
+		
+		<idsSpecification name="ReferenceRange" udlName="ReferenceRange" 
+			 		 		elementOrder="RangeMeaningCode, LowValue, LowValueUnitOfMeasureCode, LowValueComparatorCode,
+			 		 		 HighValue, HighValueUnitOfMeasureCode, HighValueComparatorCode, Age, AgeUnitsCode"
+			 		 		 implementationClass="com.ibi.omni.patient.model.clinical.event.ReferenceRange">
+			 
+			<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+			<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+					 	  	
+			<documentation>
+			Knowing what values are considered "normal" can help evaluate the significance of a particular result.  A reference range can be generic or be specific to the patient's age, gender, weight and other factors. 
+			</documentation>
+		
+			<element name="RangeMeaningCode" type="SourceCode">
+				<documentation>
+				Used to indicate the meaning/use of a reference range.
+				</documentation>
+				
+				<example sourceCodeSet="RangeMeaningCodes" sourceCode="normal">Normal (based on 95th percentile for the relevant control population)</example>
+			</element>	
+
+			<element name="LowValue" type="double">
+				<documentation>
+				The numeric low value of the reference range. 
+				</documentation>
+				
+				<example>2.5</example>
+			</element>
+
+			<element name="LowValueUnitOfMeasureCode" type="SourceCode" codeSource="OMNI" codeSet="6020">
+				<documentation>
+				Represents the unit of measure to be used with the low value.
+				</documentation>
+				
+				<example sourceName="OMNI" sourceCodeSet="6020" sourceCode="Cin"/>
+			</element>
+
+			<element name="LowValueComparatorCode" type="SourceCode" codeSource="OMNI" codeSet="6045">
+				<documentation>
+				How the value should be understood and represented.    Should not use comparator values "lt" or "gt" for Low/High values as it is implied and should be ignored.
+				</documentation>
+				
+				<example sourceName="OMNI" sourceCodeSet="6045" sourceCode="le">Less than or equal to</example>
+			</element>	
+
+			<element name="HighValue" type="double">
+				<documentation>
+				The numeric high value of the reference range. 
+				</documentation>
+				
+				<example>2.5</example>
+			</element>
+
+			<element name="HighValueUnitOfMeasureCode" type="SourceCode" codeSource="OMNI" codeSet="6020">
+				<documentation>
+				Represents the unit of measure to be used with the high value.
+				</documentation>
+				
+				<example sourceName="OMNI" sourceCodeSet="6020" sourceCode="Cin"/>
+			</element>
+
+			<element name="HighValueComparatorCode" type="SourceCode">
+				<documentation>
+				How the value should be understood and represented.  Should not use comparator values "lt" or "gt" for Low/High values as it is implied and should be ignored.
+				</documentation>
+				
+				<example sourceName="OMNI" sourceCodeSet="6045" sourceCode="le">Less than or equal to</example>
+			</element>	
+
+			<element name="Age" type="double">
+				<documentation>
+				Age at which this reference range is applicable. 
+				</documentation>
+				
+				<example>2.5</example>
+			</element>
+		
+			<element name="AgeUnitsCode" type="SourceCode" codeSource="OMNI" codeSet="0625">
+				<documentation>
+				The Age represents when the reference range is applicable.  The Units define how to interpret the age value.
+				</documentation>
+						
+				<example sourceName="OMNI" sourceCodeSet="0625" sourceCode="a"/>
+			</element>
+		</idsSpecification>			
+	</list>	 		 			
+</idsDocument>

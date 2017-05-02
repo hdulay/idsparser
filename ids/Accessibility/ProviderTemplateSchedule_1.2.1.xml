@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.2.1" changeVersion="2" domain="Accessibility" type="instance"
+			 name="ProviderTemplateSchedule"  
+	 		 elementOrder="Template, ScheduleStartDate, ScheduleEndDate, DayOfWeek, StartTime, EndTime,
+	 		               SlotLength, OpeningsPerSlot, NumberOfOverbooksAllowed, PrivateSlot, ModificationReason">
+	  	 					
+	<changeLog>
+		<change version="1.2.1">Initial Version</change>
+		<change version="1.2.1_2">Added SourceStatusCode to instance and collection items.</change>
+	</changeLog>
+		
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	
+	<documentation>
+	Use this input specification  to load a collection of records supplied by a Provider to define slots of time set aside
+	by the Provider at a specific Location that can be used for scheduling appointments. Each ProviderTemplateSchedule can
+	provide information for a Provider, Location, Day of Week, Time, and Slot Length. These slots can then be used for 
+	determining Provider availability and hence appointment scheduling. 
+	</documentation>
+
+	<element name="Template" type="link" contains="ProviderTemplate" dbColumn="provider_template_id">
+		<documentation>
+		Use this element to link this ProviderTemplateSchedule to a ProviderTemplate using the ProviderTemplate's 
+		SourceName and SourceInstanceId.You cannot load ProviderTemplate information using this element, however 
+		if the ProviderTemplate is not found then a "placeholder" will be created that will contain the ProviderTemplate
+		when loaded.
+		</documentation>
+	</element>
+
+	<element name="ScheduleStartDate" type="date">
+		<documentation>
+		Use this element to specify the schedules start date for a Provider at a Location for
+		specific day of week and time frame.
+		
+		Integration Note: Only specify the date format. Any time information should be placed in
+		StartTime and EndTime elements.
+		</documentation>
+	</element>
+
+	<element name="ScheduleEndDate" type="date">
+		<documentation>
+		Use this element to specify the schedules end date for a Provider at a Location for
+		specific day of week and time frame.
+		
+		Integration Note: Only specify the date format. Any time information should be placed in
+		StartTime and EndTime elements.
+		</documentation>
+	</element>
+
+	<element name="DayOfWeek" type="integer">
+		<documentation>
+		Use this element to specify the day of week associated with the ProviderTemplateSchedule. This
+		is a number starting with 0 for designating Sunday.
+		</documentation>
+	</element>
+
+	<element name="StartTime" type="time" dbColumn="start_time">
+		<documentation>
+		Use this element to specify the starting time of this TemplateSchedule on the specified day.
+		
+		Integration Notes: See the java SimpleDateFormat for formatting options.
+		</documentation>
+	</element>
+
+	<element name="EndTime" type="time" dbColumn="end_time">
+		<documentation>
+		Use this element to specify the ending time of this TemplateSchedule on the specified day.
+		
+		Integration Notes: See the java SimpleDateFormat for formatting options.		
+		</documentation>
+	</element>
+
+	<element name="SlotLength" type="integer">
+		<documentation>
+		Use this element to specify the slot length for the specified DayOfWeek and StartTime-EndTime
+		range. All lengths should be in minutes.
+		</documentation>
+	</element>
+
+	<element name="OpeningsPerSlot" type="integer">
+		<documentation>
+		Use this element to specify the number of openings allowed for each slot. For example a Provider
+		may allow 2 Patients to be booked into a 30 minute slot.
+		</documentation>
+	</element>
+
+	<element name="NumberOfOverbooksAllowed" type="integer" dbColumn="nbr_overbooks_allowed">
+		<documentation>
+		Use this element to specify the maximum number of overbookings for a slot.
+		</documentation>
+	</element>
+
+	<element name="PrivateSlot" type="code">
+		<documentation>
+		Use this element to specify if the slots for this schedule are private. Typically private slots
+		should not be visible to the public as the Patient's may have high visibility. The assumption is
+		the when set to "Y" then only private Patients will be scheduled into this slot.
+		</documentation>
+	</element>
+
+	<element name="ModificationReason" type="code">
+		<documentation>
+		Use this element to code the reason this template was modified. This information along
+		with SourceModifiedDay and SourceModifiedBy will give a full audit trail of changes to
+		this template.
+		</documentation>
+	</element>
+</idsDocument>

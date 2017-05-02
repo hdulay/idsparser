@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.2.1" changeVersion="3" domain="Accessibility" type="instance"
+			 name="PatientWaitList"  
+	 		 elementOrder="Patient, Referral, ScheduledAppointment, WaitListStatusCode, RemovalReasonCode, VisitTypeCode,
+	 		               TreatmentCode, PriorityCode, AppointmentLength, SchedulingPreference, PreferedBeginDate,
+	 		               PreferedEndDate, AppointmentPreferences">
+	  	 					
+	<changeLog>
+		<change version="1.2.1">Initial Version</change>
+		<change version="1.2.1_2">Replaced ReferralId and ScheduledAppointmentId with real links</change>
+		<change version="1.2.1_3">Added SourceStatusCode to instance and collection items.</change>		
+	</changeLog>
+		
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	
+	<documentation>
+	Use this document to load Patients that are waiting to be scheduled for appointments. This document can track where the
+	Patient was referred from, type of visit needed, priority and status of the appointment.
+	</documentation>
+
+	<element name="Patient" type="link" contains="Patient">
+		<documentation>
+		Use this element to specify the Patient waiting using the Patient's SourceName and SourceInstanceId. You cannot load Patient
+		information using this element, however if the Patient is not found then a "placeholder" will be created that will contain the 
+		Patient when loaded.
+		</documentation>
+	</element>
+		
+	<element name="Referral" type="link" contains="ReferralSource" dbColumn="referral_id">
+		<documentation>
+		Use this element to specify the Referal that prompted the request for the appointment. 
+		</documentation>
+	</element>	
+		
+	<element name="ScheduledAppointment" type="link" contains="Appointment" dbColumn="appointment_id">
+		<documentation>
+		Use this element to link this PatientWaitList to a scheduled appointment.  
+		</documentation>	
+	</element>	
+
+  	<element name="WaitListStatusCode" type="code">
+		<documentation>
+		Use this element to specify the status of this PatientWaitList. For example:
+		Pending, Scheduled, Deleted, Expired, Auto-Deleted, etc...
+		</documentation>
+	</element>
+
+  	<element name="RemovalReasonCode" type="code">
+		<documentation>
+		When a wait list item no longer requires scheduling use this element to specify the reason. 
+		
+		For Example:
+		Regular Treatment, Emergency Admission, Deceased, Treated Elsewhere, Complaint Disappeared, Indication Expired,
+		Patient Request, Order Expired, Referral Expired, etc...
+		</documentation>
+	</element>
+
+  	<element name="VisitTypeCode" type="code">
+		<documentation>
+		Use this element to specify the type of visit being requested.
+		</documentation>
+	</element>
+
+  	<element name="TreatmentCode" type="code">
+		<documentation>
+		Use this element to specify the type treatment required during the appointment. 
+		</documentation>
+	</element>
+
+  	<element name="PriorityCode" type="code">
+		<documentation>
+		Use this element to specify the priority of the appointment request. 
+		</documentation>
+	</element>
+
+	<element name="AppointmentLength" type="integer">
+		<documentation>
+		Use this element to specify the length of appointment requested. 
+		</documentation>
+	</element>
+
+  	<element name="SchedulingPreference" type="string">
+		<documentation>
+		Use this element to specify the Patient's preference for scheduling the appointment. 
+		</documentation>
+	</element>
+
+  	<element name="PreferedBeginDate" type="date">
+		<documentation>
+		Use this element to specify the first date to look for an appointment. 
+		</documentation>
+	</element>
+
+  	<element name="PreferedEndDate" type="date">
+		<documentation>
+		Use this element to specify the last date to look for an appointment. 
+		</documentation>
+	</element>
+
+	<list name="AppointmentPreferences">
+		<documentation>
+		Use this collection to specify the list of preferred Locations and/or Providers. This list can be
+		validated against ProviderAvailablitySlots to held scheduling and appointment.  
+		</documentation>
+		
+		<idsDocument name="PatientWaitListPreference" type="instance_child"
+			 		 		elementOrder="Provider, Location">
+			 		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+					 	  	
+			<documentation>
+			Use this document to specify a preferred FacilityLocation and/or Provider combination to use when
+			scheduling an appointment. 
+			</documentation>
+		
+			<element name="Provider" type="link" contains="Provider">
+				<documentation>
+				Use this element to specify a preferred service Provider using the Provider's SourceName and SourceInstanceId. You cannot load Provider
+				information using this element, however if the Provider is not found then a "placeholder" will be created that will contain the Provider
+				when loaded.
+				</documentation>
+			</element>
+				
+			<element name="Location" type="link" contains="FacilityLocation" dbColumn="facility_location_id">
+				<documentation>
+				Use this element to specify the preferred location to perform services using the FacilityLocation's SourceName and SourceInstanceId.
+				You cannot load FacilityLocation using this element, however if the FacilityLocation is not found a "placeholder" will be created that will
+				contain the FacilityLocation information when its loaded.
+				</documentation>
+			</element>
+		</idsDocument>			
+	</list>
+
+</idsDocument>

@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.2.2" changeVersion="1" domain="Accessibility" type="instance"
+			 name="Appointment"  
+	 		 elementOrder="AppointmentNumber, Patient, Provider, Location, LanguageInterpreterCode, ShadowProvider, ReferralSource, VisitTypeCode, BlockCategoryCode, 
+						NumberOfCalls, NumberOfChanges, ChangeReasonCode, AppointmentStatusCode, AutomatedReminderStatusCode, ConfirmationStatusCode,
+						CancellationReasonCode, RescheduledAppointment, Execution, Indicators, Notifications, Notes, Encounter">
+	  	 					
+	<changeLog>
+		<change version="1.2.2_0">Initial Version</change>
+		<change version="1.2.2_1">Added CancellationReasonCode</change>
+		<change version="1.2.2_2">Added SourceStatusCode to instance and collection items.</change>
+	</changeLog>
+
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	
+	<documentation>
+	Use this document to load Patients that are waiting to be scheduled for appointments. This document can track where the
+	Patient was referred from, type of visit needed, priority and status of the appointment.
+	</documentation>
+
+	<element name="AppointmentNumber" type="string">
+		<documentation>
+		Specifies the appointment number.  This number usually carries over as the encounter number.
+		</documentation>
+	</element>
+	
+	<element name="Patient" type="link" contains="Patient">
+		<documentation>
+		Use this element to specify the Patient on the appointment using the Patient's SourceName and SourceInstanceId. You cannot load Patient
+		information using this element, however if the Patient is not found then a "placeholder" will be created that will contain the 
+		Patient when loaded.
+		</documentation>
+	</element>
+	
+	<element name="Provider" type="link" contains="Provider">
+		<documentation>
+		Use this element to specify the Provider assigned to the appointment using the Provider's SourceName and SourceInstanceId. You cannot load Provider
+		information using this element, however if the Provider is not found then a "placeholder" will be created that will contain the 
+		Provider when loaded.
+		</documentation>
+	</element>
+
+	<element name="Location" type="link" contains="FacilityLocation" dbColumn="facility_location_id">
+		<documentation>
+		Use this element to specify the physical facility location (maintained in the Facility domain) where the appointment will take place.  You cannot load FacilityLocation
+		information using this element, however if the FacilityLocation is not found then a "placeholder" will be created that will contain the FacilityLocation when loaded.
+		</documentation>
+	</element>	
+
+  	<element name="LanguageInterpreterCode" type="code">
+		<documentation>
+		If patient requires an interpreter, this categorizes the provider as a certain type of interpreter.
+		</documentation>
+	</element>
+
+	<element name="ShadowProvider" type="link" contains="Provider" dbColumn="shadow_provider_id">
+		<documentation>
+		Use this element to specify the who is brought in to shadow the primary provider assigned to this appointment using the Provider's SourceName and SourceInstanceId. You cannot load Provider
+		information using this element, however if the Provider is not found then a "placeholder" will be created that will contain the Provider when loaded.
+		</documentation>
+	</element>
+
+	<element name="ReferralSource" type="link" contains="ReferralSource" dbColumn="referral_source_id">
+		<documentation>
+		Use this element to specify the referral source which specifies the provider 
+		and location from which the referral originated using the ReferralSource's SourceName 
+		and SourceInstanceId. You cannot load ReferralSource information using this element, however 
+		if the ReferralSource is not found then a "placeholder" will be created that will contain the 
+		ReferralSource when loaded.
+		</documentation>
+	</element>		
+	
+  	<element name="VisitTypeCode" type="code">
+		<documentation>
+		Represents the type of visit for this appointment.
+		</documentation>
+	</element>
+
+  	<element name="BlockCategoryCode" type="code">
+		<documentation>
+		Specifies the type of block assigned to this appointment.
+		</documentation>
+	</element>
+
+	<element name="NumberOfCalls" type="integer">
+		<documentation>
+		The number of calls made to the patient about the appointment using communication tracking functionality.
+		</documentation>
+	</element>
+
+	<element name="NumberOfChanges" type="integer">
+		<documentation>
+		The number of times that an appointment has been changed.  If an appointment has not been changed, this should be 0.
+		</documentation>
+	</element>
+
+  	<element name="ChangeReasonCode" type="code">
+		<documentation>
+		Specifies a coded reason why the appointment was changed.
+		</documentation>
+	</element>
+	
+	<element name="AppointmentStatusCode" type="code">
+		<documentation>
+		Specifies the status of this appointment.
+		</documentation>
+	</element>
+
+  	<element name="AutomatedReminderStatusCode" type="code">
+		<documentation>
+		Specifies the response from an automated appointment reminder system for this appointment.
+		</documentation>
+	</element>
+
+  	<element name="ConfirmationStatusCode" type="code">
+		<documentation>
+		Specifies the response from an automated appointment reminder system for this appointment.
+		</documentation>
+	</element>
+
+  	<element name="CancellationReasonCode" type="code">
+		<documentation>
+		Specifies the response from an automated appointment reminder system for this appointment.
+		</documentation>
+	</element>
+	
+	<element name="RescheduledAppointment" type="link" contains="Appointment" dbColumn="rescheduled_appointment_id">
+		<documentation>
+		Use this element to specify a link to the rescheduled appointment using the Appointment's SourceName and SourceInstanceId. You cannot load Appointment
+		information using this element, however if the Appointment is not found then a "placeholder" will be created that will contain the 
+		Appointment when loaded.
+		</documentation>
+	</element>
+
+	<group name="Execution" 
+	       elementOrder="AppointmentLength, AppointmentStartDateTime, AppointmentEndDateTime, ScheduledFromKiosk, 
+	       				 ConfirmedDateTime, CancelledDateTime, SignInDateTime, InitialCheckInDateTime, CheckInKiosk, 
+	       				 CheckInDateTime, ArrivalListRemovalDateTime, PagedDateTime, RoomAssignedDateTime, 
+	       				 RoomedDateTime, NurseLeftRoomDateTime, ProviderEnteredRoomDateTime, CheckOutKiosk, 
+	       				 CheckOutDateTime" 
+	       udlName="execution">
+
+		<documentation>
+		This group organizes all of the pertinent Execution Date/Times related to the Appointment.
+		</documentation>
+
+		<element name="AppointmentLength" type="integer" dbColumn="appointment_length">
+			<documentation>
+			Use this element to specify the length of the appointment in minutes. 
+			</documentation>
+		</element>
+		
+		<element name="AppointmentStartDateTime" type="datetime" dbColumn="appointment_start_date">
+			<documentation>
+			Use this element to specify the start date and time of the appointment.
+			</documentation>
+		</element>
+	
+		<element name="AppointmentEndDateTime" type="datetime" dbColumn="appointment_end_date">
+			<documentation>
+			Use this element to specify the start date and time of the appointment.
+			</documentation>
+		</element>
+	
+		<element name="ScheduledFromKiosk" type="string" dbColumn="scheduled_from_kiosk">
+			<documentation>
+			Physical kiosk machine used to schedule the appointment.
+			</documentation>
+		</element>
+
+		<element name="ConfirmedDateTime" type="datetime" dbColumn="confirmed_date">
+			<documentation>
+			Specifies the date and time the appointment was confirmed.
+			</documentation>
+		</element>
+		
+		<element name="CancelledDateTime" type="datetime" dbColumn="cancelled_date">
+			<documentation>
+			Specifies the date and time the appointment was cancelled.
+			</documentation>
+		</element>
+		
+		<element name="SignInDateTime" type="datetime" dbColumn="sign_in_date">
+			<documentation>
+			Specifies the date and time the sign-in action occurred on the appointment.
+			</documentation>
+		</element>
+		
+		<element name="InitialCheckInDateTime" type="datetime" dbColumn="initial_check_in_date">
+			<documentation>
+			Specifies the date and time that the system began the check-in action on the appointment. 
+			</documentation>
+		</element>
+		
+		<element name="CheckInKiosk" type="string" dbColumn="check_in_kiosk">
+			<documentation>
+			 Physical kiosk machine used for the appointment check-in process.
+			</documentation>
+		</element>
+		
+		<element name="CheckInDateTime" type="datetime" dbColumn="check_in_date">
+			<documentation>
+			Specifies the date and time the check-in action occurred on the appointment.
+			</documentation>
+		</element>
+		
+		<element name="ArrivalListRemovalDateTime" type="datetime" dbColumn="arrival_list_removal_date">
+			<documentation>
+			Specifies the date and time the patient was removed from the arrival list that the patient signed when first arrived at the facility location.
+			</documentation>
+		</element>
+		
+		<element name="PagedDateTime" type="datetime" dbColumn="paged_date">
+			<documentation>
+			Specifies the date and time the patient was paged on the appointment.
+			</documentation>
+		</element>
+		
+		<element name="RoomAssignedDateTime" type="datetime" dbColumn="room_assigned_date">
+			<documentation>
+			Specifies the date and time the patient was first assigned to a room for the appointment.
+			</documentation>
+		</element>
+		
+		<element name="RoomedDateTime" type="datetime" dbColumn="roomed_date">
+			<documentation>
+			Specifies the date and time the patient arrived in his/her assigned room for the appointment.
+			</documentation>
+		</element>
+		
+		<element name="NurseLeftRoomDateTime" type="datetime" dbColumn="nurse_left_room_date">
+			<documentation>
+			Specifies the date and time the nurse left the patient's assigned room on the appointment.
+			</documentation>
+		</element>
+		
+		<element name="ProviderEnteredRoomDateTime" type="datetime" dbColumn="provider_entered_room_date">
+			<documentation>
+			Specifies the date and time the provider entered the patient's assigned room on the appointment.
+			</documentation>
+		</element>
+		
+		<element name="CheckOutKiosk" type="string" dbColumn="check_out_kiosk">
+			<documentation>
+			Physical kiosk machine used for the appointment check-out process.
+			</documentation>
+		</element>
+		
+		<element name="CheckOutDateTime" type="datetime" dbColumn="check_out_date">
+			<documentation>
+			Specifies the date and time the check-out action occurred on the appointment.
+			</documentation>
+		</element>
+	</group>
+
+	<group name="Indicators" 
+	       elementOrder="ReferralIndicator, OverbookIndicator, OverrideIndicator, TimeUnavailableIndicator, 
+	       		         WalkinIndicator, SequentialAppointmentIndicator, WarningOverridenIndicator, 
+	       		         SameDayIndicator, JointAppointmentIndicator, CancelledSameDayIndicator" 
+	       udlName="indicator">
+	       
+		<documentation>
+		This group organizes all of the Yes/No Indicators related to the Appointment.
+		</documentation>
+
+		<element name="ReferralIndicator" type="code" codeSource="HL7" codeSet="0136" dbColumn="referral_code">
+			<documentation>
+			Indicates whether or not the appointment requires a referral as determined by the visit coverage and appointment information.  
+			If "Yes", appointment requires a referral.  If "No", appointment does not require a referral.  
+			</documentation>
+		</element>
+	
+		<element name="OverbookIndicator" type="code" codeSource="HL7" codeSet="0136" dbColumn="overbook_code">
+			<documentation>
+			Indicates whether or not the appointment was booked into an overbook opening.  If "Yes", indicates that the appointment 
+			was overbooked.  If this is a joint appointment, indicates that the appointment was overbooked with at least one of 
+			the providers.  If "No", indicates that the appointment was not overbooked. 
+			</documentation>
+		</element>
+		
+		<element name="OverrideIndicator" type="code" codeSource="HL7" codeSet="0136" dbColumn="override_code">
+			<documentation>
+			Indicates whether or not the appointment was scheduled outside of the template. 
+			If "Yes", indicates that it was scheduled outside of the template.   
+			If "Yes" and this is a joint appointment, appointment is outside of the regular schedule 
+			for at least one of the providers.  
+			If "No", indicates that it was not scheduled outside of the template.
+			</documentation>
+		</element>
+	
+		<element name="TimeUnavailableIndicator" type="code" codeSource="HL7" codeSet="0136" dbColumn="time_unavailable_code">
+			<documentation>
+			Indicates whether or not the appointment was scheduled into unavailable time.  
+			If "Yes", indicates that it was scheduled into time marked unavailable, and 
+			"No" indicates that it was not.  If this is a joint appointment, value will be 
+			"Yes" if it is was scheduled into time marked unavailable for at least one of the providers. 
+			</documentation>
+		</element>
+	
+		<element name="WalkinIndicator" type="code" codeSource="HL7" codeSet="0136" dbColumn="walk_in_code">
+			<documentation>
+			Indicates whether the patient appointment is a walk-in.  
+			If "Yes", indicates that the appointment is a walk-in.  
+			If "No", indicates that the appointment is not a walk-in.
+			</documentation>
+		</element>
+	
+		<element name="SequentialAppointmentIndicator" type="code" codeSource="HL7" codeSet="0136" dbColumn="sequential_appointment_code">
+			<documentation>
+			Indicates whether this appointment is a sequential appointment.  
+			If "Yes", indicates the appointment is a sequential appointment.  
+			If "No", indicates the appointment is not a sequential appointment.
+			</documentation>
+		</element>
+	
+		<element name="WarningOverridenIndicator" type="code" codeSource="HL7" codeSet="0136" dbColumn="warning_overridden_code">
+			<documentation>
+			Indicates whether or not the user overrode a warning that the patient chronically no-shows and 
+			should be booked in an overbook opening.  
+			If "Yes", indicates that the warning was overridden.  
+			If "No", indicates that no such warning was displayed and overridden. 
+			</documentation>
+		</element>
+	
+		<element name="SameDayIndicator" type="code" codeSource="HL7" codeSet="0136" dbColumn="same_day_code">
+			<documentation>
+			Indicates whether or not the appointment was made on the day of the appointment.  
+			If "Yes", indicates that it is a same day appointment.  
+			If "No", indicates that it is not a same day appointment.
+			</documentation>
+		</element>
+	
+		<element name="JointAppointmentIndicator" type="code" codeSource="HL7" codeSet="0136" dbColumn="joint_appointment_code">
+			<documentation>
+			Indicates whether or not the appointment is a joint appointment.  
+			If "Yes", indicates that it is a joint appointment.  If "No", indicates that it is not. 
+			</documentation>
+		</element>
+	
+		<element name="CancelledSameDayIndicator" type="code" codeSource="HL7" codeSet="0136" dbColumn="cancelled_sameday_code">
+			<documentation>
+			Indicates that the appointment was cancelled on the day of the appointment.  
+			If "Yes", appointment was cancelled on day of appointment.  If "No", it was not.
+			</documentation>
+		</element>
+	</group>
+
+	<list name="Notifications">
+		<documentation>
+		A collection of AppointmentNotifications.
+		</documentation>
+		
+		<idsDocument name="AppointmentNotification" type="instance_child"
+			 		 	  elementOrder="NotificationModeCode, NotificationReasonCode, NotificationDateTime">
+			 		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+					 	  	
+			<documentation>
+			Appointment Notification captures general communications to the patient with reference to a specific appointment.  
+			</documentation>
+
+			<element name="NotificationModeCode" type="code">
+				<documentation>
+				Specifies the manner in which the Notification was communicated.
+				</documentation>
+			</element>
+			
+			<element name="NotificationReasonCode" type="code">
+				<documentation>
+				Specifies the reason why the notification was made.
+				</documentation>
+			</element>
+			
+			<element name="NotificationDateTime" type="datetime" dbColumn="notification_date">
+				<documentation>
+				Use this element to specify the date and time of the note entry.
+				</documentation>
+			</element>
+
+		</idsDocument>
+	</list>
+	
+	<list name="Notes">
+		<documentation>
+		A collection of AppointmentNotes.
+		</documentation>
+		
+		<idsDocument name="AppointmentNote" type="instance_child"
+			 		 		elementOrder="NoteTypeCode, Note, NoteDateTime">
+			 		
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+					 	  	
+			<documentation>
+			Appointment Note captures general notes on a patient with reference to a specific appointment. 
+			The scenario may exist where a single note is delivered in a sequential set of text outputs. 
+			These should be concatenated together, inserting line breaks, to form a complete note for submission.
+			</documentation>
+
+			<element name="NoteTypeCode" type="code">
+				<documentation>
+				Use this field to categorize the type of note that is being added to the appointment.
+				</documentation>
+			</element>
+			
+			<element name="Note" type="string" maxLength="1000">
+				<documentation>
+				Specifies free-form text note regarding the appointment.
+				</documentation>
+			</element>
+			
+			<element name="NoteDateTime" type="datetime" dbColumn="note_date">
+				<documentation>
+				Use this element to specify the date and time of the note entry.
+				</documentation>
+			</element>
+		</idsDocument>
+	</list>
+	<element name="Encounter" type="OmniLink" contains="Encounter" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+			Specifies the Encounter associated with this clinical event.
+
+			Use this element to specify a Encounter in the system using the Encounter's SourceName and SourceInstanceId. You cannot load Encounter
+			information using this element, however if the Encounter is not found then a "placeholder" will be created that will contain the Encounter
+			when loaded.
+		</documentation>
+
+		<example>
+			<![CDATA[
+			<Encounter>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>EncounterId</SourceInstanceId>
+			</Encounter>
+			]]>
+		</example>
+	</element>
+</idsDocument>

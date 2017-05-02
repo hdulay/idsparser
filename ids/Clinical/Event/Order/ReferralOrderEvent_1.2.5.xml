@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.2.5" changeVersion="0" domain="Clinical.Event.Order" type="instance"
+			 name="ReferralOrderEvent" udlName="ReferralOrderEvent"  
+	 		 elementOrder="ReferToLocation"
+	 		 implementationClass="com.ibi.omni.patient.model.clinical.event.order.ReferralOrderEvent">	 					
+	  	 					
+	<changeLog>
+		<change version="1.2.5_0">Initial Version</change>
+	</changeLog>
+	
+	<notes>
+	
+	</notes>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	<customType name="SourceCodeList" class="com.ibi.omni.patient.ids.SourceCodeListType"/>
+	
+	<include name="OrderElements"
+			 prependToElementOrder="EventDateTime, Location, OrderNumber, OrderTypeCode, PriorityCode, OrderReason, OrderOutcomeStatusCode, OrderDetailNumber, Sequence, OrderDetailStatusCode, OrderSetNumber, OrderSetName"
+			 appendToElementOrder="OrderDetailReasons"/>
+			 
+	<include name="EventElements"
+			 prependToElementOrder="ParentEvent, Encounter, CarePlanId, CarePlan, CCDCategoryCode"
+			 appendToElementOrder="EventProviders, EventNotes"/>
+			 
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	
+	<documentation>	
+Each order event captures the requests made by a Provider for a Patient's handling, diagnosis, treatment, etc. as part of an Encounter.
+	</documentation>
+
+	<element name="ReferToLocation" type="OmniLink" contains="FacilityLocation" keys="SourceName, SourceInstanceId" allowCreate="true">
+		<documentation>
+		Contains the location where the patient is being referred to.
+		
+		Use this element to specify a FacilityLocation in the system using the FacilityLocation's SourceName and SourceInstanceId. You cannot load FacilityLocation
+		information using this element, however if the FacilityLocation is not found then a "placeholder" will be created that will contain the FacilityLocation
+		when loaded.
+		</documentation>
+		
+		<example>
+			<![CDATA[
+			<FacilityLocation>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>FacilityLocationId</SourceInstanceId>
+			</FacilityLocation>
+			]]>
+		</example>		
+	</element>
+
+
+</idsDocument>

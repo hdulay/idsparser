@@ -1,0 +1,1424 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.1.7" changeVersion="2" domain="CoveragePlan" type="instance"
+       name="SubscriberForCoverage"
+       elementOrder="SubscriberName, CoverageNumber, GroupNumber, EmploymentDate, ApplicationDate,
+              SocialSecurityNumber, MaritalStatus, EmployerId, EmployerIdComment, UsCitizen,
+              Race, BirthDate, Gender, SubscriberAddress, PhoneNumber, WorkPhoneNumber, FaxNumber, 
+              RelationshipToGuarantor, SubscriberEmployments, CoverageRecord"
+              implementationClass="com.ibi.omni.patient.model.coverage_plan.SubscriberForCoverage">
+
+  <changeLog>
+    <change version="1.0.1">Removed any references to SourceCode and replaced with SourceCode</change>
+    <change version="1.1.7_0">Supported Version</change>
+    <change version="1.1.7_1">Extended Attribute Support</change>
+    <change version="1.1.7_2">Added SourceStatusCode to instance and collection items.</change>
+  </changeLog>
+
+  <include name="CommonElements"
+       prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+       appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>  
+       
+  <customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+  <customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+    <customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+    
+  <documentation>
+  Use this structure to feed Subscriber for Coverage information.
+  </documentation>
+  
+  <group name="SubscriberName" elementOrder="FullName, Prefix, FirstName, MiddleName, LastName, Suffix, Title, Degree">
+    <documentation>The name of the subscriber for the coverage.</documentation>
+  
+    <element name="FullName" type="string">
+      <documentation>Specify full name of patient. If this field is used then do not use the component fields.</documentation>
+    </element>
+
+    <element name="Prefix" type="string">
+      <documentation>Used to specify a name prefix (e.g., Dr.).</documentation>
+    </element>
+
+    <element name="FirstName" type="string">
+      <documentation>Use this element to specify the first name</documentation>
+    </element>
+
+    <element name="MiddleName" type="string">
+      <documentation>Use this element to specify the middle name or intial.</documentation>
+    </element>
+
+    <element name="LastName" type="string">
+      <documentation>Use this element to specify the last name.</documentation>
+    </element>
+
+    <element name="Suffix" type="string">
+      <documentation>Used to specify a name suffix (e.g., Jr. or III).</documentation>
+    </element>
+
+    <element name="Title" type="string">
+      <documentation>Use this element to specify the title the person holds.</documentation>
+    </element>
+
+    <element name="Degree" type="string">
+      <documentation>Use this field to specify the degree the person holds.</documentation>
+    </element>
+  </group>
+
+  <element name="CoverageNumber" type="string">
+    <documentation>
+    The identification number assigned to the subscriber for the coverage. 
+    When the subscriber is also a member on the coverage, this is the same as the subscriber's member number. 
+    This column may be hidden if you have elected to use enterprise reporting's security utility.
+    </documentation>
+  </element>
+
+  <element name="GroupNumber" type="string">
+    <documentation>The identification number assigned to this subscriber's employer/plan group by the payer.  This number will appear in box 11 of the HCFA claim form.</documentation>
+  </element>
+
+  <element name="EmploymentDate" type="OmniDate">
+    <documentation>The date on which the subscriber began working for the employer associated with the employer group.</documentation>
+  </element>
+
+  <element name="ApplicationDate" type="OmniDate">
+    <documentation>The date on which the subscriber applied for coverage.</documentation>
+  </element>
+
+  <element name="SocialSecurityNumber" type="string">
+    <documentation>The SSN number of the subscriber on a coverage</documentation>
+  </element>
+
+  <element name="MaritalStatus" type="SourceCode" codeTable="0002">
+    <documentation>The marital status of the subscriber.</documentation>
+  </element>
+
+  <element name="EmployerId" type="string">
+    <documentation>This is the unique ID of the employer of the patient subscribing to the coverage if EAF 6410 is set to 1.  This is free text if EAF 6410 is set to 2.</documentation>
+  </element>
+
+  <element name="EmployerIdComment" type="string">
+    <documentation>
+    A free text comment that can be entered when the  value that is considered to be "Other" is selected as the employer. 
+    This option is available only if your organization has chosen to link the subscriber employer to the Employer (EEP) master file in the Facility Profile.
+    </documentation>
+  </element>
+
+  <element name="UsCitizen" type="SourceCode">
+    <documentation>Indicates whether the subscriber is a U.S. citizen.</documentation>
+  </element>
+
+  <element name="Race" type="SourceCode" codeTable="0005">
+    <documentation>The race of the subscriber.</documentation>
+  </element>
+  
+  <element name="BirthDate" type="OmniDate">
+    <documentation>The date of birth for the subscriber on the coverage.</documentation>
+  </element>
+
+  <element name="Gender" type="SourceCode" codeTable="0001">
+    <documentation>The sex of the subscriber of coverage.</documentation>
+  </element>
+  
+  <group name="SubscriberAddress" elementOrder="AddressLine1, AddressLine2, AddressLine3, AddressLine4, City, StateProvince, PostalCode, CountyRegion, District, Country">
+      <documentation>Collection used for communicating the Subscriber Address.</documentation>
+
+    <element name="AddressLine1" type="string">
+      <documentation>The street address, line 1 of the subscriber address.</documentation>
+    </element>
+
+    <element name="AddressLine2" type="string">
+      <documentation>The street address, line 2 of the subscriber address.</documentation>
+    </element>
+
+    <element name="AddressLine3" type="string">
+      <documentation>The street address, line 3 of the subscriber address.</documentation>
+    </element>
+
+    <element name="AddressLine4" type="string">
+      <documentation>The street address, line 4 of the subscriber address.</documentation>
+    </element>
+
+    <element name="City" type="string">
+      <documentation>The city of the subscriber address.</documentation>
+    </element>
+
+    <element name="StateProvince" type="SourceCode">
+      <documentation>The state of the subscriber address.</documentation>
+    </element>
+
+    <element name="PostalCode" type="string">
+      <documentation>The state of the subscriber address.</documentation>
+    </element>
+
+    <element name="CountyRegion" type="SourceCode">
+      <documentation>The County or Region of the subscriber address.</documentation>
+    </element>
+
+    <element name="District" type="SourceCode">
+      <documentation>The district of the subscriber address.</documentation>
+    </element>
+
+    <element name="Country" type="SourceCode">
+      <documentation>The Country of the subscriber address.</documentation>
+    </element>
+  </group>
+
+  <element name="PhoneNumber" type="string">
+    <documentation>The phone number for the subscriber on the coverage.</documentation>
+  </element>
+
+  <element name="WorkPhoneNumber" type="string">
+    <documentation>The work phone number for the subscriber on the coverage.</documentation>
+  </element>
+
+  <element name="FaxNumber" type="string">
+    <documentation>The fax number for the subscriber on the coverage.</documentation>
+  </element>
+
+  <element name="RelationshipToGuarantor" type="SourceCode">
+    <documentation>The category number for the subscriber's relationship to the guarantor.</documentation>
+  </element>
+  
+  <!-- One-to-One relationships -->
+  <element name="CoverageRecord" type="document">
+    <documentation>Subscriber for Coverage information.</documentation>
+    
+    <idsSpecification name="CoverageRecord" udlName="CoverageRecord" type="instance_child"
+           elementOrder="StatusCategoryNumber, RetroAdjudicationQueue, CopayInformation, DeductibleMet, ProviderAssignmentCoverageAssigned,
+                SignatureOnFileDate, SignatureOnFileLocation, MedigapAuthorization, TplResource, ThirdParyLiability, CoverageBenefit,
+                SubscriberEmployerFax, SubscriberEmployerId, SubscriberOccupation, SubscriberRetireDate, SubscriberSpouseRetireDate, 
+                ScheduledDiscontinueDate, ScheduledActivationDate, VerificationOfCoverage, YearlyAllowedDollarTotal, YearlyAllowedDollarUsed,
+                OrganizationNameForSubmittedClaim, FinancialClass, CoverageFax, FreeTextPlanName, FreeTextPayerName, CoverageCopySource,
+                FreeTextPlanFormat, TefraPatient, AdmissionSource, FederalEmploymentProgramEnrollment, GroupNumber, HmoSiteNumber, HmoPhoneNumber,
+                AlternateSubscriberBillingName, CopayAmount, ChampusSubscriberStatus, ChampusSponsorMilitaryStatus, ChampusSubscriberMilitaryServiceBranch,
+                ChampusSponsorMilitaryServiceBranch, ChampusSponsorMilitaryPayGrade, MedicareOtherInsuranceCompany, MedicareReceivingDisability,
+                DisabilityCoverageFromEmployer, MedicareEmployerOver100Employees, MedicareAutoAccident, MedicareLiabilityAccident, MedicareWorkersComp,
+                MedicareNonAutoAccident, MedicareBlackLung, MedicareVa, MedicarePatientEmployed, MedicareEnrolledHmo, MedicareCoveredByGroupHealthPlan,
+                MedicareEmployerOver20Employees, MedicareRenalDialysis, MedicareRenalDialysisFirst18Months, MedicareHomeDialysisPatient, MedicareSelfAdministeredEpo,
+                MedicareDisability, MedicareSpouseRetired, MedicareSpouseRetireDate, MedicareInsuredByEmployer, MedicarePatientRetired, MedicarePatientRetireDate,
+                MedicareFamilyMemberEmployed, MedicareOtherCoverage, MedicareSpouseEmployed, MedicareCoveredBySpouseEmployer, EvsVerification, EvsVerificationDate,
+                CoveragePayerName, CoveragePayerCity, SubscriberBankingId, CoveragePayer, MemberCoverageRecords"
+                implementationClass="com.ibi.omni.patient.model.coverage_plan.CoverageRecord">
+    
+      <customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+      <customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+      <customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+        
+      <include name="CommonElements"
+           prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+          appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/> 
+        
+      <documentation>
+      Use this structure to feed Subscriber for Coverage information.
+      </documentation>
+          
+      <element name="StatusCategoryNumber" type="SourceCode">
+        <documentation>The category number of the status for this coverage record.</documentation>
+      </element>
+    
+      <element name="RetroAdjudicationQueue" type="SourceCode">
+        <documentation>
+        The retroadjudication queue flag for the coverage. 
+        Indicates if the coverage should be queued for retroadjudication from self-pay to insurance.
+        </documentation>
+      </element>
+    
+      <element name="CopayInformation" type="string">
+        <documentation>Notes regarding copay information for this coverage.</documentation>
+      </element>
+    
+      <element name="DeductibleMet" type="SourceCode">
+        <documentation>
+        Indicates whether the deductible has been met for this coverage. 
+        The deductible can be established on the guarantor account or patient level.
+        </documentation>
+      </element>
+    
+      <element name="ProviderAssignmentCoverageAssigned" type="SourceCode">
+        <documentation>Indicated whether the provider's assignment status is set to Coverage Assignment for this coverage's payer.</documentation>
+      </element>
+    
+      <element name="SignatureOnFileDate" type="OmniDate">
+        <documentation>The date when the signature was filed.</documentation>
+      </element>
+    
+      <element name="SignatureOnFileLocation" type="string">
+        <documentation>The location at which the signature was filed.</documentation>
+      </element>
+    
+      <element name="MedigapAuthorization" type="SourceCode">
+        <documentation>Indicates whether the payer for this coverage has Medigap authorization.</documentation>
+      </element>  
+    
+      <element name="TplResource" type="SourceCode">
+        <documentation>
+        The TPL Resource Code for the Illinois Department of Public Aid claims. 
+        This code must be a three-digit number. 
+        If entered, it will appear in record DA0-08.0 of the ILDPA electronic claim file.
+        </documentation>
+      </element>  
+    
+      <element name="ThirdParyLiability" type="SourceCode">
+        <documentation>Indicates if there is third-party liability for this coverage.</documentation>
+      </element>  
+    
+      <element name="CoverageBenefit" type="SourceCode">
+        <documentation>The benefit code for this coverage. This can contain any facility-specific benefit code.</documentation>
+      </element>  
+    
+      <element name="SubscriberEmployerFax" type="string">
+        <documentation>The fax number of the coverage subscriber's employer.</documentation>
+      </element>  
+    
+      <element name="SubscriberEmployerId" type="string">
+        <documentation>The coverage subscriber's employee ID number.</documentation>
+      </element>  
+    
+      <element name="SubscriberOccupation" type="string">
+        <documentation>The coverage subscriber's occupation.</documentation>
+      </element>  
+    
+      <element name="SubscriberRetireDate" type="OmniDate">
+        <documentation>The date when the coverage subscriber retired.</documentation>
+      </element>
+    
+      <element name="SubscriberSpouseRetireDate" type="OmniDate">
+        <documentation>The date when the coverage subscriber's spouse retired.</documentation>
+      </element>
+    
+      <element name="ScheduledDiscontinueDate" type="OmniDate">
+        <documentation>The date when the coverage is scheduled to be discontinued.</documentation>
+      </element>
+    
+      <element name="ScheduledActivationDate" type="OmniDate">
+        <documentation>The date when the coverage is scheduled to be activated.</documentation>
+      </element>
+    
+      <element name="VerificationOfCoverage" type="SourceCode">
+        <documentation>Indicates whether the system should prompt for verification of the coverage.</documentation>
+      </element>  
+    
+      <element name="YearlyAllowedDollarTotal" type="double">
+        <documentation>The yearly dollar limit for payments against this coverage's payer.</documentation>
+      </element>  
+    
+      <element name="YearlyAllowedDollarUsed" type="double">
+        <documentation>The year-to-date payments made against the coverage's payer.</documentation>
+      </element>  
+    
+      <element name="OrganizationNameForSubmittedClaim" type="string">
+        <documentation>The title or name of the organization to which submitted claims under this coverage will be sent.</documentation>
+      </element>  
+    
+      <element name="FinancialClass" type="SourceCode">
+        <documentation>The financial class for this coverage.</documentation>
+      </element>
+    
+      <element name="CoverageFax" type="string">
+        <documentation>The fax number for this coverage.</documentation>
+      </element>
+    
+      <element name="FreeTextPlanName" type="string">
+        <documentation>The free-text plan name for this coverage.</documentation>
+      </element>
+    
+      <element name="FreeTextPayerName" type="string">
+        <documentation>The free-text payer name for this coverage.</documentation>
+      </element>
+    
+      <element name="CoverageCopySource" type="string">
+        <documentation>The ID of the coverage from which this coverage was copied.</documentation>
+      </element>
+    
+      <element name="FreeTextPlanFormat" type="string">
+        <documentation>The format of the coverage's free-text plan.</documentation>
+      </element>
+    
+      <element name="TefraPatient" type="SourceCode">
+        <documentation>Indicates whether the patient is TEFRA. A patient is TEFRA if an eligibile Medicare beneficiary is covered by a group health plan.</documentation>
+      </element>  
+      
+      <element name="AdmissionSource" type="SourceCode">
+        <documentation>The category number of the admission source.</documentation>
+      </element>  
+      
+      <element name="FederalEmploymentProgramEnrollment" type="SourceCode">
+        <documentation>The Federal Employment Program enrollment code.</documentation>
+      </element>  
+    
+      <element name="GroupNumber" type="string">
+        <documentation>The group number for the coverage.</documentation>
+      </element>
+    
+      <element name="HmoSiteNumber" type="string">
+        <documentation>The site number for the coverage's HMO.</documentation>
+      </element>
+    
+      <element name="HmoPhoneNumber" type="string">
+        <documentation>The phone number for the coverage's HMO.</documentation>
+      </element>
+    
+      <element name="AlternateSubscriberBillingName" type="string">
+        <documentation>The alternate billing name for the coverage subscriber.</documentation>
+      </element>
+    
+      <element name="CopayAmount" type="double">
+        <documentation>The copay amount for the coverage.</documentation>
+      </element>
+    
+      <element name="ChampusSubscriberStatus" type="SourceCode">
+        <documentation>The CHAMPUS/Tricare subscriber status.</documentation>
+      </element>  
+    
+      <element name="ChampusSponsorMilitaryStatus" type="SourceCode">
+        <documentation>The CHAMPUS/Tricare sponsor's military status, obtained from the military identification card.</documentation>
+      </element>  
+    
+      <element name="ChampusSubscriberMilitaryServiceBranch" type="string">
+        <documentation>The military service branch for a CHAMPUS/Tricare coverage subscriber.</documentation>
+      </element>  
+    
+      <element name="ChampusSponsorMilitaryServiceBranch" type="string">
+        <documentation>A CHAMPUS/Tricare coverage sponsor's military service branch.</documentation>
+      </element>  
+    
+      <element name="ChampusSponsorMilitaryPayGrade" type="string">
+        <documentation>A CHAMPUS/Tricare coverage sponsor's military pay grade.</documentation>
+      </element>  
+    
+      <element name="MedicareOtherInsuranceCompany" type="string">
+        <documentation>An additional insurance company providing coverage for a Medicare patient.</documentation>
+      </element>  
+    
+      <element name="MedicareReceivingDisability" type="SourceCode">
+        <documentation>Indicates if a Medicare patient is receiving disability benefit.</documentation>
+      </element>  
+    
+      <element name="DisabilityCoverageFromEmployer" type="SourceCode">
+        <documentation>Indicates if a Medicare patient is receiving disability coverage from their employer.</documentation>
+      </element>  
+    
+      <element name="MedicareEmployerOver100Employees" type="SourceCode">
+        <documentation>Indicates if a Medicare employer has over 100 employees.</documentation>
+      </element>  
+    
+      <element name="MedicareAutoAccident" type="SourceCode">
+        <documentation>Indicates if the illness or injury for this visit is due to an automobile accident.</documentation>
+      </element>  
+    
+      <element name="MedicareLiabilityAccident" type="SourceCode">
+        <documentation>Indicates if the illness or injury for this visit is due to a liability accident.</documentation>
+      </element>  
+    
+      <element name="MedicareWorkersComp" type="SourceCode">
+        <documentation>Indicates if a Medicare visit is covered by Workman's Compensation.</documentation>
+      </element>  
+    
+      <element name="MedicareNonAutoAccident" type="SourceCode">
+        <documentation>Indicates if the patient's visit is due to an accident not involving automobiles.</documentation>
+      </element>  
+    
+      <element name="MedicareBlackLung" type="SourceCode">
+        <documentation>Indicates whether the illness is coveraged by the Black Lung program.</documentation>
+      </element>  
+    
+      <element name="MedicareVa" type="SourceCode">
+        <documentation>Indicates if the illness is covered by a Veterans' Administration program.</documentation>
+      </element>  
+    
+      <element name="MedicarePatientEmployed" type="SourceCode">
+        <documentation>Indicates whether the Medicare patient is employed.</documentation>
+      </element>  
+    
+      <element name="MedicareEnrolledHmo" type="SourceCode">
+        <documentation>Indicates if the Medicare patient is enrolled in an HMO.</documentation>
+      </element>  
+    
+      <element name="MedicareCoveredByGroupHealthPlan" type="SourceCode">
+        <documentation>Indicates whether the patient is covered by an employer group health plan.</documentation>
+      </element>  
+    
+      <element name="MedicareEmployerOver20Employees" type="SourceCode">
+        <documentation>Indicates whether the Medicare patient is employed by an employer with over 20 employees.</documentation>
+      </element>  
+    
+      <element name="MedicareRenalDialysis" type="SourceCode">
+        <documentation>Indicates whether the patient is a renal dialysis patient in the first 12 months of entitlement.</documentation>
+      </element>  
+    
+      <element name="MedicareRenalDialysisFirst18Months" type="SourceCode">
+        <documentation>Indicates whether the patient is in the first 18 months of entitlement for renal dialysis.</documentation>
+      </element>  
+    
+      <element name="MedicareHomeDialysisPatient" type="SourceCode">
+        <documentation>Indicates whether the patient is a home dialysis patient.</documentation>
+      </element>  
+    
+      <element name="MedicareSelfAdministeredEpo" type="SourceCode">
+        <documentation>Indicates whether the patient is a home dialysis patient.</documentation>
+      </element>  
+    
+      <element name="MedicareDisability" type="SourceCode">
+        <documentation>Indicates whether a patient's Medicare coverage is due to disability.</documentation>
+      </element>  
+    
+      <element name="MedicareSpouseRetired" type="SourceCode">
+        <documentation>Indicates whether a Medicare patient's spouse is retired.</documentation>
+      </element>  
+    
+      <element name="MedicareSpouseRetireDate" type="OmniDate">
+        <documentation>The date when a Medicare patient's spouse retired.</documentation>
+      </element>  
+    
+      <element name="MedicareInsuredByEmployer" type="SourceCode">
+        <documentation>Indicates whether a Medicare patient is insured by their employer.</documentation>
+      </element>  
+    
+      <element name="MedicarePatientRetired" type="SourceCode">
+        <documentation>Indicates whether a Medicare patient is retired.</documentation>
+      </element>  
+    
+      <element name="MedicarePatientRetireDate" type="OmniDate">
+        <documentation>The date when a Medicare patient's spouse retired.</documentation>
+      </element>  
+      
+      <element name="MedicareFamilyMemberEmployed" type="SourceCode">
+        <documentation>Indicates whether a Medicare patient's spouse or another family member is employed.</documentation>
+      </element>
+      
+      <element name="MedicareOtherCoverage" type="SourceCode">
+        <documentation>Indicates whether a Medicare patient is covered because of their spouse or other family member.</documentation>
+      </element>  
+    
+      <element name="MedicareSpouseEmployed" type="SourceCode">
+        <documentation>Indicates whether a Medicare patient's spouse is employed.</documentation>
+      </element>
+    
+      <element name="MedicareCoveredBySpouseEmployer" type="SourceCode">
+        <documentation>Indicates whether a Medicare patient is covered through their spouse's employer group health plan.</documentation>
+      </element>
+    
+      <element name="EvsVerification" type="SourceCode">
+        <documentation>Indicates whether verification is done through EVS.</documentation>
+      </element>
+    
+      <element name="EvsVerificationDate" type="OmniDate">
+        <documentation>The date when eligibility was verified with EVS.</documentation>
+      </element>
+      
+      <element name="CoveragePayerName" type="string">
+        <documentation>The coverage payer's name.</documentation>
+      </element>
+      
+      <element name="CoveragePayerCity" type="string">
+        <documentation>The coverage payer's city.</documentation>
+      </element>
+    
+      <element name="SubscriberBankingId" type="string">
+        <documentation>Banking details of the subscriber.</documentation>
+      </element>
+      
+      <!-- One-to-One relationships -->
+      <element name="CoveragePayer" type="document">
+        <documentation>Subscriber for Coverage Payer information.</documentation>
+      
+        <idsSpecification name="CoveragePayer" udlName="CoveragePayer" type="instance_child"
+               elementOrder="PayerAddress, PayerPhoneNumber, PayerClaimOfficeNumber, 
+                      ReferringPhysicianName, ReferringPhysicianAddress, AuthorizationNumber, AuthorizationDateTime, AuthorizingPerson, AuthorizationVerificationDateTime,
+                      MedicalAssistanceCardNumber, MedicalAssistance, MedicalAssistanceStatus, MedicalAssistanceCoverage, VaProgram, LastCoverageUpdateDateTime,
+                      ManagedCareProgram, ManagedCarePrimaryProvider, ManagedCareAuthorizationNumber, ManagedCareAuthorizationPhoneNumber,
+                      CoverageType, CoverageSubscriberHasMedicare, MajorMedicalCoverage, MedicaidGroupNumberSuffix, ChampusTricareRank, ChampusTricareGrade,
+                      BlueCrossBlueShieldContractAccountName, PrimaryProviderPhoneNumber, PrimaryProviderAuthorizationContactPerson, PrimaryProviderAuthorizationForVisit, AuthorizationComments,
+                      PmpAuthorizationForVisit, AuthorizationEntryPerson, ManagedCareRrSubscriberNumber, ReciprocityNumber, TherapyType, TherapyPlanDate,
+                      TherapyStartDate, LastMenstrualDate, AuthorizationValidDate, AuthorizationInvalidDate, CommercialAuthorizationNumber, CommercialAuthorizationPerson,
+                      ManagedCareCobraStatus, ManagedCareCobraStatusDate, PremiumBillingAccountCreated, AlternateCoverageOrganization, AlternateCoverageAddress,
+                      GroupCopayDocument"
+                      implementationClass="com.ibi.omni.patient.model.coverage_plan.CoveragePayer">
+                      
+          <customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+          <customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+          <customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+        
+          <include name="CommonElements"
+               prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+               appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>  
+        
+          <documentation>
+          Use this structure to feed Subscriber for Coverage information.
+          </documentation>
+                  
+          <group name="PayerAddress" elementOrder="AddressLine1, AddressLine2, AddressLine3, AddressLine4, City, StateProvince, PostalCode, CountyRegion, District, Country">
+              <documentation>Collection used for communicating the payer address.</documentation>
+        
+            <element name="AddressLine1" type="string">
+              <documentation>The street address, line 1 of the payer address.</documentation>
+            </element>
+        
+            <element name="AddressLine2" type="string">
+              <documentation>The street address, line 2 of the payer address.</documentation>
+            </element>
+        
+            <element name="AddressLine3" type="string">
+              <documentation>The street address, line 3 of the payer address.</documentation>
+            </element>
+        
+            <element name="AddressLine4" type="string">
+              <documentation>The street address, line 4 of the payer address.</documentation>
+            </element>
+        
+            <element name="City" type="string">
+              <documentation>The city of the payer address.</documentation>
+            </element>
+        
+            <element name="StateProvince" type="SourceCode">
+              <documentation>The state of the payer address.</documentation>
+            </element>
+        
+            <element name="PostalCode" type="string">
+              <documentation>The state of the payer address.</documentation>
+            </element>
+        
+            <element name="CountyRegion" type="SourceCode">
+              <documentation>The County or Region of the payer address.</documentation>
+            </element>
+        
+            <element name="District" type="SourceCode">
+              <documentation>The district of the payer address.</documentation>
+            </element>
+        
+            <element name="Country" type="SourceCode" codeTable="0399">
+              <documentation>The Country of the payer address.</documentation>
+            </element>
+          </group>
+        
+          <element name="PayerPhoneNumber" type="string">
+            <documentation>The phone number of the coverage payer.</documentation>
+          </element>
+        
+          <element name="PayerClaimOfficeNumber" type="string">
+            <documentation>The claim office number of the coverage payer.</documentation>
+          </element>
+        
+          <group name="ReferringPhysicianName" elementOrder="FullName, Prefix, FirstName, MiddleName, LastName, Suffix, Title, Degree">
+            <documentation>The name of the HMO's referring physician.</documentation>
+          
+            <element name="FullName" type="string">
+              <documentation>Specify full name of patient. If this field is used then do not use the component fields.</documentation>
+            </element>
+        
+            <element name="Prefix" type="string">
+              <documentation>Used to specify a name prefix (e.g., Dr.).</documentation>
+            </element>
+        
+            <element name="FirstName" type="string">
+              <documentation>Use this element to specify the first name</documentation>
+            </element>
+        
+            <element name="MiddleName" type="string">
+              <documentation>Use this element to specify the middle name or intial.</documentation>
+            </element>
+        
+            <element name="LastName" type="string">
+              <documentation>Use this element to specify the last name.</documentation>
+            </element>
+        
+            <element name="Suffix" type="string">
+              <documentation>Used to specify a name suffix (e.g., Jr. or III).</documentation>
+            </element>
+        
+            <element name="Title" type="string">
+              <documentation>Use this element to specify the title the person holds.</documentation>
+            </element>
+        
+            <element name="Degree" type="string">
+              <documentation>Use this field to specify the degree the person holds.</documentation>
+            </element>
+          </group>
+        
+          <group name="ReferringPhysicianAddress" elementOrder="AddressLine1, AddressLine2, AddressLine3, AddressLine4, City, StateProvince, PostalCode, CountyRegion, District, Country">
+              <documentation>Collection used for communicating the referring physician address.</documentation>
+        
+            <element name="AddressLine1" type="string">
+              <documentation>The street address, line 1 of the referring physician address.</documentation>
+            </element>
+        
+            <element name="AddressLine2" type="string">
+              <documentation>The street address, line 2 of the referring physician address.</documentation>
+            </element>
+        
+            <element name="AddressLine3" type="string">
+              <documentation>The street address, line 3 of the referring physician address.</documentation>
+            </element>
+        
+            <element name="AddressLine4" type="string">
+              <documentation>The street address, line 4 of the referring physician address.</documentation>
+            </element>
+        
+            <element name="City" type="string">
+              <documentation>The city of the referring physician address.</documentation>
+            </element>
+        
+            <element name="StateProvince" type="SourceCode">
+              <documentation>The state of the referring physician address.</documentation>
+            </element>
+        
+            <element name="PostalCode" type="string">
+              <documentation>The state of the referring physician address.</documentation>
+            </element>
+        
+            <element name="CountyRegion" type="SourceCode">
+              <documentation>The County or Region of the referring physician address.</documentation>
+            </element>
+        
+            <element name="District" type="SourceCode">
+              <documentation>The district of the referring physician address.</documentation>
+            </element>
+        
+            <element name="Country" type="SourceCode"  codeTable="0399">
+              <documentation>The Country of the referring physician address.</documentation>
+            </element>
+          </group>
+        
+          <element name="AuthorizationNumber" type="string">
+            <documentation>The authorization number for this coverage.</documentation>
+          </element>
+        
+          <element name="AuthorizationDateTime" type="OmniDate">
+            <documentation>The authorization date and time for this coverage.</documentation>
+          </element>
+        
+          <element name="AuthorizingPerson" type="string">
+            <documentation>The name of the person who authorized services for this coverage.</documentation>
+          </element>
+        
+          <element name="AuthorizationVerificationDateTime" type="OmniDate">
+            <documentation>TThe date and time when authorization was obtained.</documentation>
+          </element>
+        
+          <element name="MedicalAssistanceCardNumber" type="string">
+            <documentation>The medical assistance card number.</documentation>
+          </element>
+        
+          <element name="MedicalAssistance" type="SourceCode">
+            <documentation>The medical assistance code.</documentation>
+          </element>
+        
+          <element name="MedicalAssistanceStatus" type="SourceCode">
+            <documentation>The medical assistance code.</documentation>
+          </element>
+        
+          <element name="MedicalAssistanceCoverage" type="SourceCode">
+            <documentation>The medical assistance coverage code.</documentation>
+          </element>
+        
+          <element name="VaProgram" type="SourceCode">
+            <documentation>Indicates if the coverage is for a Veterans' Administration program.</documentation>
+          </element>
+        
+          <element name="LastCoverageUpdateDateTime" type="OmniDate">
+            <documentation>Date and time of the last coverage update.</documentation>
+          </element>
+        
+          <element name="ManagedCareProgram" type="SourceCode">
+            <documentation>Indicates whether the coverage is for a managed care program.</documentation>
+          </element>
+        
+          <element name="ManagedCarePrimaryProvider" type="string">
+            <documentation>The primary provider for a managed care coverage.</documentation>
+          </element>
+        
+          <element name="ManagedCareAuthorizationNumber" type="string">
+            <documentation>TThe authorization number for a managed care coverage.</documentation>
+          </element>
+        
+          <element name="ManagedCareAuthorizationPhoneNumber" type="string">
+            <documentation>TThe authorization phone number for a managed care coverage.</documentation>
+          </element>
+        
+          <element name="CoverageType" type="SourceCode">
+            <documentation>The type of coverage.</documentation>
+          </element>
+        
+          <element name="CoverageSubscriberHasMedicare" type="SourceCode">
+            <documentation>Indicates whether the coverage subscriber also has Medicare.</documentation>
+          </element>
+        
+          <element name="MajorMedicalCoverage" type="SourceCode">
+            <documentation>Indicates whether the patient has Major Medical coverage.</documentation>
+          </element>
+        
+          <element name="MedicaidGroupNumberSuffix" type="string">
+            <documentation>The two letters at the end of the recipient number on the Medicaid card.</documentation>
+          </element>
+          
+          <element name="ChampusTricareRank" type="string">
+            <documentation>The CHAMPUS/Tricare rank.</documentation>
+          </element>
+        
+          <element name="ChampusTricareGrade" type="string">
+            <documentation>The CHAMPUS/Tricare grade.</documentation>
+          </element>
+        
+          <element name="BlueCrossBlueShieldContractAccountName" type="string">
+            <documentation>The contract account name on a Blue Cross/Blue Shield insurance card.</documentation>
+          </element>
+          <element name="PrimaryProviderPhoneNumber" type="string">
+            <documentation>The phone number for the primary provider.</documentation>
+          </element>
+          <element name="PrimaryProviderAuthorizationContactPerson" type="string">
+            <documentation>The person who provided authorization information for this visit.</documentation>
+          </element>
+          <element name="PrimaryProviderAuthorizationForVisit" type="string">
+            <documentation>
+            </documentation>
+          </element>
+          <element name="AuthorizationComments" type="string">
+            <documentation>Comments regarding authorization or denial.</documentation>
+          </element>
+          <element name="PmpAuthorizationForVisit" type="string">
+            <documentation>The PMP authorization for this visit.</documentation>
+          </element>
+          <element name="AuthorizationEntryPerson" type="string">
+            <documentation>The person who entered the authorization number for this managed care coverage.</documentation>
+          </element>
+          <element name="ManagedCareRrSubscriberNumber" type="string">
+            <documentation>The RR subscriber number for this managed care coverage.</documentation>
+          </element>
+          <element name="ReciprocityNumber" type="string">
+            <documentation>The reciprocity number for this coverage.</documentation>
+          </element>
+          <element name="TherapyType" type="SourceCode">
+            <documentation>The therapy type for this coverage.</documentation>
+          </element>
+          <element name="TherapyPlanDate" type="OmniDate">
+            <documentation>The date when the therapy plan was established.</documentation>
+          </element>
+          <element name="TherapyStartDate" type="OmniDate">
+            <documentation>The date when the therapy started.</documentation>
+          </element>
+          <element name="LastMenstrualDate" type="OmniDate">
+            <documentation>The patient's last menstrual date.</documentation>
+          </element>
+          <element name="AuthorizationValidDate" type="OmniDate">
+            <documentation>The date when the authorization became valid.</documentation>
+          </element>
+          <element name="AuthorizationInvalidDate" type="OmniDate">
+            <documentation>The date when the authorization became invalid.</documentation>
+          </element>
+          <element name="CommercialAuthorizationNumber" type="string">
+            <documentation>The commercial authorization number.</documentation>
+          </element>
+          <element name="CommercialAuthorizationPerson" type="string">
+            <documentation>The person who authorized the commercial coverage.</documentation>
+          </element>
+          <element name="ManagedCareCobraStatus" type="SourceCode">
+            <documentation>Indicated whether a managed care coverage has COBRA status.</documentation>
+          </element>
+          <element name="ManagedCareCobraStatusDate" type="OmniDate">
+            <documentation>The date when a managed care coverage got COBRA status.</documentation>
+          </element>
+          <element name="PremiumBillingAccountCreated" type="SourceCode">
+            <documentation>Indicates whether a premium billing account was created for this coverage.</documentation>
+          </element>
+          <element name="AlternateCoverageOrganization" type="string">
+            <documentation>The alternate name of the organization to which claims submitted under this coverage can be sent.</documentation>
+          </element>
+          <group name="AlternateCoverageAddress" elementOrder="AddressLine1, AddressLine2, AddressLine3, AddressLine4, City, StateProvince, PostalCode, CountyRegion, District, Country">
+              <documentation>Collection used for communicating the coverage plan address.</documentation>
+        
+            <element name="AddressLine1" type="string">
+              <documentation>
+              The alternate street address, line 1 to which claims submitted under this coverage can be sent.
+              When referencing an institution, this first component is used to specify the institution name. 
+              When used in connection with a person, this component specifies the first line of the address.
+              </documentation>
+            </element>
+        
+            <element name="AddressLine2" type="string">
+              <documentation>
+              The alternate street address, line 2 to which claims submitted under this coverage can be sent.
+              In general, line 2 qualifies address. Examples: Suite 555 or Fourth Floor. 
+              When referencing an institution, this component specifies the street address.
+              </documentation>
+            </element>
+        
+            <element name="AddressLine3" type="string">
+              <documentation>
+              The alternate street address, line 3 to which claims submitted under this coverage can be sent.
+              This field specifies the name of the person or organization that should appear as part of the address. 
+              This is also known as the "Care of" or "C/O" line.
+              </documentation>
+            </element>
+        
+            <element name="AddressLine4" type="string">
+              <documentation>The alternate street address, line 4 to which claims submitted under this coverage can be sent.</documentation>
+            </element>
+        
+            <element name="City" type="string">
+              <documentation>The alternate city to which claims submitted under this coverage can be sent.</documentation>
+            </element>
+        
+            <element name="StateProvince" type="SourceCode">
+              <documentation>
+              The alternate state to which claims submitted under this coverage can be sent.
+              State or province should be represented by the official postal service codes for that country.
+              </documentation>
+            </element>
+        
+            <element name="PostalCode" type="string">
+              <documentation>
+              The alternate ZIP code to which claims submitted under this coverage can be sent.
+              Zip or postal codes should be represented by the official codes for that country. 
+              In the US, the zip code takes the form 99999[-9999], while the Canadian postal code takes the form A9A9A9,
+              and the Australian Postcode takes the form 9999. 
+              </documentation>
+            </element>
+        
+            <element name="CountyRegion" type="SourceCode" codeTable="????">
+              <documentation>The alternate county to which claims submitted under this coverage can be sent.</documentation>
+            </element>
+        
+            <element name="District" type="SourceCode">
+              <documentation>The alternate district to which claims submitted under this coverage can be sent.</documentation>
+            </element>
+        
+            <element name="Country" type="SourceCode" codeTable="0399">
+              <documentation>
+              The alternate country to which claims submitted under this coverage can be sent.
+              The 3-character (alphabetic) form of ISO 3166 should be used for the country code.
+              </documentation>
+            </element>
+          </group>
+          
+          <!-- One-to-One relationships -->
+          <element name="GroupCopayDocument" type="document">
+            <documentation>
+            Subscriber for Group Copay Document information.
+            </documentation>
+            
+            <idsSpecification name="GroupCopayDocument" udlName="GroupCopayDocument" type="instance_child"
+                     elementOrder="EcdCategoryName, CopayCategory, Department, CopayAmount, CoinsuranceAmount, LineCount"
+                     implementationClass="com.ibi.omni.patient.model.coverage_plan.GroupCopayDocument">  
+            
+            
+              <customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+              <customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+              <customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>             
+            
+              <include name="CommonElements"
+                   prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+                     appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>  
+                
+              <documentation>
+              Use this structure to feed Group Copay Document information.
+              </documentation>
+              
+              <element name="EcdCategoryName" type="string">
+                <documentation>Displays ECD Copay Category name</documentation>
+              </element>
+              
+              <element name="CopayCategory" type="SourceCode">
+                <documentation>
+                Indicate the copay category specialty for which you want to establish a different copay/coinsurance amount.  
+                For details on the logic that POS or the Benefits Engine uses to determine the copay/coinsurance amount, 
+                please consult the help text of the "Default Copay Amount" or "Default Coinsurance Amount" items.
+                </documentation>
+              </element>
+            
+              <element name="Department" type="SourceCode">
+                <documentation>
+                Indicate the department specialty for which you want to establish a different copay/coinsurance amount.  
+                For details on the logic that POS or the Benefits Engine uses to determine the  copay/coinsurance amount, 
+                please consult the help text of the "Default Copay Amount" or "Default Coinsurance Amount" items.
+                </documentation>
+              </element>
+              
+              <element name="CopayAmount" type="double">
+                <documentation>
+                Indicate the copay amount for the corresponding department specialty and/or copay category.  
+                For details on the logic that POS or the Benefits Engine uses to determine the copay/coinsurance amount, 
+                please consult the help text of the "Default Copay Amount" or "Default Coinsurance Amount" items.
+                </documentation>
+              </element>
+            
+              <element name="CoinsuranceAmount" type="double">
+                <documentation>
+                Indicate the coinsurance amount for the corresponding department specialty and/or copay category.  
+                For details on the logic that POS or the Benefits Engine uses to determine the copay/coinsurance amount, 
+                please consult the help text of the "Default Copay Amount" or "Default Coinsurance Amount" items.
+                </documentation>
+              </element>
+            
+              <element name="LineCount" type="integer">
+                <documentation>The Line Count</documentation>
+              </element>
+            </idsSpecification>
+          </element>
+        </idsSpecification>     
+      </element>
+    
+      <!-- One-to-Many relationships -->
+      <list name="MemberCoverageRecords">
+         <documentation>
+         Use this collection to specify Member Coverage Record information.
+         </documentation>
+
+        <idsSpecification name="MemberCoverageRecord" udlName="MemberCoverageRecord" type="instance_child"
+               elementOrder="CoverageLineNumber, EffectiveDate, TerminationDate, MemberCovered, EligibilityUpdateDate, RelationshipToSubscriber, 
+                       TerminationReason, MemberNumber, ApplicationDate, Student, LateEnrollment, MedicareNumber,
+                       AlternateCoverageNumber, RelationshipToGuarantor, DependentType, CourtDecree, Custody, EnrollmentReason,
+                       VerificationUserId, PayerMemberName, PersonType, VerificationId,
+                       VerificationStatus, LastVerificationDate, ScheduledDiscontinuationDate, CarrierId, ClaimId, FacilityId, 
+                       HomePlan, PlanId, MemberIdFromFile, ProcessorControlNumberOverride, PrescriptionBillingInfo,
+                       CoverageSponsor, CoverageEligibilityQuery, CoverageEligibilityFail"
+                       implementationClass="com.ibi.omni.patient.model.coverage_plan.MemberCoverageRecord"> 
+        
+          <customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+          <customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+          <customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+          
+          <include name="CommonElements"
+               prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+                 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>  
+          
+          <documentation>
+          Use this structure to feed Member Coverage Record information.
+          </documentation>
+            
+          <element name="CoverageLineNumber" type="integer">
+            <documentation>The line number used to identify each member of a coverage record.</documentation>
+          </element>
+        
+          <element name="EffectiveDate" type="OmniDate">
+            <documentation>The date on which the coverage goes into effect for the member.</documentation>
+          </element>
+        
+          <element name="TerminationDate" type="OmniDate">
+            <documentation>The date after which the coverage is no longer in effect for the member and the member becomes ineligible for benefits.</documentation>
+          </element>
+        
+          <element name="MemberCovered" type="SourceCode">
+            <documentation>
+            The member's covered status for the coverage, such as: 
+            - The coverage is verified and in effect
+            - The coverage was invalidated manually. 
+            - Pending (not verified, but in effect), 
+            - In Question (was verified, but recent carrier information omitted this coverage), 
+            - Invalid (never verified, not effective).
+            </documentation>
+          </element>
+        
+          <element name="EligibilityUpdateDate" type="OmniDate">
+            <documentation>The date the coverage record was last updated through an eligibility load.</documentation>
+          </element>
+        
+          <element name="RelationshipToSubscriber" type="SourceCode">
+            <documentation>The category value associated with the relationship of the member to the subscriber of the coverage, such as Self or Spouse.</documentation>
+          </element>
+        
+          <element name="TerminationReason" type="SourceCode">
+            <documentation>The category value assigned to the explanation for termination of this member's coverage.</documentation>
+          </element>
+        
+          <element name="MemberNumber" type="string">
+            <documentation>The identification number assigned to the member for the coverage.</documentation>
+          </element>
+        
+          <element name="ApplicationDate" type="OmniDate">
+            <documentation>The date on which the member applied for coverage.</documentation>
+          </element>
+        
+          <element name="Student" type="SourceCode">
+            <documentation>
+            If the member is a full time student this column contains the value 'Y'. 
+            If the member is not a full time student, this column contains the value 'N'.
+            </documentation>
+          </element>
+        
+          <element name="LateEnrollment" type="SourceCode">
+            <documentation>
+            If the member applied for coverage after open enrollment, this column contains the value 'Y'.
+            If the member did not apply for the coverage after the open enrollment period, this column contains the value 'N'.
+            </documentation>
+          </element>
+        
+          <element name="MedicareNumber" type="string">
+            <documentation>The member's Medicare-assigned identification number, if applicable.</documentation>
+          </element>
+        
+          <element name="AlternateCoverageNumber" type="string">
+            <documentation>Alternate Coverage Record Number for the member</documentation>
+          </element>
+          
+          <element name="RelationshipToGuarantor" type="SourceCode">
+            <documentation>The category value associated with the relationship of the member to the guarantor</documentation>
+          </element>
+        
+          <element name="DependentType" type="SourceCode">
+            <documentation>For members whose relationship to the subscriber is unclear, this column specifies how the member is covered by the subscriber.</documentation>
+          </element>
+        
+          <element name="CourtDecree" type="SourceCode">
+            <documentation>
+            For members that are children involved in divorce scenarios, if a court has decreed 
+            exactly which of the parents is responsible for the child's medical expenses, 
+            then this column specifies how this subscriber is involved in that court decree.
+            </documentation>
+          </element>
+        
+          <element name="Custody" type="SourceCode">
+            <documentation>For members that are children involved in divorce scenarios, this column specifies what type of custody the subscriber has over the child member.</documentation>
+          </element>
+        
+          <element name="EnrollmentReason" type="SourceCode">
+            <documentation>The category value stores the enrollment reason of this member's coverage.</documentation>
+          </element>
+        
+          <element name="VerificationUserId" type="OmniLink" contains="User" keys="SourceName,SourceInstanceId" excludeInDoc="true">
+            <documentation>The user ID of the user who last verified this member's status.</documentation>
+            
+            <example>
+            	<User>
+            		<SourceName>TestSystem</SourceName>
+            		<SourceInstanceId>VerificationUser</SourceInstanceId>
+            	</User>
+            </example>
+          </element>
+        
+          <element name="PayerMemberName" type="string">
+            <documentation>Stores the coverage member name from the payer</documentation>
+          </element>
+        
+          <element name="PersonType" type="SourceCode">
+            <documentation>This contains the person code for a member ID on a coverage.</documentation>
+          </element>
+        
+          <element name="VerificationId" type="string">
+            <documentation>The verification record for the coverage member.</documentation>
+          </element>
+        
+          <element name="VerificationStatus" type="SourceCode">
+            <documentation>The verification status of the coverage, such as verified, changed, elapsed, etc.</documentation>
+          </element>
+        
+          <element name="LastVerificationDate" type="OmniDate">
+            <documentation>The date the member on the coverage was last verified.</documentation>
+          </element>
+        
+          <element name="ScheduledDiscontinuationDate" type="OmniDate">
+            <documentation>The member scheduled discontinuation date.</documentation>
+          </element>
+        
+          <element name="CarrierId" type="string">
+            <documentation>Used for prescription adjudication in ambulatory pharmacy. Carrier code assigned in Workers Compensation Program(327-CR).</documentation>
+          </element>
+        
+          <element name="ClaimId" type="string">
+            <documentation>Used for prescription adjudication in ambulatory pharmacy. Identifies the claim number assigned by Workers Compensation Program (435-DZ).</documentation>
+          </element>
+        
+          <element name="FacilityId" type="string">
+            <documentation>Used for prescription adjudication in ambulatory pharmacy. ID assigned to the patient's clinic/host party (336-8C).</documentation>
+          </element>
+        
+          <element name="HomePlan" type="string">
+            <documentation>
+            Used for prescription adjudication in ambulatory pharmacy. 
+            Code identifying the Blue Cross or Blue Shield plan ID which indicates where the member's coverage has been designated. 
+            Usually where the member lives or purchased their coverage (314-CE).
+            </documentation>
+          </element>
+        
+          <element name="PlanId" type="string">
+            <documentation>
+            Used for prescription adjudication in ambulatory pharmacy. 
+            Assigned by the processor to identify a set of parameters, benefits, 
+            or coverage criteria used to adjudicate a claim (524-FO).
+            </documentation>
+          </element>
+        
+          <element name="MemberIdFromFile" type="string">
+            <documentation>Member ID received on the source file for the member on the coverage. </documentation>
+          </element>
+        
+          <element name="ProcessorControlNumberOverride" type="string">
+            <documentation>Enter the processor control number (PCN) for this member. This PCN overrides the PCN at the plan or payer level for this member only.</documentation>
+          </element>
+        
+          <element name="PrescriptionBillingInfo" type="string">
+            <documentation>Contains the default prescription billing information on this coverage like default values to send during claim adjudication.</documentation>
+          </element>
+        
+          <!-- One-to-One relationships -->
+          <element name="CoverageSponsor" type="document">
+            <documentation>
+            Subscriber for Coverage Sponsor information.
+            </documentation>
+            
+            <idsSpecification name="CoverageSponsor" udlName="CoverageSponsor" type="instance_child"
+                     elementOrder="SponsorName, EffectiveDate, TerminationDate, CoverageLineCount, CoveredThrough, EmployerSize"
+                     implementationClass="com.ibi.omni.patient.model.coverage_plan.CoverageSponsor"> 
+            
+              <customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+              <customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+              <customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+            
+              <include name="CommonElements"
+                   prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+                     appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>  
+                
+              <documentation>
+              Use this structure to feed Coverage Sponsor information.
+              </documentation>
+              
+              <element name="SponsorName" type="string">
+                <documentation>The name of the sponsor.</documentation>
+              </element>
+            
+              <element name="EffectiveDate" type="OmniDate">
+                <documentation>
+                EffectiveDate and TerminationDate are tracked over time since they can affect filing order and MSP logic. 
+                When either of those items are changed, a new line is added to this related group using today's date for this item and the new values for the other two items.</documentation>
+              </element>
+            
+              <element name="TerminationDate" type="OmniDate">
+                <documentation>
+                EffectiveDate and TerminationDate are tracked over time since they can affect filing order and MSP logic. 
+                When either of those items are changed, a new line is added to this related group, and the previous line is given yesterday's date as the termination date.
+                </documentation>
+              </element>
+            
+              <element name="CoverageLineCount" type="integer">
+                <documentation>The Line Count</documentation>
+              </element>
+            
+              <element name="CoveredThrough" type="SourceCode">
+                <documentation>Covered through current employment, retirement, COBRA, or other. Affects filing order calculation and is used for Medicare Secondary payer.</documentation>
+              </element>
+              
+              <element name="EmployerSize" type="integer">
+                <documentation>Number of employees for the employer that sponsors this coverage. Used as part of Medicare Secondary payer determination</documentation>
+              </element>
+            </idsSpecification>                       
+          </element>
+          
+          <element name="CoverageEligibilityQuery" type="document">
+            <documentation>
+            Subscriber for Coverage Eligibility Query information.
+            </documentation>
+            
+            <idsSpecification name="CoverageEligibilityQuery" udlName="CoverageEligibilityQuery" type="instance_child"
+                      elementOrder="MessageSentDateTime, ResponseReceivedDateTime, ResponseId, ResponseFiled, 
+                           HgenGlobalIndex, QueryServiceDate, AssociatedEligibilityInformation"
+                           implementationClass="com.ibi.omni.patient.model.coverage_plan.CoverageEligibilityQuery">  
+            
+              <customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+              <customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+              <customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+              
+              <include name="CommonElements"
+                     prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+                       appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>  
+                
+              <documentation>
+              Use this structure to feed Coverage Eligibility Failure information.
+              </documentation>
+              
+              <element name="MessageSentDateTime" type="OmniDate">
+                <documentation>Time an eligibility message was sent in instance format.</documentation>
+              </element>
+              
+              <element name="ResponseReceivedDateTime" type="OmniDate">
+                <documentation>Time an eligibility response was received in instance format.</documentation>
+              </element>
+            
+              <element name="ResponseId" type="string">
+                <documentation>
+                Link to HNO record of the response text. 
+                Packed version of CVG 8530 RESPONSE TEXT
+                </documentation>
+              </element>
+            
+              <element name="ResponseFiled" type="SourceCode">
+                <documentation>
+                Flag if the response data was filed. 
+                Packed version of CVG 8540 RESPONSE FILED?
+                </documentation>
+              </element>
+            
+              <element name="HgenGlobalIndex" type="string">
+                <documentation>
+                Index to HGEN global for message info. 
+                Packed version of CVG 8550 HGEN INDEX
+                </documentation>
+              </element>
+            
+              <element name="QueryServiceDate" type="OmniDate">
+                <documentation>Record of the service date queried.</documentation>
+              </element>
+            
+              <element name="AssociatedEligibilityInformation" type="integer">
+                <documentation>
+                The line number for the information associated with this record. 
+                Multiple pieces of information can be associated with this record.
+                </documentation>
+              </element>
+            </idsSpecification>                       
+          </element>
+          
+          <element name="CoverageEligibilityFail" type="document">
+            <documentation>
+            Subscriber for Coverage Eligibility Fail information.
+            </documentation>
+            
+            <idsSpecification name="CoverageEligibilityFail" udlName="CoverageEligibilityFail" type="instance_child"
+                   elementOrder="ElectronicFailureDateTime, FailureReason, FailedDatabase, FailedItem, AssociatedEligibilityInformation"
+                   implementationClass="com.ibi.omni.patient.model.coverage_plan.CoverageEligibilityFail"> 
+              
+              <customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+              <customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+              <customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+            
+              <include name="CommonElements"
+                     prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+                       appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>  
+                
+              <documentation>
+              Use this structure to feed Coverage Eligibility Failure information.
+              </documentation>
+              
+              <element name="ElectronicFailureDateTime" type="OmniDate">
+                <documentation>Shows time of last failed attempt to verify coverage electronically</documentation>
+              </element>
+              
+              <element name="FailureReason" type="SourceCode">
+                <documentation>Shows reason for last failed attempt to verify coverage electronically</documentation>
+              </element>
+            
+              <element name="FailedDatabase" type="string">
+                <documentation>Shows database of item causing failed attempt to verify coverage electronically</documentation>
+              </element>
+              
+              <element name="FailedItem" type="string">
+                <documentation>Shows item causing failure to verify coverage electronically</documentation>
+              </element>
+            
+              <element name="AssociatedEligibilityInformation" type="integer">
+                <documentation>
+                The line number for the information associated with this record. 
+                Multiple pieces of information can be associated with this record.
+                </documentation>
+              </element>
+            </idsSpecification>           
+          </element>
+        </idsSpecification>
+      </list>    
+    </idsSpecification>       
+  </element>
+
+  <!-- One-to-Many relationships -->
+  <list name="SubscriberEmployments">
+     <documentation>
+     Use this collection to specify Subscriber Employment information.
+     </documentation>
+     
+    <idsSpecification name="SubscriberEmployment" udlName="SubscriberEmployment" type="instance_child"
+             elementOrder="EmploymentDate, EmployerId, EmploymentStatus, Address, PhoneNumber"
+             implementationClass="com.ibi.omni.patient.model.coverage_plan.SubscriberEmployment"> 
+    
+      <customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+      <customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+      <customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+    
+      <include name="CommonElements"
+             prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+               appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>  
+        
+      <documentation>
+      Use this structure to feed Subscriber Employment information
+      </documentation>
+      
+      <element name="EmploymentDate" type="OmniDate">
+        <documentation>The date on which the subscriber began working for the employer associated with the employer group.</documentation>
+      </element>
+      
+      <element name="EmployerId" type="string">
+        <documentation>This is the unique ID of the employer of the patient subsribing to the coverage if EAF 6410 is set to 1.  This is free text if EAF 6410 is set to 2.</documentation>
+      </element>
+    
+      <element name="EmploymentStatus" type="SourceCode">
+        <documentation>The employment status of the subscriber's employer on a coverage (i.e. full, part, etc.).</documentation>
+      </element>
+    
+      <group name="Address" elementOrder="AddressLine1, AddressLine2, AddressLine3, AddressLine4, City, StateProvince, PostalCode, CountyRegion, District, Country">
+          <documentation>Collection used for communicating the employer's address on a coverage.</documentation>
+    
+        <element name="AddressLine1" type="string">
+          <documentation>
+          The first line of the subscriber's employer's address on a coverage.
+          When referencing an institution, this first component is used to specify the institution name. 
+          When used in connection with a person, this component specifies the first line of the address.
+          </documentation>
+        </element>
+    
+        <element name="AddressLine2" type="string">
+          <documentation>
+          The second line of the subscriber's employer's address on a coverage.
+          In general, line 2 qualifies address. Examples: Suite 555 or Fourth Floor. 
+          When referencing an institution, this component specifies the street address.
+          </documentation>
+        </element>
+    
+        <element name="AddressLine3" type="string">
+          <documentation>
+          The third line of the subscriber's employer's address on a coverage.
+          This field specifies the name of the person or organization that should appear as part of the address. 
+          This is also known as the "Care of" or "C/O" line.
+          </documentation>
+        </element>
+    
+        <element name="AddressLine4" type="string">
+          <documentation>The fourth line of the subscriber's employer's address on a coverage.</documentation>
+        </element>
+    
+        <element name="City" type="string">
+          <documentation>The City field of the subscriber's employer's address on the coverage.</documentation>
+        </element>
+    
+        <element name="StateProvince" type="SourceCode">
+          <documentation>
+          The state of the subscriber's employer's address on a coverage.
+          State or province should be represented by the official postal service codes for that country.
+          </documentation>
+        </element>
+    
+        <element name="PostalCode" type="string">
+          <documentation>
+          The zip code of the subscriber's employer's address on a coverage
+          Zip or postal codes should be represented by the official codes for that country. 
+          In the US, the zip code takes the form 99999[-9999], while the Canadian postal code takes the form A9A9A9,
+          and the Australian Postcode takes the form 9999. 
+          </documentation>
+        </element>
+    
+        <element name="CountyRegion" type="SourceCode" codeTable="????">
+          <documentation>The county of the subscriber's employer's address on a coverage</documentation>
+        </element>
+    
+        <element name="District" type="SourceCode">
+          <documentation>he district of the subscriber's employer's address on a coverage</documentation>
+        </element>
+    
+        <element name="Country" type="SourceCode" codeTable="0399">
+          <documentation>
+          The category number for the country of the subscriber's employer.
+          The 3-character (alphabetic) form of ISO 3166 should be used for the country code.
+          </documentation>
+        </element>
+      </group>
+      
+      <element name="PhoneNumber" type="string">
+        <documentation>The phone number of the subscriber's employer on a coverage.</documentation>
+      </element>
+    </idsSpecification>    
+  </list>    
+
+</idsDocument>

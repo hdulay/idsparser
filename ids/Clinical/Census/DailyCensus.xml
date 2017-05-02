@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.0.0" changeVersion="0" domain="Clinical" type="instance"
+			 name="DailyCensus"  
+	 		 elementOrder="MedicalFacility, MedicalFacilityLocation, PlanningCategoryCode, PlanningSubCategoryCode, CensusDate, CensusTime, 
+					BedCounts, ClosedBeds, PatientCounts, Admits, Discharges, Transfers, AverageTelephoneOnHoldTime"
+			 >
+	 		               	
+	<changeLog>
+		<change version="1.0.0">Initial</change>
+	</changeLog>
+	
+
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+
+	<notes> 
+
+	</notes>
+			
+	<documentation>
+	Daily Census enables the customer to populate the Actual, Projected, Budget or Benchmark totals by facility or 
+	location for a particular date.  General areas of collected statistics include bed counts, closed beds, patient counts, 
+	admits, discharges and transfers.
+	</documentation>
+
+	<element name="MedicalFacility" type="link" contains="Facility">
+		<documentation>
+		Specifies the physical medical facility where the patient received treatment.
+		</documentation>
+		
+		<example>
+			<Facility>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>Hospital</SourceInstanceId>
+			</Facility>
+		</example>
+	</element>
+
+	<element name="MedicalFacilityLocation" type="link" contains="FacilityLocation">
+		<documentation>
+		If data pertains to a particular location within the facility such as a specific building, nurse unit, 
+		floor or ward, it is defined here.
+		</documentation>
+
+		<example>
+			<FacilityLocation>
+				<SourceName>TestSystem</SourceName>
+				<SourceInstanceId>Hospital floor 3</SourceInstanceId>
+			</FacilityLocation>
+		</example>			
+	</element>
+
+	<element name="PlanningCategoryCode" type="code">
+		<documentation>
+		These IDS's can be used to capture Actuals, Budgeted, Projected or Benchmarks for any metric for the reporting period. 
+		A single IDS can be for only one Planning Category/Subcategory combination. If the customer reports this at the 
+		facility level, then each IDS represents one Facility/Category/Subcategory combination.  If reported at the facility 
+		location level, then each IDS represents one Location/Category/Subcategory combination. 
+
+		The distinction between Budgeted (near-term) and Projected (longer term) is generally accepted, but how the customer 
+		uses these categories is up to them; they just enable a means of making comparisons.  Actuals would capture the real 
+		statistics for the reporting period.
+
+		If they are so inclined, they might generate "Benchmark" IDS's if say there is an industry formula for a hospital or 
+		location of their size. Multiple benchmark IDS's might be generated for different percentiles, if they exist or are calculable.
+		</documentation>
+		
+		<example sourceName="TestSystem" codeSet="PlanningCategoryCodes">
+		Projected
+		</example>
+	</element>
+
+	<element name="PlanningSubCategoryCode" type="code">
+		<documentation>
+		The Planning Subcategory provides a method to generate these Actuals, Budgeted, Projected or Benchmarks 
+		IDS's for different percentiles, if they exist or are calculable.
+		</documentation>
+		
+		<example sourceName="TestSystem" codeSet="PlanningSubCategoryCodes">
+		50th percentile
+		</example>
+	</element>
+
+	<element name="CensusDate" type="datetime">
+		<documentation>
+		Represents the reporting period.
+		</documentation>
+			
+		<example>
+			<CensusDate format="yyyy-MM-dd">
+				2015-01-01
+			</CensusDate>
+		</example>
+	</element>
+
+	<element name="CensusTime" type="time">
+		<documentation>
+		Contains the time of day the census count occurred.
+		</documentation>		
+		
+		<example>
+			<CensusTime format="hh:mm">
+				12:15
+			</CensusTime>
+		</example>
+	</element>
+
+	<list name="BedCounts">
+		<documentation>
+		BedCounts is a collection of BedCount instances which track different types of bed counts such as actual 
+		number of beds occupied by children, number of beds being cleaned or all beds at the facility on the census date.
+		</documentation>
+		
+		<idsDocument version="1.0.0" changeVersion="0" domain="Clinical" type="instance_child"
+			 name="BedCount"  
+	 		 elementOrder="PlanningCategoryCode, BedCategorycode, BedSubCategorycode, NumberOfBeds"
+			 >
+		<include name="CommonElements"
+				 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+				 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/> 		               	
+		<changeLog>
+			<change version="1.0.0">Initial</change>
+		</changeLog>
+	
+		<notes> 
+		</notes>
+				
+		<documentation>
+		Tracks different types of bed counts such as actual number of beds occupied by children, number of beds being 
+		cleaned or all beds at the facility on the census date.
+		</documentation>
+	
+		<element name="PlanningCategoryCode" type="code">
+			<documentation>
+			Bed Counts can be contemplated, devised, or planned as well as capturing actual values.  Use the planning category to 
+			define the type of values represented for the facility and census date.
+			</documentation>
+			
+			<example sourceName="TestSystem" codeSet="PlanningCategoryCodes">
+			Projected
+			</example>
+		</element>
+	
+		<element name="BedCategorycode" type="code">
+			<documentation>
+			Specifies the category of beds being counted such as those that are occupied or available.
+			</documentation>
+			
+			<example sourceName="TestSystem" codeSet="BedCategoryCodes">
+			Occupied
+			</example>
+		</element>
+	
+		<element name="BedSubCategorycode" type="code">
+			<documentation>
+			Further categorizes the type of beds being counted.  For example, may want to track the number of beds occupied by 
+			females or the number of available beds not being used.
+			</documentation>
+			
+			<example sourceName="TestSystem" codeSet="BedSubCategoryCodes">
+			Occupied-Female
+			</example>
+		</element>
+	
+		<element name="NumberOfBeds" type="integer">
+			<documentation>
+			Total number of beds at the facility on the census date for the bed category/subcategory specified.
+			</documentation>
+			
+			<example>
+				<NumberOfBeds>
+					50
+				</NumberOfBeds>
+			</example>
+		</element>	
+	</idsDocument>
+			
+	</list>
+
+	<list name="ClosedBeds">
+		<documentation>
+		ClosedBeds is a collection of ClosedBed instances which track individual beds and number of days a bed is closed 
+		(occupied) for the facility and census date.
+		</documentation>
+		
+		<idsDocument version="1.0.0" changeVersion="0" domain="Clinical" type="instance_child"
+			 name="ClosedBed"  
+	 		 elementOrder="BedId, BedName, DaysClosed"
+			 >
+		<include name="CommonElements"
+				 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+				 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/> 		               	
+		<changeLog>
+			<change version="1.0.0">Initial</change>
+		</changeLog>
+	
+		<notes> 
+		</notes>
+				
+		<documentation>
+		Tracks individual beds and number of days a bed is closed (occupied) for the facility and census date.
+		</documentation>
+	
+		<element name="BedId" type="string">
+			<documentation>
+			String that identifies this bed.
+			</documentation>
+			
+			<example>
+				<BedId>
+					123
+				</BedId>
+			</example>
+		</element>
+	
+		<element name="BedName" type="string">
+			<documentation>
+			String that contains the name of this bed.
+			</documentation>
+			
+			<example>
+				<BedName>
+					Orange Room bed East Wing
+				</BedName>
+			</example>
+		</element>
+	
+		<element name="DaysClosed" type="integer">
+			<documentation>
+			Number of days this bed is closed for patients for the facility and census date.
+			</documentation>
+			
+			<example>
+				<DaysClosed>
+					50
+				</DaysClosed>
+			</example>
+		</element>	
+	</idsDocument>
+		
+	</list>
+
+	<list name="PatientCounts">
+		<documentation>
+		PatientCounts is a collection of PatientCount instances which track different types of patient counts such as 
+		actual number of inpatient adults, number of newborns in observation or all patients at the facility on the census date.
+		</documentation>
+		
+		<idsDocument version="1.0.0" changeVersion="0" domain="Clinical" type="instance_child"
+			 name="PatientCount"  
+	 		 elementOrder="PatientCensusCategoryCode, PatientCensusSubCategoryCode, NumberOfPatients"
+			 >
+		<include name="CommonElements"
+				 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+				 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/> 		               	
+		<changeLog>
+			<change version="1.0.0">Initial</change>
+		</changeLog>
+	
+		<notes> 
+		</notes>
+				
+		<documentation>
+		Tracks different types of patient counts such as actual number of inpatient adults, number of newborns in 
+		observation or all patients at the facility on the census date.
+		</documentation>
+	
+		<element name="PatientCensusCategoryCode" type="code">
+			<documentation>
+			Specifies the category of patient being counted such as inpatients, those in observation, or all patients.
+			</documentation>
+			
+			<example sourceName="TestSystem" codeSet="PatientCensusCategoryCodes">
+			Inpatient
+			</example>
+		</element>
+	
+		<element name="PatientCensusSubCategoryCode" type="code">
+			<documentation>
+			Further categorizes the type of patients being counted.  For example, may want to track the number of inpatient 
+			children or all newborns.
+			</documentation>
+			
+			<example sourceName="TestSystem" codeSet="PatientCensusSubCategoryCodes">
+			Children
+			</example>
+		</element>	
+	
+		<element name="NumberOfPatients" type="integer">
+			<documentation>
+			Total number of patients recorded at time of census for a particular date that fall within the category/subcategory 
+			specified.
+			</documentation>
+			
+			<example>
+				<NumberOfPatients>
+					50
+				</NumberOfPatients>
+			</example>
+		</element>
+	</idsDocument>
+	</list>	
+
+	<element name="Admits" type="integer">
+		<documentation>
+		Total number of admissions at the facility for the census date.
+		</documentation>
+		
+		<example>
+			<Admits>
+				45
+			</Admits>
+		</example>
+	</element>
+
+	<group name="Discharges" elementOrder="TotalDischarges, NormalDischarges, AdjustedDischarges, Mortalities, DischargesAfterNoon, DischargesBeforeNoon,
+						PatientsAdmittedAndDischargedIntraday, AverageLengthOfStay">
+		<documentation>
+		Discharges is a group of aggregated discharge clinical metrics for the facility and census date.
+		</documentation>
+	
+		<element name="TotalDischarges" type="integer">
+			<documentation>
+			Total number of discharges for the facility and census date.
+			</documentation>
+		
+			<example>
+				<TotalDischarges>
+					12
+				</TotalDischarges>
+			</example>
+		</element>
+
+		<element name="NormalDischarges" type="integer">
+			<documentation>
+			The number of inpatient discharges that were not adjusted for the facility and census date.	
+			</documentation>
+		
+			<example>
+				<NormalDischarges>
+					67
+				</NormalDischarges>
+			</example>
+		</element>
+
+		<element name="AdjustedDischarges" type="integer">
+			<documentation>
+			The number of adjusted inpatient discharges for the facility and census date.
+			</documentation>
+		
+			<example>
+				<AdjustedDischarges>
+					27
+				</AdjustedDischarges>
+			</example>
+		</element>
+
+		<element name="Mortalities" type="integer">
+			<documentation>
+			Total number of mortalities for the facility and census date.
+			</documentation>
+		
+			<example>
+				<Mortalities>
+					1
+				</Mortalities>
+			</example>
+		</element>
+
+		<element name="DischargesAfterNoon" type="integer">
+			<documentation>
+			Number of discharges after noon for the facility and census date.
+			</documentation>
+		
+			<example>
+				<DischargesAfterNoon>
+					37
+				</DischargesAfterNoon>
+			</example>
+		</element>
+
+		<element name="DischargesBeforeNoon" type="integer">
+			<documentation>
+			Number of discharges before noon for the facility and census date.
+			</documentation>
+		
+			<example>
+				<DischargesBeforeNoon>
+					40
+				</DischargesBeforeNoon>
+			</example>
+		</element>
+
+		<element name="PatientsAdmittedAndDischargedIntraday" type="integer">
+			<documentation>
+			Number of patients admitted and discharged on the same census date at the facility.
+			</documentation>
+		
+			<example>
+				<PatientsAdmittedAndDischargedIntraday>
+					5
+				</PatientsAdmittedAndDischargedIntraday>
+			</example>
+		</element>
+
+		<element name="AverageLengthOfStay" type="double">
+			<documentation>
+			Average length of stay, represented in days, for patients discharged on census date.  
+			General calculation is the number of days from the Admission Date to the Discharge Date on an Inpatient encounter.   
+			Each customer may calculate this value based on different set of criteria.  For example, a customer may or may not 
+			truncate the time portion of the Admission Date and Discharge Date which can change the result by an entire day.
+			</documentation>
+		
+			<example>
+				<AverageLengthOfStay>
+					4
+				</AverageLengthOfStay>
+			</example>
+		</element>
+	</group>
+
+	<group name="Transfers" elementOrder="TotalTransfers, NumberOfIntraHospitalTransfers">
+		<documentation>
+		Transfers is a group of aggregated transfer clinical metrics for the facility and census date.
+		</documentation>
+	
+		<element name="TotalTransfers" type="integer">
+			<documentation>
+			Total number of transfers for the facility and census date.
+			</documentation>
+		
+			<example>
+				<TotalTransfers>
+					12
+				</TotalTransfers>
+			</example>
+		</element>
+
+		<element name="NumberOfIntraHospitalTransfers" type="integer">
+			<documentation>
+			Number of patients transferred within the same hospital on the same census date.
+			</documentation>
+		
+			<example>
+				<NumberOfIntraHospitalTransfers>
+					67
+				</NumberOfIntraHospitalTransfers>
+			</example>
+		</element>			
+	</group>
+
+	<element name="AverageTelephoneOnHoldTime" type="double">
+		<documentation>
+		Average patient telephone on hold time, in minutes, for the facility and census date.
+		</documentation>
+	
+		<example>
+			<AverageTelephoneOnHoldTime>
+				2
+			</AverageTelephoneOnHoldTime>
+		</example>
+	</element> 	
+</idsDocument>

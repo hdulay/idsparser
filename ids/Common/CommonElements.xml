@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsInclude name="CommonElements" type="include">	
+
+	<list name="ExtendedAttributes" hidden="false" contains="ExtendedAttribute">
+		<documentation>
+		Use this collection to specify the list of extended attributes assigned to the the
+		specified element. These extended attributes are essentially a name/value pair that
+		allow data to be fed into OmniPatient and exposed all the way to any constructed RDM's.
+		
+		Any extended attributes will have associated history and change propagation information
+		stored, therefore support of "asOf" processing will be enabled.	
+		</documentation>
+	</list>
+
+
+	<list name="ExtendedAttributeMasters">
+		<documentation>
+		Use this collection to specify the list of extended attributes assigned to the the
+		specified element. These extended attributes are essentially a name/value pair that
+		allow data to be fed into OmniPatient and exposed all the way to any constructed RDM's.
+		</documentation>
+		
+		<idsSpecification name="ExtendedAttributeMaster" udlName="ExtendedAttributeMaster" type="instance_child"
+			 		 	  elementOrder="MasterChildId, MasterStatus, MasterStatusReason, Name, Type, Format, Value"
+			 		 	  implementationClass="com.ibi.dib.core.model.master.ExtendedAttributeMaster">
+			
+			<element name="MasterChildId" key="true" type="string">
+				<documentation>
+				Id for children linked to a master. 
+				</documentation>
+			</element>  
+	 
+			<element name="MasterStatus" type="string">
+				<documentation>
+				Use this element to set the status of this record. This field will default to 'ACTIVE'
+				if not supplied. Possible values are: 'ACTIVE', 'INACTIVE', 'MERGED', 'LINKED', 'UNLINK'
+				</documentation>
+				
+				<example>A</example>
+			</element>
+		
+			<element name="MasterStatusReason" type="string">
+				<documentation>
+				Use this element to specify the reason for the current status. This can be used for 
+				a simple note to help understand why the current status has been set.
+				</documentation>
+				
+				<example></example>
+			</element>
+		
+			<element name="Name" type="string">
+				<documentation>
+				Use this element to define the name of the extended attribute.
+				</documentation>
+				
+				<example>MasterExtendedAttribute</example>
+			</element>
+
+			<element name="Type" type="string">
+				<documentation>
+				Use this element to define the type that best describes the value. Examples:
+				int, long, double, date, string
+				</documentation>
+				
+				<example>string</example>
+			</element>
+
+			<element name="Format" type="string">
+				<documentation>
+				Use this element to specify the format of the value. For dates this could be
+				the format of the date information. Note: This information may be used when
+				building RDM's, so some discussion should occur between the feed of this 
+				information and the output of it.
+				</documentation>
+				
+				<example></example>
+			</element>
+
+			<element name="Value" type="string">
+				<documentation>
+				Use this element to specify the string representation of value of this 
+				extended attribute.
+				</documentation>
+				
+				<example>Sample Value</example>
+			</element>
+			
+		</idsSpecification>
+	</list>
+
+	<element name="OmniStatus" type="string" hidden="true">
+		<documentation>
+		Use this element to set the status of this record. This field will default to 'ACTIVE'
+		if not supplied. Possible values are: 'ACTIVE', 'INACTIVE', 'MERGED', 'LINKED', 'UNLINK'
+		</documentation>
+		
+		<example>A</example>
+	</element>
+
+	<element name="OmniStatusReason" type="string" hidden="true">
+		<documentation>
+		Use this element to specify the reason for the current status. This can be used for 
+		a simple note to help understand why the current status has been set.
+		</documentation>
+		
+		<example>Active</example>
+	</element>
+
+	<element name="SourceName" key="true" type="string">
+		<documentation>
+		This element must identify the source system that was responsible for generating this 
+	    data. This value is determined by the integration team and used in combination with 
+	    SourceInstanceId will allow this record to be traced back to its originating source.
+		</documentation>
+	</element>
+
+	<element name="SourceInstanceId" key="true" type="string">
+		<documentation>
+		This element should contain an integration manufactured value that uniquely identifies the
+		collection element and can be used to map back to the source system. Whatever value is
+		manufactured must not change over time as it will be used to make updates when data
+		changes in the source system.
+		</documentation>
+	</element>
+	
+	<element name="SourceInstanceIdName" type="string">
+		<documentation>
+		This element gives an indication of where the data came from in the source system.
+		Will be used in the 360 viewer for stewards to trace data from Omni back into
+		the source system.
+		</documentation>
+		
+		<example>SID Name</example>
+	</element>
+
+	<element name="SourceStatusCode" type="code">
+		<documentation>
+		Use this element to specify a customer specific status for the instance. This
+		may be used during the match and merge process. 
+		</documentation>
+		
+		<example sourceName="TestSystem" codeSet="SourceStatusCodes">A</example>
+	</element>
+			
+	<element name="SourceCreatedDate" type="datetime">
+		<documentation>
+		Use this element to define when this element was modified outside of Omni.
+		</documentation>
+		
+		<example format="yyyy-MM-dd hh:mm:ss">2000-01-01 10:12:32</example>
+	</element>
+
+	<element name="SourceCreatedBy" type="string">
+		<documentation>
+		Use this element to define the id of the person who was responsible for 
+		creating data for this record.
+		</documentation>
+		
+		<example>UnitTest</example>
+	</element>
+
+	<element name="SourceModifiedDate" type="datetime">
+		<documentation>
+		Use this element to define when this element was modified outside of Omni.
+		</documentation>
+		
+		<example format="yyyy-MM-dd hh:mm:ss">2000-10-01 11:12:32</example>
+	</element>
+
+	<element name="SourceModifiedBy" type="string">
+		<documentation>
+		Use this element to define the id of the person who was responsible for 
+		modifying data for this record.
+		</documentation>
+		
+		<example>UnitTest</example>
+	</element>
+
+	<element name="MasterId" key="true" type="string" index="true">
+		<documentation>
+		Master id for a mastered subject.
+		</documentation>
+	</element>  
+	  
+	<element name="MasterChildId" key="true" type="string">
+		<documentation>
+		Id for children linked to a master. 
+		</documentation>
+	</element>  
+	 
+	<element name="MasterStatus" type="string">
+		<documentation>
+		Use this element to set the status of this record. This field will default to 'ACTIVE'
+		if not supplied. Possible values are: 'ACTIVE', 'INACTIVE', 'MERGED', 'LINKED', 'UNLINK'
+		</documentation>
+		
+		<example>A</example>
+	</element>
+
+	<element name="MasterStatusReason" type="string">
+		<documentation>
+		Use this element to specify the reason for the current status. This can be used for 
+		a simple note to help understand why the current status has been set.
+		</documentation>
+	</element>  
+
+	<element name="MasterStatusCode" type="MasterOmniCode" udlName="masterStatus">
+		<documentation>
+		This element is used by merging to define a status to the master. This status may
+		be used to provide enhanced filtering when viewed in the UI.
+		</documentation>
+		
+		<example omniSourceName="Mastering" omniCodeSet="MasterStatusCodes" omniCode="A">Active</example>
+	</element>
+		  
+</idsInclude>

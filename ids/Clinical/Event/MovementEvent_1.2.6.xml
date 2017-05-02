@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.2.6" changeVersion="1" domain="Clinical.Event" type="instance"
+			 name="MovementEvent" udlName="MovementEvent"  
+	 		 elementOrder="EventDateTime, Location, TypeCode"
+	 		 implementationClass="com.ibi.omni.patient.model.clinical.event.MovementEvent">	 					
+	  	 					
+	<changeLog>
+		<change version="1.2.6_0">Initial Version</change>
+		<change version="1.2.6_1">Added SourceStatusCode to instance and collection items.</change>
+	</changeLog>
+	
+	<notes>
+	
+	</notes>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	<!--
+	<customType name="SourceCodeList" class="com.ibi.omni.patient.ids.SourceCodeListType"/>
+	-->
+	
+	<!--
+	<include name="OrderElements"
+			 prependToElementOrder="EventDateTime, Location, OrderNumber, OrderTypeCode, PriorityCode, OrderReason, OrderOutcomeStatusCode, OrderDetailNumber, Sequence, OrderDetailStatusCode, OrderSetNumber, OrderSetName"
+			 appendToElementOrder="OrderDetailReasons"/>
+	-->
+			 
+	<include name="EventElements"
+			 prependToElementOrder="ParentEvent, Encounter, CarePlanId, CarePlan, CCDCategoryCode"
+			 appendToElementOrder="EventProviders, EventNotes"/>
+			 
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	
+	<documentation>	
+A Movement Event is a type of clinical event capturing generic movement types of a patient throughout the encounter process (Get X-Ray,  Go to Room, Get Blood Drawn, Go to Prep Room, Go to Recovery Room, etc.).  This is different than a Transfer event where a patient is transferred from one facility location to another facility location.  The Movement events track patient movement within the same facility location.  If require tracking of duration between movements, must log all patient movements to avoid inflated durations.  The Movement event captures the date and time the patient was moved, the facility where the movement occurred and the provider who authorized the movement so with the movement type, can document a timeline of all patient movement, at which facility location and under the care of which providers.
+	</documentation>
+
+  <element name="EventDateTime" type="OmniDate">
+    <documentation>
+    Date and time that the patient was moved.
+    </documentation>
+    
+    <example format="yyyy-MM-dd hh:mm:ss">2000-10-01 11:12:32</example>
+  </element>
+  
+  <element name="Location" type="OmniLink" contains="FacilityLocation" keys="SourceName, SourceInstanceId" allowCreate="true">
+    <documentation>
+    The facility location where the patient was moved to.
+    
+    Use this element to specify a FacilityLocation in the system using the FacilityLocation's SourceName and SourceInstanceId. You cannot load FacilityLocation
+    information using this element, however if the FacilityLocation is not found then a "placeholder" will be created that will contain the FacilityLocation
+    when loaded.
+    </documentation>
+    
+    <example>
+      <![CDATA[
+      <FacilityLocation>
+        <SourceName>TestSystem</SourceName>
+        <SourceInstanceId>FacilityLocationId</SourceInstanceId>
+      </FacilityLocation>
+      ]]>
+    </example>    
+  </element>
+  
+	<element name="TypeCode" type="SourceCode" >
+		<documentation>
+		Describes the type of patient movement.  It is important to note that movement is different than facility location.  Movements are independent of a facility location.  To track that a patient moved to a different facility location, would include a Transfer clinical event in addition to the Movement clinical events.
+		</documentation>
+		
+		<example sourceCodeSet="MovementTypeCodes" sourceCode="x-ray">Get X-Ray</example>
+	</element>
+
+
+</idsDocument>

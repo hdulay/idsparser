@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idsDocument version="1.2.5" changeVersion="0" domain="Clinical.Event.Order" type="instance"
+			 name="DiagnosticTestOrderEvent" udlName="DiagnosticTestOrderEvent"  
+	 		 elementOrder="DiagnosticTestCode, Specimens"
+	 		 implementationClass="com.ibi.omni.patient.model.clinical.event.order.DiagnosticTestOrderEvent">	 					
+	  	 					
+	<changeLog>
+		<change version="1.2.5_0">Initial Version</change>
+	</changeLog>
+	
+	<notes>
+	
+	</notes>
+	
+	<customType name="OmniDate" class="com.ibi.dib.core.ids.types.IdsDateTimeType"/>
+	<customType name="SourceCode" class="com.ibi.dib.core.ids.types.IdsCodeType"/>
+	<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>
+	<customType name="SourceCodeList" class="com.ibi.omni.patient.ids.SourceCodeListType"/>
+	
+	<include name="OrderElements"
+			 prependToElementOrder="EventDateTime, Location, OrderNumber, OrderTypeCode, PriorityCode, OrderReason, OrderOutcomeStatusCode, OrderDetailNumber, Sequence, OrderDetailStatusCode, OrderSetNumber, OrderSetName"
+			 appendToElementOrder="OrderDetailReasons"/>
+			 
+	<include name="EventElements"
+			 prependToElementOrder="ParentEvent, Encounter, CarePlanId, CarePlan, CCDCategoryCode"
+			 appendToElementOrder="EventProviders, EventNotes"/>
+			 
+	<include name="CommonElements"
+			 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+			 appendToElementOrder="ExtendedAttributes, SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+	
+	<documentation>	
+Each order event captures the requests made by a Provider for a Patient's handling, diagnosis, treatment, etc. as part of an Encounter. 
+	</documentation>
+
+	<element name="DiagnosticTestCode" type="SourceCode" >
+		<documentation>
+		Contains the mode or state of being that describes the nature of the specimen.
+		</documentation>
+		
+		<example sourceCodeSet="DiagnosticTestCodes" sourceCode="DiagnosticBloodTest"/>
+	</element>
+
+	<list name="Specimens">
+		<documentation>
+		Specimens is a collection of EventSpecimen records.  Each diagnostic test ordered can contain none, one or more specimens that the diagnostic investigation is about.
+		</documentation>
+		
+		<idsSpecification name="EventSpecimen" udlName="EventSpecimen" elementOrder="Specimen"
+			implementationClass="com.ibi.omni.patient.model.clinical.event.order.EventSpecimen">
+			 
+			<customType name="OmniLink" class="com.ibi.dib.core.ids.types.IdsLinkType"/>	
+				
+			<include name="CommonElements"
+					 prependToElementOrder="OmniStatus, OmniStatusReason, SourceName, SourceInstanceId, SourceInstanceIdName"
+					 appendToElementOrder="SourceStatusCode, SourceCreatedDate, SourceCreatedBy, SourceModifiedDate, SourceModifiedBy"/>
+					 	  	
+			<documentation>
+			Event Specimen captures the specimens that are used in the diagnostic test ordered.
+			</documentation>
+
+			<element name="Specimen" type="OmniLink" contains="Specimen" keys="SourceName, SourceInstanceId" allowCreate="true">
+				<documentation>
+				A specimen is a sample for analysis taken from a biological entity, living or dead, or taken from a physical object or the environment. You cannot load Specimen information using this element, 
+				however if the Specimen is not found then a "placeholder" will be created that will contain the Specimen when loaded.
+				</documentation>
+				
+				<example>
+					<![CDATA[
+					<Specimen>
+						<SourceName>TestSystem</SourceName>
+						<SourceInstanceId>TestSystem:SpecimenId</SourceInstanceId>
+					</Specimen>
+					]]>
+				</example>		
+			</element>	
+		</idsSpecification>
+	</list>
+</idsDocument>
