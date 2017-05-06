@@ -1,5 +1,7 @@
 package ids;
 
+import org.w3c.dom.Node;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,17 +10,19 @@ import java.util.List;
  * Created by hkdulay on 4/30/17.
  */
 public class Field {
+    private Node node;
     private String name;
     private File file;
     private String doc;
     private Type type;
     private List<String> links = new ArrayList<>();
+    private String dbColumn;
 
-
-    public Field(String name, File file, String doc) {
+    public Field(String name, File file, String doc, Node node) {
         this.name = name;
         this.file = file;
         this.doc = doc;
+        this.node = node;
     }
 
     public String getDoc() {
@@ -39,14 +43,7 @@ public class Field {
 
     @Override
     public String toString() {
-        String patient = doc != null && doc.toLowerCase().contains("patient") ? "patient" : "unknown";
-        switch (type) {
-            case OmniDate:
-                return "[" + file.getName() + "] [" + name + "] [" + type + "] ["+patient+"] : " + doc;
-            case OmniLink:
-                return "[" + file.getName() + "] [" + name + "] [" + type + "] ["+patient+"] : " + links;
-        }
-        return "unknown field";
+        return file.getName() + "," + name + "," + dbColumn;
     }
 
     public File getFile() {
@@ -73,4 +70,19 @@ public class Field {
         this.type = type;
     }
 
+    public void setDbColumn(String dbColumn) {
+        this.dbColumn = dbColumn;
+    }
+
+    public String getDbColumn() {
+        return dbColumn;
+    }
+
+    public Node getNode() {
+        return node;
+    }
+
+    public void setNode(Node node) {
+        this.node = node;
+    }
 }
