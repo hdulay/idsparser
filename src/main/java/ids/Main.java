@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created by hkdulay on 4/30/17.
@@ -35,15 +36,16 @@ public class Main {
         files.stream()
                 .flatMap(file -> IDSUtil.getFileNodes(file, "//element[@type='OmniDate']").stream()) // OmniDates
                 .map(Main::getField)
-                .flatMap(field -> Arrays.stream(findTableColumn(field, statements)))
+                .flatMap(field -> findTableColumn(field, statements))
+                .sorted((o1, o2) -> o1.getField().getFile().getName().compareTo(o2.getField().getFile().getName()))
                 .forEach(System.out::println);
     }
 
-    private static TableColumn[] findTableColumn(Field field, List<CreateTable> statements) {
+    private static Stream<TableColumn> findTableColumn(Field field, List<CreateTable> statements) {
         Node parent = field.getNode().getParentNode();
         String parentName = parent.getAttributes().getNamedItem("name").getNodeValue();
 
-        TableColumn[] tc = statements.stream().
+         return statements.stream().
                 filter(create ->
                         distance.distance(create.getTable().getName().toLowerCase(), parentName.toLowerCase()) < limit
                 ).
@@ -51,10 +53,7 @@ public class Main {
                         create.getColumnDefinitions().stream()
                                 .filter(col -> distance.distance(col.getColumnName().toLowerCase(), field.getName().toLowerCase()) < limit)
                                 .map(col -> new TableColumn(create, col, field))
-                ).
-                toArray(size -> new TableColumn[size]);
-
-        return tc;
+                );
     }
 
     private static Field getField(FileNodes fn) {
