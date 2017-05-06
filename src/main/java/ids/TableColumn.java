@@ -45,6 +45,6 @@ public class TableColumn {
     @Override
     public String toString() {
         String parent = field.getNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
-        return field.getFile().getName()+","+parent+","+field.getName()+","+create.getTable()+","+col.getColumnName();
+        return field.getFile().getName()+","+parent+","+field.getName()+","+create.getTable()+","+col.getColumnName()+","+field.getDoc();
     }
 }

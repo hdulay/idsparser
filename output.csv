@@ -1,0 +1,995 @@
+AccountTransaction_1.2.6.xml,AccountTransaction,TransactionDateTime,t_account_transaction,transaction_date_time,Date and time the transaction was recorded on the account.
+AccountTransaction_1.2.6.xml,AccountTransaction,TransactionDateTime,t_account_transaction,transaction_time,Date and time the transaction was recorded on the account.
+AccountTransaction_1.2.6.xml,AccountTransaction,TransactionDateTime,t_account_transaction,transaction_date,Date and time the transaction was recorded on the account.
+AccountTransaction_1.2.6.xml,AccountTransaction,TransactionDateTime,account_transaction,transaction_date_time,Date and time the transaction was recorded on the account.
+AccountTransaction_1.2.6.xml,AccountTransaction,TransactionDateTime,account_transaction_onr,transaction_date_time,Date and time the transaction was recorded on the account.
+AccountTransaction_1.2.6.xml,AccountTransaction,TransactionDateTime,hist_account_transaction,transaction_date_time,Date and time the transaction was recorded on the account.
+AccountTransaction_1.2.6.xml,AccountTransaction,ReplacedDate,account_transaction,replaced_date,Date and time the transaction was replaced on the account.
+AccountTransaction_1.2.6.xml,AccountTransaction,ReplacedDate,account_transaction_onr,replaced_date,Date and time the transaction was replaced on the account.
+AccountTransaction_1.2.6.xml,AccountTransaction,ReplacedDate,hist_account_transaction,replaced_date,Date and time the transaction was replaced on the account.
+Account_1.2.6.xml,Account,AccountBalanceDateTime,t_account,account_balance_date_time,Definition TBD
+Account_1.2.6.xml,Account,AccountBalanceDateTime,t_account,account_balance_time,Definition TBD
+Account_1.2.6.xml,Account,AccountBalanceDateTime,t_account,account_balance_date,Definition TBD
+Account_1.2.6.xml,Account,AccountBalanceDateTime,account,account_balance_date_time,Definition TBD
+AdmissionEvent_1.2.3.xml,AdmissionEvent,EventDateTime,t_admission_event,event_date_time,Date and time that the patient was admitted
+AdmissionEvent_1.2.3.xml,AdmissionEvent,EventDateTime,admission_event_onr,event_date_time,Date and time that the patient was admitted
+AdmissionEvent_1.2.3.xml,AdmissionEvent,ExpectedEventDateTime,t_admission_event,expected_event_date_time,Contains the date and time that the patient is expected to be admitted.
+AdmissionEvent_1.2.3.xml,AdmissionEvent,ExpectedEventDateTime,t_admission_event,expected_event_time,Contains the date and time that the patient is expected to be admitted.
+AdmissionEvent_1.2.3.xml,AdmissionEvent,ExpectedEventDateTime,t_admission_event,expected_event_date,Contains the date and time that the patient is expected to be admitted.
+AdmissionEvent_1.2.3.xml,AdmissionEvent,ExpectedEventDateTime,admission_event,expected_event_date_time,Contains the date and time that the patient is expected to be admitted.
+AdmissionEvent_1.2.3.xml,AdmissionEvent,ExpectedEventDateTime,admission_event_onr,expected_event_date_time,Contains the date and time that the patient is expected to be admitted.
+BenefitPlan_1_1_7.xml,BenefitPlanOvertimeInformation,ContactUpdateDate,benefit_plan_overtime_information_onr,contact_update_date,The contact date of the benefit plan in standard date format.
+Bill.xml,Bill,BillDateTime,bill,bill_date_time,Date and time the bill was created for the account.
+CarePlan_1.2.8.xml,CarePlan,StartDate,t_care_plan,start_date,Contains the starting date of when the care plan is expected to begin.
+CarePlan_1.2.8.xml,CarePlan,StartDate,care_plan,start_date,Contains the starting date of when the care plan is expected to begin.
+CarePlan_1.2.8.xml,CarePlan,EndDate,t_care_plan,end_date,Contains the ending date of when the care plan is expected to be completed.
+CarePlan_1.2.8.xml,CarePlan,EndDate,care_plan,end_date,Contains the ending date of when the care plan is expected to be completed.
+Charge_1.2.6.xml,Charge,ServiceDateTime,t_charge,service_date_time,Date and time the service was actually performed.
+Charge_1.2.6.xml,Charge,ServiceDateTime,t_charge,service_time,Date and time the service was actually performed.
+Charge_1.2.6.xml,Charge,ServiceDateTime,charge,service_date_time,Date and time the service was actually performed.
+Charge_1.2.6.xml,Charge,ReplacedDate,charge,replaced_date,Date of the charge replacement.
+Charge_1.2.6.xml,Charge,ChargeDateTime,t_charge,charge_date_time,Date and time the charge was recorded on the account.
+Charge_1.2.6.xml,Charge,ChargeDateTime,t_charge,charge_time,Date and time the charge was recorded on the account.
+Charge_1.2.6.xml,Charge,ChargeDateTime,charge,charge_date_time,Date and time the charge was recorded on the account.
+Claim_1.2.6.xml,Claim,ClaimDateTime,t_claim,claim_date_time,Date and time the Claim was created for the account.
+Claim_1.2.6.xml,Claim,ClaimDateTime,claim,claim_date_time,Date and time the Claim was created for the account.
+Claim_1.2.6.xml,Claim,CorrectionDate,claim,correction_date,Date and time the Claim was corrected for the account.
+CoveragePlan_1_1_7.xml,CoveragePlan,EffectiveDate,coverage_plan,effective_date,The effective date of the coverage.
+CoveragePlan_1_1_7.xml,CoveragePlan,EffectiveDate,coverage_plan_onr,effective_date,The effective date of the coverage.
+CoveragePlan_1_1_7.xml,CoveragePlan,CardIssueDate,coverage_plan,card_issue_date,Stores the card issue date.
+CoveragePlan_1_1_7.xml,CoveragePlan,CardIssueDate,coverage_plan_onr,card_issue_date,Stores the card issue date.
+CoveragePlan_1_1_7.xml,CoveragePlan,NextReviewDate,coverage_plan,next_review_date,The date on which this coverage should next be verified. This is calculated every time the coverage is verified.
+CoveragePlan_1_1_7.xml,CoveragePlan,NextReviewDate,coverage_plan_onr,next_review_date,The date on which this coverage should next be verified. This is calculated every time the coverage is verified.
+CoveragePlan_1_1_7.xml,CoveragePlan,TerminationDate,coverage_plan,termination_date,The termination date of the coverage.
+CoveragePlan_1_1_7.xml,CoveragePlan,TerminationDate,coverage_plan_onr,termination_date,The termination date of the coverage.
+CoveragePlan_1_1_7.xml,CoveragePlan,CobraTerminationDate,coverage_plan,cobra_termination_date,The termination date for any COBRA arrangement.
+CoveragePlan_1_1_7.xml,CoveragePlan,CobraTerminationDate,coverage_plan_onr,cobra_termination_date,The termination date for any COBRA arrangement.
+CoveragePlan_1_1_7.xml,CoveragePlan,StudentMembersReviewDate,coverage_plan,student_members_review_date,The date on which you should review the status of any members on this coverage who are students.
+CoveragePlan_1_1_7.xml,CoveragePlan,StudentMembersReviewDate,coverage_plan_onr,student_members_review_date,The date on which you should review the status of any members on this coverage who are students.
+CoveragePlan_1_1_7.xml,CoveragePlan,StudentMembersReviewDate,coverage_plan,student_members_review_date,The date on which you should review the status of any members on this coverage who are students.
+CoveragePlan_1_1_7.xml,CoveragePlan,StudentMembersReviewDate,coverage_plan_onr,student_members_review_date,The date on which you should review the status of any members on this coverage who are students.
+CoveragePlan_1_1_7.xml,CoveragePlan,LastProratedDate,coverage_plan,last_prorated_date,The date on which a bucket was last adjusted by proration.
+CoveragePlan_1_1_7.xml,CoveragePlan,LastProratedDate,coverage_plan_onr,last_prorated_date,The date on which a bucket was last adjusted by proration.
+CoveragePlan_1_1_7.xml,CoveragePlan,LastCoverageVerifiedDate,coverage_plan,last_coverage_verified_date,The last date the coverage was verified.
+CoveragePlan_1_1_7.xml,CoveragePlan,LastCoverageVerifiedDate,coverage_plan_onr,last_coverage_verified_date,The last date the coverage was verified.
+CoveragePlan_1_1_7.xml,CoveragePlan,WorkersCompInjuryDate,coverage_plan,workers_comp_injury_date,Workers Comp date of injury. This is the date the injury occurred on the job. This field is populated as the user sets up the WC account.
+CoveragePlan_1_1_7.xml,CoveragePlan,WorkersCompInjuryDate,coverage_plan_onr,workers_comp_injury_date,Workers Comp date of injury. This is the date the injury occurred on the job. This field is populated as the user sets up the WC account.
+CoveragePlan_1_1_7.xml,CoveragePlan,EffectiveMedicarePartACoverageDate,coverage_plan,eff_medicare_parta_coverage_date,The effective date of Medicare Part A.
+CoveragePlan_1_1_7.xml,CoveragePlan,EffectiveMedicarePartACoverageDate,coverage_plan,eff_medicare_partb_coverage_date,The effective date of Medicare Part A.
+CoveragePlan_1_1_7.xml,CoveragePlan,EffectiveMedicarePartACoverageDate,coverage_plan_onr,effective_medicare_part_a_coverage_date,The effective date of Medicare Part A.
+CoveragePlan_1_1_7.xml,CoveragePlan,EffectiveMedicarePartACoverageDate,coverage_plan_onr,effective_medicare_part_b_coverage_date,The effective date of Medicare Part A.
+CoveragePlan_1_1_7.xml,CoveragePlan,EffectiveMedicarePartBCoverageDate,coverage_plan,eff_medicare_parta_coverage_date,The effective date of Medicare Part B.
+CoveragePlan_1_1_7.xml,CoveragePlan,EffectiveMedicarePartBCoverageDate,coverage_plan,eff_medicare_partb_coverage_date,The effective date of Medicare Part B.
+CoveragePlan_1_1_7.xml,CoveragePlan,EffectiveMedicarePartBCoverageDate,coverage_plan_onr,effective_medicare_part_a_coverage_date,The effective date of Medicare Part B.
+CoveragePlan_1_1_7.xml,CoveragePlan,EffectiveMedicarePartBCoverageDate,coverage_plan_onr,effective_medicare_part_b_coverage_date,The effective date of Medicare Part B.
+CoveragePlan_1_1_7.xml,AlternateCoverageRecord,AlternateSubscriberBirthDate,alternate_coverage_record,alternate_subscriber_birth_date,The alternate subscriber date of birth override for use with interfaces.
+CoveragePlan_1_1_7.xml,AlternateCoverageRecord,AlternateSubscriberBirthDate,alternate_coverage_record_onr,alternate_subscriber_birth_date,The alternate subscriber date of birth override for use with interfaces.
+CoveragePlan_1_1_7.xml,AlternateCoverageRecord,AlternateSubscriberBirthDate,hist_alternate_coverage_record,alternate_subscriber_birth_date,The alternate subscriber date of birth override for use with interfaces.
+CoveragePlan_1_1_7.xml,AlternateCoverageRecord,SelfVerificationDate,alternate_coverage_record,self_verification_date,Stores the last self-verification date. Used by Welcome.
+CoveragePlan_1_1_7.xml,AlternateCoverageRecord,SelfVerificationDate,alternate_coverage_record_onr,self_verification_date,Stores the last self-verification date. Used by Welcome.
+CoveragePlan_1_1_7.xml,AlternateCoverageRecord,SelfVerificationDate,hist_alternate_coverage_record,self_verification_date,Stores the last self-verification date. Used by Welcome.
+DeathEvent_1.2.6.xml,DeathEvent,EventDateTime,t_death_event,event_date_time,Date and time of patient's death.
+DiagnosisEvent_1.2.3.xml,DiagnosisEvent,EventDateTime,t_diagnosis_event,event_date_time,Date and time that the diagnosis was made.
+DiagnosisEvent_1.2.3.xml,DiagnosisEvent,EventDateTime,diagnosis_event_onr,event_date_time,Date and time that the diagnosis was made.
+DiagnosisEvent_1.2.3.xml,DiagnosisEvent,OnsetDate,t_diagnosis_event,onset_date,Estimated or actual date the condition was first detected in the opinion of the provider.
+DiagnosisEvent_1.2.3.xml,DiagnosisEvent,OnsetDate,diagnosis_event,onset_date,Estimated or actual date the condition was first detected in the opinion of the provider.
+DiagnosisEvent_1.2.3.xml,DiagnosisEvent,OnsetDate,diagnosis_event_onr,onset_date,Estimated or actual date the condition was first detected in the opinion of the provider.
+DiagnosisEvent_1.2.3.xml,DiagnosisEvent,AssertionDate,t_diagnosis_event,assertion_date,Estimated or actual date the condition was first detected by the patient.
+DiagnosisEvent_1.2.3.xml,DiagnosisEvent,AssertionDate,diagnosis_event,assertion_date,Estimated or actual date the condition was first detected by the patient.
+DiagnosisEvent_1.2.3.xml,DiagnosisEvent,AssertionDate,diagnosis_event_onr,assertion_date,Estimated or actual date the condition was first detected by the patient.
+DiagnosisEvent_1.2.3.xml,DiagnosisEvent,AbatementDate,t_diagnosis_event,abatement_date,Estimated or actual date that the diagnosis was resolved or went into remission.
+DiagnosisEvent_1.2.3.xml,DiagnosisEvent,AbatementDate,diagnosis_event,abatement_date,Estimated or actual date that the diagnosis was resolved or went into remission.
+DiagnosisEvent_1.2.3.xml,DiagnosisEvent,AbatementDate,diagnosis_event_onr,abatement_date,Estimated or actual date that the diagnosis was resolved or went into remission.
+DischargeEvent_1.2.3.xml,DischargeEvent,EventDateTime,t_discharge_event,event_date_time,Date and time that the patient is discharged
+DischargeEvent_1.2.3.xml,DischargeEvent,EventDateTime,discharge_event_onr,event_date_time,Date and time that the patient is discharged
+Encounter_1.2.2.xml,Encounter,ArrivalDateTime,t_encounter,arrival_date_time,Tracks the date and time the patient arrived at the facility.  This is different than the date the patient is admitted (applies to inpatient only).
+Encounter_1.2.2.xml,Encounter,ArrivalDateTime,t_encounter,arrival_time,Tracks the date and time the patient arrived at the facility.  This is different than the date the patient is admitted (applies to inpatient only).
+Encounter_1.2.2.xml,Encounter,ArrivalDateTime,encounter,arrival_date_time,Tracks the date and time the patient arrived at the facility.  This is different than the date the patient is admitted (applies to inpatient only).
+Encounter_1.2.2.xml,Encounter,DepartureDateTime,t_encounter,departure_date_time,Tracks the date and time the patient leaves the facility for both inpatient and outpatient.  For inpatient, can be different than discharge date.
+Encounter_1.2.2.xml,Encounter,DepartureDateTime,t_encounter,departure_time,Tracks the date and time the patient leaves the facility for both inpatient and outpatient.  For inpatient, can be different than discharge date.
+Encounter_1.2.2.xml,Encounter,DepartureDateTime,t_encounter,departure_date,Tracks the date and time the patient leaves the facility for both inpatient and outpatient.  For inpatient, can be different than discharge date.
+Encounter_1.2.2.xml,Encounter,DepartureDateTime,encounter,departure_date_time,Tracks the date and time the patient leaves the facility for both inpatient and outpatient.  For inpatient, can be different than discharge date.
+Encounter_1.2.2.xml,ChronicCondition,AssertionDate,t_chronic_condition,assertion_date,Estimated or actual date the chronic condition was first detected for the patient.
+Encounter_1.2.2.xml,ChronicCondition,AssertionDate,chronic_condition,assertion_date,Estimated or actual date the chronic condition was first detected for the patient.
+Encounter_1.2.2.xml,ChronicCondition,AssertionDate,chronic_condition_onr,assertion_date,Estimated or actual date the chronic condition was first detected for the patient.
+Encounter_1.2.2.xml,ChronicCondition,AssertionDate,hist_chronic_condition,assertion_date,Estimated or actual date the chronic condition was first detected for the patient.
+Encounter_1.2.2.xml,Symptom,AssertionDateTime,t_symptom,assertion_date_time,Estimated or actual date and time (if applicable) the symptom was first detected by the patient.
+Encounter_1.2.2.xml,Symptom,AssertionDateTime,symptom,assertion_date_time,Estimated or actual date and time (if applicable) the symptom was first detected by the patient.
+Encounter_1.2.2.xml,SubstanceUsage,SubstanceStartDate,t_substance_usage,substance_start_date,Identifies the date the patient first used the substance.
+Encounter_1.2.2.xml,SubstanceUsage,SubstanceStartDate,t_substance_usage,substance_end_date,Identifies the date the patient first used the substance.
+Encounter_1.2.2.xml,SubstanceUsage,SubstanceStartDate,substance_usage,substance_start_date,Identifies the date the patient first used the substance.
+Encounter_1.2.2.xml,SubstanceUsage,SubstanceStartDate,substance_usage,substance_end_date,Identifies the date the patient first used the substance.
+Encounter_1.2.2.xml,SubstanceUsage,SubstanceStartDate,substance_usage_onr,substance_start_date,Identifies the date the patient first used the substance.
+Encounter_1.2.2.xml,SubstanceUsage,SubstanceStartDate,substance_usage_onr,substance_end_date,Identifies the date the patient first used the substance.
+Encounter_1.2.2.xml,SubstanceUsage,SubstanceEndDate,t_substance_usage,substance_end_date,Identifies the date the patient last used the substance.
+Encounter_1.2.2.xml,SubstanceUsage,SubstanceEndDate,substance_usage,substance_end_date,Identifies the date the patient last used the substance.
+Encounter_1.2.2.xml,SubstanceUsage,SubstanceEndDate,substance_usage_onr,substance_end_date,Identifies the date the patient last used the substance.
+Encounter_1.2.2.xml,SubstanceUsage,TreatmentProgramStartDate,t_substance_usage,treatment_program_start_date,Identifies the date the patient last started a treatment program.
+Encounter_1.2.2.xml,SubstanceUsage,TreatmentProgramStartDate,t_substance_usage,treatment_program_end_date,Identifies the date the patient last started a treatment program.
+Encounter_1.2.2.xml,SubstanceUsage,TreatmentProgramStartDate,substance_usage,treatment_program_start_date,Identifies the date the patient last started a treatment program.
+Encounter_1.2.2.xml,SubstanceUsage,TreatmentProgramStartDate,substance_usage,treatment_program_end_date,Identifies the date the patient last started a treatment program.
+Encounter_1.2.2.xml,SubstanceUsage,TreatmentProgramStartDate,substance_usage_onr,treatment_program_start_date,Identifies the date the patient last started a treatment program.
+Encounter_1.2.2.xml,SubstanceUsage,TreatmentProgramStartDate,substance_usage_onr,treatment_program_end_date,Identifies the date the patient last started a treatment program.
+Encounter_1.2.2.xml,SubstanceUsage,TreatmentProgramEndDate,t_substance_usage,treatment_program_start_date,Identifies the date the patient last ended a treatment program.
+Encounter_1.2.2.xml,SubstanceUsage,TreatmentProgramEndDate,t_substance_usage,treatment_program_end_date,Identifies the date the patient last ended a treatment program.
+Encounter_1.2.2.xml,SubstanceUsage,TreatmentProgramEndDate,substance_usage,treatment_program_start_date,Identifies the date the patient last ended a treatment program.
+Encounter_1.2.2.xml,SubstanceUsage,TreatmentProgramEndDate,substance_usage,treatment_program_end_date,Identifies the date the patient last ended a treatment program.
+Encounter_1.2.2.xml,SubstanceUsage,TreatmentProgramEndDate,substance_usage_onr,treatment_program_start_date,Identifies the date the patient last ended a treatment program.
+Encounter_1.2.2.xml,SubstanceUsage,TreatmentProgramEndDate,substance_usage_onr,treatment_program_end_date,Identifies the date the patient last ended a treatment program.
+Encounter_1.2.2.xml,Consent,DiscussionDateTime,t_consent,discussion_date_time,Identifies the date and time when consent was discussed with the subject.
+Encounter_1.2.2.xml,Consent,DiscussionDateTime,consent,discussion_date_time,Identifies the date and time when consent was discussed with the subject.
+Encounter_1.2.2.xml,Consent,DecisionDateTime,t_consent,decision_date_time,Identifies the date and time when the decision to grant/refuse consent was made.
+Encounter_1.2.2.xml,Consent,DecisionDateTime,consent,decision_date_time,Identifies the date and time when the decision to grant/refuse consent was made.
+Encounter_1.2.2.xml,Consent,EffectiveDateTime,t_consent,effective_date_time,Identifies the date and time the consent became effective.
+Encounter_1.2.2.xml,Consent,EffectiveDateTime,consent,effective_date_time,Identifies the date and time the consent became effective.
+Encounter_1.2.2.xml,Consent,EndDateTime,t_consent,end_date_time,Identifies the date and time the consent becomes ineffective.
+Encounter_1.2.2.xml,Consent,EndDateTime,consent,end_date_time,Identifies the date and time the consent becomes ineffective.
+Encounter_1.2.2.xml,Encounter,RegistrationDateTime,encounter,registration_date_time,Tracks the date and time the patient registered at the facility.
+Encounter_1.2.2.xml,Encounter,DischargeDateTime,encounter,discharge_date_time,Tracks the date and time the patient registered at the facility.
+Encounter_1.2.2.xml,Encounter,EDCheckinDateTime,t_encounter,ed_checkin_datetime,Tracks the date and time the patient was checked in to the Emergency Department.
+Encounter_1.2.2.xml,Encounter,EDCheckinDateTime,t_encounter,ed_checkout_datetime,Tracks the date and time the patient was checked in to the Emergency Department.
+Encounter_1.2.2.xml,Encounter,EDCheckinDateTime,encounter,ed_checkin_datetime,Tracks the date and time the patient was checked in to the Emergency Department.
+Encounter_1.2.2.xml,Encounter,EDCheckinDateTime,encounter,ed_checkout_datetime,Tracks the date and time the patient was checked in to the Emergency Department.
+Encounter_1.2.2.xml,Encounter,EDCheckoutDateTime,t_encounter,ed_checkin_datetime,Tracks the date and time the patient was checked out of the Emergency Department.
+Encounter_1.2.2.xml,Encounter,EDCheckoutDateTime,t_encounter,ed_checkout_datetime,Tracks the date and time the patient was checked out of the Emergency Department.
+Encounter_1.2.2.xml,Encounter,EDCheckoutDateTime,encounter,ed_checkin_datetime,Tracks the date and time the patient was checked out of the Emergency Department.
+Encounter_1.2.2.xml,Encounter,EDCheckoutDateTime,encounter,ed_checkout_datetime,Tracks the date and time the patient was checked out of the Emergency Department.
+Encounter_1.2.2.xml,Encounter,PreadmissionDateTime,t_encounter,preadmission_datetime,Tracks the date and time, typically in the future, that the patient is expected to be admitted.
+Encounter_1.2.2.xml,Encounter,PreadmissionDateTime,encounter,preadmission_datetime,Tracks the date and time, typically in the future, that the patient is expected to be admitted.
+Episode_1.2.2.xml,Episode,StartDate,t_episode,start_date,The date the episode of care for the patient is scheduled to start.
+Episode_1.2.2.xml,Episode,StartDate,episode,start_date,The date the episode of care for the patient is scheduled to start.
+Episode_1.2.2.xml,Episode,EndDate,t_episode,end_date,The date the episode of care for the patient should be completed.
+Episode_1.2.2.xml,Episode,EndDate,episode,end_date,The date the episode of care for the patient should be completed.
+EventNote.xml,EventNote,NoteDateTime,t_event_note,note_date_time,Use this element to specify the date and time of the note entry.
+EventNote.xml,EventNote,NoteDateTime,event_note,note_date_time,Use this element to specify the date and time of the note entry.
+FacilityLocationMaster_1_2_0.xml,FacilityLocationAddressMaster,StartDate,facility_location_address,start_date,Specify the date this address became active.
+FacilityLocationMaster_1_2_0.xml,FacilityLocationAddressMaster,StartDate,facility_location_address_m,start_date,Specify the date this address became active.
+FacilityLocationMaster_1_2_0.xml,FacilityLocationAddressMaster,StartDate,facility_location_address_onr,start_date,Specify the date this address became active.
+FacilityLocationMaster_1_2_0.xml,FacilityLocationAddressMaster,EndDate,facility_location_address,end_date,Specify the date this address becomes inactive.
+FacilityLocationMaster_1_2_0.xml,FacilityLocationAddressMaster,EndDate,facility_location_address_m,end_date,Specify the date this address becomes inactive.
+FacilityLocationMaster_1_2_0.xml,FacilityLocationAddressMaster,EndDate,facility_location_address_onr,end_date,Specify the date this address becomes inactive.
+FacilityLocationMaster_1_2_0.xml,FacilityLocationIdentifierMaster,StartDate,facility_location_identifier,start_date,Use this element to specify the date the identifier became active.
+FacilityLocationMaster_1_2_0.xml,FacilityLocationIdentifierMaster,StartDate,facility_location_identifier_m,start_date,Use this element to specify the date the identifier became active.
+FacilityLocationMaster_1_2_0.xml,FacilityLocationIdentifierMaster,StartDate,facility_location_identifier_onr,start_date,Use this element to specify the date the identifier became active.
+FacilityLocationMaster_1_2_0.xml,FacilityLocationIdentifierMaster,EndDate,facility_location_identifier,end_date,Use this element to specify the date the identifier becomes inactive.
+FacilityLocationMaster_1_2_0.xml,FacilityLocationIdentifierMaster,EndDate,facility_location_identifier_m,end_date,Use this element to specify the date the identifier becomes inactive.
+FacilityLocationMaster_1_2_0.xml,FacilityLocationIdentifierMaster,EndDate,facility_location_identifier_onr,end_date,Use this element to specify the date the identifier becomes inactive.
+FacilityLocationMaster_1_2_0.xml,FacilityLocationContactMethodMaster,StartDate,facility_location_contact_method,start_date,Specify the date this contact method became active.
+FacilityLocationMaster_1_2_0.xml,FacilityLocationContactMethodMaster,StartDate,facility_location_contact_method_m,start_date,Specify the date this contact method became active.
+FacilityLocationMaster_1_2_0.xml,FacilityLocationContactMethodMaster,StartDate,facility_location_contact_method_onr,start_date,Specify the date this contact method became active.
+FacilityLocationMaster_1_2_0.xml,FacilityLocationContactMethodMaster,EndDate,facility_location_contact_method,end_date,Specify the date this contact method became inactive.
+FacilityLocationMaster_1_2_0.xml,FacilityLocationContactMethodMaster,EndDate,facility_location_contact_method_m,end_date,Specify the date this contact method became inactive.
+FacilityLocationMaster_1_2_0.xml,FacilityLocationContactMethodMaster,EndDate,facility_location_contact_method_onr,end_date,Specify the date this contact method became inactive.
+FacilityLocationMaster_1_2_0.xml,FacilityLocationRelationMaster,StartDate,facility_location_relation,start_date,Use this element to specify the date the relation became active.
+FacilityLocationMaster_1_2_0.xml,FacilityLocationRelationMaster,StartDate,facility_location_relation_m,start_date,Use this element to specify the date the relation became active.
+FacilityLocationMaster_1_2_0.xml,FacilityLocationRelationMaster,StartDate,facility_location_relation_onr,start_date,Use this element to specify the date the relation became active.
+FacilityLocationMaster_1_2_0.xml,FacilityLocationRelationMaster,EndDate,facility_location_relation,end_date,Use this element to specify the date the relation becomes inactive.
+FacilityLocationMaster_1_2_0.xml,FacilityLocationRelationMaster,EndDate,facility_location_relation_m,end_date,Use this element to specify the date the relation becomes inactive.
+FacilityLocationMaster_1_2_0.xml,FacilityLocationRelationMaster,EndDate,facility_location_relation_onr,end_date,Use this element to specify the date the relation becomes inactive.
+FacilityLocation_1_1_7.xml,FacilityLocationAddress,StartDate,facility_location_address,start_date,Specify the date this address became active.
+FacilityLocation_1_1_7.xml,FacilityLocationAddress,StartDate,facility_location_address_m,start_date,Specify the date this address became active.
+FacilityLocation_1_1_7.xml,FacilityLocationAddress,StartDate,facility_location_address_onr,start_date,Specify the date this address became active.
+FacilityLocation_1_1_7.xml,FacilityLocationAddress,StartDate,hist_facility_location_address,start_date,Specify the date this address became active.
+FacilityLocation_1_1_7.xml,FacilityLocationAddress,StartDate,hist_facility_location_address_m,start_date,Specify the date this address became active.
+FacilityLocation_1_1_7.xml,FacilityLocationAddress,EndDate,facility_location_address,end_date,Specify the date this address becomes inactive.
+FacilityLocation_1_1_7.xml,FacilityLocationAddress,EndDate,facility_location_address_m,end_date,Specify the date this address becomes inactive.
+FacilityLocation_1_1_7.xml,FacilityLocationAddress,EndDate,facility_location_address_onr,end_date,Specify the date this address becomes inactive.
+FacilityLocation_1_1_7.xml,FacilityLocationAddress,EndDate,hist_facility_location_address,end_date,Specify the date this address becomes inactive.
+FacilityLocation_1_1_7.xml,FacilityLocationAddress,EndDate,hist_facility_location_address_m,end_date,Specify the date this address becomes inactive.
+FacilityLocation_1_1_7.xml,FacilityLocationIdentifier,StartDate,facility_location_identifier,start_date,Use this element to specify the date the identifier became active.
+FacilityLocation_1_1_7.xml,FacilityLocationIdentifier,StartDate,facility_location_identifier_m,start_date,Use this element to specify the date the identifier became active.
+FacilityLocation_1_1_7.xml,FacilityLocationIdentifier,StartDate,facility_location_identifier_onr,start_date,Use this element to specify the date the identifier became active.
+FacilityLocation_1_1_7.xml,FacilityLocationIdentifier,StartDate,hist_facility_location_identifier,start_date,Use this element to specify the date the identifier became active.
+FacilityLocation_1_1_7.xml,FacilityLocationIdentifier,StartDate,hist_facility_location_identifier_m,start_date,Use this element to specify the date the identifier became active.
+FacilityLocation_1_1_7.xml,FacilityLocationIdentifier,EndDate,facility_location_identifier,end_date,Use this element to specify the date the identifier becomes inactive.
+FacilityLocation_1_1_7.xml,FacilityLocationIdentifier,EndDate,facility_location_identifier_m,end_date,Use this element to specify the date the identifier becomes inactive.
+FacilityLocation_1_1_7.xml,FacilityLocationIdentifier,EndDate,facility_location_identifier_onr,end_date,Use this element to specify the date the identifier becomes inactive.
+FacilityLocation_1_1_7.xml,FacilityLocationIdentifier,EndDate,hist_facility_location_identifier,end_date,Use this element to specify the date the identifier becomes inactive.
+FacilityLocation_1_1_7.xml,FacilityLocationIdentifier,EndDate,hist_facility_location_identifier_m,end_date,Use this element to specify the date the identifier becomes inactive.
+FacilityLocation_1_1_7.xml,FacilityLocationContactMethod,StartDate,facility_location_contact_method,start_date,Specify the date this contact method became active.
+FacilityLocation_1_1_7.xml,FacilityLocationContactMethod,StartDate,facility_location_contact_method_m,start_date,Specify the date this contact method became active.
+FacilityLocation_1_1_7.xml,FacilityLocationContactMethod,StartDate,facility_location_contact_method_onr,start_date,Specify the date this contact method became active.
+FacilityLocation_1_1_7.xml,FacilityLocationContactMethod,StartDate,hist_facility_location_contact_method,start_date,Specify the date this contact method became active.
+FacilityLocation_1_1_7.xml,FacilityLocationContactMethod,StartDate,hist_facility_location_contact_method_m,start_date,Specify the date this contact method became active.
+FacilityLocation_1_1_7.xml,FacilityLocationContactMethod,EndDate,facility_location_contact_method,end_date,Specify the date this contact method became inactive.
+FacilityLocation_1_1_7.xml,FacilityLocationContactMethod,EndDate,facility_location_contact_method_m,end_date,Specify the date this contact method became inactive.
+FacilityLocation_1_1_7.xml,FacilityLocationContactMethod,EndDate,facility_location_contact_method_onr,end_date,Specify the date this contact method became inactive.
+FacilityLocation_1_1_7.xml,FacilityLocationContactMethod,EndDate,hist_facility_location_contact_method,end_date,Specify the date this contact method became inactive.
+FacilityLocation_1_1_7.xml,FacilityLocationContactMethod,EndDate,hist_facility_location_contact_method_m,end_date,Specify the date this contact method became inactive.
+FacilityLocation_1_1_7.xml,FacilityLocationRelation,StartDate,facility_location_relation,start_date,Use this element to specify the date the relation became active.
+FacilityLocation_1_1_7.xml,FacilityLocationRelation,StartDate,facility_location_relation_m,start_date,Use this element to specify the date the relation became active.
+FacilityLocation_1_1_7.xml,FacilityLocationRelation,StartDate,facility_location_relation_onr,start_date,Use this element to specify the date the relation became active.
+FacilityLocation_1_1_7.xml,FacilityLocationRelation,StartDate,hist_facility_location_relation,start_date,Use this element to specify the date the relation became active.
+FacilityLocation_1_1_7.xml,FacilityLocationRelation,StartDate,hist_facility_location_relation_m,start_date,Use this element to specify the date the relation became active.
+FacilityLocation_1_1_7.xml,FacilityLocationRelation,EndDate,facility_location_relation,end_date,Use this element to specify the date the relation becomes inactive.
+FacilityLocation_1_1_7.xml,FacilityLocationRelation,EndDate,facility_location_relation_m,end_date,Use this element to specify the date the relation becomes inactive.
+FacilityLocation_1_1_7.xml,FacilityLocationRelation,EndDate,facility_location_relation_onr,end_date,Use this element to specify the date the relation becomes inactive.
+FacilityLocation_1_1_7.xml,FacilityLocationRelation,EndDate,hist_facility_location_relation,end_date,Use this element to specify the date the relation becomes inactive.
+FacilityLocation_1_1_7.xml,FacilityLocationRelation,EndDate,hist_facility_location_relation_m,end_date,Use this element to specify the date the relation becomes inactive.
+FacilityMaster_1_2_0.xml,FacilityAddressMaster,StartDate,facility_address_onr,start_date,Specify the date this address became active.
+FacilityMaster_1_2_0.xml,FacilityAddressMaster,EndDate,facility_address_onr,end_date,Specify the date this address becomes inactive.
+FacilityMaster_1_2_0.xml,FacilityIdentifierMaster,StartDate,facility_identifier,start_date,Use this element to specify the date the identifier became active.
+FacilityMaster_1_2_0.xml,FacilityIdentifierMaster,StartDate,facility_identifier_m,start_date,Use this element to specify the date the identifier became active.
+FacilityMaster_1_2_0.xml,FacilityIdentifierMaster,StartDate,facility_identifier_onr,start_date,Use this element to specify the date the identifier became active.
+FacilityMaster_1_2_0.xml,FacilityIdentifierMaster,EndDate,facility_identifier,end_date,Use this element to specify the date the identifier becomes inactive.
+FacilityMaster_1_2_0.xml,FacilityIdentifierMaster,EndDate,facility_identifier_m,end_date,Use this element to specify the date the identifier becomes inactive.
+FacilityMaster_1_2_0.xml,FacilityIdentifierMaster,EndDate,facility_identifier_onr,end_date,Use this element to specify the date the identifier becomes inactive.
+FacilityMaster_1_2_0.xml,FacilityContactMethodMaster,StartDate,facility_contact_method,start_date,Specify the date this contact method became active.
+FacilityMaster_1_2_0.xml,FacilityContactMethodMaster,StartDate,facility_contact_method_m,start_date,Specify the date this contact method became active.
+FacilityMaster_1_2_0.xml,FacilityContactMethodMaster,StartDate,facility_contact_method_onr,start_date,Specify the date this contact method became active.
+FacilityMaster_1_2_0.xml,FacilityContactMethodMaster,EndDate,facility_contact_method,end_date,Specify the date this contact method became inactive.
+FacilityMaster_1_2_0.xml,FacilityContactMethodMaster,EndDate,facility_contact_method_m,end_date,Specify the date this contact method became inactive.
+FacilityMaster_1_2_0.xml,FacilityContactMethodMaster,EndDate,facility_contact_method_onr,end_date,Specify the date this contact method became inactive.
+FacilityMaster_1_2_0.xml,FacilityRelationMaster,StartDate,facility_relation_onr,start_date,Use this element to specify the date the relation became active.
+FacilityMaster_1_2_0.xml,FacilityRelationMaster,EndDate,facility_relation_onr,end_date,Use this element to specify the date the relation becomes inactive.
+Facility_1_1_7.xml,FacilityAddress,StartDate,facility_address,start_date,Specify the date this address became active.
+Facility_1_1_7.xml,FacilityAddress,StartDate,facility_address_m,start_date,Specify the date this address became active.
+Facility_1_1_7.xml,FacilityAddress,StartDate,facility_address_onr,start_date,Specify the date this address became active.
+Facility_1_1_7.xml,FacilityAddress,StartDate,hist_facility_address,start_date,Specify the date this address became active.
+Facility_1_1_7.xml,FacilityAddress,EndDate,facility_address,end_date,Specify the date this address becomes inactive.
+Facility_1_1_7.xml,FacilityAddress,EndDate,facility_address_m,end_date,Specify the date this address becomes inactive.
+Facility_1_1_7.xml,FacilityAddress,EndDate,facility_address_onr,end_date,Specify the date this address becomes inactive.
+Facility_1_1_7.xml,FacilityAddress,EndDate,hist_facility_address,end_date,Specify the date this address becomes inactive.
+Facility_1_1_7.xml,FacilityIdentifier,StartDate,facility_identifier,start_date,Use this element to specify the date the identifier became active.
+Facility_1_1_7.xml,FacilityIdentifier,StartDate,facility_identifier_m,start_date,Use this element to specify the date the identifier became active.
+Facility_1_1_7.xml,FacilityIdentifier,StartDate,facility_identifier_onr,start_date,Use this element to specify the date the identifier became active.
+Facility_1_1_7.xml,FacilityIdentifier,StartDate,hist_facility_identifier,start_date,Use this element to specify the date the identifier became active.
+Facility_1_1_7.xml,FacilityIdentifier,EndDate,facility_identifier,end_date,Use this element to specify the date the identifier becomes inactive.
+Facility_1_1_7.xml,FacilityIdentifier,EndDate,facility_identifier_m,end_date,Use this element to specify the date the identifier becomes inactive.
+Facility_1_1_7.xml,FacilityIdentifier,EndDate,facility_identifier_onr,end_date,Use this element to specify the date the identifier becomes inactive.
+Facility_1_1_7.xml,FacilityIdentifier,EndDate,hist_facility_identifier,end_date,Use this element to specify the date the identifier becomes inactive.
+Facility_1_1_7.xml,FacilityContactMethod,StartDate,facility_contact_method,start_date,Specify the date this contact method became active.
+Facility_1_1_7.xml,FacilityContactMethod,StartDate,facility_contact_method_m,start_date,Specify the date this contact method became active.
+Facility_1_1_7.xml,FacilityContactMethod,StartDate,facility_contact_method_onr,start_date,Specify the date this contact method became active.
+Facility_1_1_7.xml,FacilityContactMethod,StartDate,hist_facility_contact_method,start_date,Specify the date this contact method became active.
+Facility_1_1_7.xml,FacilityContactMethod,EndDate,facility_contact_method,end_date,Specify the date this contact method became inactive.
+Facility_1_1_7.xml,FacilityContactMethod,EndDate,facility_contact_method_m,end_date,Specify the date this contact method became inactive.
+Facility_1_1_7.xml,FacilityContactMethod,EndDate,facility_contact_method_onr,end_date,Specify the date this contact method became inactive.
+Facility_1_1_7.xml,FacilityContactMethod,EndDate,hist_facility_contact_method,end_date,Specify the date this contact method became inactive.
+Facility_1_1_7.xml,FacilityRelation,StartDate,facility_relation,start_date,Use this element to specify the date the relation became active.
+Facility_1_1_7.xml,FacilityRelation,StartDate,facility_relation_m,start_date,Use this element to specify the date the relation became active.
+Facility_1_1_7.xml,FacilityRelation,StartDate,facility_relation_onr,start_date,Use this element to specify the date the relation became active.
+Facility_1_1_7.xml,FacilityRelation,StartDate,hist_facility_relation,start_date,Use this element to specify the date the relation became active.
+Facility_1_1_7.xml,FacilityRelation,EndDate,facility_relation,end_date,Use this element to specify the date the relation becomes inactive.
+Facility_1_1_7.xml,FacilityRelation,EndDate,facility_relation_m,end_date,Use this element to specify the date the relation becomes inactive.
+Facility_1_1_7.xml,FacilityRelation,EndDate,facility_relation_onr,end_date,Use this element to specify the date the relation becomes inactive.
+Facility_1_1_7.xml,FacilityRelation,EndDate,hist_facility_relation,end_date,Use this element to specify the date the relation becomes inactive.
+GLTransaction.xml,GLTransaction,PostDate,t_gl_transaction,post_date,Posting date of the transaction.
+GLTransaction.xml,GLTransaction,PostDate,gl_transaction,post_date,Posting date of the transaction.
+GLTransaction.xml,GLTransaction,PostDate,gl_transaction_onr,post_date,Posting date of the transaction.
+GLTransaction.xml,GLTransaction,EffectiveDate,t_gl_transaction,effective_date,Effective date of the transaction.
+GLTransaction.xml,GLTransaction,EffectiveDate,gl_transaction,effective_date,Effective date of the transaction.
+GLTransaction.xml,GLTransaction,EffectiveDate,gl_transaction_onr,effective_date,Effective date of the transaction.
+GuarantorAccount_1_1_7.xml,GuarantorAccountPerson,TransactionDate,guarantor_account_person,transaction_id,
+GuarantorAccount_1_1_7.xml,GuarantorAccountPerson,TransactionDate,guarantor_account_trans,transaction_date,
+GuarantorAccount_1_1_7.xml,GuarantorAccountPerson,TransactionDate,guarantor_account_trans,transaction_id,
+GuarantorAccount_1_1_7.xml,GuarantorAccountPerson,TransactionDate,hist_guarantor_account_person,transaction_id,
+GuarantorAccount_1_1_7.xml,GuarantorAccountPerson,DateOfBirth,guarantor_account_person_onr,date_of_birth,Guarantor's Date of Birth
+GuarantorAccount_1_1_7.xml,GuarantorAccountPerson,EmploymentStartDate,guarantor_account_person,employment_start_date,
+GuarantorAccount_1_1_7.xml,GuarantorAccountPerson,EmploymentStartDate,guarantor_account_person_onr,employment_start_date,
+GuarantorAccount_1_1_7.xml,GuarantorAccountPerson,EmploymentStartDate,hist_guarantor_account_person,employment_start_date,
+GuarantorAccount_1_1_7.xml,GuarantorAccountPerson,NextAccountReviewDate,guarantor_account_person,next_account_review_date,Next review date this Guarantor Account should be reviewed
+GuarantorAccount_1_1_7.xml,GuarantorAccountPerson,NextAccountReviewDate,guarantor_account_person_onr,next_account_review_date,Next review date this Guarantor Account should be reviewed
+GuarantorAccount_1_1_7.xml,GuarantorAccountPerson,NextAccountReviewDate,hist_guarantor_account_person,next_account_review_date,Next review date this Guarantor Account should be reviewed
+GuarantorAccount_1_1_7.xml,GuarantorAccountPerson,NextReviewDate,guarantor_account_person,next_review_date,Next review date this Guarantor Account should be reviewd
+GuarantorAccount_1_1_7.xml,GuarantorAccountPerson,NextReviewDate,guarantor_account_person_onr,next_review_date,Next review date this Guarantor Account should be reviewd
+GuarantorAccount_1_1_7.xml,GuarantorAccountPerson,NextReviewDate,hist_guarantor_account_person,next_review_date,Next review date this Guarantor Account should be reviewd
+GuarantorAccount_1_1_7.xml,GuarantorAccount,LastInsurancePaymentDate,t_guarantor_account,last_insur_payment_date,Most recent insurance payment received date
+GuarantorAccount_1_1_7.xml,GuarantorAccount,LastInsurancePaymentDate,guarantor_account,last_insur_payment_date,Most recent insurance payment received date
+GuarantorAccount_1_1_7.xml,GuarantorAccount,LastInsurancePaymentDate,guarantor_account_onr,last_insurance_payment_date,Most recent insurance payment received date
+GuarantorAccount_1_1_7.xml,GuarantorAccount,LastInsurancePaymentDate,guarantor_account_onr,last_insurance_payment_amount,Most recent insurance payment received date
+GuarantorAccount_1_1_7.xml,GuarantorAccount,LastInsurancePaymentDate,hist_guarantor_account,last_insur_payment_date,Most recent insurance payment received date
+GuarantorAccount_1_1_7.xml,GuarantorAccount,LastPatientPaymentDate,t_guarantor_account,last_pat_payment_date,Most recent insurance payment amount
+GuarantorAccount_1_1_7.xml,GuarantorAccount,LastPatientPaymentDate,guarantor_account,last_pat_payment_date,Most recent insurance payment amount
+GuarantorAccount_1_1_7.xml,GuarantorAccount,LastPatientPaymentDate,guarantor_account_onr,last_patient_payment_date,Most recent insurance payment amount
+GuarantorAccount_1_1_7.xml,GuarantorAccount,LastPatientPaymentDate,guarantor_account_onr,last_patient_payment_amount,Most recent insurance payment amount
+GuarantorAccount_1_1_7.xml,GuarantorAccount,LastPatientPaymentDate,hist_guarantor_account,last_pat_payment_date,Most recent insurance payment amount
+GuarantorAccount_1_1_7.xml,GuarantorAccount,PricingContractExpireDate,t_guarantor_account,pricing_contract_expire_date,Pricing contract expiriy date for this Guarantor Account
+GuarantorAccount_1_1_7.xml,GuarantorAccount,PricingContractExpireDate,guarantor_account,pricing_contract_expire_date,Pricing contract expiriy date for this Guarantor Account
+GuarantorAccount_1_1_7.xml,GuarantorAccount,PricingContractExpireDate,guarantor_account_onr,pricing_contract_expire_date,Pricing contract expiriy date for this Guarantor Account
+GuarantorAccount_1_1_7.xml,GuarantorAccount,PricingContractExpireDate,hist_guarantor_account,pricing_contract_expire_date,Pricing contract expiriy date for this Guarantor Account
+GuarantorAccount_1_1_7.xml,GuarantorAccount,LastNonDemandEnterpriseStatementDate,guarantor_account_onr,last_non_demand_enterprise_statement_date,Last Non Demand Enterprise Statement Date
+GuarantorAccount_1_1_7.xml,GuarantorAccount,LastNonDemandEnterpriseStatementDate,guarantor_account_onr,last_demand_enterprise_statement_date,Last Non Demand Enterprise Statement Date
+GuarantorAccount_1_1_7.xml,GuarantorAccount,LastNonDemandEnterpriseStatementDate,guarantor_account_onr,last_non_demand_enterprise_generated_statement_date,Last Non Demand Enterprise Statement Date
+GuarantorAccount_1_1_7.xml,GuarantorAccount,LastDemandEnterpriseStatementDate,guarantor_account_onr,last_non_demand_enterprise_statement_date,Last demand enterprise statement date
+GuarantorAccount_1_1_7.xml,GuarantorAccount,LastDemandEnterpriseStatementDate,guarantor_account_onr,last_demand_enterprise_statement_date,Last demand enterprise statement date
+GuarantorAccount_1_1_7.xml,GuarantorAccount,LastDemandEnterpriseStatementDate,guarantor_account_onr,last_demand_enterprise_generated_statement_date,Last demand enterprise statement date
+GuarantorAccount_1_1_7.xml,GuarantorAccount,LastNonDemandEnterpriseGeneratedStatementDate,guarantor_account_onr,last_non_demand_enterprise_statement_date,Date of last non-demand enterprise statement generated
+GuarantorAccount_1_1_7.xml,GuarantorAccount,LastNonDemandEnterpriseGeneratedStatementDate,guarantor_account_onr,last_non_demand_enterprise_generated_statement_date,Date of last non-demand enterprise statement generated
+GuarantorAccount_1_1_7.xml,GuarantorAccount,LastNonDemandEnterpriseGeneratedStatementDate,guarantor_account_onr,last_demand_enterprise_generated_statement_date,Date of last non-demand enterprise statement generated
+GuarantorAccount_1_1_7.xml,GuarantorAccount,LastDemandEnterpriseGeneratedStatementDate,guarantor_account_onr,last_demand_enterprise_statement_date,Date of last demand enterprise statement generated
+GuarantorAccount_1_1_7.xml,GuarantorAccount,LastDemandEnterpriseGeneratedStatementDate,guarantor_account_onr,last_non_demand_enterprise_generated_statement_date,Date of last demand enterprise statement generated
+GuarantorAccount_1_1_7.xml,GuarantorAccount,LastDemandEnterpriseGeneratedStatementDate,guarantor_account_onr,last_demand_enterprise_generated_statement_date,Date of last demand enterprise statement generated
+GuarantorAccount_1_1_7.xml,GuarantorAccount,NextStatementDate,guarantor_account_onr,next_statement_date,Next statement date
+GuarantorAccount_1_1_7.xml,GuarantorAccountNote,ExpirationDate,guarantor_account,expiration_date,Note expiry Date
+GuarantorAccount_1_1_7.xml,GuarantorAccountNote,ExpirationDate,guarantor_account_note,expiration_date,Note expiry Date
+GuarantorAccount_1_1_7.xml,GuarantorAccountNote,ExpirationDate,guarantor_account_note_onr,expiration_date,Note expiry Date
+GuarantorAccount_1_1_7.xml,GuarantorAccountNote,ExpirationDate,hist_guarantor_account_note,expiration_date,Note expiry Date
+GuarantorAccount_1_1_7.xml,GuarantorAccountNote,CreatedOnDate,guarantor_account_note,created_on_date,The date and time the note was created.
+GuarantorAccount_1_1_7.xml,GuarantorAccountNote,CreatedOnDate,guarantor_account_note_onr,created_on_date,The date and time the note was created.
+GuarantorAccount_1_1_7.xml,GuarantorAccountNote,CreatedOnDate,hist_guarantor_account_note,created_on_date,The date and time the note was created.
+GuarantorAccount_1_1_7.xml,GuarantorAccountContactHistory,ContactDate,guarantor_account_cont_hist,contact_date,Contact date
+GuarantorAccount_1_1_7.xml,GuarantorAccountContactHistory,ContactDate,guarantor_account_cont_hist,re_contact_date,Contact date
+GuarantorAccount_1_1_7.xml,GuarantorAccountContactHistory,ContactDate,guarantor_account_contact_history_onr,contact_date,Contact date
+GuarantorAccount_1_1_7.xml,GuarantorAccountContactHistory,ContactDate,guarantor_account_contact_history_onr,re_contact_date,Contact date
+GuarantorAccount_1_1_7.xml,GuarantorAccountContactHistory,ReContactDate,guarantor_account_cont_hist,contact_date,The date the account should be contacted again
+GuarantorAccount_1_1_7.xml,GuarantorAccountContactHistory,ReContactDate,guarantor_account_cont_hist,re_contact_date,The date the account should be contacted again
+GuarantorAccount_1_1_7.xml,GuarantorAccountContactHistory,ReContactDate,guarantor_account_contact_history_onr,contact_date,The date the account should be contacted again
+GuarantorAccount_1_1_7.xml,GuarantorAccountContactHistory,ReContactDate,guarantor_account_contact_history_onr,re_contact_date,The date the account should be contacted again
+GuarantorAccount_1_1_7.xml,GuarantorAccountContactHistory,RecordedDate,guarantor_account_cont_hist,recorded_date,Date and Time the contact was recorded
+GuarantorAccount_1_1_7.xml,GuarantorAccountContactHistory,RecordedDate,guarantor_account_contact_history_onr,recorded_date,Date and Time the contact was recorded
+GuarantorAccount_1_1_7.xml,GuarantorAccountTransaction,TransactionDate,guarantor_account_trans,transaction_date,
+GuarantorAccount_1_1_7.xml,GuarantorAccountTransaction,TransactionDate,guarantor_account_trans,transaction_id,
+GuarantorAccount_1_1_7.xml,GuarantorAccountTransaction,TransactionDate,guarantor_account_transaction_onr,transaction_date,
+Guarantor_1_2_8.xml,Guarantor,GuaranteePeriodStartDate,t_guarantor,guarantee_period_start_date,Specifies the start of period when guarantor is responsible.
+Guarantor_1_2_8.xml,Guarantor,GuaranteePeriodStartDate,t_guarantor,guarantee_period_end_date,Specifies the start of period when guarantor is responsible.
+Guarantor_1_2_8.xml,Guarantor,GuaranteePeriodStartDate,guarantor,guarantee_period_start_date,Specifies the start of period when guarantor is responsible.
+Guarantor_1_2_8.xml,Guarantor,GuaranteePeriodStartDate,guarantor,guarantee_period_end_date,Specifies the start of period when guarantor is responsible.
+Guarantor_1_2_8.xml,Guarantor,GuaranteePeriodEndDate,t_guarantor,guarantee_period_start_date,Specifies the end of period when guarantor is responsible.
+Guarantor_1_2_8.xml,Guarantor,GuaranteePeriodEndDate,t_guarantor,guarantee_period_end_date,Specifies the end of period when guarantor is responsible.
+Guarantor_1_2_8.xml,Guarantor,GuaranteePeriodEndDate,guarantor,guarantee_period_start_date,Specifies the end of period when guarantor is responsible.
+Guarantor_1_2_8.xml,Guarantor,GuaranteePeriodEndDate,guarantor,guarantee_period_end_date,Specifies the end of period when guarantor is responsible.
+HealthPlan_1_2_8.xml,HealthPlanAddress,StartDate,health_plan_address,start_date,Specify the date this address became active.
+HealthPlan_1_2_8.xml,HealthPlanAddress,StartDate,health_plan_address_onr,start_date,Specify the date this address became active.
+HealthPlan_1_2_8.xml,HealthPlanAddress,StartDate,hist_health_plan_address,start_date,Specify the date this address became active.
+HealthPlan_1_2_8.xml,HealthPlanAddress,EndDate,health_plan_address,end_date,Specify the date this address becomes inactive.
+HealthPlan_1_2_8.xml,HealthPlanAddress,EndDate,health_plan_address_onr,end_date,Specify the date this address becomes inactive.
+HealthPlan_1_2_8.xml,HealthPlanAddress,EndDate,hist_health_plan_address,end_date,Specify the date this address becomes inactive.
+HealthPlan_1_2_8.xml,HealthPlanContactMethod,StartDate,health_plan_contact_method,start_date,Specify the date this contact method became active.
+HealthPlan_1_2_8.xml,HealthPlanContactMethod,StartDate,health_plan_contact_method_onr,start_date,Specify the date this contact method became active.
+HealthPlan_1_2_8.xml,HealthPlanContactMethod,StartDate,hist_health_plan_contact_method,start_date,Specify the date this contact method became active.
+HealthPlan_1_2_8.xml,HealthPlanContactMethod,EndDate,health_plan_contact_method,end_date,Specify the date this contact method became inactive.
+HealthPlan_1_2_8.xml,HealthPlanContactMethod,EndDate,health_plan_contact_method_onr,end_date,Specify the date this contact method became inactive.
+HealthPlan_1_2_8.xml,HealthPlanContactMethod,EndDate,hist_health_plan_contact_method,end_date,Specify the date this contact method became inactive.
+HoursWorked.xml,HoursWorked,PostDate,hours_worked,post_date,Posting date of the transaction.
+HoursWorked.xml,HoursWorked,PeriodStartDate,hours_worked,period_start_date,Contains the starting date associated with the reported hours.
+HoursWorked.xml,HoursWorked,PeriodEndDate,hours_worked,period_end_date,Contains the ending date associated with the reported hours.
+MammogramEvent.xml,MammogramEvent,EventDateTime,t_mammogram_event,event_date_time,Date and time of the mammogram. If this record is 			created prior to the execution of the mammogram, this can contain the 			scheduled date and time of the mammogram
+MammogramEvent.xml,MammogramEvent,EventDateTime,mammogram_event_onr,event_date_time,Date and time of the mammogram. If this record is 			created prior to the execution of the mammogram, this can contain the 			scheduled date and time of the mammogram
+MammogramEvent.xml,MammogramEvent,PatientProfileCompleteDate,t_mammogram_event,patient_profile_complete_date,Date that the Patient Profile was completed
+MammogramEvent.xml,MammogramEvent,PatientProfileCompleteDate,mammogram_event,patient_profile_complete_date,Date that the Patient Profile was completed
+MammogramEvent.xml,MammogramEvent,PatientProfileCompleteDate,mammogram_event_onr,patient_profile_complete_date,Date that the Patient Profile was completed
+MammogramEvent.xml,MammogramEvent,ExamDataCompleteDate,t_mammogram_event,exam_data_complete_date,Date that the exam data entry was completed
+MammogramEvent.xml,MammogramEvent,ExamDataCompleteDate,mammogram_event,exam_data_complete_date,Date that the exam data entry was completed
+MammogramEvent.xml,MammogramEvent,ExamDataCompleteDate,mammogram_event_onr,exam_data_complete_date,Date that the exam data entry was completed
+MammogramEvent.xml,MammogramEvent,RecommendationsCompleteDate,t_mammogram_event,recommendations_complete_date,Date that the Recommedations were completed
+MammogramEvent.xml,MammogramEvent,RecommendationsCompleteDate,mammogram_event,recommendations_complete_date,Date that the Recommedations were completed
+MammogramEvent.xml,MammogramEvent,RecommendationsCompleteDate,mammogram_event_onr,recommendations_complete_date,Date that the Recommedations were completed
+MammogramEvent.xml,MammogramEvent,DataCompleteDate,t_mammogram_event,data_complete_date,Date that the evaluation data was completed
+MammogramEvent.xml,MammogramEvent,DataCompleteDate,mammogram_event,data_complete_date,Date that the evaluation data was completed
+MammogramEvent.xml,MammogramEvent,DataCompleteDate,mammogram_event_onr,data_complete_date,Date that the evaluation data was completed
+MammogramEvent.xml,MammogramEvent,FindingsCompleteDate,t_mammogram_event,findings_complete_date,Date that the findings data was completed
+MammogramEvent.xml,MammogramEvent,FindingsCompleteDate,mammogram_event,findings_complete_date,Date that the findings data was completed
+MammogramEvent.xml,MammogramEvent,FindingsCompleteDate,mammogram_event_onr,findings_complete_date,Date that the findings data was completed
+MammogramEvent.xml,MammogramEventBreastSurgery,SurgeryDate,hist_mammogram_event_breast_surgery,surgery_date,Date of prior breast surgery
+MammogramEvent.xml,MammogramEventBreastSurgery,SurgeryDate,mammogram_event_breast_surgery,surgery_date,Date of prior breast surgery
+MammogramEvent.xml,MammogramEventBreastSurgery,SurgeryDate,mammogram_event_breast_surgery_onr,surgery_date,Date of prior breast surgery
+MammogramEvent.xml,MammogramEventRecommendation,ExecutedDate,hist_mammogram_event_recommendation,executed_date,If the recommendation was executed, indicates the date it was executed
+MammogramEvent.xml,MammogramEventRecommendation,ExecutedDate,mammogram_event_recommendation,executed_date,If the recommendation was executed, indicates the date it was executed
+MammogramEvent.xml,MammogramEventRecommendation,ExecutedDate,mammogram_event_recommendation_onr,executed_date,If the recommendation was executed, indicates the date it was executed
+MovementEvent_1.2.6.xml,MovementEvent,EventDateTime,t_movement_event,event_date_time,Date and time that the patient was moved.
+MovementEvent_1.2.6.xml,MovementEvent,EventDateTime,movement_event,event_date_time,Date and time that the patient was moved.
+MovementEvent_1.2.6.xml,MovementEvent,EventDateTime,movement_event_onr,event_date_time,Date and time that the patient was moved.
+ObservationEvent_1.2.4.xml,ObservationEvent,EventDateTime,t_observation_event,event_date_time,Date and time that the observation was made.
+ObservationEvent_1.2.4.xml,ObservationEvent,EventDateTime,hist_observation_event,event_date_time,Date and time that the observation was made.
+ObservationEvent_1.2.4.xml,ObservationEvent,EventDateTime,observation_event_onr,event_date_time,Date and time that the observation was made.
+ObservationEvent_1.2.4.xml,ObservationEvent,EventEndDateTime,t_observation_event,event_date_time,If the observation is a set of measurements over a period of time (e.g. readings from a device), this represents the ending date and time.
+ObservationEvent_1.2.4.xml,ObservationEvent,EventEndDateTime,t_observation_event,event_end_date_time,If the observation is a set of measurements over a period of time (e.g. readings from a device), this represents the ending date and time.
+ObservationEvent_1.2.4.xml,ObservationEvent,EventEndDateTime,hist_observation_event,event_date_time,If the observation is a set of measurements over a period of time (e.g. readings from a device), this represents the ending date and time.
+ObservationEvent_1.2.4.xml,ObservationEvent,EventEndDateTime,hist_observation_event,event_end_date_time,If the observation is a set of measurements over a period of time (e.g. readings from a device), this represents the ending date and time.
+ObservationEvent_1.2.4.xml,ObservationEvent,EventEndDateTime,observation_event,event_end_date_time,If the observation is a set of measurements over a period of time (e.g. readings from a device), this represents the ending date and time.
+ObservationEvent_1.2.4.xml,ObservationEvent,EventEndDateTime,observation_event_onr,event_date_time,If the observation is a set of measurements over a period of time (e.g. readings from a device), this represents the ending date and time.
+ObservationEvent_1.2.4.xml,ObservationEvent,EventEndDateTime,observation_event_onr,event_end_date_time,If the observation is a set of measurements over a period of time (e.g. readings from a device), this represents the ending date and time.
+OrganizationMaster_1_1_8.xml,OrganizationNameMaster,StartDate,organization_name_onr,start_date,Use this element to specify the date that the name became active for this Organization.
+OrganizationMaster_1_1_8.xml,OrganizationNameMaster,EndDate,organization_name_onr,end_date,Use this element to specify the date that the name will become inactive for this 				Organization.
+OrganizationMaster_1_1_8.xml,OrganizationAddressMaster,StartDate,organization_address,start_date,Specify the date this address became active.
+OrganizationMaster_1_1_8.xml,OrganizationAddressMaster,StartDate,organization_address_m,start_date,Specify the date this address became active.
+OrganizationMaster_1_1_8.xml,OrganizationAddressMaster,StartDate,organization_address_onr,start_date,Specify the date this address became active.
+OrganizationMaster_1_1_8.xml,OrganizationAddressMaster,EndDate,organization_address,end_date,Specify the date this address becomes inactive.
+OrganizationMaster_1_1_8.xml,OrganizationAddressMaster,EndDate,organization_address_m,end_date,Specify the date this address becomes inactive.
+OrganizationMaster_1_1_8.xml,OrganizationAddressMaster,EndDate,organization_address_onr,end_date,Specify the date this address becomes inactive.
+OrganizationMaster_1_1_8.xml,OrganizationIdentifierMaster,StartDate,organization_identifier,start_date,Use this element to specify the date the identifier became active.
+OrganizationMaster_1_1_8.xml,OrganizationIdentifierMaster,StartDate,organization_identifier_m,start_date,Use this element to specify the date the identifier became active.
+OrganizationMaster_1_1_8.xml,OrganizationIdentifierMaster,StartDate,organization_identifier_onr,start_date,Use this element to specify the date the identifier became active.
+OrganizationMaster_1_1_8.xml,OrganizationIdentifierMaster,EndDate,organization_identifier,end_date,Use this element to specify the date the identifier becomes inactive.
+OrganizationMaster_1_1_8.xml,OrganizationIdentifierMaster,EndDate,organization_identifier_m,end_date,Use this element to specify the date the identifier becomes inactive.
+OrganizationMaster_1_1_8.xml,OrganizationIdentifierMaster,EndDate,organization_identifier_onr,end_date,Use this element to specify the date the identifier becomes inactive.
+OrganizationMaster_1_1_8.xml,OrganizationContactMethodMaster,StartDate,organization_contact_method,start_date,Specify the date this contact method became active.
+OrganizationMaster_1_1_8.xml,OrganizationContactMethodMaster,StartDate,organization_contact_method_m,start_date,Specify the date this contact method became active.
+OrganizationMaster_1_1_8.xml,OrganizationContactMethodMaster,StartDate,organization_contact_method_onr,start_date,Specify the date this contact method became active.
+OrganizationMaster_1_1_8.xml,OrganizationContactMethodMaster,EndDate,organization_contact_method,end_date,Specify the date this contact method became inactive.
+OrganizationMaster_1_1_8.xml,OrganizationContactMethodMaster,EndDate,organization_contact_method_m,end_date,Specify the date this contact method became inactive.
+OrganizationMaster_1_1_8.xml,OrganizationContactMethodMaster,EndDate,organization_contact_method_onr,end_date,Specify the date this contact method became inactive.
+OrganizationMaster_1_1_8.xml,OrganizationRelationMaster,StartDate,organization_relation,start_date,Use this element to specify the date the relation became active.
+OrganizationMaster_1_1_8.xml,OrganizationRelationMaster,StartDate,organization_relation_m,start_date,Use this element to specify the date the relation became active.
+OrganizationMaster_1_1_8.xml,OrganizationRelationMaster,StartDate,organization_relation_onr,start_date,Use this element to specify the date the relation became active.
+OrganizationMaster_1_1_8.xml,OrganizationRelationMaster,EndDate,organization_relation,end_date,Use this element to specify the date the relation becomes inactive.
+OrganizationMaster_1_1_8.xml,OrganizationRelationMaster,EndDate,organization_relation_m,end_date,Use this element to specify the date the relation becomes inactive.
+OrganizationMaster_1_1_8.xml,OrganizationRelationMaster,EndDate,organization_relation_onr,end_date,Use this element to specify the date the relation becomes inactive.
+Organization_1_1_7.xml,OrganizationName,StartDate,hist_organization_name,start_date,Use this element to specify the date that the name became active for this Organization.
+Organization_1_1_7.xml,OrganizationName,StartDate,organization_name,start_date,Use this element to specify the date that the name became active for this Organization.
+Organization_1_1_7.xml,OrganizationName,StartDate,organization_name_m,start_date,Use this element to specify the date that the name became active for this Organization.
+Organization_1_1_7.xml,OrganizationName,StartDate,organization_name_onr,start_date,Use this element to specify the date that the name became active for this Organization.
+Organization_1_1_7.xml,OrganizationName,EndDate,hist_organization_name,end_date,Use this element to specify the date that the name will become inactive for this 				Organization.
+Organization_1_1_7.xml,OrganizationName,EndDate,organization_name,end_date,Use this element to specify the date that the name will become inactive for this 				Organization.
+Organization_1_1_7.xml,OrganizationName,EndDate,organization_name_m,end_date,Use this element to specify the date that the name will become inactive for this 				Organization.
+Organization_1_1_7.xml,OrganizationName,EndDate,organization_name_onr,end_date,Use this element to specify the date that the name will become inactive for this 				Organization.
+Organization_1_1_7.xml,OrganizationAddress,StartDate,hist_organization_address,start_date,Specify the date this address became active.
+Organization_1_1_7.xml,OrganizationAddress,StartDate,hist_organization_address_m,start_date,Specify the date this address became active.
+Organization_1_1_7.xml,OrganizationAddress,StartDate,organization_address,start_date,Specify the date this address became active.
+Organization_1_1_7.xml,OrganizationAddress,StartDate,organization_address_m,start_date,Specify the date this address became active.
+Organization_1_1_7.xml,OrganizationAddress,StartDate,organization_address_onr,start_date,Specify the date this address became active.
+Organization_1_1_7.xml,OrganizationAddress,StartDate,organization_unit_address,start_date,Specify the date this address became active.
+Organization_1_1_7.xml,OrganizationAddress,StartDate,organization_unit_address_m,start_date,Specify the date this address became active.
+Organization_1_1_7.xml,OrganizationAddress,EndDate,hist_organization_address,end_date,Specify the date this address becomes inactive.
+Organization_1_1_7.xml,OrganizationAddress,EndDate,hist_organization_address_m,end_date,Specify the date this address becomes inactive.
+Organization_1_1_7.xml,OrganizationAddress,EndDate,organization_address,end_date,Specify the date this address becomes inactive.
+Organization_1_1_7.xml,OrganizationAddress,EndDate,organization_address_m,end_date,Specify the date this address becomes inactive.
+Organization_1_1_7.xml,OrganizationAddress,EndDate,organization_address_onr,end_date,Specify the date this address becomes inactive.
+Organization_1_1_7.xml,OrganizationAddress,EndDate,organization_unit_address,end_date,Specify the date this address becomes inactive.
+Organization_1_1_7.xml,OrganizationAddress,EndDate,organization_unit_address_m,end_date,Specify the date this address becomes inactive.
+Organization_1_1_7.xml,OrganizationIdentifier,StartDate,hist_organization_identifier,start_date,Use this element to specify the date the identifier became active.
+Organization_1_1_7.xml,OrganizationIdentifier,StartDate,hist_organization_identifier_m,start_date,Use this element to specify the date the identifier became active.
+Organization_1_1_7.xml,OrganizationIdentifier,StartDate,organization_identifier,start_date,Use this element to specify the date the identifier became active.
+Organization_1_1_7.xml,OrganizationIdentifier,StartDate,organization_identifier_m,start_date,Use this element to specify the date the identifier became active.
+Organization_1_1_7.xml,OrganizationIdentifier,StartDate,organization_identifier_onr,start_date,Use this element to specify the date the identifier became active.
+Organization_1_1_7.xml,OrganizationIdentifier,StartDate,organization_unit_identifier,start_date,Use this element to specify the date the identifier became active.
+Organization_1_1_7.xml,OrganizationIdentifier,StartDate,organization_unit_identifier_m,start_date,Use this element to specify the date the identifier became active.
+Organization_1_1_7.xml,OrganizationIdentifier,EndDate,hist_organization_identifier,end_date,Use this element to specify the date the identifier becomes inactive.
+Organization_1_1_7.xml,OrganizationIdentifier,EndDate,hist_organization_identifier_m,end_date,Use this element to specify the date the identifier becomes inactive.
+Organization_1_1_7.xml,OrganizationIdentifier,EndDate,organization_identifier,end_date,Use this element to specify the date the identifier becomes inactive.
+Organization_1_1_7.xml,OrganizationIdentifier,EndDate,organization_identifier_m,end_date,Use this element to specify the date the identifier becomes inactive.
+Organization_1_1_7.xml,OrganizationIdentifier,EndDate,organization_identifier_onr,end_date,Use this element to specify the date the identifier becomes inactive.
+Organization_1_1_7.xml,OrganizationIdentifier,EndDate,organization_unit_identifier,end_date,Use this element to specify the date the identifier becomes inactive.
+Organization_1_1_7.xml,OrganizationIdentifier,EndDate,organization_unit_identifier_m,end_date,Use this element to specify the date the identifier becomes inactive.
+Organization_1_1_7.xml,OrganizationContactMethod,StartDate,hist_organization_contact_method,start_date,Specify the date this contact method became active.
+Organization_1_1_7.xml,OrganizationContactMethod,StartDate,hist_organization_contact_method_m,start_date,Specify the date this contact method became active.
+Organization_1_1_7.xml,OrganizationContactMethod,StartDate,organization_contact_method,start_date,Specify the date this contact method became active.
+Organization_1_1_7.xml,OrganizationContactMethod,StartDate,organization_contact_method_m,start_date,Specify the date this contact method became active.
+Organization_1_1_7.xml,OrganizationContactMethod,StartDate,organization_contact_method_onr,start_date,Specify the date this contact method became active.
+Organization_1_1_7.xml,OrganizationContactMethod,StartDate,organization_unit_contact_method,start_date,Specify the date this contact method became active.
+Organization_1_1_7.xml,OrganizationContactMethod,StartDate,organization_unit_contact_method_m,start_date,Specify the date this contact method became active.
+Organization_1_1_7.xml,OrganizationContactMethod,EndDate,hist_organization_contact_method,end_date,Specify the date this contact method became inactive.
+Organization_1_1_7.xml,OrganizationContactMethod,EndDate,hist_organization_contact_method_m,end_date,Specify the date this contact method became inactive.
+Organization_1_1_7.xml,OrganizationContactMethod,EndDate,organization_contact_method,end_date,Specify the date this contact method became inactive.
+Organization_1_1_7.xml,OrganizationContactMethod,EndDate,organization_contact_method_m,end_date,Specify the date this contact method became inactive.
+Organization_1_1_7.xml,OrganizationContactMethod,EndDate,organization_contact_method_onr,end_date,Specify the date this contact method became inactive.
+Organization_1_1_7.xml,OrganizationContactMethod,EndDate,organization_unit_contact_method,end_date,Specify the date this contact method became inactive.
+Organization_1_1_7.xml,OrganizationContactMethod,EndDate,organization_unit_contact_method_m,end_date,Specify the date this contact method became inactive.
+Organization_1_1_7.xml,OrganizationRelation,StartDate,hist_organization_relation,start_date,Use this element to specify the date the relation became active.
+Organization_1_1_7.xml,OrganizationRelation,StartDate,hist_organization_relation_m,start_date,Use this element to specify the date the relation became active.
+Organization_1_1_7.xml,OrganizationRelation,StartDate,organization_relation,start_date,Use this element to specify the date the relation became active.
+Organization_1_1_7.xml,OrganizationRelation,StartDate,organization_relation_m,start_date,Use this element to specify the date the relation became active.
+Organization_1_1_7.xml,OrganizationRelation,StartDate,organization_relation_onr,start_date,Use this element to specify the date the relation became active.
+Organization_1_1_7.xml,OrganizationRelation,StartDate,organization_unit_relation,start_date,Use this element to specify the date the relation became active.
+Organization_1_1_7.xml,OrganizationRelation,StartDate,organization_unit_relation_m,start_date,Use this element to specify the date the relation became active.
+Organization_1_1_7.xml,OrganizationRelation,EndDate,hist_organization_relation,end_date,Use this element to specify the date the relation becomes inactive.
+Organization_1_1_7.xml,OrganizationRelation,EndDate,hist_organization_relation_m,end_date,Use this element to specify the date the relation becomes inactive.
+Organization_1_1_7.xml,OrganizationRelation,EndDate,organization_relation,end_date,Use this element to specify the date the relation becomes inactive.
+Organization_1_1_7.xml,OrganizationRelation,EndDate,organization_relation_m,end_date,Use this element to specify the date the relation becomes inactive.
+Organization_1_1_7.xml,OrganizationRelation,EndDate,organization_relation_onr,end_date,Use this element to specify the date the relation becomes inactive.
+Organization_1_1_7.xml,OrganizationRelation,EndDate,organization_unit_relation,end_date,Use this element to specify the date the relation becomes inactive.
+Organization_1_1_7.xml,OrganizationRelation,EndDate,organization_unit_relation_m,end_date,Use this element to specify the date the relation becomes inactive.
+OrganizationalUnitMaster_1_2_4.xml,OrganizationalUnitAddressMaster,StartDate,organization_unit_address,start_date,Specify the date this address became active.
+OrganizationalUnitMaster_1_2_4.xml,OrganizationalUnitAddressMaster,StartDate,organization_unit_address_m,start_date,Specify the date this address became active.
+OrganizationalUnitMaster_1_2_4.xml,OrganizationalUnitAddressMaster,StartDate,organizational_unit_address_onr,start_date,Specify the date this address became active.
+OrganizationalUnitMaster_1_2_4.xml,OrganizationalUnitAddressMaster,EndDate,organization_unit_address,end_date,Specify the date this address becomes inactive.
+OrganizationalUnitMaster_1_2_4.xml,OrganizationalUnitAddressMaster,EndDate,organization_unit_address_m,end_date,Specify the date this address becomes inactive.
+OrganizationalUnitMaster_1_2_4.xml,OrganizationalUnitAddressMaster,EndDate,organizational_unit_address_onr,end_date,Specify the date this address becomes inactive.
+OrganizationalUnitMaster_1_2_4.xml,OrganizationalUnitIdentifierMaster,StartDate,organization_unit_identifier,start_date,Use this element to specify the date the identifier became active.
+OrganizationalUnitMaster_1_2_4.xml,OrganizationalUnitIdentifierMaster,StartDate,organization_unit_identifier_m,start_date,Use this element to specify the date the identifier became active.
+OrganizationalUnitMaster_1_2_4.xml,OrganizationalUnitIdentifierMaster,StartDate,organizational_unit_identifier_onr,start_date,Use this element to specify the date the identifier became active.
+OrganizationalUnitMaster_1_2_4.xml,OrganizationalUnitIdentifierMaster,EndDate,organization_unit_identifier,end_date,Use this element to specify the date the identifier becomes inactive.
+OrganizationalUnitMaster_1_2_4.xml,OrganizationalUnitIdentifierMaster,EndDate,organization_unit_identifier_m,end_date,Use this element to specify the date the identifier becomes inactive.
+OrganizationalUnitMaster_1_2_4.xml,OrganizationalUnitIdentifierMaster,EndDate,organizational_unit_identifier_onr,end_date,Use this element to specify the date the identifier becomes inactive.
+OrganizationalUnitMaster_1_2_4.xml,OrganizationalUnitContactMethodMaster,StartDate,organization_unit_contact_method,start_date,Specify the date this contact method became active.
+OrganizationalUnitMaster_1_2_4.xml,OrganizationalUnitContactMethodMaster,StartDate,organization_unit_contact_method_m,start_date,Specify the date this contact method became active.
+OrganizationalUnitMaster_1_2_4.xml,OrganizationalUnitContactMethodMaster,StartDate,organizational_unit_contact_method_onr,start_date,Specify the date this contact method became active.
+OrganizationalUnitMaster_1_2_4.xml,OrganizationalUnitContactMethodMaster,EndDate,organization_unit_contact_method,end_date,Specify the date this contact method became inactive.
+OrganizationalUnitMaster_1_2_4.xml,OrganizationalUnitContactMethodMaster,EndDate,organization_unit_contact_method_m,end_date,Specify the date this contact method became inactive.
+OrganizationalUnitMaster_1_2_4.xml,OrganizationalUnitContactMethodMaster,EndDate,organizational_unit_contact_method_onr,end_date,Specify the date this contact method became inactive.
+OrganizationalUnitMaster_1_2_4.xml,OrganizationalUnitRelationMaster,StartDate,organization_unit_relation,start_date,Use this element to specify the date the relation became active.
+OrganizationalUnitMaster_1_2_4.xml,OrganizationalUnitRelationMaster,StartDate,organization_unit_relation_m,start_date,Use this element to specify the date the relation became active.
+OrganizationalUnitMaster_1_2_4.xml,OrganizationalUnitRelationMaster,StartDate,organizational_unit_relation_onr,start_date,Use this element to specify the date the relation became active.
+OrganizationalUnitMaster_1_2_4.xml,OrganizationalUnitRelationMaster,EndDate,organization_unit_relation,end_date,Use this element to specify the date the relation becomes inactive.
+OrganizationalUnitMaster_1_2_4.xml,OrganizationalUnitRelationMaster,EndDate,organization_unit_relation_m,end_date,Use this element to specify the date the relation becomes inactive.
+OrganizationalUnitMaster_1_2_4.xml,OrganizationalUnitRelationMaster,EndDate,organizational_unit_relation_onr,end_date,Use this element to specify the date the relation becomes inactive.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitAddress,StartDate,hist_organization_unit_address,start_date,Specify the date this address became active.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitAddress,StartDate,organization_address,start_date,Specify the date this address became active.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitAddress,StartDate,organization_unit_address,start_date,Specify the date this address became active.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitAddress,StartDate,organization_unit_address_m,start_date,Specify the date this address became active.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitAddress,StartDate,organizational_unit_address_onr,start_date,Specify the date this address became active.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitAddress,EndDate,hist_organization_unit_address,end_date,Specify the date this address becomes inactive.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitAddress,EndDate,organization_address,end_date,Specify the date this address becomes inactive.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitAddress,EndDate,organization_unit_address,end_date,Specify the date this address becomes inactive.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitAddress,EndDate,organization_unit_address_m,end_date,Specify the date this address becomes inactive.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitAddress,EndDate,organizational_unit_address_onr,end_date,Specify the date this address becomes inactive.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitIdentifier,StartDate,hist_organization_unit_identifier,start_date,Use this element to specify the date the identifier became active.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitIdentifier,StartDate,hist_organization_unit_identifier_m,start_date,Use this element to specify the date the identifier became active.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitIdentifier,StartDate,organization_identifier,start_date,Use this element to specify the date the identifier became active.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitIdentifier,StartDate,organization_identifier_m,start_date,Use this element to specify the date the identifier became active.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitIdentifier,StartDate,organization_unit_identifier,start_date,Use this element to specify the date the identifier became active.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitIdentifier,StartDate,organization_unit_identifier_m,start_date,Use this element to specify the date the identifier became active.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitIdentifier,StartDate,organizational_unit_identifier_onr,start_date,Use this element to specify the date the identifier became active.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitIdentifier,EndDate,hist_organization_unit_identifier,end_date,Use this element to specify the date the identifier becomes inactive.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitIdentifier,EndDate,hist_organization_unit_identifier_m,end_date,Use this element to specify the date the identifier becomes inactive.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitIdentifier,EndDate,organization_identifier,end_date,Use this element to specify the date the identifier becomes inactive.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitIdentifier,EndDate,organization_identifier_m,end_date,Use this element to specify the date the identifier becomes inactive.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitIdentifier,EndDate,organization_unit_identifier,end_date,Use this element to specify the date the identifier becomes inactive.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitIdentifier,EndDate,organization_unit_identifier_m,end_date,Use this element to specify the date the identifier becomes inactive.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitIdentifier,EndDate,organizational_unit_identifier_onr,end_date,Use this element to specify the date the identifier becomes inactive.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitContactMethod,StartDate,hist_organization_unit_contact_method,start_date,Specify the date this contact method became active.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitContactMethod,StartDate,hist_organization_unit_contact_method_m,start_date,Specify the date this contact method became active.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitContactMethod,StartDate,organization_contact_method,start_date,Specify the date this contact method became active.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitContactMethod,StartDate,organization_contact_method_m,start_date,Specify the date this contact method became active.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitContactMethod,StartDate,organization_unit_contact_method,start_date,Specify the date this contact method became active.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitContactMethod,StartDate,organization_unit_contact_method_m,start_date,Specify the date this contact method became active.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitContactMethod,StartDate,organizational_unit_contact_method_onr,start_date,Specify the date this contact method became active.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitContactMethod,EndDate,hist_organization_unit_contact_method,end_date,Specify the date this contact method became inactive.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitContactMethod,EndDate,hist_organization_unit_contact_method_m,end_date,Specify the date this contact method became inactive.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitContactMethod,EndDate,organization_contact_method,end_date,Specify the date this contact method became inactive.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitContactMethod,EndDate,organization_contact_method_m,end_date,Specify the date this contact method became inactive.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitContactMethod,EndDate,organization_unit_contact_method,end_date,Specify the date this contact method became inactive.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitContactMethod,EndDate,organization_unit_contact_method_m,end_date,Specify the date this contact method became inactive.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitContactMethod,EndDate,organizational_unit_contact_method_onr,end_date,Specify the date this contact method became inactive.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitRelation,StartDate,hist_organization_unit_relation,start_date,Use this element to specify the date the relation became active.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitRelation,StartDate,organization_relation,start_date,Use this element to specify the date the relation became active.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitRelation,StartDate,organization_unit_relation,start_date,Use this element to specify the date the relation became active.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitRelation,StartDate,organization_unit_relation_m,start_date,Use this element to specify the date the relation became active.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitRelation,StartDate,organizational_unit_relation_onr,start_date,Use this element to specify the date the relation became active.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitRelation,EndDate,hist_organization_unit_relation,end_date,Use this element to specify the date the relation becomes inactive.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitRelation,EndDate,organization_relation,end_date,Use this element to specify the date the relation becomes inactive.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitRelation,EndDate,organization_unit_relation,end_date,Use this element to specify the date the relation becomes inactive.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitRelation,EndDate,organization_unit_relation_m,end_date,Use this element to specify the date the relation becomes inactive.
+OrganizationalUnit_1_2_4.xml,OrganizationalUnitRelation,EndDate,organizational_unit_relation_onr,end_date,Use this element to specify the date the relation becomes inactive.
+PatientHealthPlan_1_2_8.xml,PatientHealthPlan,PlanEffectiveDate,t_patient_health_plan,effective_date,Date the health plan took effect for this subscriber.
+PatientHealthPlan_1_2_8.xml,PatientHealthPlan,PlanEffectiveDate,t_patient_health_plan,plan_effective_date,Date the health plan took effect for this subscriber.
+PatientHealthPlan_1_2_8.xml,PatientHealthPlan,PlanEffectiveDate,hist_patient_health_plan,plan_effective_date,Date the health plan took effect for this subscriber.
+PatientHealthPlan_1_2_8.xml,PatientHealthPlan,PlanEffectiveDate,hist_patient_health_plan,effective_date,Date the health plan took effect for this subscriber.
+PatientHealthPlan_1_2_8.xml,PatientHealthPlan,PlanEffectiveDate,patient_health_plan,plan_effective_date,Date the health plan took effect for this subscriber.
+PatientHealthPlan_1_2_8.xml,PatientHealthPlan,PlanEffectiveDate,patient_health_plan,effective_date,Date the health plan took effect for this subscriber.
+PatientHealthPlan_1_2_8.xml,PatientHealthPlan,PlanEffectiveDate,patient_health_plan_onr,plan_effective_date,Date the health plan took effect for this subscriber.
+PatientHealthPlan_1_2_8.xml,PatientHealthPlan,PlanExpirationDate,t_patient_health_plan,expiration_date,Date the health plan expired for this subscriber.
+PatientHealthPlan_1_2_8.xml,PatientHealthPlan,PlanExpirationDate,t_patient_health_plan,plan_expiration_date,Date the health plan expired for this subscriber.
+PatientHealthPlan_1_2_8.xml,PatientHealthPlan,PlanExpirationDate,hist_patient_health_plan,plan_expiration_date,Date the health plan expired for this subscriber.
+PatientHealthPlan_1_2_8.xml,PatientHealthPlan,PlanExpirationDate,hist_patient_health_plan,expiration_date,Date the health plan expired for this subscriber.
+PatientHealthPlan_1_2_8.xml,PatientHealthPlan,PlanExpirationDate,patient_health_plan,plan_expiration_date,Date the health plan expired for this subscriber.
+PatientHealthPlan_1_2_8.xml,PatientHealthPlan,PlanExpirationDate,patient_health_plan,expiration_date,Date the health plan expired for this subscriber.
+PatientHealthPlan_1_2_8.xml,PatientHealthPlan,PlanExpirationDate,patient_health_plan_onr,plan_expiration_date,Date the health plan expired for this subscriber.
+PatientMaster_1_1_8.xml,PatientPreferredProviderMaster,StartDate,patient_preferred_provider,start_date,Specify the date this preferred provider became active.
+PatientMaster_1_1_8.xml,PatientPreferredProviderMaster,StartDate,patient_preferred_provider_m,start_date,Specify the date this preferred provider became active.
+PatientMaster_1_1_8.xml,PatientPreferredProviderMaster,StartDate,patient_preferred_provider_onr,start_date,Specify the date this preferred provider became active.
+PatientMaster_1_1_8.xml,PatientPreferredProviderMaster,EndDate,patient_preferred_provider,end_date,Specify the date this preferred provider becomes inactive.
+PatientMaster_1_1_8.xml,PatientPreferredProviderMaster,EndDate,patient_preferred_provider_m,end_date,Specify the date this preferred provider becomes inactive.
+PatientMaster_1_1_8.xml,PatientPreferredProviderMaster,EndDate,patient_preferred_provider_onr,end_date,Specify the date this preferred provider becomes inactive.
+Patient_1_1_8.xml,Patient,LivingWillDate,patient,living_will_date,This element is used to specify the date the patient supplied a living will.
+Patient_1_1_8.xml,Patient,LivingWillDate,patient_m,living_will_date,This element is used to specify the date the patient supplied a living will.
+Patient_1_1_8.xml,Patient,MyChartSignedupDate,patient,mychart_signedup_date,Use this element to specify the date the patient signed up for mychart access.
+Patient_1_1_8.xml,Patient,MyChartSignedupDate,patient_m,mychart_signedup_date,Use this element to specify the date the patient signed up for mychart access.
+Patient_1_1_8.xml,PatientPreferredProvider,StartDate,t_patient_preferred_providers,start_date,Specify the date this preferred provider became active.
+Patient_1_1_8.xml,PatientPreferredProvider,StartDate,hist_patient_preferred_provider,start_date,Specify the date this preferred provider became active.
+Patient_1_1_8.xml,PatientPreferredProvider,StartDate,hist_patient_preferred_provider_m,start_date,Specify the date this preferred provider became active.
+Patient_1_1_8.xml,PatientPreferredProvider,StartDate,patient_preferred_provider,start_date,Specify the date this preferred provider became active.
+Patient_1_1_8.xml,PatientPreferredProvider,StartDate,patient_preferred_provider_m,start_date,Specify the date this preferred provider became active.
+Patient_1_1_8.xml,PatientPreferredProvider,StartDate,patient_preferred_provider_onr,start_date,Specify the date this preferred provider became active.
+Patient_1_1_8.xml,PatientPreferredProvider,EndDate,t_patient_preferred_providers,end_date,Specify the date this preferred provider becomes inactive.
+Patient_1_1_8.xml,PatientPreferredProvider,EndDate,hist_patient_preferred_provider,end_date,Specify the date this preferred provider becomes inactive.
+Patient_1_1_8.xml,PatientPreferredProvider,EndDate,hist_patient_preferred_provider_m,end_date,Specify the date this preferred provider becomes inactive.
+Patient_1_1_8.xml,PatientPreferredProvider,EndDate,patient_preferred_provider,end_date,Specify the date this preferred provider becomes inactive.
+Patient_1_1_8.xml,PatientPreferredProvider,EndDate,patient_preferred_provider_m,end_date,Specify the date this preferred provider becomes inactive.
+Patient_1_1_8.xml,PatientPreferredProvider,EndDate,patient_preferred_provider_onr,end_date,Specify the date this preferred provider becomes inactive.
+PayerMaster_1_2_8.xml,PayerNameMaster,StartDate,t_payer_name_master,start_date,Use this element to specify the date that the name became active for this Organization.
+PayerMaster_1_2_8.xml,PayerNameMaster,EndDate,t_payer_name_master,end_date,Use this element to specify the date that the name will become inactive for this 				Organization.
+PayerMaster_1_2_8.xml,PayerIdentifierMaster,StartDate,payer_identifier_onr,start_date,Use this element to specify the date the identifier became active.
+PayerMaster_1_2_8.xml,PayerIdentifierMaster,EndDate,payer_identifier_onr,end_date,Use this element to specify the date the identifier becomes inactive.
+PayerMaster_1_2_8.xml,PayerContactMethodMaster,StartDate,payer_contact_method_onr,start_date,Specify the date this contact method became active.
+PayerMaster_1_2_8.xml,PayerContactMethodMaster,EndDate,payer_contact_method_onr,end_date,Specify the date this contact method became inactive.
+Payer_1_2_8.xml,PayerName,StartDate,payer_name,start_date,Use this element to specify the date that the name became active for this Organization.
+Payer_1_2_8.xml,PayerName,StartDate,payer_name_m,start_date,Use this element to specify the date that the name became active for this Organization.
+Payer_1_2_8.xml,PayerName,EndDate,payer_name,end_date,Use this element to specify the date that the name will become inactive for this 				Organization.
+Payer_1_2_8.xml,PayerName,EndDate,payer_name_m,end_date,Use this element to specify the date that the name will become inactive for this 				Organization.
+Payer_1_2_8.xml,PayerIdentifier,StartDate,hist_payer_identifier,start_date,Use this element to specify the date the identifier became active.
+Payer_1_2_8.xml,PayerIdentifier,StartDate,member_identifier,start_date,Use this element to specify the date the identifier became active.
+Payer_1_2_8.xml,PayerIdentifier,StartDate,payer_identifier,start_date,Use this element to specify the date the identifier became active.
+Payer_1_2_8.xml,PayerIdentifier,StartDate,payer_identifier_m,start_date,Use this element to specify the date the identifier became active.
+Payer_1_2_8.xml,PayerIdentifier,StartDate,payer_identifier_onr,start_date,Use this element to specify the date the identifier became active.
+Payer_1_2_8.xml,PayerIdentifier,EndDate,hist_payer_identifier,end_date,Use this element to specify the date the identifier becomes inactive.
+Payer_1_2_8.xml,PayerIdentifier,EndDate,member_identifier,end_date,Use this element to specify the date the identifier becomes inactive.
+Payer_1_2_8.xml,PayerIdentifier,EndDate,payer_identifier,end_date,Use this element to specify the date the identifier becomes inactive.
+Payer_1_2_8.xml,PayerIdentifier,EndDate,payer_identifier_m,end_date,Use this element to specify the date the identifier becomes inactive.
+Payer_1_2_8.xml,PayerIdentifier,EndDate,payer_identifier_onr,end_date,Use this element to specify the date the identifier becomes inactive.
+Payer_1_2_8.xml,PayerAddress,StartDate,payer_address,start_date,Specify the date this address became active.
+Payer_1_2_8.xml,PayerAddress,StartDate,payer_address_m,start_date,Specify the date this address became active.
+Payer_1_2_8.xml,PayerAddress,StartDate,payer_address_onr,start_date,Specify the date this address became active.
+Payer_1_2_8.xml,PayerAddress,EndDate,payer_address,end_date,Specify the date this address becomes inactive.
+Payer_1_2_8.xml,PayerAddress,EndDate,payer_address_m,end_date,Specify the date this address becomes inactive.
+Payer_1_2_8.xml,PayerAddress,EndDate,payer_address_onr,end_date,Specify the date this address becomes inactive.
+Payer_1_2_8.xml,PayerContactMethod,StartDate,hist_payer_contact_method,start_date,Specify the date this contact method became active.
+Payer_1_2_8.xml,PayerContactMethod,StartDate,payer_contact_method,start_date,Specify the date this contact method became active.
+Payer_1_2_8.xml,PayerContactMethod,StartDate,payer_contact_method_m,start_date,Specify the date this contact method became active.
+Payer_1_2_8.xml,PayerContactMethod,StartDate,payer_contact_method_onr,start_date,Specify the date this contact method became active.
+Payer_1_2_8.xml,PayerContactMethod,EndDate,hist_payer_contact_method,end_date,Specify the date this contact method became inactive.
+Payer_1_2_8.xml,PayerContactMethod,EndDate,payer_contact_method,end_date,Specify the date this contact method became inactive.
+Payer_1_2_8.xml,PayerContactMethod,EndDate,payer_contact_method_m,end_date,Specify the date this contact method became inactive.
+Payer_1_2_8.xml,PayerContactMethod,EndDate,payer_contact_method_onr,end_date,Specify the date this contact method became inactive.
+PersonMaster_1_1_8.xml,PersonIdentifierMaster,StartDate,person_identifier_onr,start_date,Use this element to specify the date the identifier became active.
+PersonMaster_1_1_8.xml,PersonIdentifierMaster,EndDate,person_identifier_onr,end_date,Use this element to specify the date the identifier becomes inactive.
+PersonMaster_1_1_8.xml,PersonContactMethodMaster,StartDate,person_contact_method_onr,start_date,Specify the date this contact method became active.
+PersonMaster_1_1_8.xml,PersonContactMethodMaster,EndDate,person_contact_method_onr,end_date,Specify the date this contact method became inactive.
+Person_1_1_7.xml,PersonName,StartDate,person_name,start_date,Use this element to specify the date that the name became active for this Patient.
+Person_1_1_7.xml,PersonName,StartDate,person_name_m,start_date,Use this element to specify the date that the name became active for this Patient.
+Person_1_1_7.xml,PersonName,EndDate,person_name,end_date,Use this element to specify the date that the name will become inactive for this 				Patient.
+Person_1_1_7.xml,PersonName,EndDate,person_name_m,end_date,Use this element to specify the date that the name will become inactive for this 				Patient.
+Person_1_1_7.xml,PersonAddress,StartDate,person_address,start_date,Specify the date this address became active.
+Person_1_1_7.xml,PersonAddress,StartDate,person_address_m,start_date,Specify the date this address became active.
+Person_1_1_7.xml,PersonAddress,StartDate,person_address_onr,start_date,Specify the date this address became active.
+Person_1_1_7.xml,PersonAddress,EndDate,person_address,end_date,Specify the date this address becomes inactive.
+Person_1_1_7.xml,PersonAddress,EndDate,person_address_m,end_date,Specify the date this address becomes inactive.
+Person_1_1_7.xml,PersonAddress,EndDate,person_address_onr,end_date,Specify the date this address becomes inactive.
+Person_1_1_7.xml,PersonIdentifier,StartDate,hist_person_identifier,start_date,Use this element to specify the date the identifier became active.
+Person_1_1_7.xml,PersonIdentifier,StartDate,person_identifier,start_date,Use this element to specify the date the identifier became active.
+Person_1_1_7.xml,PersonIdentifier,StartDate,person_identifier_m,start_date,Use this element to specify the date the identifier became active.
+Person_1_1_7.xml,PersonIdentifier,StartDate,person_identifier_onr,start_date,Use this element to specify the date the identifier became active.
+Person_1_1_7.xml,PersonIdentifier,EndDate,hist_person_identifier,end_date,Use this element to specify the date the identifier becomes inactive.
+Person_1_1_7.xml,PersonIdentifier,EndDate,person_identifier,end_date,Use this element to specify the date the identifier becomes inactive.
+Person_1_1_7.xml,PersonIdentifier,EndDate,person_identifier_m,end_date,Use this element to specify the date the identifier becomes inactive.
+Person_1_1_7.xml,PersonIdentifier,EndDate,person_identifier_onr,end_date,Use this element to specify the date the identifier becomes inactive.
+Person_1_1_7.xml,PersonContactMethod,StartDate,hist_person_contact_method,start_date,Specify the date this contact method became active.
+Person_1_1_7.xml,PersonContactMethod,StartDate,person_contact_method,start_date,Specify the date this contact method became active.
+Person_1_1_7.xml,PersonContactMethod,StartDate,person_contact_method_m,start_date,Specify the date this contact method became active.
+Person_1_1_7.xml,PersonContactMethod,StartDate,person_contact_method_onr,start_date,Specify the date this contact method became active.
+Person_1_1_7.xml,PersonContactMethod,EndDate,hist_person_contact_method,end_date,Specify the date this contact method became inactive.
+Person_1_1_7.xml,PersonContactMethod,EndDate,person_contact_method,end_date,Specify the date this contact method became inactive.
+Person_1_1_7.xml,PersonContactMethod,EndDate,person_contact_method_m,end_date,Specify the date this contact method became inactive.
+Person_1_1_7.xml,PersonContactMethod,EndDate,person_contact_method_onr,end_date,Specify the date this contact method became inactive.
+Person_1_1_7.xml,PersonRelation,StartDate,person_relation,start_date,Use this element to specify the date the relation became active.
+Person_1_1_7.xml,PersonRelation,StartDate,person_relation_m,start_date,Use this element to specify the date the relation became active.
+Person_1_1_7.xml,PersonRelation,StartDate,person_relation_onr,start_date,Use this element to specify the date the relation became active.
+Person_1_1_7.xml,PersonRelation,EndDate,person_relation,end_date,Use this element to specify the date the relation becomes inactive.
+Person_1_1_7.xml,PersonRelation,EndDate,person_relation_m,end_date,Use this element to specify the date the relation becomes inactive.
+Person_1_1_7.xml,PersonRelation,EndDate,person_relation_onr,end_date,Use this element to specify the date the relation becomes inactive.
+ProcedureEvent_1.2.3.xml,ProcedureEvent,EventDateTime,t_procedure_event,event_date_time,Date and time that the procedure administered to the patient began.
+ProcedureEvent_1.2.3.xml,ProcedureEvent,EventDateTime,procedure_event_onr,event_date_time,Date and time that the procedure administered to the patient began.
+ProcedureEvent_1.2.3.xml,ProcedureEvent,EventEndDateTime,t_procedure_event,event_date_time,Date and time that the procedure administered to the patient completed.
+ProcedureEvent_1.2.3.xml,ProcedureEvent,EventEndDateTime,t_procedure_event,event_end_date_time,Date and time that the procedure administered to the patient completed.
+ProcedureEvent_1.2.3.xml,ProcedureEvent,EventEndDateTime,procedure_event,event_end_date_time,Date and time that the procedure administered to the patient completed.
+ProcedureEvent_1.2.3.xml,ProcedureEvent,EventEndDateTime,procedure_event_onr,event_date_time,Date and time that the procedure administered to the patient completed.
+ProcedureEvent_1.2.3.xml,ProcedureEvent,EventEndDateTime,procedure_event_onr,event_end_date_time,Date and time that the procedure administered to the patient completed.
+ProcedureEvent_1.2.3.xml,ProcedureConsent,DiscussionDateTime,hist_procedure_consent,discussion_date_time,Identifies the date and time when consent was discussed with the subject.
+ProcedureEvent_1.2.3.xml,ProcedureConsent,DiscussionDateTime,procedure_consent,discussion_date_time,Identifies the date and time when consent was discussed with the subject.
+ProcedureEvent_1.2.3.xml,ProcedureConsent,DiscussionDateTime,procedure_consent_onr,discussion_date_time,Identifies the date and time when consent was discussed with the subject.
+ProcedureEvent_1.2.3.xml,ProcedureConsent,DecisionDateTime,hist_procedure_consent,decision_date_time,Identifies the date and time when the decision to grant/refuse consent was made.
+ProcedureEvent_1.2.3.xml,ProcedureConsent,DecisionDateTime,procedure_consent,decision_date_time,Identifies the date and time when the decision to grant/refuse consent was made.
+ProcedureEvent_1.2.3.xml,ProcedureConsent,DecisionDateTime,procedure_consent_onr,decision_date_time,Identifies the date and time when the decision to grant/refuse consent was made.
+ProcedureEvent_1.2.3.xml,ProcedureConsent,EffectiveDateTime,hist_procedure_consent,effective_date_time,Identifies the date and time the consent became effective.
+ProcedureEvent_1.2.3.xml,ProcedureConsent,EffectiveDateTime,procedure_consent,effective_date_time,Identifies the date and time the consent became effective.
+ProcedureEvent_1.2.3.xml,ProcedureConsent,EffectiveDateTime,procedure_consent_onr,effective_date_time,Identifies the date and time the consent became effective.
+ProcedureEvent_1.2.3.xml,ProcedureConsent,EndDateTime,hist_procedure_consent,end_date_time,Identifies the date and time the consent becomes ineffective.
+ProcedureEvent_1.2.3.xml,ProcedureConsent,EndDateTime,procedure_consent,end_date_time,Identifies the date and time the consent becomes ineffective.
+ProcedureEvent_1.2.3.xml,ProcedureConsent,EndDateTime,procedure_consent_onr,end_date_time,Identifies the date and time the consent becomes ineffective.
+ProviderMaster_1_1_8.xml,ProviderInsuranceMaster,CoverageStartDate,provider_insurance_onr,coverage_start_date,Use this element to specify the date that the this coverage started.
+ProviderMaster_1_1_8.xml,ProviderInsuranceMaster,CoverageStartDate,provider_insurance_onr,coverage_end_date,Use this element to specify the date that the this coverage started.
+ProviderMaster_1_1_8.xml,ProviderInsuranceMaster,CoverageEndDate,provider_insurance_onr,coverage_end_date,Use this element to specify the date that the this coverage ended.
+ProviderMaster_1_1_8.xml,ProviderInsuranceMaster,RetroactiveDate,provider_insurance_onr,retroactive_date,Use this element to specify the date that the this coverage is retroactive to.
+ProviderMaster_1_1_8.xml,ProviderEducationMaster,DegreeGrantedDate,provider_education_onr,degree_granted_date,This field contains the date the academic degree was granted to the staff member.
+ProviderMaster_1_1_8.xml,ProviderEducationMaster,DegreeStartDate,provider_education_onr,degree_start_date,This field contains the date when the academic degree program started.
+ProviderMaster_1_1_8.xml,ProviderEducationMaster,DegreeEndDate,provider_education_onr,degree_end_date,This field contains the date when the academic degree program ended.
+ProviderMaster_1_1_8.xml,ProviderSpecialityMaster,StartDate,provider_speciality,start_date,This field contains the date in which the practitioner earned this speciality.
+ProviderMaster_1_1_8.xml,ProviderSpecialityMaster,StartDate,provider_speciality_m,start_date,This field contains the date in which the practitioner earned this speciality.
+ProviderMaster_1_1_8.xml,ProviderSpecialityMaster,StartDate,provider_speciality_onr,start_date,This field contains the date in which the practitioner earned this speciality.
+ProviderMaster_1_1_8.xml,ProviderSpecialityMaster,EndDate,provider_speciality,end_date,This field contains the date in which the practitioner ended this speciality.
+ProviderMaster_1_1_8.xml,ProviderSpecialityMaster,EndDate,provider_speciality_m,end_date,This field contains the date in which the practitioner ended this speciality.
+ProviderMaster_1_1_8.xml,ProviderSpecialityMaster,EndDate,provider_speciality_onr,end_date,This field contains the date in which the practitioner ended this speciality.
+ProviderMaster_1_1_8.xml,ProviderPracticeSpecialityMaster,StartDate,provider_practice_speciality,start_date,This field contains the date in which the practitioner started working at  						the specific organization unit in the specific practicing specialty category.
+ProviderMaster_1_1_8.xml,ProviderPracticeSpecialityMaster,StartDate,provider_practice_speciality_m,start_date,This field contains the date in which the practitioner started working at  						the specific organization unit in the specific practicing specialty category.
+ProviderMaster_1_1_8.xml,ProviderPracticeSpecialityMaster,StartDate,provider_practice_speciality_onr,start_date,This field contains the date in which the practitioner started working at  						the specific organization unit in the specific practicing specialty category.
+ProviderMaster_1_1_8.xml,ProviderPracticeSpecialityMaster,EndDate,provider_practice_speciality,end_date,This field contains the date in which the practitioner ended working at  						the specific organization unit in the specific practicing specialty category.
+ProviderMaster_1_1_8.xml,ProviderPracticeSpecialityMaster,EndDate,provider_practice_speciality_m,end_date,This field contains the date in which the practitioner ended working at  						the specific organization unit in the specific practicing specialty category.
+ProviderMaster_1_1_8.xml,ProviderPracticeSpecialityMaster,EndDate,provider_practice_speciality_onr,end_date,This field contains the date in which the practitioner ended working at  						the specific organization unit in the specific practicing specialty category.
+ProviderMaster_1_1_8.xml,ProviderCertificationMaster,ActiveDate,provider_certification,active_date,This field contains the date/time when the certificate became or will become active.
+ProviderMaster_1_1_8.xml,ProviderCertificationMaster,ActiveDate,provider_certification,inactive_date,This field contains the date/time when the certificate became or will become active.
+ProviderMaster_1_1_8.xml,ProviderCertificationMaster,ActiveDate,provider_certification_m,active_date,This field contains the date/time when the certificate became or will become active.
+ProviderMaster_1_1_8.xml,ProviderCertificationMaster,ActiveDate,provider_certification_m,inactive_date,This field contains the date/time when the certificate became or will become active.
+ProviderMaster_1_1_8.xml,ProviderCertificationMaster,ActiveDate,provider_certification_onr,active_date,This field contains the date/time when the certificate became or will become active.
+ProviderMaster_1_1_8.xml,ProviderCertificationMaster,ActiveDate,provider_certification_onr,inactive_date,This field contains the date/time when the certificate became or will become active.
+ProviderMaster_1_1_8.xml,ProviderCertificationMaster,InactiveDate,provider_certification,active_date,This field contains the date/time when the certificate became or will become inactive.
+ProviderMaster_1_1_8.xml,ProviderCertificationMaster,InactiveDate,provider_certification,inactive_date,This field contains the date/time when the certificate became or will become inactive.
+ProviderMaster_1_1_8.xml,ProviderCertificationMaster,InactiveDate,provider_certification_m,active_date,This field contains the date/time when the certificate became or will become inactive.
+ProviderMaster_1_1_8.xml,ProviderCertificationMaster,InactiveDate,provider_certification_m,inactive_date,This field contains the date/time when the certificate became or will become inactive.
+ProviderMaster_1_1_8.xml,ProviderCertificationMaster,InactiveDate,provider_certification_onr,active_date,This field contains the date/time when the certificate became or will become inactive.
+ProviderMaster_1_1_8.xml,ProviderCertificationMaster,InactiveDate,provider_certification_onr,inactive_date,This field contains the date/time when the certificate became or will become inactive.
+ProviderMaster_1_1_8.xml,ProviderCertificationMaster,ExpirationDate,provider_certification,expiration_date,This field contains the date/time when the certificate expires or will expire.
+ProviderMaster_1_1_8.xml,ProviderCertificationMaster,ExpirationDate,provider_certification_m,expiration_date,This field contains the date/time when the certificate expires or will expire.
+ProviderMaster_1_1_8.xml,ProviderCertificationMaster,ExpirationDate,provider_certification_onr,expiration_date,This field contains the date/time when the certificate expires or will expire.
+ProviderMaster_1_1_8.xml,ProviderCertificationMaster,RenewalDate,provider_certification,renewal_date,This field contains the date/time when the certificate must/will/ be / has been renewed.
+ProviderMaster_1_1_8.xml,ProviderCertificationMaster,RenewalDate,provider_certification_m,renewal_date,This field contains the date/time when the certificate must/will/ be / has been renewed.
+ProviderMaster_1_1_8.xml,ProviderCertificationMaster,RenewalDate,provider_certification_onr,renewal_date,This field contains the date/time when the certificate must/will/ be / has been renewed.
+ProviderMaster_1_1_8.xml,ProviderCertificationMaster,RevocationDate,provider_certification,revocation_date,This field contains the date/time when the certificate has been revoked.
+ProviderMaster_1_1_8.xml,ProviderCertificationMaster,RevocationDate,provider_certification_m,revocation_date,This field contains the date/time when the certificate has been revoked.
+ProviderMaster_1_1_8.xml,ProviderCertificationMaster,RevocationDate,provider_certification_onr,revocation_date,This field contains the date/time when the certificate has been revoked.
+ProviderMaster_1_1_8.xml,ProviderLicenseMaster,IssuedDate,provider_license_onr,issued_date,Use this element to specify date the license was issued.
+ProviderMaster_1_1_8.xml,ProviderLicenseMaster,ExpirationDate,provider_license_monitor,expiration_date,Use this element to specify date the license will Expire.
+ProviderMaster_1_1_8.xml,ProviderLicenseMaster,ExpirationDate,provider_license_onr,expiration_date,Use this element to specify date the license will Expire.
+ProviderMaster_1_1_8.xml,ProviderLicenseMaster,RenewalDate,provider_license_onr,renewal_date,Use this element to specify date the license will require renewal.
+ProviderMaster_1_1_8.xml,ProviderPracticeLicenseMaster,StartDate,provider_practice_license,start_date,Use this element to specify when the Practice License for the Facility will be in effect.
+ProviderMaster_1_1_8.xml,ProviderPracticeLicenseMaster,StartDate,provider_practice_license_m,start_date,Use this element to specify when the Practice License for the Facility will be in effect.
+ProviderMaster_1_1_8.xml,ProviderPracticeLicenseMaster,StartDate,provider_practice_license_onr,start_date,Use this element to specify when the Practice License for the Facility will be in effect.
+ProviderMaster_1_1_8.xml,ProviderPracticeLicenseMaster,EndDate,provider_practice_license,end_date,Use this element to specify when the Practice License for the Facility will be terminate.
+ProviderMaster_1_1_8.xml,ProviderPracticeLicenseMaster,EndDate,provider_practice_license_m,end_date,Use this element to specify when the Practice License for the Facility will be terminate.
+ProviderMaster_1_1_8.xml,ProviderPracticeLicenseMaster,EndDate,provider_practice_license_onr,end_date,Use this element to specify when the Practice License for the Facility will be terminate.
+ProviderMaster_1_1_8.xml,ProviderPracticeLicenseMaster,VerifiedDate,provider_practice_license,verified_date,Use this element to specify the user id or name of the person who performed the verification.
+ProviderMaster_1_1_8.xml,ProviderPracticeLicenseMaster,VerifiedDate,provider_practice_license_m,verified_date,Use this element to specify the user id or name of the person who performed the verification.
+ProviderMaster_1_1_8.xml,ProviderPracticeLicenseMaster,VerifiedDate,provider_practice_license_onr,verified_date,Use this element to specify the user id or name of the person who performed the verification.
+ProviderMaster_1_1_8.xml,ProviderLicenseMonitorMaster,MonitoringDate,provider_license_monitor,monitoring_date,Use this element to specify when the monitoring occured.
+ProviderMaster_1_1_8.xml,ProviderLicenseMonitorMaster,MonitoringDate,provider_license_monitor_m,monitoring_date,Use this element to specify when the monitoring occured.
+ProviderMaster_1_1_8.xml,ProviderLicenseMonitorMaster,MonitoringDate,provider_license_monitor_onr,monitoring_date,Use this element to specify when the monitoring occured.
+ProviderMaster_1_1_8.xml,ProviderPrivilegeMaster,StartDate,provider_privilege_onr,start_date,Use this element to specify when the privilege at the facility begins.
+ProviderMaster_1_1_8.xml,ProviderPrivilegeMaster,EndDate,provider_privilege_onr,end_date,Use this element to specify when the privilege ends.
+ProviderMaster_1_1_8.xml,ProviderPrivilegeMaster,RevokedDate,provider_privilege_onr,revoked_date,Use this element to specify the date that this privilege was revoked.
+ProviderMaster_1_1_8.xml,ProviderAssignmentMaster,StartDate,provider_assignment,start_date,Use this element to specify when the assignment will begin at the specified Facility.
+ProviderMaster_1_1_8.xml,ProviderAssignmentMaster,StartDate,provider_assignment_m,start_date,Use this element to specify when the assignment will begin at the specified Facility.
+ProviderMaster_1_1_8.xml,ProviderAssignmentMaster,StartDate,provider_assignment_onr,start_date,Use this element to specify when the assignment will begin at the specified Facility.
+ProviderMaster_1_1_8.xml,ProviderAssignmentMaster,EndDate,provider_assignment,end_date,This field contains the date in which the practitioner ended working at  						the specific organization unit in the specific practicing specialty category.
+ProviderMaster_1_1_8.xml,ProviderAssignmentMaster,EndDate,provider_assignment_m,end_date,This field contains the date in which the practitioner ended working at  						the specific organization unit in the specific practicing specialty category.
+ProviderMaster_1_1_8.xml,ProviderAssignmentMaster,EndDate,provider_assignment_onr,end_date,This field contains the date in which the practitioner ended working at  						the specific organization unit in the specific practicing specialty category.
+ProviderMaster_1_1_8.xml,ProviderAssignmentMaster,AssignmentStatusDate,provider_assignment,assignment_status_code,Use this element to specify the date that the status was updated.
+ProviderMaster_1_1_8.xml,ProviderAssignmentMaster,AssignmentStatusDate,provider_assignment,assignment_status_date,Use this element to specify the date that the status was updated.
+ProviderMaster_1_1_8.xml,ProviderAssignmentMaster,AssignmentStatusDate,provider_assignment_m,assignment_status_code,Use this element to specify the date that the status was updated.
+ProviderMaster_1_1_8.xml,ProviderAssignmentMaster,AssignmentStatusDate,provider_assignment_m,assignment_status_date,Use this element to specify the date that the status was updated.
+ProviderMaster_1_1_8.xml,ProviderAssignmentMaster,AssignmentStatusDate,provider_assignment_onr,assignment_status_date,Use this element to specify the date that the status was updated.
+ProviderMaster_1_1_8.xml,ProviderAssignmentMaster,TerminationDate,provider_assignment,termination_date,Use this element to specify when this assignment was abnormally terminated.
+ProviderMaster_1_1_8.xml,ProviderAssignmentMaster,TerminationDate,provider_assignment_m,termination_date,Use this element to specify when this assignment was abnormally terminated.
+ProviderMaster_1_1_8.xml,ProviderAssignmentMaster,TerminationDate,provider_assignment_onr,termination_date,Use this element to specify when this assignment was abnormally terminated.
+Provider_1_1_7.xml,Provider,ExpectedReturnDate,provider,expected_return_date,Use this element to specify when an inactive Provider is expected to return to active 		status.
+Provider_1_1_7.xml,Provider,ExpectedReturnDate,provider_m,expected_return_date,Use this element to specify when an inactive Provider is expected to return to active 		status.
+Provider_1_1_7.xml,ProviderInsurance,CoverageStartDate,hist_provider_insurance,coverage_end_date,Use this element to specify the date that the this coverage started.
+Provider_1_1_7.xml,ProviderInsurance,CoverageStartDate,hist_provider_insurance,coverage_start_date,Use this element to specify the date that the this coverage started.
+Provider_1_1_7.xml,ProviderInsurance,CoverageStartDate,provider_insurance,coverage_start_date,Use this element to specify the date that the this coverage started.
+Provider_1_1_7.xml,ProviderInsurance,CoverageStartDate,provider_insurance,coverage_end_date,Use this element to specify the date that the this coverage started.
+Provider_1_1_7.xml,ProviderInsurance,CoverageStartDate,provider_insurance_m,coverage_start_date,Use this element to specify the date that the this coverage started.
+Provider_1_1_7.xml,ProviderInsurance,CoverageStartDate,provider_insurance_m,coverage_end_date,Use this element to specify the date that the this coverage started.
+Provider_1_1_7.xml,ProviderInsurance,CoverageStartDate,provider_insurance_onr,coverage_start_date,Use this element to specify the date that the this coverage started.
+Provider_1_1_7.xml,ProviderInsurance,CoverageStartDate,provider_insurance_onr,coverage_end_date,Use this element to specify the date that the this coverage started.
+Provider_1_1_7.xml,ProviderInsurance,CoverageEndDate,hist_provider_insurance,coverage_end_date,Use this element to specify the date that the this coverage ended.
+Provider_1_1_7.xml,ProviderInsurance,CoverageEndDate,provider_insurance,coverage_end_date,Use this element to specify the date that the this coverage ended.
+Provider_1_1_7.xml,ProviderInsurance,CoverageEndDate,provider_insurance_m,coverage_end_date,Use this element to specify the date that the this coverage ended.
+Provider_1_1_7.xml,ProviderInsurance,CoverageEndDate,provider_insurance_onr,coverage_end_date,Use this element to specify the date that the this coverage ended.
+Provider_1_1_7.xml,ProviderInsurance,RetroactiveDate,hist_provider_insurance,retroactive_date,Use this element to specify the date that the this coverage is retroactive to.
+Provider_1_1_7.xml,ProviderInsurance,RetroactiveDate,provider_insurance,retroactive_date,Use this element to specify the date that the this coverage is retroactive to.
+Provider_1_1_7.xml,ProviderInsurance,RetroactiveDate,provider_insurance_m,retroactive_date,Use this element to specify the date that the this coverage is retroactive to.
+Provider_1_1_7.xml,ProviderInsurance,RetroactiveDate,provider_insurance_onr,retroactive_date,Use this element to specify the date that the this coverage is retroactive to.
+Provider_1_1_7.xml,ProviderEducation,DegreeGrantedDate,hist_provider_education,degree_granted_code,This field contains the date the academic degree was granted to the staff member.
+Provider_1_1_7.xml,ProviderEducation,DegreeGrantedDate,hist_provider_education,degree_granted_date,This field contains the date the academic degree was granted to the staff member.
+Provider_1_1_7.xml,ProviderEducation,DegreeGrantedDate,provider_education,degree_granted_code,This field contains the date the academic degree was granted to the staff member.
+Provider_1_1_7.xml,ProviderEducation,DegreeGrantedDate,provider_education,degree_granted_date,This field contains the date the academic degree was granted to the staff member.
+Provider_1_1_7.xml,ProviderEducation,DegreeGrantedDate,provider_education_m,degree_granted_code,This field contains the date the academic degree was granted to the staff member.
+Provider_1_1_7.xml,ProviderEducation,DegreeGrantedDate,provider_education_m,degree_granted_date,This field contains the date the academic degree was granted to the staff member.
+Provider_1_1_7.xml,ProviderEducation,DegreeGrantedDate,provider_education_onr,degree_granted_date,This field contains the date the academic degree was granted to the staff member.
+Provider_1_1_7.xml,ProviderEducation,DegreeStartDate,hist_provider_education,degree_start_date,This field contains the date when the academic degree program started.
+Provider_1_1_7.xml,ProviderEducation,DegreeStartDate,provider_education,degree_start_date,This field contains the date when the academic degree program started.
+Provider_1_1_7.xml,ProviderEducation,DegreeStartDate,provider_education_m,degree_start_date,This field contains the date when the academic degree program started.
+Provider_1_1_7.xml,ProviderEducation,DegreeStartDate,provider_education_onr,degree_start_date,This field contains the date when the academic degree program started.
+Provider_1_1_7.xml,ProviderEducation,DegreeEndDate,hist_provider_education,degree_end_date,This field contains the date when the academic degree program ended.
+Provider_1_1_7.xml,ProviderEducation,DegreeEndDate,provider_education,degree_end_date,This field contains the date when the academic degree program ended.
+Provider_1_1_7.xml,ProviderEducation,DegreeEndDate,provider_education_m,degree_end_date,This field contains the date when the academic degree program ended.
+Provider_1_1_7.xml,ProviderEducation,DegreeEndDate,provider_education_onr,degree_end_date,This field contains the date when the academic degree program ended.
+Provider_1_1_7.xml,ProviderSpeciality,StartDate,hist_provider_speciality,start_date,This field contains the date in which the practitioner earned this speciality.
+Provider_1_1_7.xml,ProviderSpeciality,StartDate,provider_speciality,start_date,This field contains the date in which the practitioner earned this speciality.
+Provider_1_1_7.xml,ProviderSpeciality,StartDate,provider_speciality_m,start_date,This field contains the date in which the practitioner earned this speciality.
+Provider_1_1_7.xml,ProviderSpeciality,StartDate,provider_speciality_onr,start_date,This field contains the date in which the practitioner earned this speciality.
+Provider_1_1_7.xml,ProviderSpeciality,EndDate,hist_provider_speciality,end_date,This field contains the date in which the practitioner ended this speciality.
+Provider_1_1_7.xml,ProviderSpeciality,EndDate,provider_speciality,end_date,This field contains the date in which the practitioner ended this speciality.
+Provider_1_1_7.xml,ProviderSpeciality,EndDate,provider_speciality_m,end_date,This field contains the date in which the practitioner ended this speciality.
+Provider_1_1_7.xml,ProviderSpeciality,EndDate,provider_speciality_onr,end_date,This field contains the date in which the practitioner ended this speciality.
+Provider_1_1_7.xml,ProviderPracticeSpeciality,StartDate,hist_provider_practice_speciality,start_date,This field contains the date in which the practitioner started working at  						the specific organization unit in the specific practicing specialty category.
+Provider_1_1_7.xml,ProviderPracticeSpeciality,StartDate,hist_provider_practice_speciality_m,start_date,This field contains the date in which the practitioner started working at  						the specific organization unit in the specific practicing specialty category.
+Provider_1_1_7.xml,ProviderPracticeSpeciality,StartDate,provider_practice_speciality,start_date,This field contains the date in which the practitioner started working at  						the specific organization unit in the specific practicing specialty category.
+Provider_1_1_7.xml,ProviderPracticeSpeciality,StartDate,provider_practice_speciality_m,start_date,This field contains the date in which the practitioner started working at  						the specific organization unit in the specific practicing specialty category.
+Provider_1_1_7.xml,ProviderPracticeSpeciality,StartDate,provider_practice_speciality_onr,start_date,This field contains the date in which the practitioner started working at  						the specific organization unit in the specific practicing specialty category.
+Provider_1_1_7.xml,ProviderPracticeSpeciality,EndDate,hist_provider_practice_speciality,end_date,This field contains the date in which the practitioner ended working at  						the specific organization unit in the specific practicing specialty category.
+Provider_1_1_7.xml,ProviderPracticeSpeciality,EndDate,hist_provider_practice_speciality_m,end_date,This field contains the date in which the practitioner ended working at  						the specific organization unit in the specific practicing specialty category.
+Provider_1_1_7.xml,ProviderPracticeSpeciality,EndDate,provider_practice_speciality,end_date,This field contains the date in which the practitioner ended working at  						the specific organization unit in the specific practicing specialty category.
+Provider_1_1_7.xml,ProviderPracticeSpeciality,EndDate,provider_practice_speciality_m,end_date,This field contains the date in which the practitioner ended working at  						the specific organization unit in the specific practicing specialty category.
+Provider_1_1_7.xml,ProviderPracticeSpeciality,EndDate,provider_practice_speciality_onr,end_date,This field contains the date in which the practitioner ended working at  						the specific organization unit in the specific practicing specialty category.
+Provider_1_1_7.xml,ProviderCertification,ActiveDate,hist_provider_certification,active_date,This field contains the date/time when the certificate became or will become active.
+Provider_1_1_7.xml,ProviderCertification,ActiveDate,hist_provider_certification,inactive_date,This field contains the date/time when the certificate became or will become active.
+Provider_1_1_7.xml,ProviderCertification,ActiveDate,hist_provider_certification_m,active_date,This field contains the date/time when the certificate became or will become active.
+Provider_1_1_7.xml,ProviderCertification,ActiveDate,hist_provider_certification_m,inactive_date,This field contains the date/time when the certificate became or will become active.
+Provider_1_1_7.xml,ProviderCertification,ActiveDate,provider_certification,active_date,This field contains the date/time when the certificate became or will become active.
+Provider_1_1_7.xml,ProviderCertification,ActiveDate,provider_certification,inactive_date,This field contains the date/time when the certificate became or will become active.
+Provider_1_1_7.xml,ProviderCertification,ActiveDate,provider_certification_m,active_date,This field contains the date/time when the certificate became or will become active.
+Provider_1_1_7.xml,ProviderCertification,ActiveDate,provider_certification_m,inactive_date,This field contains the date/time when the certificate became or will become active.
+Provider_1_1_7.xml,ProviderCertification,ActiveDate,provider_certification_onr,active_date,This field contains the date/time when the certificate became or will become active.
+Provider_1_1_7.xml,ProviderCertification,ActiveDate,provider_certification_onr,inactive_date,This field contains the date/time when the certificate became or will become active.
+Provider_1_1_7.xml,ProviderCertification,InactiveDate,hist_provider_certification,active_date,This field contains the date/time when the certificate became or will become inactive.
+Provider_1_1_7.xml,ProviderCertification,InactiveDate,hist_provider_certification,inactive_date,This field contains the date/time when the certificate became or will become inactive.
+Provider_1_1_7.xml,ProviderCertification,InactiveDate,hist_provider_certification_m,active_date,This field contains the date/time when the certificate became or will become inactive.
+Provider_1_1_7.xml,ProviderCertification,InactiveDate,hist_provider_certification_m,inactive_date,This field contains the date/time when the certificate became or will become inactive.
+Provider_1_1_7.xml,ProviderCertification,InactiveDate,provider_certification,active_date,This field contains the date/time when the certificate became or will become inactive.
+Provider_1_1_7.xml,ProviderCertification,InactiveDate,provider_certification,inactive_date,This field contains the date/time when the certificate became or will become inactive.
+Provider_1_1_7.xml,ProviderCertification,InactiveDate,provider_certification_m,active_date,This field contains the date/time when the certificate became or will become inactive.
+Provider_1_1_7.xml,ProviderCertification,InactiveDate,provider_certification_m,inactive_date,This field contains the date/time when the certificate became or will become inactive.
+Provider_1_1_7.xml,ProviderCertification,InactiveDate,provider_certification_onr,active_date,This field contains the date/time when the certificate became or will become inactive.
+Provider_1_1_7.xml,ProviderCertification,InactiveDate,provider_certification_onr,inactive_date,This field contains the date/time when the certificate became or will become inactive.
+Provider_1_1_7.xml,ProviderCertification,ExpirationDate,hist_provider_certification,expiration_date,This field contains the date/time when the certificate expires or will expire.
+Provider_1_1_7.xml,ProviderCertification,ExpirationDate,hist_provider_certification_m,expiration_date,This field contains the date/time when the certificate expires or will expire.
+Provider_1_1_7.xml,ProviderCertification,ExpirationDate,provider_certification,expiration_date,This field contains the date/time when the certificate expires or will expire.
+Provider_1_1_7.xml,ProviderCertification,ExpirationDate,provider_certification_m,expiration_date,This field contains the date/time when the certificate expires or will expire.
+Provider_1_1_7.xml,ProviderCertification,ExpirationDate,provider_certification_onr,expiration_date,This field contains the date/time when the certificate expires or will expire.
+Provider_1_1_7.xml,ProviderCertification,ExpirationDate,provider_education,expiration_date,This field contains the date/time when the certificate expires or will expire.
+Provider_1_1_7.xml,ProviderCertification,RenewalDate,hist_provider_certification,renewal_date,This field contains the date/time when the certificate must/will/ be / has been renewed.
+Provider_1_1_7.xml,ProviderCertification,RenewalDate,hist_provider_certification_m,renewal_date,This field contains the date/time when the certificate must/will/ be / has been renewed.
+Provider_1_1_7.xml,ProviderCertification,RenewalDate,provider_certification,renewal_date,This field contains the date/time when the certificate must/will/ be / has been renewed.
+Provider_1_1_7.xml,ProviderCertification,RenewalDate,provider_certification_m,renewal_date,This field contains the date/time when the certificate must/will/ be / has been renewed.
+Provider_1_1_7.xml,ProviderCertification,RenewalDate,provider_certification_onr,renewal_date,This field contains the date/time when the certificate must/will/ be / has been renewed.
+Provider_1_1_7.xml,ProviderCertification,RevocationDate,hist_provider_certification,revocation_date,This field contains the date/time when the certificate has been revoked.
+Provider_1_1_7.xml,ProviderCertification,RevocationDate,hist_provider_certification_m,revocation_date,This field contains the date/time when the certificate has been revoked.
+Provider_1_1_7.xml,ProviderCertification,RevocationDate,provider_certification,revocation_date,This field contains the date/time when the certificate has been revoked.
+Provider_1_1_7.xml,ProviderCertification,RevocationDate,provider_certification_m,revocation_date,This field contains the date/time when the certificate has been revoked.
+Provider_1_1_7.xml,ProviderCertification,RevocationDate,provider_certification_onr,revocation_date,This field contains the date/time when the certificate has been revoked.
+Provider_1_1_7.xml,ProviderLicense,IssuedDate,hist_provider_license,issued_date,Use this element to specify date the license was issued.
+Provider_1_1_7.xml,ProviderLicense,IssuedDate,provider_license,issued_date,Use this element to specify date the license was issued.
+Provider_1_1_7.xml,ProviderLicense,IssuedDate,provider_license_m,issued_date,Use this element to specify date the license was issued.
+Provider_1_1_7.xml,ProviderLicense,IssuedDate,provider_license_onr,issued_date,Use this element to specify date the license was issued.
+Provider_1_1_7.xml,ProviderLicense,ExpirationDate,hist_provider_license,expiration_date,Use this element to specify date the license will Expire.
+Provider_1_1_7.xml,ProviderLicense,ExpirationDate,provider_license,expiration_date,Use this element to specify date the license will Expire.
+Provider_1_1_7.xml,ProviderLicense,ExpirationDate,provider_license_m,expiration_date,Use this element to specify date the license will Expire.
+Provider_1_1_7.xml,ProviderLicense,ExpirationDate,provider_license_onr,expiration_date,Use this element to specify date the license will Expire.
+Provider_1_1_7.xml,ProviderLicense,RenewalDate,hist_provider_license,renewal_date,Use this element to specify date the license will require renewal.
+Provider_1_1_7.xml,ProviderLicense,RenewalDate,provider_license,renewal_date,Use this element to specify date the license will require renewal.
+Provider_1_1_7.xml,ProviderLicense,RenewalDate,provider_license_m,renewal_date,Use this element to specify date the license will require renewal.
+Provider_1_1_7.xml,ProviderLicense,RenewalDate,provider_license_onr,renewal_date,Use this element to specify date the license will require renewal.
+Provider_1_1_7.xml,ProviderPracticeLicense,StartDate,hist_provider_practice_license,start_date,Use this element to specify when the Practice License for the Facility will be in effect.
+Provider_1_1_7.xml,ProviderPracticeLicense,StartDate,hist_provider_practice_license_m,start_date,Use this element to specify when the Practice License for the Facility will be in effect.
+Provider_1_1_7.xml,ProviderPracticeLicense,StartDate,provider_practice_license,start_date,Use this element to specify when the Practice License for the Facility will be in effect.
+Provider_1_1_7.xml,ProviderPracticeLicense,StartDate,provider_practice_license_m,start_date,Use this element to specify when the Practice License for the Facility will be in effect.
+Provider_1_1_7.xml,ProviderPracticeLicense,StartDate,provider_practice_license_onr,start_date,Use this element to specify when the Practice License for the Facility will be in effect.
+Provider_1_1_7.xml,ProviderPracticeLicense,EndDate,hist_provider_practice_license,end_date,Use this element to specify when the Practice License for the Facility will be terminate.
+Provider_1_1_7.xml,ProviderPracticeLicense,EndDate,hist_provider_practice_license_m,end_date,Use this element to specify when the Practice License for the Facility will be terminate.
+Provider_1_1_7.xml,ProviderPracticeLicense,EndDate,provider_practice_license,end_date,Use this element to specify when the Practice License for the Facility will be terminate.
+Provider_1_1_7.xml,ProviderPracticeLicense,EndDate,provider_practice_license_m,end_date,Use this element to specify when the Practice License for the Facility will be terminate.
+Provider_1_1_7.xml,ProviderPracticeLicense,EndDate,provider_practice_license_onr,end_date,Use this element to specify when the Practice License for the Facility will be terminate.
+Provider_1_1_7.xml,ProviderPracticeLicense,VerifiedDate,hist_provider_practice_license,verified_date,Use this element to specify the user id or name of the person who performed the verification.
+Provider_1_1_7.xml,ProviderPracticeLicense,VerifiedDate,hist_provider_practice_license_m,verified_date,Use this element to specify the user id or name of the person who performed the verification.
+Provider_1_1_7.xml,ProviderPracticeLicense,VerifiedDate,provider_practice_license,verified_date,Use this element to specify the user id or name of the person who performed the verification.
+Provider_1_1_7.xml,ProviderPracticeLicense,VerifiedDate,provider_practice_license_m,verified_date,Use this element to specify the user id or name of the person who performed the verification.
+Provider_1_1_7.xml,ProviderPracticeLicense,VerifiedDate,provider_practice_license_onr,verified_date,Use this element to specify the user id or name of the person who performed the verification.
+Provider_1_1_7.xml,ProviderLicenseMonitor,MonitoringDate,hist_provider_license_monitor,monitoring_date,Use this element to specify when the monitoring occured.
+Provider_1_1_7.xml,ProviderLicenseMonitor,MonitoringDate,hist_provider_license_monitor_m,monitoring_date,Use this element to specify when the monitoring occured.
+Provider_1_1_7.xml,ProviderLicenseMonitor,MonitoringDate,provider_license_monitor,monitoring_date,Use this element to specify when the monitoring occured.
+Provider_1_1_7.xml,ProviderLicenseMonitor,MonitoringDate,provider_license_monitor_m,monitoring_date,Use this element to specify when the monitoring occured.
+Provider_1_1_7.xml,ProviderLicenseMonitor,MonitoringDate,provider_license_monitor_onr,monitoring_date,Use this element to specify when the monitoring occured.
+Provider_1_1_7.xml,ProviderPrivilege,StartDate,hist_provider_privilege,start_date,Use this element to specify when the privilege at the facility begins.
+Provider_1_1_7.xml,ProviderPrivilege,StartDate,provider_privilege,start_date,Use this element to specify when the privilege at the facility begins.
+Provider_1_1_7.xml,ProviderPrivilege,StartDate,provider_privilege_m,start_date,Use this element to specify when the privilege at the facility begins.
+Provider_1_1_7.xml,ProviderPrivilege,StartDate,provider_privilege_onr,start_date,Use this element to specify when the privilege at the facility begins.
+Provider_1_1_7.xml,ProviderPrivilege,EndDate,hist_provider_privilege,end_date,Use this element to specify when the privilege ends.
+Provider_1_1_7.xml,ProviderPrivilege,EndDate,provider_privilege,end_date,Use this element to specify when the privilege ends.
+Provider_1_1_7.xml,ProviderPrivilege,EndDate,provider_privilege_m,end_date,Use this element to specify when the privilege ends.
+Provider_1_1_7.xml,ProviderPrivilege,EndDate,provider_privilege_onr,end_date,Use this element to specify when the privilege ends.
+Provider_1_1_7.xml,ProviderPrivilege,RevokedDate,hist_provider_privilege,revoked_date,Use this element to specify the date that this privilege was revoked.
+Provider_1_1_7.xml,ProviderPrivilege,RevokedDate,provider_privilege,revoked_date,Use this element to specify the date that this privilege was revoked.
+Provider_1_1_7.xml,ProviderPrivilege,RevokedDate,provider_privilege_m,revoked_date,Use this element to specify the date that this privilege was revoked.
+Provider_1_1_7.xml,ProviderPrivilege,RevokedDate,provider_privilege_onr,revoked_date,Use this element to specify the date that this privilege was revoked.
+Provider_1_1_7.xml,ProviderAssignment,StartDate,t_provider_assignment,start_date,Use this element to specify when the assignment will begin at the specified Facility.
+Provider_1_1_7.xml,ProviderAssignment,StartDate,hist_provider_assignment,start_date,Use this element to specify when the assignment will begin at the specified Facility.
+Provider_1_1_7.xml,ProviderAssignment,StartDate,provider_assignment,start_date,Use this element to specify when the assignment will begin at the specified Facility.
+Provider_1_1_7.xml,ProviderAssignment,StartDate,provider_assignment_m,start_date,Use this element to specify when the assignment will begin at the specified Facility.
+Provider_1_1_7.xml,ProviderAssignment,StartDate,provider_assignment_onr,start_date,Use this element to specify when the assignment will begin at the specified Facility.
+Provider_1_1_7.xml,ProviderAssignment,EndDate,t_provider_assignment,end_date,This field contains the date in which the practitioner ended working at  						the specific organization unit in the specific practicing specialty category.
+Provider_1_1_7.xml,ProviderAssignment,EndDate,hist_provider_assignment,end_date,This field contains the date in which the practitioner ended working at  						the specific organization unit in the specific practicing specialty category.
+Provider_1_1_7.xml,ProviderAssignment,EndDate,provider_assignment,end_date,This field contains the date in which the practitioner ended working at  						the specific organization unit in the specific practicing specialty category.
+Provider_1_1_7.xml,ProviderAssignment,EndDate,provider_assignment_m,end_date,This field contains the date in which the practitioner ended working at  						the specific organization unit in the specific practicing specialty category.
+Provider_1_1_7.xml,ProviderAssignment,EndDate,provider_assignment_onr,end_date,This field contains the date in which the practitioner ended working at  						the specific organization unit in the specific practicing specialty category.
+Provider_1_1_7.xml,ProviderAssignment,AssignmentStatusDate,t_provider_assignment,assignment_status_code,Use this element to specify the date that the status was updated.
+Provider_1_1_7.xml,ProviderAssignment,AssignmentStatusDate,t_provider_assignment,assignment_status_date,Use this element to specify the date that the status was updated.
+Provider_1_1_7.xml,ProviderAssignment,AssignmentStatusDate,hist_provider_assignment,assignment_status_code,Use this element to specify the date that the status was updated.
+Provider_1_1_7.xml,ProviderAssignment,AssignmentStatusDate,hist_provider_assignment,assignment_status_date,Use this element to specify the date that the status was updated.
+Provider_1_1_7.xml,ProviderAssignment,AssignmentStatusDate,provider_assignment,assignment_status_code,Use this element to specify the date that the status was updated.
+Provider_1_1_7.xml,ProviderAssignment,AssignmentStatusDate,provider_assignment,assignment_status_date,Use this element to specify the date that the status was updated.
+Provider_1_1_7.xml,ProviderAssignment,AssignmentStatusDate,provider_assignment_m,assignment_status_code,Use this element to specify the date that the status was updated.
+Provider_1_1_7.xml,ProviderAssignment,AssignmentStatusDate,provider_assignment_m,assignment_status_date,Use this element to specify the date that the status was updated.
+Provider_1_1_7.xml,ProviderAssignment,AssignmentStatusDate,provider_assignment_onr,assignment_status_date,Use this element to specify the date that the status was updated.
+Provider_1_1_7.xml,ProviderAssignment,TerminationDate,t_provider_assignment,termination_date,Use this element to specify when this assignment was abnormally terminated.
+Provider_1_1_7.xml,ProviderAssignment,TerminationDate,hist_provider_assignment,termination_date,Use this element to specify when this assignment was abnormally terminated.
+Provider_1_1_7.xml,ProviderAssignment,TerminationDate,provider_assignment,termination_date,Use this element to specify when this assignment was abnormally terminated.
+Provider_1_1_7.xml,ProviderAssignment,TerminationDate,provider_assignment_m,termination_date,Use this element to specify when this assignment was abnormally terminated.
+Provider_1_1_7.xml,ProviderAssignment,TerminationDate,provider_assignment_onr,termination_date,Use this element to specify when this assignment was abnormally terminated.
+Specimen_1_2_4.xml,Specimen,CollectionDateTime,t_specimen,collection_date_time,Contains the date and time when the specimen was acquired from the source.
+Specimen_1_2_4.xml,Specimen,CollectionDateTime,t_specimen,collection_time,Contains the date and time when the specimen was acquired from the source.
+Specimen_1_2_4.xml,Specimen,CollectionDateTime,t_specimen,collection_date,Contains the date and time when the specimen was acquired from the source.
+Specimen_1_2_4.xml,Specimen,CollectionDateTime,specimen,collection_date_time,Contains the date and time when the specimen was acquired from the source.
+Specimen_1_2_4.xml,Specimen,ReceivedDateTime,t_specimen,received_date_time,Contains the date and time when the specimen was received at the diagnostic service.
+Specimen_1_2_4.xml,Specimen,ReceivedDateTime,t_specimen,received_time,Contains the date and time when the specimen was received at the diagnostic service.
+Specimen_1_2_4.xml,Specimen,ReceivedDateTime,specimen,received_date_time,Contains the date and time when the specimen was received at the diagnostic service.
+Specimen_1_2_4.xml,Specimen,ExpirationDateTime,t_specimen,expiration_date_time,Contains the date and time when the specimen can no longer be used for the purpose implied by the order.
+Specimen_1_2_4.xml,Specimen,ExpirationDateTime,t_specimen,expiration_time,Contains the date and time when the specimen can no longer be used for the purpose implied by the order.
+Specimen_1_2_4.xml,Specimen,ExpirationDateTime,t_specimen,expiration_date,Contains the date and time when the specimen can no longer be used for the purpose implied by the order.
+Specimen_1_2_4.xml,Specimen,ExpirationDateTime,specimen,expiration_date_time,Contains the date and time when the specimen can no longer be used for the purpose implied by the order.
+SubscriberForCoverage_1_1_7.xml,SubscriberForCoverage,EmploymentDate,subscriber_for_coverage_onr,employment_date,The date on which the subscriber began working for the employer associated with the employer group.
+SubscriberForCoverage_1_1_7.xml,SubscriberForCoverage,ApplicationDate,subscriber_for_coverage_onr,application_date,The date on which the subscriber applied for coverage.
+SubscriberForCoverage_1_1_7.xml,SubscriberForCoverage,BirthDate,subscriber_for_coverage_onr,birth_date,The date of birth for the subscriber on the coverage.
+SubscriberForCoverage_1_1_7.xml,CoverageRecord,SignatureOnFileDate,coverage_record_onr,signature_on_file_date,The date when the signature was filed.
+SubscriberForCoverage_1_1_7.xml,CoverageRecord,SubscriberRetireDate,coverage_record,subscriber_retire_date,The date when the coverage subscriber retired.
+SubscriberForCoverage_1_1_7.xml,CoverageRecord,SubscriberRetireDate,coverage_record_onr,subscriber_retire_date,The date when the coverage subscriber retired.
+SubscriberForCoverage_1_1_7.xml,CoverageRecord,SubscriberSpouseRetireDate,coverage_record,subscriber_retire_date,The date when the coverage subscriber's spouse retired.
+SubscriberForCoverage_1_1_7.xml,CoverageRecord,SubscriberSpouseRetireDate,coverage_record,subscriber_spouse_retire_date,The date when the coverage subscriber's spouse retired.
+SubscriberForCoverage_1_1_7.xml,CoverageRecord,SubscriberSpouseRetireDate,coverage_record_onr,subscriber_retire_date,The date when the coverage subscriber's spouse retired.
+SubscriberForCoverage_1_1_7.xml,CoverageRecord,SubscriberSpouseRetireDate,coverage_record_onr,subscriber_spouse_retire_date,The date when the coverage subscriber's spouse retired.
+SubscriberForCoverage_1_1_7.xml,CoverageRecord,ScheduledDiscontinueDate,coverage_record,scheduled_discontinue_date,The date when the coverage is scheduled to be discontinued.
+SubscriberForCoverage_1_1_7.xml,CoverageRecord,ScheduledDiscontinueDate,coverage_record_onr,scheduled_discontinue_date,The date when the coverage is scheduled to be discontinued.
+SubscriberForCoverage_1_1_7.xml,CoverageRecord,ScheduledActivationDate,coverage_record,scheduled_activation_date,The date when the coverage is scheduled to be activated.
+SubscriberForCoverage_1_1_7.xml,CoverageRecord,ScheduledActivationDate,coverage_record_onr,scheduled_activation_date,The date when the coverage is scheduled to be activated.
+SubscriberForCoverage_1_1_7.xml,CoverageRecord,MedicareSpouseRetireDate,coverage_record,medicare_spouse_retired_code,The date when a Medicare patient's spouse retired.
+SubscriberForCoverage_1_1_7.xml,CoverageRecord,MedicareSpouseRetireDate,coverage_record,medicare_spouse_retire_date,The date when a Medicare patient's spouse retired.
+SubscriberForCoverage_1_1_7.xml,CoverageRecord,MedicareSpouseRetireDate,coverage_record,medicare_patient_retire_date,The date when a Medicare patient's spouse retired.
+SubscriberForCoverage_1_1_7.xml,CoverageRecord,MedicareSpouseRetireDate,coverage_record_onr,medicare_spouse_retire_date,The date when a Medicare patient's spouse retired.
+SubscriberForCoverage_1_1_7.xml,CoverageRecord,MedicareSpouseRetireDate,coverage_record_onr,medicare_patient_retire_date,The date when a Medicare patient's spouse retired.
+SubscriberForCoverage_1_1_7.xml,CoverageRecord,MedicarePatientRetireDate,coverage_record,medicare_spouse_retire_date,The date when a Medicare patient's spouse retired.
+SubscriberForCoverage_1_1_7.xml,CoverageRecord,MedicarePatientRetireDate,coverage_record,medicare_patient_retired_code,The date when a Medicare patient's spouse retired.
+SubscriberForCoverage_1_1_7.xml,CoverageRecord,MedicarePatientRetireDate,coverage_record,medicare_patient_retire_date,The date when a Medicare patient's spouse retired.
+SubscriberForCoverage_1_1_7.xml,CoverageRecord,MedicarePatientRetireDate,coverage_record_onr,medicare_spouse_retire_date,The date when a Medicare patient's spouse retired.
+SubscriberForCoverage_1_1_7.xml,CoverageRecord,MedicarePatientRetireDate,coverage_record_onr,medicare_patient_retire_date,The date when a Medicare patient's spouse retired.
+SubscriberForCoverage_1_1_7.xml,CoverageRecord,EvsVerificationDate,coverage_record,evs_verification_code,The date when eligibility was verified with EVS.
+SubscriberForCoverage_1_1_7.xml,CoverageRecord,EvsVerificationDate,coverage_record,evs_verification_date,The date when eligibility was verified with EVS.
+SubscriberForCoverage_1_1_7.xml,CoverageRecord,EvsVerificationDate,coverage_record_onr,evs_verification_date,The date when eligibility was verified with EVS.
+SubscriberForCoverage_1_1_7.xml,CoveragePayer,AuthorizationDateTime,coverage_payer,authorization_date,The authorization date and time for this coverage.
+SubscriberForCoverage_1_1_7.xml,CoveragePayer,AuthorizationDateTime,coverage_payer_onr,authorization_date_time,The authorization date and time for this coverage.
+SubscriberForCoverage_1_1_7.xml,CoveragePayer,AuthorizationVerificationDateTime,coverage_payer_onr,authorization_verification_date_time,TThe date and time when authorization was obtained.
+SubscriberForCoverage_1_1_7.xml,CoveragePayer,LastCoverageUpdateDateTime,coverage_payer_onr,last_coverage_update_date_time,Date and time of the last coverage update.
+SubscriberForCoverage_1_1_7.xml,CoveragePayer,TherapyPlanDate,coverage_payer,therapy_plan_date,The date when the therapy plan was established.
+SubscriberForCoverage_1_1_7.xml,CoveragePayer,TherapyPlanDate,coverage_payer_onr,therapy_plan_date,The date when the therapy plan was established.
+SubscriberForCoverage_1_1_7.xml,CoveragePayer,TherapyStartDate,coverage_payer,therapy_plan_date,The date when the therapy started.
+SubscriberForCoverage_1_1_7.xml,CoveragePayer,TherapyStartDate,coverage_payer,therapy_start_date,The date when the therapy started.
+SubscriberForCoverage_1_1_7.xml,CoveragePayer,TherapyStartDate,coverage_payer_onr,therapy_plan_date,The date when the therapy started.
+SubscriberForCoverage_1_1_7.xml,CoveragePayer,TherapyStartDate,coverage_payer_onr,therapy_start_date,The date when the therapy started.
+SubscriberForCoverage_1_1_7.xml,CoveragePayer,LastMenstrualDate,coverage_payer,last_menstrual_date,The patient's last menstrual date.
+SubscriberForCoverage_1_1_7.xml,CoveragePayer,LastMenstrualDate,coverage_payer_onr,last_menstrual_date,The patient's last menstrual date.
+SubscriberForCoverage_1_1_7.xml,CoveragePayer,AuthorizationValidDate,coverage_payer,authorization_date,The date when the authorization became valid.
+SubscriberForCoverage_1_1_7.xml,CoveragePayer,AuthorizationValidDate,coverage_payer,authorization_valid_date,The date when the authorization became valid.
+SubscriberForCoverage_1_1_7.xml,CoveragePayer,AuthorizationValidDate,coverage_payer,authorization_invalid_date,The date when the authorization became valid.
+SubscriberForCoverage_1_1_7.xml,CoveragePayer,AuthorizationValidDate,coverage_payer_onr,authorization_valid_date,The date when the authorization became valid.
+SubscriberForCoverage_1_1_7.xml,CoveragePayer,AuthorizationValidDate,coverage_payer_onr,authorization_invalid_date,The date when the authorization became valid.
+SubscriberForCoverage_1_1_7.xml,CoveragePayer,AuthorizationInvalidDate,coverage_payer,authorization_date,The date when the authorization became invalid.
+SubscriberForCoverage_1_1_7.xml,CoveragePayer,AuthorizationInvalidDate,coverage_payer,authorization_valid_date,The date when the authorization became invalid.
+SubscriberForCoverage_1_1_7.xml,CoveragePayer,AuthorizationInvalidDate,coverage_payer,authorization_invalid_date,The date when the authorization became invalid.
+SubscriberForCoverage_1_1_7.xml,CoveragePayer,AuthorizationInvalidDate,coverage_payer_onr,authorization_valid_date,The date when the authorization became invalid.
+SubscriberForCoverage_1_1_7.xml,CoveragePayer,AuthorizationInvalidDate,coverage_payer_onr,authorization_invalid_date,The date when the authorization became invalid.
+SubscriberForCoverage_1_1_7.xml,CoveragePayer,ManagedCareCobraStatusDate,coverage_payer,mng_care_cobra_status_date,The date when a managed care coverage got COBRA status.
+SubscriberForCoverage_1_1_7.xml,CoveragePayer,ManagedCareCobraStatusDate,coverage_payer_onr,managed_care_cobra_status_code_set,The date when a managed care coverage got COBRA status.
+SubscriberForCoverage_1_1_7.xml,CoveragePayer,ManagedCareCobraStatusDate,coverage_payer_onr,managed_care_cobra_status_date,The date when a managed care coverage got COBRA status.
+SubscriberForCoverage_1_1_7.xml,MemberCoverageRecord,EffectiveDate,member_coverage_record_onr,effective_date,The date on which the coverage goes into effect for the member.
+SubscriberForCoverage_1_1_7.xml,MemberCoverageRecord,TerminationDate,member_coverage_record_onr,termination_date,The date after which the coverage is no longer in effect for the member and the member becomes ineligible for benefits.
+SubscriberForCoverage_1_1_7.xml,MemberCoverageRecord,EligibilityUpdateDate,member_coverage_record_onr,eligibility_update_date,The date the coverage record was last updated through an eligibility load.
+SubscriberForCoverage_1_1_7.xml,MemberCoverageRecord,ApplicationDate,member_coverage_record_onr,application_date,The date on which the member applied for coverage.
+SubscriberForCoverage_1_1_7.xml,MemberCoverageRecord,LastVerificationDate,member_coverage_record_onr,last_verification_date,The date the member on the coverage was last verified.
+SubscriberForCoverage_1_1_7.xml,MemberCoverageRecord,ScheduledDiscontinuationDate,member_coverage_record_onr,scheduled_discontinuation_date,The member scheduled discontinuation date.
+SubscriberForCoverage_1_1_7.xml,CoverageSponsor,EffectiveDate,coverage_plan_onr,effective_date,EffectiveDate and TerminationDate are tracked over time since they can affect filing order and MSP logic.                  When either of those items are changed, a new line is added to this related group using today's date for this item and the new values for the other two items.
+SubscriberForCoverage_1_1_7.xml,CoverageSponsor,EffectiveDate,coverage_sponsor,effective_date,EffectiveDate and TerminationDate are tracked over time since they can affect filing order and MSP logic.                  When either of those items are changed, a new line is added to this related group using today's date for this item and the new values for the other two items.
+SubscriberForCoverage_1_1_7.xml,CoverageSponsor,EffectiveDate,coverage_sponsor_onr,effective_date,EffectiveDate and TerminationDate are tracked over time since they can affect filing order and MSP logic.                  When either of those items are changed, a new line is added to this related group using today's date for this item and the new values for the other two items.
+SubscriberForCoverage_1_1_7.xml,CoverageSponsor,EffectiveDate,hist_coverage_sponsor,effective_date,EffectiveDate and TerminationDate are tracked over time since they can affect filing order and MSP logic.                  When either of those items are changed, a new line is added to this related group using today's date for this item and the new values for the other two items.
+SubscriberForCoverage_1_1_7.xml,CoverageSponsor,TerminationDate,coverage_plan_onr,termination_date,EffectiveDate and TerminationDate are tracked over time since they can affect filing order and MSP logic.                  When either of those items are changed, a new line is added to this related group, and the previous line is given yesterday's date as the termination date.
+SubscriberForCoverage_1_1_7.xml,CoverageSponsor,TerminationDate,coverage_sponsor,termination_date,EffectiveDate and TerminationDate are tracked over time since they can affect filing order and MSP logic.                  When either of those items are changed, a new line is added to this related group, and the previous line is given yesterday's date as the termination date.
+SubscriberForCoverage_1_1_7.xml,CoverageSponsor,TerminationDate,coverage_sponsor_onr,termination_date,EffectiveDate and TerminationDate are tracked over time since they can affect filing order and MSP logic.                  When either of those items are changed, a new line is added to this related group, and the previous line is given yesterday's date as the termination date.
+SubscriberForCoverage_1_1_7.xml,CoverageSponsor,TerminationDate,hist_coverage_sponsor,termination_date,EffectiveDate and TerminationDate are tracked over time since they can affect filing order and MSP logic.                  When either of those items are changed, a new line is added to this related group, and the previous line is given yesterday's date as the termination date.
+SubscriberForCoverage_1_1_7.xml,CoverageEligibilityQuery,MessageSentDateTime,coverage_eligibility_query_onr,message_sent_date_time,Time an eligibility message was sent in instance format.
+SubscriberForCoverage_1_1_7.xml,CoverageEligibilityQuery,ResponseReceivedDateTime,coverage_eligibility_query,response_received_date,Time an eligibility response was received in instance format.
+SubscriberForCoverage_1_1_7.xml,CoverageEligibilityQuery,ResponseReceivedDateTime,coverage_eligibility_query_onr,response_received_date_time,Time an eligibility response was received in instance format.
+SubscriberForCoverage_1_1_7.xml,CoverageEligibilityQuery,ResponseReceivedDateTime,hist_coverage_eligibility_query,response_received_date,Time an eligibility response was received in instance format.
+SubscriberForCoverage_1_1_7.xml,CoverageEligibilityQuery,QueryServiceDate,coverage_eligibility_query,query_service_date,Record of the service date queried.
+SubscriberForCoverage_1_1_7.xml,CoverageEligibilityQuery,QueryServiceDate,coverage_eligibility_query_onr,query_service_date,Record of the service date queried.
+SubscriberForCoverage_1_1_7.xml,CoverageEligibilityQuery,QueryServiceDate,hist_coverage_eligibility_query,query_service_date,Record of the service date queried.
+SubscriberForCoverage_1_1_7.xml,CoverageEligibilityFail,ElectronicFailureDateTime,coverage_eligibility_fail,electronic_failure_date,Shows time of last failed attempt to verify coverage electronically
+SubscriberForCoverage_1_1_7.xml,CoverageEligibilityFail,ElectronicFailureDateTime,coverage_eligibility_fail_onr,electronic_failure_date_time,Shows time of last failed attempt to verify coverage electronically
+SubscriberForCoverage_1_1_7.xml,CoverageEligibilityFail,ElectronicFailureDateTime,hist_coverage_eligibility_fail,electronic_failure_date,Shows time of last failed attempt to verify coverage electronically
+SubscriberForCoverage_1_1_7.xml,SubscriberEmployment,EmploymentDate,subscriber_employment_onr,employment_date,The date on which the subscriber began working for the employer associated with the employer group.
+TransferEvent_1.2.3.xml,TransferEvent,EventDateTime,t_transfer_event,event_date_time,Date and time that the patient is transferred.
+TransferEvent_1.2.3.xml,TransferEvent,EventDateTime,transfer_event_onr,event_date_time,Date and time that the patient is transferred.
+TransfusionOrderEvent_1.2.6.xml,TransfusionOrderEvent,IntendedUseDateTime,t_transfusion_order_event,intended_use_date_time,This represents the date and time the person who placed the order intends to use the blood product.
+TransfusionOrderEvent_1.2.6.xml,TransfusionOrderEvent,IntendedUseDateTime,hist_transfusion_order_event,intended_use_date_time,This represents the date and time the person who placed the order intends to use the blood product.
+TransfusionOrderEvent_1.2.6.xml,TransfusionOrderEvent,IntendedUseDateTime,transfusion_order_event,intended_use_date_time,This represents the date and time the person who placed the order intends to use the blood product.
+TransfusionOrderEvent_1.2.6.xml,TransfusionOrderEvent,IntendedUseDateTime,transfusion_order_event_onr,intended_use_date_time,This represents the date and time the person who placed the order intends to use the blood product.
+TransfusionOrderEvent_1.2.6.xml,TransfusionOrderEvent,RequestedDispenseDateTime,t_transfusion_order_event,requested_dispense_date_time,This represents the date and time that the requested blood products must be ready to dispense.
+TransfusionOrderEvent_1.2.6.xml,TransfusionOrderEvent,RequestedDispenseDateTime,hist_transfusion_order_event,requested_dispense_date_time,This represents the date and time that the requested blood products must be ready to dispense.
+TransfusionOrderEvent_1.2.6.xml,TransfusionOrderEvent,RequestedDispenseDateTime,transfusion_order_event,requested_dispense_date_time,This represents the date and time that the requested blood products must be ready to dispense.
+TransfusionOrderEvent_1.2.6.xml,TransfusionOrderEvent,RequestedDispenseDateTime,transfusion_order_event_onr,requested_dispense_date_time,This represents the date and time that the requested blood products must be ready to dispense.

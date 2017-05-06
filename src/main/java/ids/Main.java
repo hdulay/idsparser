@@ -75,7 +75,8 @@ public class Main {
                 case Node.ELEMENT_NODE:
                     if (kid.getNodeName().equals("documentation")) {
                         Node text = kid.getFirstChild();
-                        f.setDoc(text.getNodeValue().trim());
+
+                        f.setDoc(text.getNodeValue().replace('\n', ' ').trim());
                     }
             }
             if (f.getDoc() != null) break;
